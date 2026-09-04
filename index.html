@@ -1,910 +1,942 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!doctype html>
 
-<title>CHAK338 — Gaming Hub</title>
+<html lang="ru">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<title>
+  CHAK338 — Gaming Hub
+</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      boxShadow: {
-        neon: "0 0 45px rgba(168,85,247,.28)",
-        cyan: "0 0 45px rgba(56,189,248,.25)",
-        redneon: "0 0 45px rgba(239,68,68,.28)"
-      }
-    }
-  }
-}
-</script>
-
-<script src="data.js"></script>
-
 <style>
 
-html {
-  scroll-behavior: smooth;
+*{
+  box-sizing:border-box;
 }
 
-body {
-  background: #07070b;
-  color: #f8fafc;
+html{
+  scroll-behavior:smooth;
 }
 
-body:before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: .18;
+body{
+  margin:0;
+  background:#06070b;
+  color:#f8fafc;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.grid-bg{
 
   background-image:
     linear-gradient(
-      rgba(255,255,255,.035) 1px,
+      rgba(255,255,255,.025) 1px,
       transparent 1px
     ),
     linear-gradient(
       90deg,
-      rgba(255,255,255,.035) 1px,
+      rgba(255,255,255,.025) 1px,
       transparent 1px
     );
 
-  background-size: 36px 36px;
+  background-size:38px 38px;
+
 }
 
-.glass {
-  background: rgba(12,12,18,.82);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-}
-
-.case-card {
-  transition:
-    transform .3s,
-    box-shadow .3s;
-}
-
-.case-card:hover {
-  transform: translateY(-8px);
-}
-
-.case-art {
-  position: relative;
-  overflow: hidden;
-}
-
-.case-art:after {
-  content: "";
-  position: absolute;
-
-  width: 260px;
-  height: 260px;
-
-  border-radius: 50%;
-
-  background: rgba(168,85,247,.18);
-
-  filter: blur(60px);
-
-  top: 5%;
-  left: 50%;
-
-  transform: translateX(-50%);
-}
-
-.case-image {
-  position: relative;
-  z-index: 2;
-
-  max-width: 82%;
-  max-height: 220px;
-
-  object-fit: contain;
-
-  filter:
-    drop-shadow(0 25px 35px rgba(0,0,0,.7))
-    drop-shadow(0 0 25px rgba(168,85,247,.22));
-}
-
-.reel-window {
-  position: relative;
-  overflow: hidden;
-
-  border-radius: 22px;
+.glass{
 
   background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.025),
-      rgba(0,0,0,.35)
-    );
+    rgba(8,9,14,.82);
 
-  border: 1px solid rgba(255,255,255,.08);
+  backdrop-filter:
+    blur(18px);
+
 }
 
-.reel-window:before {
-  content: "";
+.case-card{
 
-  position: absolute;
+  transition:.25s;
 
-  z-index: 20;
+  position:relative;
 
-  left: 50%;
-  top: 0;
-  bottom: 0;
+  overflow:hidden;
 
-  width: 3px;
+}
 
-  transform: translateX(-50%);
+.case-card:hover{
 
-  background: white;
+  transform:
+    translateY(-7px);
+
+}
+
+.case-art{
+
+  height:250px;
+
+  background:#090a10;
+
+  overflow:hidden;
+
+}
+
+.case-art img{
+
+  width:100%;
+
+  height:100%;
+
+  object-fit:cover;
+
+}
+
+.coolbox{
+
+  background:
+    rgba(255,255,255,.035);
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+
+}
+
+.reel-window{
+
+  height:235px;
+
+  position:relative;
+
+  overflow:hidden;
+
+  border-radius:24px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.12);
+
+  background:#07080d;
 
   box-shadow:
-    0 0 10px white,
-    0 0 25px rgba(168,85,247,.8);
+    inset 0 0 70px #000;
+
 }
 
-.reel-window:after {
-  content: "";
+.reel-window:before{
 
-  position: absolute;
+  content:"";
 
-  z-index: 10;
+  position:absolute;
 
-  inset: 0;
+  z-index:8;
 
-  pointer-events: none;
+  top:0;
+
+  bottom:0;
+
+  left:50%;
+
+  width:3px;
+
+  transform:
+    translateX(-50%);
+
+  background:#fff;
+
+  box-shadow:
+    0 0 20px #fff;
+
+}
+
+.reel-window:after{
+
+  content:"";
+
+  position:absolute;
+
+  z-index:7;
+
+  inset:0;
+
+  pointer-events:none;
 
   background:
     linear-gradient(
       90deg,
-      #050508 0%,
-      transparent 12%,
-      transparent 88%,
-      #050508 100%
+      rgba(0,0,0,.9),
+      transparent 22%,
+      transparent 78%,
+      rgba(0,0,0,.9)
     );
+
 }
 
-.reel {
-  display: flex;
+.reel-track{
 
-  gap: 12px;
+  display:flex;
 
-  width: max-content;
+  gap:12px;
 
-  will-change: transform;
+  padding:22px;
+
+  position:absolute;
+
+  left:0;
+
+  top:0;
+
+  will-change:transform;
+
 }
 
-.reel-item {
-  position: relative;
+.reel-item{
 
-  flex: 0 0 128px;
+  width:150px;
 
-  height: 155px;
+  min-width:150px;
 
-  border-radius: 18px;
+  height:188px;
+
+  border-radius:20px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.12);
 
   background:
     linear-gradient(
-      145deg,
-      rgba(255,255,255,.055),
-      rgba(255,255,255,.015)
+      180deg,
+      #181922,
+      #090a0e
     );
 
-  border: 2px solid rgba(255,255,255,.08);
+  padding:12px;
 
-  display: flex;
+  display:flex;
 
-  flex-direction: column;
+  flex-direction:column;
 
-  align-items: center;
+  align-items:center;
 
-  justify-content: center;
+  justify-content:center;
 
-  text-align: center;
-
-  overflow: hidden;
 }
 
-.reel-item img {
-  width: 78px;
-  height: 78px;
+.reel-item img{
 
-  object-fit: contain;
+  width:115px;
 
-  filter: drop-shadow(
-    0 8px 12px rgba(0,0,0,.7)
-  );
+  height:105px;
+
+  object-fit:contain;
+
 }
 
-.reel-item.common {
-  border-color: #64748b;
+.reel-item b{
+
+  font-size:12px;
+
+  text-align:center;
+
+  margin-top:7px;
+
 }
 
-.reel-item.uncommon {
-  border-color: #22c55e;
+.reel-item small{
+
+  font-size:10px;
+
+  margin-top:4px;
+
 }
 
-.reel-item.rare {
-  border-color: #38bdf8;
+.pointer{
+
+  position:absolute;
+
+  z-index:10;
+
+  left:50%;
+
+  top:0;
+
+  transform:
+    translateX(-50%);
+
+  width:0;
+
+  height:0;
+
+  border-left:
+    11px solid transparent;
+
+  border-right:
+    11px solid transparent;
+
+  border-top:
+    18px solid #fff;
+
+  filter:
+    drop-shadow(
+      0 0 8px #fff
+    );
+
 }
 
-.reel-item.epic {
-  border-color: #a855f7;
-}
+.drop-card{
 
-.reel-item.legendary {
-  border-color: #f59e0b;
-
-  box-shadow:
-    0 0 20px rgba(245,158,11,.12);
-}
-
-.reel-item.mythic {
-  border-color: #ef4444;
-
-  box-shadow:
-    0 0 25px rgba(239,68,68,.18);
-}
-
-.drop-pop {
   animation:
-    dropPop .65s
-    cubic-bezier(.2,.9,.25,1.3);
+    drop .65s
+    cubic-bezier(.2,.9,.25,1);
+
 }
 
-@keyframes dropPop {
+@keyframes drop{
 
-  0% {
-    transform: scale(.55) rotate(-8deg);
-    opacity: 0;
+  from{
+
+    opacity:0;
+
+    transform:
+      scale(.55)
+      translateY(20px);
+
   }
 
-  70% {
-    transform: scale(1.08) rotate(2deg);
+  to{
+
+    opacity:1;
+
+    transform:
+      scale(1)
+      translateY(0);
+
   }
 
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
 }
 
-.modal-bg {
-  background: rgba(0,0,0,.82);
+.modal{
 
-  backdrop-filter: blur(10px);
-}
+  background:
+    rgba(0,0,0,.86);
 
-.timer-ready {
-  color: #34d399;
-}
+  backdrop-filter:
+    blur(10px);
 
-.timer-wait {
-  color: #f59e0b;
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #27272a;
-  border-radius: 20px;
 }
 
 </style>
+
 </head>
 
 
-<body class="antialiased">
+<body class="grid-bg">
 
 
-<header class="fixed top-0 left-0 right-0 z-50">
+<!-- HEADER -->
 
-<div class="glass border-b border-white/10">
+<header
+  class="
+    fixed
+    top-0
+    left-0
+    right-0
+    z-40
+    glass
+    border-b
+    border-white/10
+  "
+>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div
+  class="
+    max-w-7xl
+    mx-auto
+    px-4
+    h-20
+    flex
+    items-center
+    justify-between
+  "
+>
 
-<div class="h-20 flex items-center justify-between">
+<a
+  href="index.html"
+  class="font-black text-xl tracking-tight"
+>
 
-<a href="#" class="flex items-center gap-3">
-
-<div class="
-w-11 h-11
-rounded-2xl
-bg-gradient-to-br
-from-fuchsia-500
-to-violet-700
-flex items-center justify-center
-font-black text-xl
-shadow-neon
-">
-C
-</div>
-
-<div>
-<div class="font-black text-xl">
 CHAK338
-</div>
 
-<div class="
-text-[10px]
-uppercase
-tracking-[.22em]
-text-zinc-500
-">
-Gaming Hub
-</div>
-</div>
+<span
+  class="
+    text-fuchsia-400
+    text-xs
+    tracking-[.3em]
+  "
+>
+
+GAMING HUB
+
+</span>
 
 </a>
 
 
-<nav class="
-hidden lg:flex
-items-center
-gap-7
-text-sm
-font-bold
-text-zinc-400
-">
+<nav
+  class="
+    hidden
+    md:flex
+    gap-6
+    text-sm
+    font-bold
+    text-zinc-400
+  "
+>
 
-<a href="#cases" class="hover:text-white">
-Кейсы
+<a href="#cases">
+  Кейсы
 </a>
 
-<a href="#news" class="hover:text-white">
-Новости
+<a href="#news">
+  Новости
 </a>
 
-<a href="#giveaways" class="hover:text-white">
-Розыгрыши
+<a href="#giveaways">
+  Розыгрыши
 </a>
 
-<a href="#shop" class="hover:text-white">
-Мерч
+<a href="inventory.html">
+  Инвентарь
 </a>
 
-<a
-href="inventory.html"
-class="
-px-3 py-2
-rounded-xl
-bg-fuchsia-500/10
-border border-fuchsia-500/20
-text-fuchsia-300
-">
-Инвентарь
-</a>
-
-<a
-href="upgrade.html"
-class="
-px-3 py-2
-rounded-xl
-bg-white/5
-border border-white/10
-">
-Апгрейдер
+<a href="upgrade.html">
+  Апгрейдер
 </a>
 
 </nav>
 
 
-<div class="flex items-center gap-3">
+<div class="text-right">
 
-<div class="hidden sm:block text-right">
+<div
+  class="
+    text-[10px]
+    text-zinc-500
+  "
+>
 
-<div class="text-[10px] text-zinc-500">
-ТВОЙ УРОВЕНЬ
+LVL
+
+<span id="level">
+1
+</span>
+
 </div>
 
-<div class="font-black">
-LVL <span id="level">1</span>
-·
-<span id="xp">0</span> XP
-</div>
+<div class="text-sm font-black">
 
-</div>
+<span id="xp">
+0
+</span>
 
-
-<a
-href="inventory.html"
-class="
-px-4 py-3
-rounded-xl
-bg-fuchsia-500
-text-white
-text-sm
-font-black
-">
-ИНВЕНТАРЬ
-</a>
+XP
 
 </div>
 
 </div>
-</div>
+
 </div>
 
 </header>
 
 
-<main class="pt-20">
+
+<main
+  class="
+    pt-28
+    pb-20
+    max-w-7xl
+    mx-auto
+    px-4
+  "
+>
 
 
 <!-- HERO -->
 
-<section class="relative overflow-hidden">
+<section
+  class="
+    py-10
+    md:py-16
+  "
+>
 
-<div class="
-absolute
--top-40
-left-1/2
--translate-x-1/2
-w-[700px]
-h-[500px]
-bg-fuchsia-600/15
-blur-[120px]
-rounded-full
-"></div>
+<div
+  class="
+    max-w-3xl
+  "
+>
 
+<div
+  class="
+    text-xs
+    uppercase
+    tracking-[.35em]
+    text-fuchsia-400
+    font-black
+  "
+>
 
-<div class="
-max-w-7xl
-mx-auto
-px-4 sm:px-6 lg:px-8
-pt-20 pb-16
-">
-
-<div class="
-grid
-lg:grid-cols-2
-gap-12
-items-center
-">
-
-
-<div>
-
-<div class="
-inline-flex
-items-center
-gap-2
-px-4 py-2
-rounded-full
-bg-white/5
-border border-white/10
-text-xs
-font-black
-uppercase
-tracking-widest
-text-fuchsia-300
-">
-
-<span
-class="
-w-2 h-2
-bg-emerald-400
-rounded-full
-animate-pulse
-">
-</span>
-
-CHAK338 ONLINE
+CHAK338 GAMING HUB
 
 </div>
 
 
-<h1 class="
-mt-7
-text-5xl
-sm:text-7xl
-font-black
-leading-[.9]
-tracking-tight
-">
+<h1
+  class="
+    mt-4
+    text-5xl
+    md:text-7xl
+    font-black
+    leading-[.9]
+  "
+>
 
-ИГРАЙ.<br>
-ОТКРЫВАЙ.<br>
+ВЫБЕРИ
+
+<br>
 
 <span class="text-fuchsia-400">
-ПРОКАЧИВАЙСЯ.
+
+СВОЙ ДРОП
+
 </span>
 
 </h1>
 
 
-<p class="
-mt-7
-max-w-xl
-text-zinc-400
-text-lg
-leading-relaxed
-">
+<p
+  class="
+    mt-6
+    text-zinc-400
+    text-lg
+  "
+>
 
-Кейсы, уникальные персонажи,
-экипировка, Dota 2, розыгрыши
-и мерч от CHAK338.
+Открывай кейсы,
+собирай коллекцию
+и апгрейдь лучшие предметы.
 
 </p>
 
-
-<div class="mt-8 flex flex-wrap gap-3">
-
-<a
-href="#cases"
-class="
-px-7 py-4
-rounded-2xl
-bg-fuchsia-500
-hover:bg-fuchsia-400
-font-black
-shadow-neon
-">
-
-ОТКРЫТЬ КЕЙС
-
-</a>
-
-
-<a
-href="upgrade.html"
-class="
-px-7 py-4
-rounded-2xl
-bg-white/5
-border border-white/10
-font-black
-hover:bg-white/10
-">
-
-АПГРЕЙДЕР
-
-</a>
-
 </div>
 
+</section>
 
-<div class="
-mt-10
-grid
-grid-cols-3
-max-w-lg
-gap-5
-">
+
+
+<!-- CASES -->
+
+<section id="cases">
+
+<div
+  class="
+    flex
+    items-end
+    justify-between
+    gap-4
+    mb-6
+  "
+>
 
 <div>
-<div class="text-2xl font-black">
-3
-</div>
 
-<div class="text-xs text-zinc-500 mt-1">
-кейса
-</div>
-</div>
+<div
+  class="
+    text-xs
+    text-zinc-600
+    uppercase
+    tracking-[.25em]
+    font-black
+  "
+>
 
-
-<div>
-<div class="text-2xl font-black">
-18
-</div>
-
-<div class="text-xs text-zinc-500 mt-1">
-предметов
-</div>
-</div>
-
-
-<div>
-<div class="text-2xl font-black">
-100
-</div>
-
-<div class="text-xs text-zinc-500 mt-1">
-уровней
-</div>
-</div>
+DROP COLLECTION
 
 </div>
 
-</div>
+<h2
+  class="
+    text-3xl
+    font-black
+    mt-2
+  "
+>
 
+Три кейса. Три игры.
 
-<!-- FEATURED -->
-
-<div class="relative">
-
-<div class="
-absolute
-inset-8
-rounded-[40px]
-bg-fuchsia-500/10
-blur-3xl
-"></div>
-
-
-<div class="
-relative
-rounded-[36px]
-border border-white/10
-bg-zinc-950/90
-p-6
-shadow-neon
-">
-
-<div class="
-flex
-items-center
-justify-between
-mb-5
-">
-
-<span class="
-text-xs
-font-black
-uppercase
-tracking-widest
-text-zinc-500
-">
-FEATURED DROP
-</span>
-
-<span class="
-px-3 py-1
-rounded-full
-bg-red-500/10
-text-red-300
-text-xs
-font-black
-">
-MYTHIC · 3%
-</span>
+</h2>
 
 </div>
 
 
 <div
-class="
-case-art
-h-80
-rounded-[28px]
-flex
-items-center
-justify-center
-bg-gradient-to-br
-from-fuchsia-950
-to-zinc-950
-">
+  class="
+    text-xs
+    text-zinc-600
+  "
+>
 
-<img
-src="assets/cases/lviv.png"
-class="case-image"
-/>
+Шансы скрыты — решает удача.
+
+</div>
 
 </div>
 
 
-<div class="
-mt-5
-flex
-items-end
-justify-between
-gap-4
-">
+<div
+  id="casesGrid"
+  class="
+    grid
+    lg:grid-cols-3
+    gap-5
+  "
+></div>
+
+</section>
+
+
+
+<!-- NEWS -->
+
+<section
+  id="news"
+  class="
+    mt-16
+    grid
+    lg:grid-cols-3
+    gap-5
+  "
+>
+
+<div
+  class="
+    lg:col-span-2
+    rounded-3xl
+    border
+    border-white/10
+    bg-zinc-950
+    p-7
+  "
+>
+
+<div
+  class="
+    text-xs
+    uppercase
+    tracking-[.25em]
+    text-fuchsia-400
+    font-black
+  "
+>
+
+НОВОСТИ
+
+</div>
+
+
+<h2
+  class="
+    text-3xl
+    font-black
+    mt-2
+  "
+>
+
+CHAK338 HUB развивается
+
+</h2>
+
+
+<p
+  class="
+    text-zinc-500
+    mt-3
+  "
+>
+
+Добавлены Clash of Clans,
+CS2 и Dota 2.
+Теперь вся коллекция
+работает через общий инвентарь
+и апгрейдер.
+
+</p>
+
+</div>
+
+
+
+<div
+  id="giveaways"
+  class="
+    rounded-3xl
+    border
+    border-white/10
+    bg-zinc-950
+    p-7
+  "
+>
+
+<div
+  class="
+    text-xs
+    uppercase
+    tracking-[.25em]
+    text-amber-400
+    font-black
+  "
+>
+
+РОЗЫГРЫШИ
+
+</div>
+
+
+<h2
+  class="
+    text-2xl
+    font-black
+    mt-2
+  "
+>
+
+Скоро
+
+</h2>
+
+
+<p
+  class="
+    text-zinc-500
+    mt-3
+  "
+>
+
+Крупные дропы
+и бонусы для активных игроков.
+
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+
+
+<!-- CASE MODAL -->
+
+<div
+  id="modal"
+  class="
+    hidden
+    fixed
+    inset-0
+    z-50
+    modal
+    p-4
+    overflow-y-auto
+  "
+>
+
+<div
+  class="
+    min-h-full
+    flex
+    items-center
+    justify-center
+  "
+>
+
+<div
+  class="
+    w-full
+    max-w-5xl
+    rounded-[30px]
+    border
+    border-white/10
+    bg-[#090a0f]
+    shadow-2xl
+    overflow-hidden
+  "
+>
+
+
+<!-- MODAL HEADER -->
+
+<div
+  class="
+    p-5
+    md:p-7
+    border-b
+    border-white/10
+    flex
+    items-center
+    justify-between
+  "
+>
 
 <div>
 
-<div class="text-sm text-zinc-500">
-CASE #001
-</div>
+<div
+  id="modalCaseName"
+  class="
+    text-2xl
+    font-black
+  "
+></div>
 
-<div class="text-2xl font-black">
-LVIV
-</div>
 
-<div class="text-xs text-zinc-500 mt-1">
-Персонажи
-</div>
+<div
+  id="modalStatus"
+  class="
+    text-sm
+    text-zinc-500
+    mt-1
+  "
+></div>
 
 </div>
 
 
 <button
-onclick="openCase('lviv')"
-class="
-px-5 py-3
-rounded-xl
-bg-white
-text-black
-font-black
-">
+  onclick="closeModal()"
+  class="
+    w-10
+    h-10
+    rounded-xl
+    bg-white/5
+    text-zinc-400
+  "
+>
 
-ОТКРЫТЬ
+✕
 
 </button>
 
 </div>
 
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
 
 
-<!-- CASES -->
-
-<section
-id="cases"
-class="
-py-20
-border-t
-border-white/5
-">
-
-<div class="
-max-w-7xl
-mx-auto
-px-4 sm:px-6 lg:px-8
-">
+<div class="p-5 md:p-7">
 
 
-<div class="max-w-2xl mb-10">
+<!-- PREVIEW -->
 
-<div class="
-text-xs
-font-black
-uppercase
-tracking-[.25em]
-text-fuchsia-400
-">
-THE CASES
-</div>
-
-<h2 class="
-mt-3
-text-4xl
-sm:text-5xl
-font-black
-">
-Выбери свой дроп.
-</h2>
-
-<p class="
-mt-4
-text-zinc-400
-">
-Три направления коллекции.
-Каждый кейс имеет собственный cooldown.
-</p>
-
-</div>
-
+<div id="preview">
 
 <div
-id="caseGrid"
-class="
-grid
-lg:grid-cols-3
-gap-6
-">
-</div>
-
-
-</div>
-
-</section>
-
-
-<!-- LEVEL -->
-
-<section
-class="
-py-20
-bg-white/[.02]
-border-y
-border-white/5
-">
-
-<div class="
-max-w-7xl
-mx-auto
-px-4 sm:px-6 lg:px-8
-grid
-lg:grid-cols-2
-gap-12
-items-center
-">
+  class="
+    grid
+    lg:grid-cols-[.8fr_1.2fr]
+    gap-6
+  "
+>
 
 
 <div>
 
-<div class="
-text-xs
-font-black
-uppercase
-tracking-[.25em]
-text-emerald-400
-">
-LEVEL SYSTEM
-</div>
+<img
+  id="modalCaseImage"
+  class="
+    w-full
+    h-64
+    object-cover
+    rounded-3xl
+    border
+    border-white/10
+  "
+  alt="Кейс"
+>
 
-
-<h2 class="
-mt-3
-text-4xl
-sm:text-5xl
-font-black
-">
-
-Прокачивай уровень.<br>
-Открывай награды.
-
-</h2>
-
-
-<p class="
-mt-5
-text-zinc-400
-leading-relaxed
-">
-
-За открытия кейсов ты получаешь XP.
-Чем больше играешь — тем выше уровень.
-
-</p>
-
-
-<div class="mt-7 max-w-xl">
-
-<div class="
-flex
-justify-between
-text-xs
-font-bold
-mb-2
-">
-
-<span>
-LVL <span id="level2">1</span>
-</span>
-
-<span>
-<span id="xp2">0</span>
-/
-1000 XP
-</span>
-
-</div>
-
-
-<div class="
-h-3
-rounded-full
-bg-zinc-900
-overflow-hidden
-">
 
 <div
-id="xpbar"
-class="
-h-full
-bg-fuchsia-500
-rounded-full
-transition-all
-"
-style="width:0%"
+  id="cooldownModal"
+  class="
+    coolbox
+    rounded-2xl
+    p-4
+    mt-4
+  "
+></div>
+
+
+<button
+  id="openButton"
+  onclick="startOpen()"
+  class="
+    w-full
+    mt-4
+    py-4
+    rounded-2xl
+    font-black
+    text-black
+  "
+>
+
+ОТКРЫТЬ КЕЙС
+
+</button>
+
+</div>
+
+
+
+<div>
+
+<div
+  class="
+    text-xs
+    uppercase
+    tracking-[.25em]
+    text-zinc-600
+    font-black
+  "
+>
+
+СОДЕРЖИМОЕ
+
+</div>
+
+
+<div
+  id="contents"
+  class="
+    mt-4
+    grid
+    grid-cols-2
+    sm:grid-cols-3
+    gap-3
+    max-h-[480px]
+    overflow-y-auto
+    pr-1
+  "
 ></div>
 
 </div>
@@ -914,1782 +946,1303 @@ style="width:0%"
 </div>
 
 
-<div class="
-grid
-sm:grid-cols-2
-gap-4
-">
 
-<div class="
-rounded-3xl
-border border-white/10
-bg-zinc-950
-p-6
-">
+<!-- OPENING -->
 
-<div class="text-3xl">
-🎁
+<div
+  id="opening"
+  class="hidden"
+>
+
+<div class="text-center">
+
+<div
+  class="
+    text-xs
+    uppercase
+    tracking-[.25em]
+    text-fuchsia-400
+    font-black
+  "
+>
+
+ОТКРЫВАЕМ...
+
 </div>
 
-<h3 class="mt-5 font-black text-xl">
-Награды
+
+<h3
+  class="
+    text-3xl
+    font-black
+    mt-2
+  "
+>
+
+Прокрутка предметов
+
 </h3>
 
-<p class="mt-2 text-sm text-zinc-500">
-Новые предметы за активность.
+
+<p
+  class="
+    text-zinc-500
+    mt-2
+  "
+>
+
+Следи за центральной линией —
+на ней остановится дроп.
+
 </p>
 
 </div>
 
 
-<div class="
-rounded-3xl
-border border-white/10
-bg-zinc-950
-p-6
-">
 
-<div class="text-3xl">
-🏆
-</div>
+<div class="mt-6">
 
-<h3 class="mt-5 font-black text-xl">
-Рейтинг
-</h3>
+<div class="reel-window">
 
-<p class="mt-2 text-sm text-zinc-500">
-Стань легендой CHAK338.
-</p>
-
-</div>
-
-
-<div class="
-rounded-3xl
-border border-white/10
-bg-zinc-950
-p-6
-">
-
-<div class="text-3xl">
-⚡
-</div>
-
-<h3 class="mt-5 font-black text-xl">
-Апгрейдер
-</h3>
-
-<p class="mt-2 text-sm text-zinc-500">
-Рискуй предметами ради лучших.
-</p>
-
-</div>
-
-
-<div class="
-rounded-3xl
-border border-white/10
-bg-zinc-950
-p-6
-">
-
-<div class="text-3xl">
-👑
-</div>
-
-<h3 class="mt-5 font-black text-xl">
-Эксклюзив
-</h3>
-
-<p class="mt-2 text-sm text-zinc-500">
-Редкие предметы CHAK338.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- NEWS -->
-
-<section id="news" class="py-20">
-
-<div class="
-max-w-7xl
-mx-auto
-px-4 sm:px-6 lg:px-8
-">
-
-<div class="mb-10">
-
-<div class="
-text-xs
-font-black
-uppercase
-tracking-[.25em]
-text-zinc-500
-">
-LATEST
-</div>
-
-<h2 class="
-mt-3
-text-4xl
-font-black
-">
-Новости
-</h2>
-
-</div>
-
-
-<div class="
-grid
-md:grid-cols-3
-gap-5
-">
-
-<div class="
-rounded-3xl
-border border-white/10
-bg-zinc-950
-p-6
-">
-
-<div class="text-4xl">
-🔥
-</div>
-
-<div class="
-mt-7
-text-xs
-text-fuchsia-400
-font-black
-">
-UPDATE #001
-</div>
-
-<h3 class="mt-2 text-xl font-black">
-CHAK338 Gaming Hub
-</h3>
-
-<p class="mt-2 text-sm text-zinc-500">
-Игровой портал запущен.
-</p>
-
-</div>
-
-
-<div class="
-rounded-3xl
-border border-white/10
-bg-zinc-950
-p-6
-">
-
-<div class="text-4xl">
-🎁
-</div>
-
-<div class="
-mt-7
-text-xs
-text-cyan-400
-font-black
-">
-GIVEAWAY
-</div>
-
-<h3 class="mt-2 text-xl font-black">
-Розыгрыш мерча
-</h3>
-
-<p class="mt-2 text-sm text-zinc-500">
-Следи за новостями.
-</p>
-
-</div>
-
-
-<div class="
-rounded-3xl
-border border-white/10
-bg-zinc-950
-p-6
-">
-
-<div class="text-4xl">
-⚔️
-</div>
-
-<div class="
-mt-7
-text-xs
-text-red-400
-font-black
-">
-COMING SOON
-</div>
-
-<h3 class="mt-2 text-xl font-black">
-CHAK Damage System
-</h3>
-
-<p class="mt-2 text-sm text-zinc-500">
-Новые игровые механики.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- GIVEAWAY -->
-
-<section
-id="giveaways"
-class="
-py-20
-bg-gradient-to-br
-from-fuchsia-950/30
-via-zinc-950
-to-red-950/20
-border-y
-border-white/5
-">
-
-<div class="
-max-w-5xl
-mx-auto
-px-4
-text-center
-">
-
-<div class="text-5xl">
-🎁
-</div>
-
-<h2 class="
-mt-5
-text-4xl
-sm:text-6xl
-font-black
-">
-
-РОЗЫГРЫШИ<br>
-
-<span class="text-fuchsia-400">
-CHAK338
-</span>
-
-</h2>
-
-<p class="
-mt-5
-text-zinc-400
-max-w-2xl
-mx-auto
-">
-
-Эксклюзивные персонажи,
-предметы и настоящий мерч
-от стримера.
-
-</p>
-
-<button
-onclick="showMessage('Раздел розыгрышей скоро откроется!')"
-class="
-mt-8
-px-8 py-4
-rounded-2xl
-bg-white
-text-black
-font-black
-">
-
-УЗНАТЬ БОЛЬШЕ
-
-</button>
-
-</div>
-
-</section>
-
-
-<!-- SHOP -->
-
-<section id="shop" class="py-20">
-
-<div class="
-max-w-7xl
-mx-auto
-px-4 sm:px-6 lg:px-8
-">
-
-<div class="max-w-2xl mb-10">
-
-<div class="
-text-xs
-font-black
-uppercase
-tracking-[.25em]
-text-zinc-500
-">
-CHAK338 SHOP
-</div>
-
-<h2 class="
-mt-3
-text-4xl
-sm:text-5xl
-font-black
-">
-Мерч стримера.
-</h2>
-
-<p class="
-mt-4
-text-zinc-400
-">
-Физические вещи из мира CHAK338.
-</p>
-
-</div>
-
-
-<div class="
-grid
-sm:grid-cols-3
-gap-5
-">
-
-
-<div class="
-rounded-3xl
-border border-white/10
-bg-zinc-950
-overflow-hidden
-">
-
-<div class="
-h-56
-flex
-items-center
-justify-center
-bg-zinc-900
-text-8xl
-">
-👕
-</div>
-
-<div class="p-5">
-
-<h3 class="font-black text-xl">
-CHAK338 T-Shirt
-</h3>
-
-<div class="mt-2 text-zinc-500">
-1 490 ₴
-</div>
-
-<button
-onclick="showMessage('Магазин скоро откроется.')"
-class="
-w-full
-mt-5
-py-3
-rounded-xl
-bg-white
-text-black
-font-black
-">
-В МАГАЗИН
-</button>
-
-</div>
-</div>
-
-
-<div class="
-rounded-3xl
-border border-white/10
-bg-zinc-950
-overflow-hidden
-">
-
-<div class="
-h-56
-flex
-items-center
-justify-center
-bg-zinc-900
-text-8xl
-">
-🧥
-</div>
-
-<div class="p-5">
-
-<h3 class="font-black text-xl">
-CHAK338 Hoodie
-</h3>
-
-<div class="mt-2 text-zinc-500">
-2 990 ₴
-</div>
-
-<button
-onclick="showMessage('Магазин скоро откроется.')"
-class="
-w-full
-mt-5
-py-3
-rounded-xl
-bg-white
-text-black
-font-black
-">
-В МАГАЗИН
-</button>
-
-</div>
-</div>
-
-
-<div class="
-rounded-3xl
-border border-white/10
-bg-zinc-950
-overflow-hidden
-">
-
-<div class="
-h-56
-flex
-items-center
-justify-center
-bg-zinc-900
-text-8xl
-">
-🧢
-</div>
-
-<div class="p-5">
-
-<h3 class="font-black text-xl">
-CHAK338 Cap
-</h3>
-
-<div class="mt-2 text-zinc-500">
-990 ₴
-</div>
-
-<button
-onclick="showMessage('Магазин скоро откроется.')"
-class="
-w-full
-mt-5
-py-3
-rounded-xl
-bg-white
-text-black
-font-black
-">
-В МАГАЗИН
-</button>
-
-</div>
-</div>
-
-
-</div>
-</div>
-
-</section>
-
-</main>
-
-
-<footer class="
-border-t
-border-white/10
-bg-black
-">
-
-<div class="
-max-w-7xl
-mx-auto
-px-4 sm:px-6 lg:px-8
-py-10
-flex
-flex-col
-md:flex-row
-justify-between
-gap-5
-">
-
-<div>
-
-<div class="font-black text-xl">
-CHAK338
-</div>
-
-<p class="mt-2 text-sm text-zinc-600">
-Gaming Hub · Cases · Drops · Merch
-</p>
-
-</div>
-
-<div class="text-sm text-zinc-600">
-© 2026 CHAK338
-</div>
-
-</div>
-
-</footer>
-
-
-<!-- CASE MODAL -->
+<div class="pointer"></div>
 
 <div
-id="caseModal"
-class="
-hidden
-fixed
-inset-0
-z-[100]
-modal-bg
-items-center
-justify-center
-p-4
-">
-
-<div
-class="
-w-full
-max-w-6xl
-rounded-[32px]
-border border-white/10
-bg-zinc-950
-shadow-2xl
-overflow-hidden
-">
-
-<div class="
-p-5 sm:p-7
-flex
-justify-between
-items-start
-border-b
-border-white/10
-">
-
-<div>
-
-<div
-id="modalType"
-class="
-text-xs
-uppercase
-tracking-widest
-font-black
-text-fuchsia-400
-">
-CASE
-</div>
-
-<h2
-id="modalTitle"
-class="
-mt-1
-text-3xl
-font-black
-">
-LVIV
-</h2>
-
-<div
-id="modalCooldown"
-class="
-mt-2
-text-xs
-font-bold
-text-emerald-400
-">
-ГОТОВ
-</div>
+  id="reelTrack"
+  class="reel-track"
+></div>
 
 </div>
-
-
-<button
-onclick="closeCase()"
-class="
-w-10 h-10
-rounded-xl
-bg-white/5
-hover:bg-white/10
-">
-✕
-</button>
-
-</div>
-
-
-<div class="p-5 sm:p-7">
-
-
-<div class="
-mb-4
-flex
-items-center
-justify-between
-">
-
-<div class="
-text-xs
-font-black
-uppercase
-tracking-widest
-text-zinc-500
-">
-CASE CONTENTS
-</div>
-
-<div
-id="modalXP"
-class="
-text-xs
-font-black
-text-fuchsia-400
-">
-+100 XP
-</div>
-
-</div>
-
-
-<!-- ROULETTE -->
-
-<div class="reel-window p-4">
-
-<div
-id="reel"
-class="reel">
-</div>
-
-</div>
-
-
-<div class="
-mt-4
-text-center
-text-xs
-text-zinc-600
-">
-
-▲
-
-<span class="mx-2">
-ЦЕНТРАЛЬНЫЙ УКАЗАТЕЛЬ
-</span>
-
-▲
-
-</div>
-
-
-<!-- DROP RESULT -->
-
-<div
-id="dropResult"
-class="
-hidden
-mt-6
-rounded-3xl
-border border-fuchsia-500/30
-bg-fuchsia-500/5
-p-6
-text-center
-">
-
-<div class="
-text-xs
-font-black
-uppercase
-tracking-widest
-text-fuchsia-300
-">
-YOU GOT
-</div>
-
-
-<img
-id="dropImage"
-class="
-mx-auto
-mt-4
-w-32
-h-32
-object-contain
-drop-pop
-"
-/>
-
-
-<div
-id="dropName"
-class="
-text-3xl
-font-black
-mt-2
-">
-Shadow
-</div>
-
-
-<div
-id="dropRarity"
-class="
-mt-2
-text-sm
-font-bold
-">
-EPIC
-</div>
-
-
-<div
-id="dropPrice"
-class="
-mt-2
-text-zinc-400
-font-black
-">
-75 ₴
-</div>
-
-
-<div
-id="dropStat"
-class="
-mt-2
-text-zinc-500
-">
-Предмет добавлен в инвентарь
-</div>
-
-
-<a
-href="inventory.html"
-class="
-inline-block
-mt-4
-px-5 py-3
-rounded-xl
-bg-white
-text-black
-font-black
-">
-
-ОТКРЫТЬ ИНВЕНТАРЬ
-
-</a>
-
-</div>
-
-
-<div class="
-mt-6
-flex
-flex-col
-sm:flex-row
-gap-3
-">
-
-<button
-id="spinBtn"
-onclick="spinCase()"
-class="
-flex-1
-py-4
-rounded-2xl
-bg-fuchsia-500
-hover:bg-fuchsia-400
-font-black
-">
-
-ОТКРЫТЬ КЕЙС
-
-</button>
-
-
-<button
-onclick="closeCase()"
-class="
-px-6
-py-4
-rounded-2xl
-bg-white/5
-border border-white/10
-font-black
-">
-
-ЗАКРЫТЬ
-
-</button>
 
 </div>
 
 
 <div
-id="rarityList"
-class="
-mt-7
-grid
-grid-cols-2
-sm:grid-cols-6
-gap-2
-text-[11px]
-font-bold
-">
-</div>
+  id="dropResult"
+  class="
+    hidden
+    mt-6
+    text-center
+  "
+></div>
 
-
-</div>
 </div>
 
 </div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<script src="data.js"></script>
 
 
 <script>
 
-/* =========================================================
-   CASE UI
-   ========================================================= */
+let currentCase = null;
 
-let activeCase = "lviv";
-let spinning = false;
-let lastWinner = null;
+let busy = false;
 
+let reelTimer = null;
 
-/* =========================================================
-   RENDER CASE CARDS
-   ========================================================= */
-
-function renderCases() {
-
-  const grid =
-    document.getElementById("caseGrid");
-
-  grid.innerHTML = "";
-
-  Object.values(CASES).forEach(c => {
-
-    const ready = isCaseReady(c.id);
-
-    const remaining =
-      getRemainingCooldown(c.id);
-
-    const border =
-      c.id === "lviv"
-        ? "border-cyan-500/30 shadow-cyan"
-        : c.id === "kiyiv"
-          ? "border-fuchsia-500/30"
-          : "border-red-500/30";
+let audioCtx = null;
 
 
-    const buttonColor =
-      c.id === "lviv"
-        ? "bg-cyan-400 text-black hover:bg-cyan-300"
-        : c.id === "kiyiv"
-          ? "bg-fuchsia-500 hover:bg-fuchsia-400"
-          : "bg-red-500 hover:bg-red-400";
+/* =========================================
+   ЗВУК
+========================================= */
+
+function sound(type){
+
+  try{
+
+    audioCtx =
+      audioCtx ||
+      new (
+        window.AudioContext ||
+        window.webkitAudioContext
+      )();
+
+    if(
+      audioCtx.state === 'suspended'
+    ){
+
+      audioCtx.resume();
+
+    }
 
 
-    const timerClass =
-      ready
-        ? "timer-ready"
-        : "timer-wait";
+    const oscillator =
+      audioCtx.createOscillator();
+
+    const gain =
+      audioCtx.createGain();
+
+    oscillator.connect(gain);
+
+    gain.connect(
+      audioCtx.destination
+    );
 
 
-    grid.innerHTML += `
+    const now =
+      audioCtx.currentTime;
 
-      <article
-        class="
-        case-card
-        rounded-[30px]
-        border
-        ${border}
-        bg-zinc-950
-        overflow-hidden
-        "
+
+    if(type === 'tick'){
+
+      oscillator.type =
+        'square';
+
+      oscillator.frequency.setValueAtTime(
+        120 +
+        Math.random() * 80,
+        now
+      );
+
+      gain.gain.setValueAtTime(
+        .045,
+        now
+      );
+
+      gain.gain.exponentialRampToValueAtTime(
+        .001,
+        now + .055
+      );
+
+      oscillator.start(now);
+
+      oscillator.stop(
+        now + .06
+      );
+
+    }
+
+
+    else if(type === 'win'){
+
+      oscillator.type =
+        'sine';
+
+      oscillator.frequency.setValueAtTime(
+        420,
+        now
+      );
+
+      oscillator.frequency.exponentialRampToValueAtTime(
+        980,
+        now + .35
+      );
+
+      gain.gain.setValueAtTime(
+        .001,
+        now
+      );
+
+      gain.gain.exponentialRampToValueAtTime(
+        .22,
+        now + .03
+      );
+
+      gain.gain.exponentialRampToValueAtTime(
+        .001,
+        now + .8
+      );
+
+      oscillator.start(now);
+
+      oscillator.stop(
+        now + .82
+      );
+
+      setTimeout(
+        () => sound('chime'),
+        160
+      );
+
+    }
+
+
+    else{
+
+      oscillator.type =
+        'triangle';
+
+      oscillator.frequency.setValueAtTime(
+        180,
+        now
+      );
+
+      oscillator.frequency.exponentialRampToValueAtTime(
+        90,
+        now + .45
+      );
+
+      gain.gain.setValueAtTime(
+        .12,
+        now
+      );
+
+      gain.gain.exponentialRampToValueAtTime(
+        .001,
+        now + .5
+      );
+
+      oscillator.start(now);
+
+      oscillator.stop(
+        now + .52
+      );
+
+    }
+
+  }catch(e){}
+
+}
+
+
+function chime(){
+
+  try{
+
+    const oscillator =
+      audioCtx.createOscillator();
+
+    const gain =
+      audioCtx.createGain();
+
+    const now =
+      audioCtx.currentTime;
+
+    oscillator.connect(gain);
+
+    gain.connect(
+      audioCtx.destination
+    );
+
+    oscillator.frequency.value =
+      1320;
+
+    gain.gain.setValueAtTime(
+      .001,
+      now
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      .14,
+      now + .02
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      .001,
+      now + .3
+    );
+
+    oscillator.start(now);
+
+    oscillator.stop(
+      now + .32
+    );
+
+  }catch(e){}
+
+}
+
+
+/* =========================================
+   TIME
+========================================= */
+
+function fmt(ms){
+
+  let seconds =
+    Math.max(
+      0,
+      Math.floor(ms / 1000)
+    );
+
+  let hours =
+    Math.floor(
+      seconds / 3600
+    );
+
+  seconds %= 3600;
+
+  let minutes =
+    Math.floor(
+      seconds / 60
+    );
+
+  seconds %= 60;
+
+  return [
+    hours,
+    minutes,
+    seconds
+  ]
+  .map(
+    value =>
+      String(value)
+        .padStart(2,'0')
+  )
+  .join(':');
+
+}
+
+
+function nextText(c){
+
+  const remaining =
+    getRemaining(c.id);
+
+
+  if(!remaining){
+
+    return `
+
+      <div class="flex justify-between">
+
+        <span class="text-zinc-500">
+          СЛЕДУЮЩЕЕ ОТКРЫТИЕ
+        </span>
+
+        <b class="text-emerald-400">
+          ГОТОВ
+        </b>
+
+      </div>
+
+      <div
+        class="h-1.5 mt-3 rounded-full bg-white/10"
       >
 
         <div
-          class="
-          case-art
-          h-64
-          flex
-          items-center
-          justify-center
-          bg-gradient-to-br
-          from-zinc-900
-          to-black
+          class="h-full rounded-full"
+          style="
+            width:100%;
+            background:${c.color}
           "
+        ></div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  const next =
+    getNextOpenTime(c.id);
+
+
+  return `
+
+    <div class="flex justify-between gap-3">
+
+      <span class="text-zinc-500">
+        ПРОКРУТКА ЧЕРЕЗ
+      </span>
+
+      <b
+        style="color:${c.color}"
+        data-countdown="${c.id}"
+      >
+
+        ${fmt(remaining)}
+
+      </b>
+
+    </div>
+
+    <div class="text-xs text-zinc-600 mt-2">
+
+      Следующее открытие:
+      ${next.toLocaleString('ru-RU')}
+
+    </div>
+
+    <div
+      class="
+        h-1.5
+        mt-3
+        rounded-full
+        bg-white/10
+      "
+    >
+
+      <div
+        class="h-full rounded-full"
+        style="
+          width:${Math.max(
+            2,
+            100 -
+            remaining /
+            (c.cooldownHours * 3600000) *
+            100
+          )}%;
+
+          background:${c.color}
+        "
+      ></div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================
+   CASE CARDS
+========================================= */
+
+function renderCases(){
+
+  document.getElementById(
+    'casesGrid'
+  ).innerHTML = CASES.map(
+    (c,index) => `
+
+    <article
+      class="
+        case-card
+        rounded-3xl
+        border
+        bg-zinc-950
+      "
+      style="
+        border-color:${c.color}55;
+        box-shadow:
+          0 0 35px ${c.color}10;
+      "
+    >
+
+      <div class="case-art">
+
+        <img
+          src="${c.image}"
+          alt="${c.name}"
         >
 
-          <img
-            src="${c.image}"
-            class="case-image"
-            alt="${c.name}"
-          >
+      </div>
+
+
+      <div class="p-5">
+
+        <div
+          class="
+            text-xs
+            font-black
+            tracking-[.2em]
+          "
+          style="color:${c.color}"
+        >
+
+          ${String(index + 1).padStart(2,'0')}
+          ·
+          ${c.subtitle}
 
         </div>
 
 
-        <div class="p-6">
+        <h3
+          class="
+            text-2xl
+            font-black
+            mt-2
+          "
+        >
+
+          ${c.name}
+
+        </h3>
+
+
+        <p
+          class="
+            text-sm
+            text-zinc-500
+            mt-2
+            min-h-[42px]
+          "
+        >
+
+          ${c.description}
+
+        </p>
+
+
+        <div
+          class="
+            flex
+            justify-between
+            text-xs
+            text-zinc-500
+            mt-4
+          "
+        >
+
+          <span>
+
+            ${getCaseItems(c.id).length}
+            предметов
+
+          </span>
+
+          <span>
+
+            +${c.xp} XP
+
+          </span>
+
+        </div>
+
+
+        <div
+          class="
+            coolbox
+            rounded-2xl
+            p-3
+            mt-4
+          "
+          data-cool="${c.id}"
+        >
+
+          ${nextText(c)}
+
+        </div>
+
+
+        <button
+          onclick="openModal('${c.id}')"
+          class="
+            w-full
+            mt-4
+            py-4
+            rounded-2xl
+            font-black
+            text-black
+          "
+          style="
+            background:${c.color}
+          "
+        >
+
+          ОТКРЫТЬ ${c.short}
+
+        </button>
+
+      </div>
+
+    </article>
+
+  `
+  ).join('');
+
+}
+
+
+/* =========================================
+   COUNTDOWN
+========================================= */
+
+function renderCountdowns(){
+
+  document
+    .querySelectorAll('[data-cool]')
+    .forEach(el => {
+
+      const c =
+        getCase(
+          el.dataset.cool
+        );
+
+      el.innerHTML =
+        nextText(c);
+
+    });
+
+
+  if(
+    currentCase &&
+    !busy
+  ){
+
+    document.getElementById(
+      'cooldownModal'
+    ).innerHTML =
+      nextText(currentCase);
+
+
+    const ready =
+      canOpenCase(
+        currentCase.id
+      );
+
+
+    document.getElementById(
+      'openButton'
+    ).disabled =
+      !ready;
+
+    document.getElementById(
+      'openButton'
+    ).style.opacity =
+      ready ? 1 : .35;
+
+    document.getElementById(
+      'openButton'
+    ).textContent =
+      ready
+        ? 'ОТКРЫТЬ КЕЙС'
+        : 'КЕЙС ЕЩЁ НА КУЛДАУНЕ';
+
+  }
+
+}
+
+
+/* =========================================
+   OPEN MODAL
+========================================= */
+
+function openModal(id){
+
+  currentCase =
+    getCase(id);
+
+  busy = false;
+
+
+  document
+    .getElementById('modal')
+    .classList
+    .remove('hidden');
+
+
+  document.getElementById(
+    'modalCaseName'
+  ).textContent =
+    currentCase.name;
+
+
+  document.getElementById(
+    'modalStatus'
+  ).textContent =
+    currentCase.description;
+
+
+  document.getElementById(
+    'modalCaseImage'
+  ).src =
+    currentCase.image;
+
+
+  document.getElementById(
+    'preview'
+  ).classList.remove(
+    'hidden'
+  );
+
+
+  document.getElementById(
+    'opening'
+  ).classList.add(
+    'hidden'
+  );
+
+
+  document.getElementById(
+    'dropResult'
+  ).classList.add(
+    'hidden'
+  );
+
+
+  document.getElementById(
+    'cooldownModal'
+  ).innerHTML =
+    nextText(currentCase);
+
+
+  const ready =
+    canOpenCase(id);
+
+
+  document.getElementById(
+    'openButton'
+  ).disabled =
+    !ready;
+
+
+  document.getElementById(
+    'openButton'
+  ).style.background =
+    currentCase.color;
+
+
+  document.getElementById(
+    'openButton'
+  ).style.opacity =
+    ready ? 1 : .35;
+
+
+  document.getElementById(
+    'openButton'
+  ).textContent =
+    ready
+      ? 'ОТКРЫТЬ КЕЙС'
+      : 'КЕЙС ЕЩЁ НА КУЛДАУНЕ';
+
+
+  document.getElementById(
+    'contents'
+  ).innerHTML =
+    getCaseItems(id)
+      .map(
+        (item,index) => `
+
+        <div
+          class="
+            rounded-2xl
+            border
+            border-white/10
+            bg-black/20
+            p-3
+          "
+        >
 
           <div
             class="
-            text-xs
-            font-black
-            uppercase
-            tracking-widest
+              h-24
+              flex
+              items-center
+              justify-center
             "
-            style="color:${c.color}"
           >
-            ${String(Object.keys(CASES).indexOf(c.id)+1).padStart(2,"0")}
-            ·
-            ${c.subtitle}
+
+            <img
+              src="${item.image}"
+              class="
+                w-full
+                h-full
+                object-contain
+              "
+              alt="${item.name}"
+            >
+
+          </div>
+
+
+          <div
+            class="
+              text-xs
+              text-zinc-600
+              mt-1
+            "
+          >
+
+            ${index + 1}
+
+          </div>
+
+
+          <div
+            class="
+              font-black
+              text-sm
+              mt-1
+            "
+          >
+
+            ${item.name}
+
+          </div>
+
+
+          <div
+            class="
+              text-xs
+              mt-1
+            "
+            style="
+              color:
+              ${RARITIES[item.rarity].color}
+            "
+          >
+
+            ${RARITIES[item.rarity].name}
+
+          </div>
+
+
+          <div
+            class="
+              text-xs
+              text-amber-400
+              mt-1
+            "
+          >
+
+            🪙 ${item.price}
+
+          </div>
+
+        </div>
+
+      `
+      )
+      .join('');
+
+}
+
+
+function closeModal(){
+
+  if(busy){
+    return;
+  }
+
+  document
+    .getElementById('modal')
+    .classList
+    .add('hidden');
+
+  currentCase = null;
+
+}
+
+
+/* =========================================
+   BUILD REEL
+========================================= */
+
+function buildReel(
+  caseId,
+  win
+){
+
+  const items =
+    getCaseItems(caseId);
+
+  const arr = [];
+
+
+  for(
+    let i = 0;
+    i < 34;
+    i++
+  ){
+
+    arr.push(
+      items[
+        Math.floor(
+          Math.random() *
+          items.length
+        )
+      ]
+    );
+
+  }
+
+
+  const stopIndex = 27;
+
+  arr[stopIndex] = win;
+
+
+  const track =
+    document.getElementById(
+      'reelTrack'
+    );
+
+
+  track.innerHTML =
+    arr.map(
+      (item,index) => `
+
+      <div
+        class="reel-item"
+        data-index="${index}"
+      >
+
+        <img
+          src="${item.image}"
+          alt=""
+        >
+
+        <b>
+          ${item.name}
+        </b>
+
+        <small
+          style="
+            color:
+            ${RARITIES[item.rarity].color}
+          "
+        >
+
+          ${RARITIES[item.rarity].name}
+
+        </small>
+
+        <small class="text-amber-400">
+
+          🪙 ${item.price}
+
+        </small>
+
+      </div>
+
+    `
+    ).join('');
+
+
+  return {
+    track,
+    stopIndex
+  };
+
+}
+
+
+/* =========================================
+   OPEN CASE
+========================================= */
+
+function startOpen(){
+
+  if(
+    !currentCase ||
+    busy ||
+    !canOpenCase(
+      currentCase.id
+    )
+  ){
+
+    return;
+
+  }
+
+
+  busy = true;
+
+  sound('start');
+
+
+  const win =
+    randomCaseItem(
+      currentCase.id
+    );
+
+
+  document.getElementById(
+    'preview'
+  ).classList.add(
+    'hidden'
+  );
+
+
+  document.getElementById(
+    'opening'
+  ).classList.remove(
+    'hidden'
+  );
+
+
+  document.getElementById(
+    'dropResult'
+  ).classList.add(
+    'hidden'
+  );
+
+
+  const {
+    track,
+    stopIndex
+  } =
+    buildReel(
+      currentCase.id,
+      win
+    );
+
+
+  const itemWidth = 150;
+
+  const gap = 12;
+
+  const padding = 22;
+
+  const center =
+    track.parentElement
+      .clientWidth / 2;
+
+
+  const targetCenter =
+    padding +
+    stopIndex *
+    (itemWidth + gap) +
+    itemWidth / 2;
+
+
+  const distance =
+    targetCenter -
+    center;
+
+
+  track.style.transform =
+    'translateX(0px)';
+
+
+  let ticks = 0;
+
+
+  reelTimer =
+    setInterval(
+      () => {
+
+        sound('tick');
+
+        ticks++;
+
+
+        if(ticks > 24){
+
+          clearInterval(
+            reelTimer
+          );
+
+        }
+
+      },
+      135
+    );
+
+
+  requestAnimationFrame(
+    () => {
+
+      track.style.transition =
+        'transform 4.8s cubic-bezier(.08,.72,.13,1)';
+
+      track.style.transform =
+        `translateX(${-distance}px)`;
+
+    }
+  );
+
+
+  setTimeout(
+    () => {
+
+      clearInterval(
+        reelTimer
+      );
+
+
+      sound('win');
+
+
+      setCaseOpened(
+        currentCase.id
+      );
+
+
+      addXP(
+        currentCase.xp
+      );
+
+
+      addInventoryItem(
+        win
+      );
+
+
+      document.getElementById(
+        'dropResult'
+      ).classList.remove(
+        'hidden'
+      );
+
+
+      document.getElementById(
+        'dropResult'
+      ).innerHTML = `
+
+        <div
+          class="
+            drop-card
+            inline-block
+            rounded-3xl
+            border
+            p-6
+            min-w-[290px]
+          "
+          style="
+            border-color:
+            ${RARITIES[win.rarity].color};
+
+            box-shadow:
+            0 0 55px
+            ${RARITIES[win.rarity].color}25;
+          "
+        >
+
+          <div
+            class="
+              text-xs
+              uppercase
+              tracking-[.3em]
+            "
+            style="
+              color:
+              ${RARITIES[win.rarity].color}
+            "
+          >
+
+            ТЕБЕ ВЫПАЛО
+
+          </div>
+
+
+          <div
+            class="
+              h-40
+              mt-3
+            "
+          >
+
+            <img
+              src="${win.image}"
+              class="
+                w-full
+                h-full
+                object-contain
+              "
+              alt="${win.name}"
+            >
+
           </div>
 
 
           <h3
             class="
-            mt-2
-            text-3xl
-            font-black
+              text-2xl
+              font-black
+              mt-3
             "
           >
-            ${c.name}
+
+            ${win.name}
+
           </h3>
 
 
-          <p class="
-            mt-3
-            text-zinc-500
-            min-h-[48px]
-          ">
-            ${caseDescription(c.id)}
-          </p>
+          <div
+            class="
+              font-black
+              mt-1
+            "
+            style="
+              color:
+              ${RARITIES[win.rarity].color}
+            "
+          >
 
-
-          <div class="
-            mt-5
-            flex
-            justify-between
-            text-xs
-            text-zinc-500
-          ">
-
-            <span>
-              ${c.items.length} предметов
-            </span>
-
-            <span>
-              +${c.xp} XP
-            </span>
+            ${RARITIES[win.rarity].name}
 
           </div>
 
 
           <div
             class="
-            mt-5
-            rounded-2xl
-            bg-white/[.03]
-            border border-white/5
-            p-4
+              text-amber-400
+              font-black
+              mt-2
             "
           >
 
-            <div class="
-              flex
-              justify-between
-              text-xs
-              font-bold
-              "
-            >
-
-              <span class="text-zinc-500">
-                СЛЕДУЮЩЕЕ ОТКРЫТИЕ
-              </span>
-
-              <span
-                id="timer-${c.id}"
-                class="${timerClass}"
-              >
-                ${ready ? "ГОТОВ" : formatTime(remaining)}
-              </span>
-
-            </div>
-
-
-            <div class="
-              mt-3
-              h-1.5
-              rounded-full
-              bg-zinc-900
-              overflow-hidden
-            ">
-
-              <div
-                id="progress-${c.id}"
-                class="h-full rounded-full"
-                style="
-                  width:${cooldownProgress(c.id)}%;
-                  background:${c.color};
-                "
-              ></div>
-
-            </div>
+            🪙 ${win.price} монет
 
           </div>
 
 
           <button
-            onclick="openCase('${c.id}')"
+            onclick="
+              closeModal();
+              renderCases();
+              updateTop();
+            "
             class="
-            w-full
-            mt-5
-            py-4
-            rounded-2xl
-            ${buttonColor}
-            font-black
+              mt-5
+              w-full
+              py-3
+              rounded-xl
+              bg-white
+              text-black
+              font-black
             "
           >
 
-            ${ready
-              ? `ОТКРЫТЬ ${c.name}`
-              : `СМОТРЕТЬ ${c.name}`}
+            ЗАБРАТЬ
 
           </button>
 
         </div>
 
-      </article>
-    `;
-  });
-}
+      `;
 
 
-function caseDescription(id) {
+      busy = false;
 
-  if (id === "lviv") {
-    return "Только персонажи CHAK338 — от обычных до мифических.";
-  }
+      renderCountdowns();
 
-  if (id === "kiyiv") {
-    return "Одежда, маски, куртки и редкие образы.";
-  }
+      updateTop();
 
-  return "Только предметы из мира Dota 2.";
-}
-
-
-function cooldownProgress(id) {
-
-  const c = getCase(id);
-
-  const remaining =
-    getRemainingCooldown(id);
-
-  if (!remaining) return 100;
-
-  return Math.max(
-    0,
-    Math.min(
-      100,
-      100 - (remaining / c.cooldown * 100)
-    )
+    },
+    5100
   );
-}
-
-
-/* =========================================================
-   TIMER
-   ========================================================= */
-
-function updateTimers() {
-
-  Object.values(CASES).forEach(c => {
-
-    const timer =
-      document.getElementById(
-        "timer-" + c.id
-      );
-
-    const progress =
-      document.getElementById(
-        "progress-" + c.id
-      );
-
-    if (!timer) return;
-
-    const remaining =
-      getRemainingCooldown(c.id);
-
-    if (remaining <= 0) {
-
-      timer.textContent = "ГОТОВ";
-
-      timer.className =
-        "timer-ready";
-
-      if (progress) {
-        progress.style.width = "100%";
-      }
-
-    } else {
-
-      timer.textContent =
-        formatTime(remaining);
-
-      timer.className =
-        "timer-wait";
-
-      if (progress) {
-        progress.style.width =
-          cooldownProgress(c.id) + "%";
-      }
-
-    }
-
-  });
 
 }
 
 
-/* =========================================================
-   OPEN CASE MODAL
-   ========================================================= */
+/* =========================================
+   TOP
+========================================= */
 
-function openCase(id) {
-
-  activeCase = id;
-
-  const c = getCase(id);
+function updateTop(){
 
   document.getElementById(
-    "modalTitle"
-  ).textContent = c.name;
-
-
-  document.getElementById(
-    "modalType"
+    'level'
   ).textContent =
-    c.subtitle;
-
-
-  document.getElementById(
-    "modalXP"
-  ).textContent =
-    "+" + c.xp + " XP";
-
-
-  const remaining =
-    getRemainingCooldown(id);
-
-
-  document.getElementById(
-    "modalCooldown"
-  ).textContent =
-    remaining > 0
-      ? "Следующее открытие через " +
-        formatTime(remaining)
-      : "КЕЙС ГОТОВ";
-
-
-  document.getElementById(
-    "caseModal"
-  ).classList.remove("hidden");
-
-
-  document.getElementById(
-    "caseModal"
-  ).classList.add("flex");
-
-
-  document.getElementById(
-    "dropResult"
-  ).classList.add("hidden");
-
-
-  buildReel();
-
-  renderRarities();
-
-  updateSpinButton();
-
-}
-
-
-function closeCase() {
-
-  if (spinning) return;
-
-  document.getElementById(
-    "caseModal"
-  ).classList.add("hidden");
-
-  document.getElementById(
-    "caseModal"
-  ).classList.remove("flex");
-
-}
-
-
-/* =========================================================
-   ROULETTE
-   ========================================================= */
-
-function randomReelItem() {
-
-  const c = getCase(activeCase);
-
-  return c.items[
-    Math.floor(
-      Math.random() * c.items.length
-    )
-  ];
-
-}
-
-
-function buildReel(winner = null) {
-
-  const reel =
-    document.getElementById("reel");
-
-  reel.style.transition = "none";
-
-  reel.style.transform =
-    "translateX(0)";
-
-  reel.innerHTML = "";
-
-
-  const items = [];
-
-  /*
-    60 карточек.
-    Победитель будет находиться
-    в позиции 48.
-  */
-
-  for (let i = 0; i < 60; i++) {
-
-    items.push(
-      randomReelItem()
-    );
-
-  }
-
-
-  if (winner) {
-    items[48] = winner;
-  }
-
-
-  items.forEach(item => {
-
-    const rarity =
-      item.rarity.toLowerCase();
-
-    const div =
-      document.createElement("div");
-
-    div.className =
-      "reel-item " + rarity;
-
-
-    div.innerHTML = `
-
-      <img
-        src="${item.image}"
-        alt="${item.name}"
-      >
-
-      <div
-        class="
-        mt-2
-        text-xs
-        font-black
-        px-2
-        "
-      >
-        ${item.name}
-      </div>
-
-      <div
-        class="
-        mt-1
-        text-[10px]
-        text-zinc-500
-        "
-      >
-        ${item.rarity}
-      </div>
-
-    `;
-
-    reel.appendChild(div);
-
-  });
-
-}
-
-
-/* =========================================================
-   SPIN
-   ========================================================= */
-
-function spinCase() {
-
-  if (spinning) return;
-
-
-  if (!isCaseReady(activeCase)) {
-
-    showMessage(
-      "Кейс ещё нельзя открыть. Подожди " +
-      formatTime(
-        getRemainingCooldown(activeCase)
-      )
-    );
-
-    return;
-  }
-
-
-  spinning = true;
-
-
-  const button =
-    document.getElementById(
-      "spinBtn"
-    );
-
-  button.disabled = true;
-
-  button.textContent =
-    "ОТКРЫВАЕМ...";
-
-
-  const winner =
-    randomDrop(activeCase);
-
-  lastWinner = winner;
-
-
-  buildReel(winner);
-
-
-  const reel =
-    document.getElementById("reel");
-
-
-  const targetIndex = 48;
-
-  const itemWidth = 128;
-
-  const gap = 12;
-
-  const step =
-    itemWidth + gap;
-
-
-  const windowWidth =
-    reel.parentElement.clientWidth;
-
-
-  const targetCenter =
-    targetIndex * step +
-    itemWidth / 2;
-
-
-  const offset =
-    targetCenter -
-    windowWidth / 2;
-
-
-  /*
-    Старая версия имела
-    около 5 секунд прокрутки.
-  */
-
-  reel.style.transition =
-    "transform 5s cubic-bezier(.07,.72,.12,1)";
-
-
-  reel.style.transform =
-    "translateX(" +
-    (-offset) +
-    "px)";
-
-
-  setTimeout(() => {
-
-    finishSpin(winner);
-
-  }, 5100);
-
-}
-
-
-/* =========================================================
-   FINISH
-   ========================================================= */
-
-function finishSpin(winner) {
-
-  const c =
-    getCase(activeCase);
-
-
-  addInventoryItem({
-    ...winner,
-    caseId: c.id,
-    caseName: c.name,
-    type: c.type,
-    price: RARITIES[winner.rarity].price,
-    rarityName: RARITIES[winner.rarity].ru
-  });
-
-
-  addXP(c.xp);
-
-  setCaseCooldown(c.id);
-
-
-  document.getElementById(
-    "dropImage"
-  ).src =
-    winner.image;
-
-
-  document.getElementById(
-    "dropName"
-  ).textContent =
-    winner.name;
-
-
-  document.getElementById(
-    "dropRarity"
-  ).textContent =
-    winner.rarity +
-    " · " +
-    RARITIES[winner.rarity].ru;
-
-
-  document.getElementById(
-    "dropPrice"
-  ).textContent =
-    formatMoney(
-      RARITIES[winner.rarity].price
-    );
-
-
-  document.getElementById(
-    "dropStat"
-  ).textContent =
-    "+" +
-    c.xp +
-    " XP · Предмет добавлен в инвентарь";
-
-
-  document.getElementById(
-    "dropResult"
-  ).classList.remove("hidden");
-
-
-  document.getElementById(
-    "modalCooldown"
-  ).textContent =
-    "Следующее открытие через " +
-    formatTime(c.cooldown);
-
-
-  spinning = false;
-
-  updateSpinButton();
-
-  updateHeaderXP();
-
-  updateTimers();
-
-}
-
-
-function updateSpinButton() {
-
-  const button =
-    document.getElementById(
-      "spinBtn"
-    );
-
-  if (!button) return;
-
-
-  if (spinning) {
-
-    button.disabled = true;
-
-    button.textContent =
-      "ОТКРЫВАЕМ...";
-
-    return;
-
-  }
-
-
-  if (isCaseReady(activeCase)) {
-
-    button.disabled = false;
-
-    button.textContent =
-      "ОТКРЫТЬ КЕЙС";
-
-  } else {
-
-    button.disabled = true;
-
-    button.textContent =
-      "КЕЙС НА COOLDOWN";
-
-  }
-
-}
-
-
-/* =========================================================
-   RARITIES
-   ========================================================= */
-
-function renderRarities() {
-
-  const c =
-    getCase(activeCase);
-
-  const box =
-    document.getElementById(
-      "rarityList"
-    );
-
-  box.innerHTML = "";
-
-
-  c.items.forEach(item => {
-
-    const rarity =
-      RARITIES[item.rarity];
-
-    box.innerHTML += `
-
-      <div>
-
-        <span
-          style="color:${rarity.color}"
-          class="font-black"
-        >
-          ${item.rarity}
-        </span>
-
-        <br>
-
-        <span class="text-zinc-500">
-          ${rarity.price} ₴
-        </span>
-
-      </div>
-
-    `;
-
-  });
-
-}
-
-
-/* =========================================================
-   XP
-   ========================================================= */
-
-function updateHeaderXP() {
-
-  const xp =
-    getXP();
-
-  const level =
     getLevel();
 
 
-  const ids = [
-    "xp",
-    "xp2"
-  ];
-
-  ids.forEach(id => {
-
-    const el =
-      document.getElementById(id);
-
-    if (el) {
-      el.textContent = xp;
-    }
-
-  });
-
-
-  const levels = [
-    "level",
-    "level2"
-  ];
-
-  levels.forEach(id => {
-
-    const el =
-      document.getElementById(id);
-
-    if (el) {
-      el.textContent = level;
-    }
-
-  });
-
-
-  const bar =
-    document.getElementById(
-      "xpbar"
-    );
-
-  if (bar) {
-
-    bar.style.width =
-      (xp / 10) + "%";
-
-  }
+  document.getElementById(
+    'xp'
+  ).textContent =
+    getXP();
 
 }
 
 
-/* =========================================================
-   MESSAGE
-   ========================================================= */
+renderCases();
 
-function showMessage(message) {
-
-  const old =
-    document.getElementById(
-      "toast"
-    );
-
-  if (old) old.remove();
+updateTop();
 
 
-  const toast =
-    document.createElement("div");
+setInterval(
+  () => {
 
+    renderCountdowns();
 
-  toast.id = "toast";
+    updateTop();
 
-
-  toast.className = `
-    fixed
-    bottom-6
-    left-1/2
-    -translate-x-1/2
-    z-[200]
-    max-w-md
-    w-[calc(100%-32px)]
-    bg-white
-    text-black
-    px-5
-    py-4
-    rounded-2xl
-    shadow-2xl
-    text-sm
-    font-black
-    text-center
-  `;
-
-
-  toast.textContent =
-    message;
-
-
-  document.body.appendChild(
-    toast
-  );
-
-
-  setTimeout(
-    () => toast.remove(),
-    3200
-  );
-
-}
-
-
-/* =========================================================
-   INIT
-   ========================================================= */
-
-function init() {
-
-  renderCases();
-
-  updateHeaderXP();
-
-  setInterval(() => {
-
-    updateTimers();
-
-    if (!spinning) {
-      updateSpinButton();
-    }
-
-  }, 1000);
-
-}
-
-
-init();
-
-
-document.addEventListener(
-  "keydown",
-  event => {
-
-    if (
-      event.key === "Escape" &&
-      !spinning
-    ) {
-
-      closeCase();
-
-    }
-
-  }
+  },
+  1000
 );
 
 </script>
