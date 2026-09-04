@@ -1,1361 +1,739 @@
 /* =========================================================
-   CHAK338 GAMING HUB
-   Единый каталог кейсов и предметов
-   ========================================================= */
-
-const RARITIES = {
-  common: {
-    name: 'Обычная',
-    color: '#94a3b8'
-  },
-
-  uncommon: {
-    name: 'Необычная',
-    color: '#22c55e'
-  },
-
-  rare: {
-    name: 'Редкая',
-    color: '#38bdf8'
-  },
-
-  epic: {
-    name: 'Эпическая',
-    color: '#a855f7'
-  },
-
-  legendary: {
-    name: 'Легендарная',
-    color: '#f59e0b'
-  },
-
-  mythic: {
-    name: 'Мифическая',
-    color: '#ef4444'
-  }
-};
+   CHAK338 DATA
+========================================================= */
 
 
 /* =========================================================
-   КЕЙСЫ
-   ========================================================= */
+   SVG ICON
+========================================================= */
+
+function svgIcon(emoji) {
+
+    const svg = `
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 200 200"
+        >
+
+            <defs>
+
+                <radialGradient
+                    id="bg"
+                    cx="50%"
+                    cy="40%"
+                >
+
+                    <stop
+                        offset="0%"
+                        stop-color="#343b45"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stop-color="#090c10"
+                    />
+
+                </radialGradient>
+
+            </defs>
+
+
+            <rect
+                width="200"
+                height="200"
+                rx="35"
+                fill="url(#bg)"
+            />
+
+
+            <text
+                x="100"
+                y="125"
+                text-anchor="middle"
+                font-size="100"
+            >
+                ${emoji}
+            </text>
+
+        </svg>
+    `;
+
+
+    return (
+        "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(svg)
+    );
+}
+
+
+/* =========================================================
+   CASE ART
+========================================================= */
+
+function caseArt(
+    title,
+    emoji,
+    accent
+) {
+
+    const svg = `
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 600 400"
+        >
+
+            <defs>
+
+                <linearGradient
+                    id="background"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1"
+                >
+
+                    <stop
+                        offset="0%"
+                        stop-color="#070a0e"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stop-color="#141a21"
+                    />
+
+                </linearGradient>
+
+
+                <linearGradient
+                    id="box"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1"
+                >
+
+                    <stop
+                        offset="0%"
+                        stop-color="${accent}"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stop-color="#07100b"
+                    />
+
+                </linearGradient>
+
+            </defs>
+
+
+            <rect
+                width="600"
+                height="400"
+                rx="35"
+                fill="url(#background)"
+            />
+
+
+            <circle
+                cx="300"
+                cy="185"
+                r="135"
+                fill="${accent}"
+                opacity=".10"
+            />
+
+
+            <rect
+                x="120"
+                y="85"
+                width="360"
+                height="225"
+                rx="25"
+                fill="url(#box)"
+                stroke="${accent}"
+                stroke-width="4"
+            />
+
+
+            <rect
+                x="145"
+                y="110"
+                width="310"
+                height="175"
+                rx="18"
+                fill="#090d12"
+                stroke="${accent}"
+                stroke-width="2"
+                opacity=".9"
+            />
+
+
+            <text
+                x="300"
+                y="215"
+                text-anchor="middle"
+                font-size="95"
+            >
+                ${emoji}
+            </text>
+
+
+            <text
+                x="300"
+                y="350"
+                text-anchor="middle"
+                fill="white"
+                font-size="35"
+                font-family="Arial"
+                font-weight="900"
+            >
+                ${title}
+            </text>
+
+        </svg>
+    `;
+
+
+    return (
+        "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(svg)
+    );
+}
+
+
+/* =========================================================
+   CASES
+========================================================= */
 
 const CASES = [
 
-  {
-    id: 'clash',
-    name: 'CLASH OF CLANS',
-    short: 'CLASH',
-    subtitle: 'CLASH OF CLANS',
-    color: '#f59e0b',
-
-    cooldownHours: 5,
-    xp: 100,
-
-    description:
-      'Персонажи Clash of Clans — от Варвара до Королевы лучниц.',
-
-    /*
-      ВАЖНО:
-      PNG сейчас лежит в корне GitHub рядом с index.html.
-    */
-    image: 'clash-case.png'
-  },
-
-
-  {
-    id: 'cs2',
-    name: 'CS2',
-    short: 'CS2',
-    subtitle: 'COUNTER-STRIKE 2',
-    color: '#38bdf8',
-
-    cooldownHours: 12,
-    xp: 150,
-
-    description:
-      'Оружие, ножи и легендарные скины Counter-Strike 2.',
-
-    image: 'cs2-case.png'
-  },
-
-
-  {
-    id: 'dota2',
-    name: 'DOTA 2',
-    short: 'DOTA',
-    subtitle: 'DOTA 2',
-    color: '#ef4444',
-
-    cooldownHours: 24,
-    xp: 250,
-
-    description:
-      'Артефакты, расходники и дорогие предметы Dota 2.',
-
-    image: 'dota-case.png'
-  }
-
-];
-
-
-/* =========================================================
-   ВСТРОЕННЫЕ КАРТИНКИ ПРЕДМЕТОВ
-   ========================================================= */
-
-function svgIcon(label, emoji, color) {
-
-  const safe = String(label)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-
-  const svg = `
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 500 360"
-  >
-
-    <defs>
-
-      <radialGradient id="bg">
-        <stop
-          stop-color="${color}"
-          stop-opacity=".32"
-        />
-
-        <stop
-          offset="1"
-          stop-color="#07070b"
-          stop-opacity="0"
-        />
-      </radialGradient>
-
-      <linearGradient
-        id="shine"
-        x1="0"
-        x2="1"
-      >
-
-        <stop
-          stop-color="${color}"
-          stop-opacity=".95"
-        />
-
-        <stop
-          offset="1"
-          stop-color="#fff"
-          stop-opacity=".12"
-        />
-
-      </linearGradient>
-
-    </defs>
-
-
-    <rect
-      width="500"
-      height="360"
-      rx="34"
-      fill="#09090f"
-    />
-
-
-    <rect
-      x="12"
-      y="12"
-      width="476"
-      height="336"
-      rx="28"
-      fill="url(#bg)"
-      stroke="${color}"
-      stroke-opacity=".35"
-      stroke-width="2"
-    />
-
-
-    <circle
-      cx="250"
-      cy="145"
-      r="90"
-      fill="#11111b"
-      stroke="${color}"
-      stroke-opacity=".45"
-      stroke-width="3"
-    />
-
-
-    <circle
-      cx="250"
-      cy="145"
-      r="70"
-      fill="${color}"
-      opacity=".10"
-    />
-
-
-    <text
-      x="250"
-      y="176"
-      text-anchor="middle"
-      font-size="92"
-    >
-      ${emoji}
-    </text>
-
-
-    <rect
-      x="60"
-      y="264"
-      width="380"
-      height="3"
-      rx="2"
-      fill="url(#shine)"
-      opacity=".6"
-    />
-
-
-    <text
-      x="250"
-      y="310"
-      text-anchor="middle"
-      fill="#ffffff"
-      font-family="Arial,sans-serif"
-      font-size="25"
-      font-weight="900"
-    >
-      ${safe}
-    </text>
-
-  </svg>
-  `;
-
-  return (
-    'data:image/svg+xml;charset=UTF-8,' +
-    encodeURIComponent(svg)
-  );
-}
-
-
-/* =========================================================
-   ПРЕДМЕТЫ
-   ========================================================= */
-
-const rawItems = [
-
-  /* =======================================================
-     CLASH OF CLANS
-     ======================================================= */
-
-  [
-    'clash_barbarian',
-    'clash',
-    'Варвар',
-    '🪓',
-    10,
-    'common'
-  ],
-
-  [
-    'clash_archer',
-    'clash',
-    'Лучница',
-    '🏹',
-    15,
-    'common'
-  ],
-
-  [
-    'clash_bomber',
-    'clash',
-    'Бомбер',
-    '💣',
-    20,
-    'common'
-  ],
-
-  [
-    'clash_hog',
-    'clash',
-    'Хог Райдер',
-    '🐗',
-    25,
-    'common'
-  ],
-
-  [
-    'clash_wizard',
-    'clash',
-    'Маг',
-    '🧙',
-    50,
-    'uncommon'
-  ],
-
-  [
-    'clash_dragon',
-    'clash',
-    'Дракон',
-    '🐉',
-    75,
-    'uncommon'
-  ],
-
-  [
-    'clash_minion',
-    'clash',
-    'Миньен летающий',
-    '👾',
-    100,
-    'rare'
-  ],
-
-  [
-    'clash_witch',
-    'clash',
-    'Ведьма',
-    '🧟',
-    200,
-    'epic'
-  ],
-
-  [
-    'clash_valk',
-    'clash',
-    'Валькирия',
-    '⚔️',
-    300,
-    'epic'
-  ],
-
-  [
-    'clash_peka',
-    'clash',
-    'ПЕККА',
-    '🤖',
-    400,
-    'legendary'
-  ],
-
-  [
-    'clash_electro',
-    'clash',
-    'Электродракон',
-    '⚡',
-    500,
-    'legendary'
-  ],
-
-  [
-    'clash_golem',
-    'clash',
-    'Голем',
-    '🪨',
-    600,
-    'legendary'
-  ],
-
-  [
-    'clash_inferno',
-    'clash',
-    'Горящий дракон',
-    '🔥',
-    750,
-    'legendary'
-  ],
-
-  [
-    'clash_queen',
-    'clash',
-    'Королева лучниц',
-    '👸',
-    1000,
-    'mythic'
-  ],
-
-
-  /* =======================================================
-     CS2
-     ======================================================= */
-
-  [
-    'cs2_glock',
-    'cs2',
-    'Glock-18',
-    '🔫',
-    10,
-    'common'
-  ],
-
-  [
-    'cs2_usp',
-    'cs2',
-    'USP-S',
-    '🔫',
-    15,
-    'common'
-  ],
-
-  [
-    'cs2_deagle',
-    'cs2',
-    'Desert Eagle',
-    '🔫',
-    20,
-    'common'
-  ],
-
-  [
-    'cs2_mp5',
-    'cs2',
-    'MP5',
-    '🔫',
-    25,
-    'common'
-  ],
-
-  [
-    'cs2_galil',
-    'cs2',
-    'Galil',
-    '🔫',
-    50,
-    'uncommon'
-  ],
-
-  [
-    'cs2_ssg',
-    'cs2',
-    'SSG 08',
-    '🎯',
-    75,
-    'uncommon'
-  ],
-
-  [
-    'cs2_sg',
-    'cs2',
-    'SG 553',
-    '🔫',
-    100,
-    'rare'
-  ],
-
-  [
-    'cs2_m4a4',
-    'cs2',
-    'M4A4 без глушителя',
-    '🔫',
-    200,
-    'epic'
-  ],
-
-  [
-    'cs2_m4a1s',
-    'cs2',
-    'M4A1-S с глушителем',
-    '🔫',
-    250,
-    'epic'
-  ],
-
-  [
-    'cs2_vulcan',
-    'cs2',
-    'AK-47 Вулкан',
-    '🔫',
-    500,
-    'legendary'
-  ],
-
-  [
-    'cs2_karambit',
-    'cs2',
-    'Керамбит | Волны',
-    '🗡️',
-    600,
-    'legendary'
-  ],
-
-  [
-    'cs2_butterfly',
-    'cs2',
-    'Нож-бабочка | Волны',
-    '🔪',
-    750,
-    'legendary'
-  ],
-
-  [
-    'cs2_dragon',
-    'cs2',
-    'AWP | Dragon Lore',
-    '🎯',
-    1000,
-    'mythic'
-  ],
-
-   {
-    id: "hantiks",
-    name: "Hantiks",
-    image: "hantiks-case.png",
-
-    // У Hantiks пока НЕТ таймера
-    cooldown: 0,
-
-    xp: 0,
-
-    items: [
-        {
-            id: "hantiks-chips",
-            name: "Чипсы",
-            price: 10,
-            image: svgIcon("🍟")
-        },
-
-        {
-            id: "hantiks-gamos",
-            name: "Гамос",
-            price: 15,
-            image: svgIcon("🥩")
-        },
-
-        {
-            id: "hantiks-vamos",
-            name: "Вамос",
-            price: 20,
-            image: svgIcon("🌮")
-        },
-
-        {
-            id: "hantiks-lvivske",
-            name: "Львівське 1715",
-            price: 30,
-            image: svgIcon("🍺")
-        },
-
-        {
-            id: "hantiks-burger",
-            name: "Бургер",
-            price: 50,
-            image: svgIcon("🍔")
-        },
-
-        {
-            id: "hantiks-hotdog",
-            name: "Хот-дог",
-            price: 75,
-            image: svgIcon("🌭")
-        },
-
-        {
-            id: "hantiks-pizza",
-            name: "Пицца",
-            price: 100,
-            image: svgIcon("🍕")
-        },
-
-        {
-            id: "hantiks-shawarma",
-            name: "Шаурма",
-            price: 150,
-            image: svgIcon("🌯")
-        },
-
-        {
-            id: "hantiks-sushi",
-            name: "Суши",
-            price: 200,
-            image: svgIcon("🍣")
-        },
-
-        {
-            id: "hantiks-bomzh",
-            name: "Толстый бомж",
-            price: 300,
-            image: svgIcon("🧔")
-        },
-
-        {
-            id: "hantiks-hanti",
-            name: "Толстьй Hanti",
-            price: 500,
-            image: svgIcon("👑")
-        }
-    ]
-}
-
-  /* =======================================================
-     DOTA 2
-     ======================================================= */
-
-  [
-    'dota_tango',
-    'dota2',
-    'Tango',
-    '🌿',
-    10,
-    'common'
-  ],
-
-  [
-    'dota_flask',
-    'dota2',
-    'Flask',
-    '🧪',
-    15,
-    'common'
-  ],
-
-  [
-    'dota_ward',
-    'dota2',
-    'Ward',
-    '👁️',
-    20,
-    'common'
-  ],
-
-  [
-    'dota_smoke',
-    'dota2',
-    'Smoke',
-    '💨',
-    25,
-    'common'
-  ],
-
-  [
-    'dota_bottle',
-    'dota2',
-    'Bottle',
-    '🧴',
-    30,
-    'common'
-  ],
-
-  [
-    'dota_boots',
-    'dota2',
-    'Boots of Speed',
-    '🥾',
-    50,
-    'uncommon'
-  ],
-
-  [
-    'dota_voodoo',
-    'dota2',
-    'Voodoo Mask',
-    '🎭',
-    75,
-    'uncommon'
-  ],
-
-  [
-    'dota_morbid',
-    'dota2',
-    'Morbid Mask',
-    '💀',
-    85,
-    'rare'
-  ],
-
-  [
-    'dota_gem',
-    'dota2',
-    'Gem',
-    '💎',
-    100,
-    'rare'
-  ],
-
-  [
-    'dota_shard',
-    'dota2',
-    "Aghanim's Shard",
-    '🔷',
-    125,
-    'rare'
-  ],
-
-  [
-    'dota_point',
-    'dota2',
-    'Point Booster',
-    '🔵',
-    150,
-    'rare'
-  ],
-
-  [
-    'dota_hyper',
-    'dota2',
-    'Hyperstone',
-    '🟢',
-    200,
-    'epic'
-  ],
-
-  [
-    'dota_eaglesong',
-    'dota2',
-    'Eaglesong',
-    '🪽',
-    250,
-    'epic'
-  ],
-
-  [
-    'dota_relic',
-    'dota2',
-    'Sacred Relic',
-    '🟠',
-    300,
-    'epic'
-  ],
-
-  [
-    'dota_moon',
-    'dota2',
-    'Moon Shard',
-    '🌙',
-    400,
-    'legendary'
-  ],
-
-  [
-    'dota_parasma',
-    'dota2',
-    'Parasma',
-    '⚔️',
-    500,
-    'legendary'
-  ],
-
-  [
-    'dota_aghanim',
-    'dota2',
-    "Aghanim's Scepter",
-    '🔷',
-    600,
-    'legendary'
-  ],
-
-  [
-    'dota_satanic',
-    'dota2',
-    'Satanic',
-    '🩸',
-    750,
-    'legendary'
-  ],
-
-  [
-    'dota_rapier',
-    'dota2',
-    'Divine Rapier',
-    '⚔️',
-    1000,
-    'mythic'
-  ]
-
-];
-
-
-/* =========================================================
-   СОЗДАЁМ ОБЪЕКТЫ ПРЕДМЕТОВ
-   ========================================================= */
-
-const ITEMS = rawItems.map((item) => {
-
-  const [
-    id,
-    caseId,
-    name,
-    emoji,
-    price,
-    rarity
-  ] = item;
-
-
-  const rarityData =
-    RARITIES[rarity] || RARITIES.common;
-
-
-  /*
-    Вес выпадения:
-    дешёвые предметы выпадают чаще,
-    дорогие — реже.
-  */
-
-  const chance =
-    100 / Math.pow(
-      price / 10,
-      0.82
-    );
-
-
-  return {
-
-    id,
-
-    caseId,
-
-    name,
-
-    emoji,
-
-    price,
-
-    rarity,
-
-    chance,
-
-    type: caseId,
-
-    image: svgIcon(
-      name,
-      emoji,
-      rarityData.color
-    )
-
-  };
-
-});
-
-
-/* =========================================================
-   ПОИСК
-   ========================================================= */
-
-function getCase(id) {
-
-  return CASES.find(
-    c => c.id === id
-  );
-
-}
-
-
-function getItem(id) {
-
-  return ITEMS.find(
-    item => item.id === id
-  );
-
-}
-
-
-function getCaseItems(caseId) {
-
-  return ITEMS.filter(
-    item => item.caseId === caseId
-  );
-
-}
-
-
-/* =========================================================
-   ЦЕНА
-   ========================================================= */
-
-function formatPrice(value) {
-
-  return `${Number(value || 0).toLocaleString('ru-RU')} монет`;
-
-}
-
-
-/* =========================================================
-   INVENTORY
-   ========================================================= */
-
-function getInventory() {
-
-  try {
-
-    return JSON.parse(
-      localStorage.getItem(
-        'chak338_inventory'
-      ) || '[]'
-    );
-
-  } catch (error) {
-
-    return [];
-
-  }
-
-}
-
-
-function saveInventory(items) {
-
-  localStorage.setItem(
-    'chak338_inventory',
-    JSON.stringify(items)
-  );
-
-}
-
-
-function addInventoryItem(item) {
-
-  const inventory =
-    getInventory();
-
-
-  inventory.push({
-
-    ...item,
-
-    uid:
-      item.id +
-      '_' +
-      Date.now() +
-      '_' +
-      Math.random()
-        .toString(36)
-        .slice(2, 8),
-
-    droppedAt:
-      Date.now()
-
-  });
-
-
-  saveInventory(
-    inventory
-  );
-
-}
-
-
-function removeInventoryItems(uids) {
-
-  const ids =
-    new Set(uids);
-
-
-  const inventory =
-    getInventory();
-
-
-  saveInventory(
-
-    inventory.filter(
-      item =>
-        !ids.has(item.uid)
-    )
-
-  );
-
-}
-
-
-/* =========================================================
-   XP
-   ========================================================= */
-
-function getXP() {
-
-  return Number(
-    localStorage.getItem(
-      'chak338_xp'
-    ) || 0
-  );
-
-}
-
-
-function addXP(value) {
-
-  const xp =
-    getXP() +
-    Number(value || 0);
-
-
-  localStorage.setItem(
-    'chak338_xp',
-    String(xp)
-  );
-
-
-  return xp;
-
-}
-
-
-function getLevel() {
-
-  return (
-    Math.floor(
-      getXP() / 1000
-    ) + 1
-  );
-
-}
-
-
-/* =========================================================
-   COOLDOWN
-   ========================================================= */
-
-function cooldownKey(caseId) {
-
-  return `chak338_case_${caseId}`;
-
-}
-
-
-function getRemaining(caseId) {
-
-  const currentCase =
-    getCase(caseId);
-
-
-  if (!currentCase) {
-    return 0;
-  }
-
-
-  const last =
-    Number(
-      localStorage.getItem(
-        cooldownKey(caseId)
-      ) || 0
-    );
-
-
-  if (!last) {
-    return 0;
-  }
-
-
-  return Math.max(
-
-    0,
-
-    currentCase.cooldownHours *
-      60 *
-      60 *
-      1000
-      -
-      (
-        Date.now() -
-        last
-      )
-
-  );
-
-}
-
-
-function getNextOpenTime(caseId) {
-
-  const currentCase =
-    getCase(caseId);
-
-
-  if (!currentCase) {
-    return new Date();
-  }
-
-
-  const last =
-    Number(
-      localStorage.getItem(
-        cooldownKey(caseId)
-      ) || 0
-    );
-
-
-  if (!last) {
-    return new Date();
-  }
-
-
-  return new Date(
-
-    last +
-    currentCase.cooldownHours *
-    60 *
-    60 *
-    1000
-
-  );
-
-}
-
-
-function canOpenCase(caseId) {
-
-  return (
-    getRemaining(caseId) <= 0
-  );
-
-}
-
-
-function setCaseOpened(caseId) {
-
-  localStorage.setItem(
-
-    cooldownKey(caseId),
-
-    String(
-      Date.now()
-    )
-
-  );
-
-}
-
-
-/* =========================================================
-   СЛУЧАЙНОЕ ВЫПАДЕНИЕ
-   ========================================================= */
-
-function randomCaseItem(caseId) {
-
-  const items =
-    getCaseItems(caseId);
-
-
-  if (!items.length) {
-    return null;
-  }
-
-
-  const total =
-    items.reduce(
-
-      (sum, item) =>
-        sum + item.chance,
-
-      0
-
-    );
-
-
-  let roll =
-    Math.random() *
-    total;
-
-
-  for (const item of items) {
-
-    roll -= item.chance;
-
-
-    if (roll <= 0) {
-
-      return item;
-
+    /* =====================================================
+       CLASH OF CLANS
+    ===================================================== */
+
+    {
+        id: "clash",
+
+        name: "Clash of Clans",
+
+        image:
+            "clash-case.png",
+
+        cooldown:
+            5 * 60 * 60 * 1000,
+
+        xp:
+            100,
+
+        items: [
+
+            {
+                id: "coc-1",
+                name: "Варвар",
+                price: 10,
+                image: svgIcon("⚔️")
+            },
+
+            {
+                id: "coc-2",
+                name: "Лучница",
+                price: 15,
+                image: svgIcon("🏹")
+            },
+
+            {
+                id: "coc-3",
+                name: "Бомбер",
+                price: 20,
+                image: svgIcon("💣")
+            },
+
+            {
+                id: "coc-4",
+                name: "Хог Райдер",
+                price: 25,
+                image: svgIcon("🐗")
+            },
+
+            {
+                id: "coc-5",
+                name: "Маг",
+                price: 50,
+                image: svgIcon("🧙")
+            },
+
+            {
+                id: "coc-6",
+                name: "Дракон",
+                price: 75,
+                image: svgIcon("🐉")
+            },
+
+            {
+                id: "coc-7",
+                name: "Миньен летающий",
+                price: 100,
+                image: svgIcon("👾")
+            },
+
+            {
+                id: "coc-8",
+                name: "Ведьма",
+                price: 200,
+                image: svgIcon("🧙‍♀️")
+            },
+
+            {
+                id: "coc-9",
+                name: "Валькирия",
+                price: 300,
+                image: svgIcon("🪓")
+            },
+
+            {
+                id: "coc-10",
+                name: "ПЕККА",
+                price: 400,
+                image: svgIcon("🤖")
+            },
+
+            {
+                id: "coc-11",
+                name: "Электродракон",
+                price: 500,
+                image: svgIcon("⚡")
+            },
+
+            {
+                id: "coc-12",
+                name: "Голем",
+                price: 600,
+                image: svgIcon("🗿")
+            },
+
+            {
+                id: "coc-13",
+                name: "Горящий дракон",
+                price: 750,
+                image: svgIcon("🔥")
+            },
+
+            {
+                id: "coc-14",
+                name: "Королева лучниц",
+                price: 1000,
+                image: svgIcon("👸")
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       CS2
+    ===================================================== */
+
+    {
+        id: "cs2",
+
+        name: "CS2",
+
+        image:
+            "cs2-case.png",
+
+        cooldown:
+            12 * 60 * 60 * 1000,
+
+        xp:
+            150,
+
+        items: [
+
+            {
+                id: "cs2-1",
+                name: "Glock",
+                price: 10,
+                image: svgIcon("🔫")
+            },
+
+            {
+                id: "cs2-2",
+                name: "USP",
+                price: 15,
+                image: svgIcon("🔫")
+            },
+
+            {
+                id: "cs2-3",
+                name: "Desert Eagle",
+                price: 20,
+                image: svgIcon("🔫")
+            },
+
+            {
+                id: "cs2-4",
+                name: "MP5",
+                price: 25,
+                image: svgIcon("🔫")
+            },
+
+            {
+                id: "cs2-5",
+                name: "Galil",
+                price: 50,
+                image: svgIcon("🔫")
+            },
+
+            {
+                id: "cs2-6",
+                name: "SSG 08",
+                price: 75,
+                image: svgIcon("🎯")
+            },
+
+            {
+                id: "cs2-7",
+                name: "SG 553",
+                price: 100,
+                image: svgIcon("🔫")
+            },
+
+            {
+                id: "cs2-8",
+                name: "M4A4 без глушителя",
+                price: 200,
+                image: svgIcon("🔫")
+            },
+
+            {
+                id: "cs2-9",
+                name: "M4A1-S с глушителем",
+                price: 250,
+                image: svgIcon("🔫")
+            },
+
+            {
+                id: "cs2-10",
+                name: "AK-47 Вулкан",
+                price: 500,
+                image: svgIcon("🔥")
+            },
+
+            {
+                id: "cs2-11",
+                name: "Керамбит | Волны",
+                price: 600,
+                image: svgIcon("🔪")
+            },
+
+            {
+                id: "cs2-12",
+                name: "Нож-бабочка | Волны",
+                price: 750,
+                image: svgIcon("🔪")
+            },
+
+            {
+                id: "cs2-13",
+                name: "AWP Dragon Lore",
+                price: 1000,
+                image: svgIcon("🐉")
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       DOTA 2
+    ===================================================== */
+
+    {
+        id: "dota2",
+
+        name: "Dota 2",
+
+        image:
+            "dota-case.png",
+
+        cooldown:
+            24 * 60 * 60 * 1000,
+
+        xp:
+            250,
+
+        items: [
+
+            {
+                id: "dota-1",
+                name: "Tango",
+                price: 10,
+                image: svgIcon("🌿")
+            },
+
+            {
+                id: "dota-2",
+                name: "Flask",
+                price: 15,
+                image: svgIcon("🧪")
+            },
+
+            {
+                id: "dota-3",
+                name: "Ward",
+                price: 20,
+                image: svgIcon("👁️")
+            },
+
+            {
+                id: "dota-4",
+                name: "Smoke",
+                price: 25,
+                image: svgIcon("💨")
+            },
+
+            {
+                id: "dota-5",
+                name: "Bottle",
+                price: 30,
+                image: svgIcon("🍾")
+            },
+
+            {
+                id: "dota-6",
+                name: "Boots of Speed",
+                price: 50,
+                image: svgIcon("👢")
+            },
+
+            {
+                id: "dota-7",
+                name: "Voodoo Mask",
+                price: 75,
+                image: svgIcon("🎭")
+            },
+
+            {
+                id: "dota-8",
+                name: "Morbid Mask",
+                price: 85,
+                image: svgIcon("😈")
+            },
+
+            {
+                id: "dota-9",
+                name: "Gem",
+                price: 100,
+                image: svgIcon("💎")
+            },
+
+            {
+                id: "dota-10",
+                name: "Aghanim's Shard",
+                price: 125,
+                image: svgIcon("🔷")
+            },
+
+            {
+                id: "dota-11",
+                name: "Point Booster",
+                price: 150,
+                image: svgIcon("🔵")
+            },
+
+            {
+                id: "dota-12",
+                name: "Hyperstone",
+                price: 200,
+                image: svgIcon("💠")
+            },
+
+            {
+                id: "dota-13",
+                name: "Eaglesong",
+                price: 250,
+                image: svgIcon("🦅")
+            },
+
+            {
+                id: "dota-14",
+                name: "Sacred Relic",
+                price: 300,
+                image: svgIcon("✨")
+            },
+
+            {
+                id: "dota-15",
+                name: "Moon Shard",
+                price: 400,
+                image: svgIcon("🌙")
+            },
+
+            {
+                id: "dota-16",
+                name: "Parasma",
+                price: 500,
+                image: svgIcon("🟣")
+            },
+
+            {
+                id: "dota-17",
+                name: "Aghanim's Scepter",
+                price: 600,
+                image: svgIcon("💜")
+            },
+
+            {
+                id: "dota-18",
+                name: "Satanic",
+                price: 750,
+                image: svgIcon("😈")
+            },
+
+            {
+                id: "dota-19",
+                name: "Divine Rapier",
+                price: 1000,
+                image: svgIcon("⚔️")
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       HANTIKS
+    ===================================================== */
+
+    {
+        id: "hantiks",
+
+        name: "Hantiks",
+
+        /*
+            У Hantiks нет отдельного файла.
+            Картинка генерируется прямо из JS.
+        */
+
+        image:
+            caseArt(
+                "HANTIKS",
+                "🍔",
+                "#22c55e"
+            ),
+
+        /*
+            0 = БЕЗ ТАЙМЕРА
+        */
+
+        cooldown: 0,
+
+        xp: 0,
+
+        items: [
+
+            {
+                id: "hantiks-1",
+                name: "Чипсы",
+                price: 10,
+                image: svgIcon("🍟")
+            },
+
+            {
+                id: "hantiks-2",
+                name: "Гамос",
+                price: 15,
+                image: svgIcon("🥩")
+            },
+
+            {
+                id: "hantiks-3",
+                name: "Вамос",
+                price: 20,
+                image: svgIcon("🌮")
+            },
+
+            {
+                id: "hantiks-4",
+                name: "Львівське 1715",
+                price: 30,
+                image: svgIcon("🍺")
+            },
+
+            {
+                id: "hantiks-5",
+                name: "Бургер",
+                price: 50,
+                image: svgIcon("🍔")
+            },
+
+            {
+                id: "hantiks-6",
+                name: "Хот-дог",
+                price: 75,
+                image: svgIcon("🌭")
+            },
+
+            {
+                id: "hantiks-7",
+                name: "Пицца",
+                price: 100,
+                image: svgIcon("🍕")
+            },
+
+            {
+                id: "hantiks-8",
+                name: "Шаурма",
+                price: 150,
+                image: svgIcon("🌯")
+            },
+
+            {
+                id: "hantiks-9",
+                name: "Суши",
+                price: 200,
+                image: svgIcon("🍣")
+            },
+
+            {
+                id: "hantiks-10",
+                name: "Толстый бомж",
+                price: 300,
+                image: svgIcon("🧔")
+            },
+
+            {
+                id: "hantiks-11",
+                name: "Толстьй Hanti",
+                price: 500,
+                image: svgIcon("👑")
+            }
+
+        ]
     }
 
-  }
-
-
-  return items[
-    items.length - 1
-  ];
-
-}
+];
 
 
 /* =========================================================
-   ФОРМАТ ВРЕМЕНИ
-   ========================================================= */
+   ALL ITEMS
+========================================================= */
 
-function formatTime(ms) {
-
-  ms = Math.max(
-    0,
-    Number(ms || 0)
-  );
-
-
-  const totalSeconds =
-    Math.floor(
-      ms / 1000
+const ITEMS =
+    CASES.flatMap(
+        caseData =>
+            caseData.items
     );
 
 
-  const hours =
-    Math.floor(
-      totalSeconds / 3600
-    );
-
-
-  const minutes =
-    Math.floor(
-      (totalSeconds % 3600) / 60
-    );
-
-
-  const seconds =
-    totalSeconds % 60;
-
-
-  return (
-
-    String(hours)
-      .padStart(2, '0') +
-
-    ':' +
-
-    String(minutes)
-      .padStart(2, '0') +
-
-    ':' +
-
-    String(seconds)
-      .padStart(2, '0')
-
-  );
-
-}
-
-
 /* =========================================================
-   ПРОГРЕСС XP
-   ========================================================= */
+   GLOBAL EXPORT
+========================================================= */
 
-function getLevelProgress() {
+window.CASES =
+    CASES;
 
-  const xp =
-    getXP();
-
-
-  const level =
-    getLevel();
-
-
-  const currentLevelXP =
-    (level - 1) * 1000;
-
-
-  const nextLevelXP =
-    level * 1000;
-
-
-  const current =
-    xp - currentLevelXP;
-
-
-  const needed =
-    nextLevelXP -
-    currentLevelXP;
-
-
-  return {
-
-    level,
-
-    current,
-
-    needed,
-
-    percent:
-      Math.min(
-        100,
-        Math.max(
-          0,
-          (current / needed) * 100
-        )
-      )
-
-  };
-
-}
-
-
-/* =========================================================
-   ОБНОВЛЕНИЕ СОСТОЯНИЯ
-   ========================================================= */
-
-function getSiteState() {
-
-  return {
-
-    xp:
-      getXP(),
-
-    level:
-      getLevel(),
-
-    inventory:
-      getInventory(),
-
-    cases:
-      CASES.map(c => ({
-
-        id: c.id,
-
-        remaining:
-          getRemaining(c.id),
-
-        available:
-          canOpenCase(c.id)
-
-      }))
-
-  };
-
-}
-
-
-/* =========================================================
-   DEBUG / GLOBAL
-   ========================================================= */
-
-window.CHAK338 = {
-
-  CASES,
-
-  ITEMS,
-
-  RARITIES,
-
-  getCase,
-
-  getItem,
-
-  getCaseItems,
-
-  formatPrice,
-
-  getInventory,
-
-  saveInventory,
-
-  addInventoryItem,
-
-  removeInventoryItems,
-
-  getXP,
-
-  addXP,
-
-  getLevel,
-
-  getRemaining,
-
-  getNextOpenTime,
-
-  canOpenCase,
-
-  setCaseOpened,
-
-  randomCaseItem,
-
-  formatTime,
-
-  getLevelProgress,
-
-  getSiteState
-
-};
+window.ITEMS =
+    ITEMS;
