@@ -1,448 +1,924 @@
-/* =========================================================
-   CHAK338 DATA
-   ========================================================= */
+/* CHAK338 Gaming Hub — единый каталог предметов */
 
 const RARITIES = {
-  COMMON: {
-    name: "COMMON",
-    ru: "Обычный",
-    price: 10,
-    color: "#64748b"
+  common: {
+    name: 'Обычная',
+    color: '#94a3b8'
   },
-  UNCOMMON: {
-    name: "UNCOMMON",
-    ru: "Необычный",
-    price: 25,
-    color: "#22c55e"
+  uncommon: {
+    name: 'Необычная',
+    color: '#22c55e'
   },
-  RARE: {
-    name: "RARE",
-    ru: "Редкий",
-    price: 75,
-    color: "#38bdf8"
+  rare: {
+    name: 'Редкая',
+    color: '#38bdf8'
   },
-  EPIC: {
-    name: "EPIC",
-    ru: "Эпический",
-    price: 200,
-    color: "#a855f7"
+  epic: {
+    name: 'Эпическая',
+    color: '#a855f7'
   },
-  LEGENDARY: {
-    name: "LEGENDARY",
-    ru: "Легендарный",
-    price: 750,
-    color: "#f59e0b"
+  legendary: {
+    name: 'Легендарная',
+    color: '#f59e0b'
   },
-  MYTHIC: {
-    name: "MYTHIC",
-    ru: "Мифический",
-    price: 2500,
-    color: "#ef4444"
+  mythic: {
+    name: 'Мифическая',
+    color: '#ef4444'
   }
 };
 
 
-/* =========================================================
-   CASES
-   ========================================================= */
+const CASES = [
 
-const CASES = {
-
-  lviv: {
-    id: "lviv",
-    name: "LVIV",
-    subtitle: "ПЕРСОНАЖИ",
-    type: "Персонажи",
-    color: "#38bdf8",
-    cooldown: 5 * 60 * 60 * 1000,
-    cooldownText: "5 часов",
+  {
+    id: 'clash',
+    name: 'CLASH OF CLANS',
+    short: 'CLASH',
+    subtitle: 'CLASH OF CLANS',
+    color: '#f59e0b',
+    cooldownHours: 5,
     xp: 100,
-    image: "assets/cases/lviv.png",
-
-    items: [
-      {
-        id: "rookie",
-        name: "Rookie",
-        rarity: "COMMON",
-        chance: 35,
-        image: "assets/items/rookie.png"
-      },
-      {
-        id: "masky",
-        name: "Masky",
-        rarity: "UNCOMMON",
-        chance: 25,
-        image: "assets/items/masky.png"
-      },
-      {
-        id: "cyber",
-        name: "Cyber",
-        rarity: "RARE",
-        chance: 18,
-        image: "assets/items/cyber.png"
-      },
-      {
-        id: "shadow",
-        name: "Shadow",
-        rarity: "EPIC",
-        chance: 12,
-        image: "assets/items/shadow.png"
-      },
-      {
-        id: "glitch",
-        name: "Glitch",
-        rarity: "LEGENDARY",
-        chance: 7,
-        image: "assets/items/glitch.png"
-      },
-      {
-        id: "uhilyant",
-        name: "UHILYANT",
-        rarity: "MYTHIC",
-        chance: 3,
-        image: "assets/items/uhilyant.png"
-      }
-    ]
+    description: 'Персонажи Clash of Clans — от варвара до королевы лучниц.',
+    image: 'assets/cases/clash-case.png'
   },
 
-
-  kiyiv: {
-    id: "kiyiv",
-    name: "KIYIV",
-    subtitle: "ОДЕЖДА",
-    type: "Одежда",
-    color: "#a855f7",
-    cooldown: 12 * 60 * 60 * 1000,
-    cooldownText: "12 часов",
+  {
+    id: 'cs2',
+    name: 'CS2',
+    short: 'CS2',
+    subtitle: 'COUNTER-STRIKE 2',
+    color: '#38bdf8',
+    cooldownHours: 12,
     xp: 150,
-    image: "assets/cases/kiyiv.png",
-
-    items: [
-      {
-        id: "tshirt",
-        name: "Basic T-Shirt",
-        rarity: "COMMON",
-        chance: 35,
-        image: "assets/items/tshirt.png"
-      },
-      {
-        id: "hoodie",
-        name: "CHAK Hoodie",
-        rarity: "UNCOMMON",
-        chance: 25,
-        image: "assets/items/hoodie.png"
-      },
-      {
-        id: "neon-jacket",
-        name: "Neon Jacket",
-        rarity: "RARE",
-        chance: 18,
-        image: "assets/items/neon-jacket.png"
-      },
-      {
-        id: "dark-mask",
-        name: "Dark Mask",
-        rarity: "EPIC",
-        chance: 12,
-        image: "assets/items/dark-mask.png"
-      },
-      {
-        id: "crown",
-        name: "Golden Crown",
-        rarity: "LEGENDARY",
-        chance: 7,
-        image: "assets/items/crown.png"
-      },
-      {
-        id: "338-outfit",
-        name: "338 Outfit",
-        rarity: "MYTHIC",
-        chance: 3,
-        image: "assets/items/338-outfit.png"
-      }
-    ]
+    description: 'Оружие, ножи и легендарные скины.',
+    image: 'assets/cases/cs2-case.png'
   },
 
-
-  vinnitsa: {
-    id: "vinnitsa",
-    name: "VINNYTSIA",
-    subtitle: "DOTA 2",
-    type: "Dota 2",
-    color: "#ef4444",
-    cooldown: 24 * 60 * 60 * 1000,
-    cooldownText: "24 часа",
+  {
+    id: 'dota2',
+    name: 'DOTA 2',
+    short: 'DOTA',
+    subtitle: 'DOTA 2',
+    color: '#ef4444',
+    cooldownHours: 24,
     xp: 250,
-    image: "assets/cases/vinnitsa.png",
-
-    items: [
-      {
-        id: "tango",
-        name: "Tango",
-        rarity: "COMMON",
-        chance: 55,
-        image: "assets/items/dota/tango.png"
-      },
-      {
-        id: "iron-branch",
-        name: "Iron Branch",
-        rarity: "UNCOMMON",
-        chance: 25,
-        image: "assets/items/dota/branches.png"
-      },
-      {
-        id: "blink",
-        name: "Blink Dagger",
-        rarity: "RARE",
-        chance: 12,
-        image: "assets/items/dota/blink.png"
-      },
-      {
-        id: "bkb",
-        name: "Black King Bar",
-        rarity: "EPIC",
-        chance: 6,
-        image: "assets/items/dota/bkb.png"
-      },
-      {
-        id: "aghanim",
-        name: "Aghanim's Scepter",
-        rarity: "LEGENDARY",
-        chance: 1.8,
-        image: "assets/items/dota/aghanim.png"
-      },
-      {
-        id: "rapier",
-        name: "Divine Rapier",
-        rarity: "MYTHIC",
-        chance: 0.2,
-        image: "assets/items/dota/rapier.png"
-      }
-    ]
+    description: 'Артефакты, расходники и дорогие предметы Dota 2.',
+    image: 'assets/cases/dota-case.png'
   }
 
-};
+];
 
 
-/* =========================================================
-   HELPERS
-   ========================================================= */
+/* -------------------------------------------------------
+   Встроенные SVG-картинки предметов.
+   Поэтому предметы не будут показывать битую картинку.
+------------------------------------------------------- */
 
-function getCase(id) {
-  return CASES[id];
+function svgIcon(label, emoji, color) {
+
+  const safe = String(label)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  const svg = `
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 360">
+
+    <defs>
+
+      <radialGradient id="bg">
+        <stop stop-color="${color}" stop-opacity=".28"/>
+        <stop offset="1"
+              stop-color="#07070b"
+              stop-opacity="0"/>
+      </radialGradient>
+
+      <linearGradient id="shine" x1="0" x2="1">
+        <stop stop-color="${color}" stop-opacity=".9"/>
+        <stop offset="1"
+              stop-color="#fff"
+              stop-opacity=".15"/>
+      </linearGradient>
+
+    </defs>
+
+    <rect
+      width="500"
+      height="360"
+      rx="34"
+      fill="#09090f"
+    />
+
+    <rect
+      x="12"
+      y="12"
+      width="476"
+      height="336"
+      rx="28"
+      fill="url(#bg)"
+      stroke="${color}"
+      stroke-opacity=".28"
+    />
+
+    <circle
+      cx="250"
+      cy="150"
+      r="86"
+      fill="#11111b"
+      stroke="${color}"
+      stroke-opacity=".35"
+      stroke-width="3"
+    />
+
+    <circle
+      cx="250"
+      cy="150"
+      r="68"
+      fill="${color}"
+      opacity=".09"
+    />
+
+    <text
+      x="250"
+      y="178"
+      text-anchor="middle"
+      font-size="92"
+    >${emoji}</text>
+
+    <rect
+      x="60"
+      y="264"
+      width="380"
+      height="3"
+      rx="2"
+      fill="url(#shine)"
+      opacity=".5"
+    />
+
+    <text
+      x="250"
+      y="310"
+      text-anchor="middle"
+      fill="#fff"
+      font-family="Arial,sans-serif"
+      font-size="26"
+      font-weight="900"
+    >${safe}</text>
+
+  </svg>`;
+
+  return 'data:image/svg+xml;charset=UTF-8,' +
+    encodeURIComponent(svg);
 }
 
-function getAllItems() {
-  const result = [];
 
-  Object.values(CASES).forEach(c => {
-    c.items.forEach(item => {
-      result.push({
-        ...item,
-        caseId: c.id,
-        caseName: c.name,
-        type: c.type,
-        price: RARITIES[item.rarity].price,
-        rarityName: RARITIES[item.rarity].ru
-      });
-    });
-  });
+/* -------------------------------------------------------
+   ПРЕДМЕТЫ
+------------------------------------------------------- */
 
-  return result;
-}
+const rawItems = [
 
-function getItem(caseId, itemId) {
-  const c = CASES[caseId];
-  if (!c) return null;
+  /* =========================
+     CLASH OF CLANS
+  ========================= */
 
-  const item = c.items.find(x => x.id === itemId);
-  if (!item) return null;
+  [
+    'clash_barbarian',
+    'clash',
+    'Варвар',
+    '🪓',
+    10,
+    'common'
+  ],
+
+  [
+    'clash_archer',
+    'clash',
+    'Лучница',
+    '🏹',
+    15,
+    'common'
+  ],
+
+  [
+    'clash_bomber',
+    'clash',
+    'Бомбер',
+    '💣',
+    20,
+    'common'
+  ],
+
+  [
+    'clash_hog',
+    'clash',
+    'Хог Райдер',
+    '🐗',
+    25,
+    'common'
+  ],
+
+  [
+    'clash_wizard',
+    'clash',
+    'Маг',
+    '🧙',
+    50,
+    'uncommon'
+  ],
+
+  [
+    'clash_dragon',
+    'clash',
+    'Дракон',
+    '🐉',
+    75,
+    'uncommon'
+  ],
+
+  [
+    'clash_minion',
+    'clash',
+    'Миньен летающий',
+    '👾',
+    100,
+    'rare'
+  ],
+
+  [
+    'clash_witch',
+    'clash',
+    'Ведьма',
+    '🧟',
+    200,
+    'epic'
+  ],
+
+  [
+    'clash_valk',
+    'clash',
+    'Валькирия',
+    '⚔️',
+    300,
+    'epic'
+  ],
+
+  [
+    'clash_peka',
+    'clash',
+    'ПЕККА',
+    '🤖',
+    400,
+    'legendary'
+  ],
+
+  [
+    'clash_electro',
+    'clash',
+    'Электродракон',
+    '⚡',
+    500,
+    'legendary'
+  ],
+
+  [
+    'clash_golem',
+    'clash',
+    'Голем',
+    '🪨',
+    600,
+    'legendary'
+  ],
+
+  [
+    'clash_inferno',
+    'clash',
+    'Горящий дракон',
+    '🔥',
+    750,
+    'legendary'
+  ],
+
+  [
+    'clash_queen',
+    'clash',
+    'Королева лучниц',
+    '👸',
+    1000,
+    'mythic'
+  ],
+
+
+  /* =========================
+     CS2
+  ========================= */
+
+  [
+    'cs2_glock',
+    'cs2',
+    'Glock-18',
+    '🔫',
+    10,
+    'common'
+  ],
+
+  [
+    'cs2_usp',
+    'cs2',
+    'USP-S',
+    '🔫',
+    15,
+    'common'
+  ],
+
+  [
+    'cs2_deagle',
+    'cs2',
+    'Desert Eagle',
+    '🔫',
+    20,
+    'common'
+  ],
+
+  [
+    'cs2_mp5',
+    'cs2',
+    'MP5',
+    '🔫',
+    25,
+    'common'
+  ],
+
+  [
+    'cs2_galil',
+    'cs2',
+    'Galil',
+    '🔫',
+    50,
+    'uncommon'
+  ],
+
+  [
+    'cs2_ssg',
+    'cs2',
+    'SSG 08',
+    '🎯',
+    75,
+    'uncommon'
+  ],
+
+  [
+    'cs2_sg',
+    'cs2',
+    'SG 553',
+    '🔫',
+    100,
+    'rare'
+  ],
+
+  [
+    'cs2_m4a4',
+    'cs2',
+    'M4A4 без глушителя',
+    '🔫',
+    200,
+    'epic'
+  ],
+
+  [
+    'cs2_m4a1s',
+    'cs2',
+    'M4A1-S с глушителем',
+    '🔫',
+    250,
+    'epic'
+  ],
+
+  [
+    'cs2_vulcan',
+    'cs2',
+    'AK-47 Вулкан',
+    '🔫',
+    500,
+    'legendary'
+  ],
+
+  [
+    'cs2_karambit',
+    'cs2',
+    'Керамбит | Волны',
+    '🗡️',
+    600,
+    'legendary'
+  ],
+
+  [
+    'cs2_butterfly',
+    'cs2',
+    'Нож-бабочка | Волны',
+    '🔪',
+    750,
+    'legendary'
+  ],
+
+  [
+    'cs2_dragon',
+    'cs2',
+    'AWP | Dragon Lore',
+    '🎯',
+    1000,
+    'mythic'
+  ],
+
+
+  /* =========================
+     DOTA 2
+  ========================= */
+
+  [
+    'dota_tango',
+    'dota2',
+    'Tango',
+    '🌿',
+    10,
+    'common'
+  ],
+
+  [
+    'dota_flask',
+    'dota2',
+    'Flask',
+    '🧪',
+    15,
+    'common'
+  ],
+
+  [
+    'dota_ward',
+    'dota2',
+    'Ward',
+    '👁️',
+    20,
+    'common'
+  ],
+
+  [
+    'dota_smoke',
+    'dota2',
+    'Smoke',
+    '💨',
+    25,
+    'common'
+  ],
+
+  [
+    'dota_bottle',
+    'dota2',
+    'Bottle',
+    '🧴',
+    30,
+    'common'
+  ],
+
+  [
+    'dota_boots',
+    'dota2',
+    'Boots of Speed',
+    '🥾',
+    50,
+    'uncommon'
+  ],
+
+  [
+    'dota_voodoo',
+    'dota2',
+    'Voodoo Mask',
+    '🎭',
+    75,
+    'uncommon'
+  ],
+
+  [
+    'dota_morbid',
+    'dota2',
+    'Morbid Mask',
+    '💀',
+    85,
+    'rare'
+  ],
+
+  [
+    'dota_gem',
+    'dota2',
+    'Gem',
+    '💎',
+    100,
+    'rare'
+  ],
+
+  [
+    'dota_shard',
+    'dota2',
+    "Aghanim's Shard",
+    '🔷',
+    125,
+    'rare'
+  ],
+
+  [
+    'dota_point',
+    'dota2',
+    'Point Booster',
+    '🔵',
+    150,
+    'rare'
+  ],
+
+  [
+    'dota_hyper',
+    'dota2',
+    'Hyperstone',
+    '🟢',
+    200,
+    'epic'
+  ],
+
+  [
+    'dota_eaglesong',
+    'dota2',
+    'Eaglesong',
+    '🪽',
+    250,
+    'epic'
+  ],
+
+  [
+    'dota_relic',
+    'dota2',
+    'Sacred Relic',
+    '🟠',
+    300,
+    'epic'
+  ],
+
+  [
+    'dota_moon',
+    'dota2',
+    'Moon Shard',
+    '🌙',
+    400,
+    'legendary'
+  ],
+
+  [
+    'dota_parasma',
+    'dota2',
+    'Parasma',
+    '⚔️',
+    500,
+    'legendary'
+  ],
+
+  [
+    'dota_aghanim',
+    'dota2',
+    "Aghanim's Scepter",
+    '🔷',
+    600,
+    'legendary'
+  ],
+
+  [
+    'dota_satanic',
+    'dota2',
+    'Satanic',
+    '🩸',
+    750,
+    'legendary'
+  ],
+
+  [
+    'dota_rapier',
+    'dota2',
+    'Divine Rapier',
+    '⚔️',
+    1000,
+    'mythic'
+  ]
+
+];
+
+
+/* -------------------------------------------------------
+   Создание объектов
+------------------------------------------------------- */
+
+const ITEMS = rawItems.map((x) => {
+
+  const [
+    id,
+    caseId,
+    name,
+    emoji,
+    price,
+    rarity
+  ] = x;
+
+  const color = RARITIES[rarity].color;
+
+  /*
+    Чем дороже предмет,
+    тем меньше его вес при выпадении.
+  */
+
+  const chance =
+    100 / Math.pow(price / 10, 0.82);
 
   return {
-    ...item,
-    caseId: c.id,
-    caseName: c.name,
-    type: c.type,
-    price: RARITIES[item.rarity].price,
-    rarityName: RARITIES[item.rarity].ru
+
+    id,
+    caseId,
+    name,
+    emoji,
+    price,
+    rarity,
+    chance,
+    type: caseId,
+
+    image: svgIcon(
+      name,
+      emoji,
+      color
+    )
+
   };
+
+});
+
+
+/* -------------------------------------------------------
+   HELPERS
+------------------------------------------------------- */
+
+function getCase(id) {
+
+  return CASES.find(
+    c => c.id === id
+  );
+
 }
 
-function getRarity(rarity) {
-  return RARITIES[rarity] || RARITIES.COMMON;
+
+function getItem(id) {
+
+  return ITEMS.find(
+    i => i.id === id
+  );
+
 }
 
 
-/* =========================================================
-   STORAGE
-   ========================================================= */
+function getCaseItems(caseId) {
+
+  return ITEMS.filter(
+    i => i.caseId === caseId
+  );
+
+}
+
+
+function formatPrice(value) {
+
+  return `${Number(value || 0).toLocaleString('ru-RU')} монет`;
+
+}
+
+
+/* -------------------------------------------------------
+   INVENTORY
+------------------------------------------------------- */
 
 function getInventory() {
+
   try {
+
     return JSON.parse(
-      localStorage.getItem("chak338_inventory") || "[]"
+      localStorage.getItem(
+        'chak338_inventory'
+      ) || '[]'
     );
-  } catch (e) {
+
+  } catch {
+
     return [];
+
   }
+
 }
+
 
 function saveInventory(items) {
+
   localStorage.setItem(
-    "chak338_inventory",
+    'chak338_inventory',
     JSON.stringify(items)
   );
+
 }
 
+
 function addInventoryItem(item) {
-  const inventory = getInventory();
 
-  inventory.unshift({
+  const inventory =
+    getInventory();
+
+  inventory.push({
+
+    ...item,
+
     uid:
+      item.id +
+      '_' +
       Date.now() +
-      "-" +
-      Math.random().toString(16).slice(2),
+      '_' +
+      Math.random()
+        .toString(36)
+        .slice(2, 8),
 
-    id: item.id,
-    caseId: item.caseId,
-    caseName: item.caseName,
-    name: item.name,
-    rarity: item.rarity,
-    rarityName: item.rarityName,
-    price: item.price,
-    image: item.image,
-    type: item.type,
-    date: new Date().toISOString()
+    droppedAt:
+      Date.now()
+
   });
 
   saveInventory(inventory);
+
 }
 
 
-/* =========================================================
+function removeInventoryItems(uids) {
+
+  const set =
+    new Set(uids);
+
+  saveInventory(
+
+    getInventory().filter(
+      item => !set.has(item.uid)
+    )
+
+  );
+
+}
+
+
+/* -------------------------------------------------------
    XP
-   ========================================================= */
+------------------------------------------------------- */
 
 function getXP() {
+
   return Number(
-    localStorage.getItem("chak338_xp") || 0
+    localStorage.getItem(
+      'chak338_xp'
+    ) || 0
   );
-}
 
-function getLevel() {
-  return Number(
-    localStorage.getItem("chak338_level") || 1
-  );
-}
-
-function addXP(amount) {
-  let xp = getXP();
-  let level = getLevel();
-
-  xp += amount;
-
-  while (xp >= 1000) {
-    xp -= 1000;
-    level++;
-  }
-
-  localStorage.setItem("chak338_xp", String(xp));
-  localStorage.setItem("chak338_level", String(level));
-
-  return {
-    xp,
-    level
-  };
 }
 
 
-/* =========================================================
-   CASE COOLDOWN
-   ========================================================= */
+function addXP(value) {
 
-function getCooldownKey(caseId) {
-  return "chak338_case_" + caseId;
-}
-
-function getCaseCooldown(caseId) {
-  return Number(
-    localStorage.getItem(getCooldownKey(caseId)) || 0
-  );
-}
-
-function isCaseReady(caseId) {
-  return Date.now() >= getCaseCooldown(caseId);
-}
-
-function setCaseCooldown(caseId) {
-  const c = getCase(caseId);
-
-  if (!c) return;
+  const xp =
+    getXP() +
+    Number(value || 0);
 
   localStorage.setItem(
-    getCooldownKey(caseId),
-    String(Date.now() + c.cooldown)
+    'chak338_xp',
+    String(xp)
   );
-}
 
-function getRemainingCooldown(caseId) {
-  return Math.max(
-    0,
-    getCaseCooldown(caseId) - Date.now()
-  );
+  return xp;
+
 }
 
 
-/* =========================================================
-   RANDOM DROP
-   ========================================================= */
+function getLevel() {
 
-function randomDrop(caseId) {
-  const c = getCase(caseId);
+  return Math.floor(
+    getXP() / 1000
+  ) + 1;
 
-  if (!c) return null;
+}
 
-  let random = Math.random() * 100;
 
-  for (const item of c.items) {
-    random -= item.chance;
+/* -------------------------------------------------------
+   COOLDOWN
+------------------------------------------------------- */
 
-    if (random <= 0) {
-      return getItem(caseId, item.id);
-    }
+function cooldownKey(caseId) {
+
+  return `chak338_case_${caseId}`;
+
+}
+
+
+function getRemaining(caseId) {
+
+  const c =
+    getCase(caseId);
+
+  const last =
+    Number(
+      localStorage.getItem(
+        cooldownKey(caseId)
+      ) || 0
+    );
+
+  if (!last) {
+    return 0;
   }
 
-  return getItem(
-    caseId,
-    c.items[c.items.length - 1].id
+  return Math.max(
+    0,
+    c.cooldownHours * 3600000 -
+    (Date.now() - last)
   );
+
 }
 
 
-/* =========================================================
-   FORMAT
-   ========================================================= */
+function getNextOpenTime(caseId) {
 
-function formatMoney(value) {
-  return Number(value).toLocaleString("ru-RU") + " ₴";
+  const c =
+    getCase(caseId);
+
+  const last =
+    Number(
+      localStorage.getItem(
+        cooldownKey(caseId)
+      ) || 0
+    );
+
+  if (!last) {
+    return new Date();
+  }
+
+  return new Date(
+    last +
+    c.cooldownHours * 3600000
+  );
+
 }
 
-function formatTime(ms) {
-  if (ms <= 0) return "ГОТОВО";
 
-  const totalSeconds = Math.ceil(ms / 1000);
+function canOpenCase(caseId) {
 
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor(
-    (totalSeconds % 3600) / 60
+  return getRemaining(caseId) <= 0;
+
+}
+
+
+function setCaseOpened(caseId) {
+
+  localStorage.setItem(
+    cooldownKey(caseId),
+    String(Date.now())
   );
-  const seconds = totalSeconds % 60;
 
-  return (
-    String(hours).padStart(2, "0") +
-    ":" +
-    String(minutes).padStart(2, "0") +
-    ":" +
-    String(seconds).padStart(2, "0")
-  );
+}
+
+
+/* -------------------------------------------------------
+   СЛУЧАЙНЫЙ ПРЕДМЕТ
+------------------------------------------------------- */
+
+function randomCaseItem(caseId) {
+
+  const items =
+    getCaseItems(caseId);
+
+  const total =
+    items.reduce(
+      (sum, item) =>
+        sum + item.chance,
+      0
+    );
+
+  let roll =
+    Math.random() * total;
+
+  for (const item of items) {
+
+    roll -= item.chance;
+
+    if (roll <= 0) {
+      return item;
+    }
+
+  }
+
+  return items[
+    items.length - 1
+  ];
+
 }
