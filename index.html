@@ -7,740 +7,164 @@
 
 <meta
     name="viewport"
-    content="width=device-width,initial-scale=1.0"
+    content="width=device-width, initial-scale=1.0"
 >
 
-<title>CHAK338</title>
+<title>CHAK338 — Gaming Hub</title>
 
-<script src="data.js"></script>
+<meta
+    name="description"
+    content="CHAK338 Gaming Hub — кейсы, новости, розыгрыши, апгрейдер, инвентарь и будущий мерч."
+>
+
+<script src="https://cdn.tailwindcss.com"></script>
 
 <style>
 
-* {
-    box-sizing:border-box;
+html {
+    scroll-behavior: smooth;
 }
 
 body {
+    background: #07070b;
+    color: #f8fafc;
+}
 
-    margin:0;
+body::before {
 
-    color:white;
+    content: "";
 
-    font-family:
-        Arial,
-        sans-serif;
+    position: fixed;
 
-    background:
-        radial-gradient(
-            circle at top,
-            #24345a,
-            #070a11 65%
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: .18;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
         );
 
+    background-size: 36px 36px;
+
 }
 
-a {
-    color:inherit;
-    text-decoration:none;
-}
-
-.header {
-
-    position:sticky;
-
-    top:0;
-
-    z-index:20;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:18px 5%;
+.glass {
 
     background:
-        rgba(5,8,14,.85);
+        rgba(12,12,18,.78);
 
     backdrop-filter:
-        blur(20px);
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.08);
+        blur(18px);
 
 }
 
-.logo {
+.card {
 
-    font-size:28px;
-
-    font-weight:1000;
-
-}
-
-.logo span {
-    color:#6ea8ff;
-}
-
-.nav {
-
-    display:flex;
-
-    gap:22px;
-
-    color:#9ba6ba;
-
-    font-size:14px;
-
-    font-weight:800;
-
-}
-
-.nav a:hover {
-    color:white;
-}
-
-.container {
-
-    width:min(1250px,90%);
-
-    margin:auto;
-
-}
-
-.hero {
-
-    min-height:380px;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    text-align:center;
-
-}
-
-.hero h1 {
-
-    font-size:
-        clamp(60px,10vw,110px);
-
-    margin:0;
-
-    font-weight:1000;
-
-    letter-spacing:-6px;
-
-}
-
-.hero h1 span {
-    color:#6ea8ff;
-}
-
-.hero p {
-
-    max-width:600px;
-
-    margin:25px auto;
-
-    color:#929db2;
-
-    line-height:1.7;
-
-}
-
-.title {
-
-    margin:40px 0 25px;
-
-    font-size:30px;
-
-    font-weight:1000;
-
-}
-
-.cases {
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap:18px;
-
-}
-
-.case {
-
-    min-height:390px;
-
-    padding:20px;
-
-    border-radius:25px;
-
-    cursor:pointer;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    text-align:center;
+    background: #0c0c12;
 
     border:
-        1px solid
-        rgba(255,255,255,.1);
-
-    transition:
-        .25s;
+        1px solid rgba(255,255,255,.08);
 
 }
 
-.case:hover {
+.case-card {
+
+    transition:
+        .3s transform,
+        .3s box-shadow;
+
+}
+
+.case-card:hover {
 
     transform:
         translateY(-8px);
 
-    border-color:
-        rgba(255,255,255,.3);
+    box-shadow:
+        0 30px 70px rgba(0,0,0,.45);
 
 }
 
-.case.blue {
+.hero-title {
 
-    background:
-        radial-gradient(
-            circle,
-            #315cae,
-            #0c152b
-        );
+    font-size:
+        clamp(48px, 8vw, 100px);
 
-}
-
-.case.purple {
-
-    background:
-        radial-gradient(
-            circle,
-            #7838a9,
-            #21102f
-        );
+    line-height:
+        .88;
 
 }
 
-.case.red {
+.case-art {
 
-    background:
-        radial-gradient(
-            circle,
-            #b23932,
-            #2b0d0d
-        );
+    height: 270px;
 
-}
+    display: flex;
 
-.case.dota {
+    align-items: center;
 
-    background:
-        radial-gradient(
-            circle,
-            #6d3b25,
-            #160d0a
-        );
+    justify-content: center;
+
+    overflow: hidden;
 
 }
 
-.case img {
+.case-placeholder {
 
-    width:210px;
+    width: 220px;
 
-    height:210px;
+    height: 145px;
 
-    object-fit:contain;
+    border-radius: 25px;
 
-    filter:
-        drop-shadow(
-            0 20px 25px
-            rgba(0,0,0,.5)
-        );
+    display: flex;
 
-}
+    align-items: center;
 
-.case-name {
+    justify-content: center;
 
-    font-size:24px;
+    font-size: 28px;
 
-    font-weight:1000;
+    font-weight: 1000;
 
-}
+    letter-spacing: .08em;
 
-.case-description {
-
-    margin-top:7px;
-
-    color:
-        rgba(255,255,255,.65);
-
-    font-size:12px;
-
-}
-
-
-/* MODAL */
-
-.modal {
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:100;
-
-    display:none;
-
-    justify-content:center;
-
-    align-items:center;
-
-    padding:20px;
-
-    background:
-        rgba(0,0,0,.85);
-
-    backdrop-filter:
-        blur(10px);
-
-}
-
-.modal.show {
-    display:flex;
-}
-
-.modal-box {
-
-    width:min(1100px,100%);
-
-    max-height:90vh;
-
-    overflow:auto;
-
-    padding:30px;
-
-    border-radius:28px;
+    transform:
+        perspective(700px)
+        rotateX(8deg)
+        rotateY(-8deg);
 
     background:
         linear-gradient(
             145deg,
-            #171f30,
-            #090c13
+            #292933,
+            #0c0c11
         );
 
     border:
-        1px solid
-        rgba(255,255,255,.12);
+        1px solid rgba(255,255,255,.15);
+
+    box-shadow:
+        0 30px 70px rgba(0,0,0,.55);
 
 }
 
-.modal-header {
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:25px;
-
-}
-
-.modal-title {
-
-    font-size:28px;
-
-    font-weight:1000;
-
-}
-
-.close {
-
-    width:42px;
-
-    height:42px;
-
-    border:0;
-
-    border-radius:12px;
+.modal-bg {
 
     background:
-        rgba(255,255,255,.08);
+        rgba(0,0,0,.8);
 
-    color:white;
-
-    font-size:20px;
-
-    cursor:pointer;
-
-}
-
-.contents {
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(6,1fr);
-
-    gap:12px;
-
-}
-
-.item {
-
-    padding:12px;
-
-    border-radius:17px;
-
-    text-align:center;
-
-    background:
-        rgba(255,255,255,.045);
-
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-
-}
-
-.item img {
-
-    width:100%;
-
-    height:120px;
-
-    object-fit:contain;
-
-}
-
-.item-name {
-
-    font-size:12px;
-
-    font-weight:900;
-
-}
-
-.rarity {
-
-    margin-top:5px;
-
-    font-size:9px;
-
-    font-weight:1000;
-
-    text-transform:uppercase;
-
-}
-
-.common {
-    color:#aeb7c8;
-}
-
-.uncommon {
-    color:#62d98b;
-}
-
-.rare {
-    color:#55a8ff;
-}
-
-.epic {
-    color:#b87cff;
-}
-
-.legendary {
-    color:#ffb84d;
-}
-
-.mythic {
-    color:#ff4c72;
-}
-
-.price {
-
-    margin-top:5px;
-
-    font-size:11px;
-
-    color:#d7dfed;
-
-    font-weight:900;
-
-}
-
-.open {
-
-    display:block;
-
-    margin:25px auto 0;
-
-    padding:
-        15px 45px;
-
-    border:0;
-
-    border-radius:14px;
-
-    background:white;
-
-    color:#070a10;
-
-    font-weight:1000;
-
-    cursor:pointer;
-
-}
-
-
-/* SPIN */
-
-.spin {
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:200;
-
-    display:none;
-
-    justify-content:center;
-
-    align-items:center;
-
-    background:
-        rgba(2,4,8,.96);
-
-}
-
-.spin.show {
-    display:flex;
-}
-
-.reel {
-
-    position:relative;
-
-    width:min(1100px,90%);
-
-    height:210px;
-
-    overflow:hidden;
-
-    border-radius:25px;
-
-    background:#111722;
-
-}
-
-.marker {
-
-    position:absolute;
-
-    z-index:2;
-
-    left:50%;
-
-    top:0;
-
-    bottom:0;
-
-    width:4px;
-
-    transform:
-        translateX(-50%);
-
-    background:white;
-
-}
-
-.track {
-
-    position:absolute;
-
-    left:0;
-
-    top:0;
-
-    height:100%;
-
-    display:flex;
-
-    gap:10px;
-
-    align-items:center;
-
-}
-
-.reel-item {
-
-    flex:
-        0 0 170px;
-
-    height:180px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
-
-    border-radius:18px;
-
-    background:
-        rgba(255,255,255,.05);
-
-}
-
-.reel-item img {
-
-    width:120px;
-
-    height:120px;
-
-    object-fit:contain;
-
-}
-
-.reel-item span {
-
-    font-size:10px;
-
-    font-weight:900;
-
-}
-
-
-/* RESULT */
-
-.result {
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:300;
-
-    display:none;
-
-    justify-content:center;
-
-    align-items:center;
-
-    background:
-        rgba(0,0,0,.9);
-
-}
-
-.result.show {
-    display:flex;
-}
-
-.result-box {
-
-    width:min(430px,90%);
-
-    padding:40px;
-
-    text-align:center;
-
-    border-radius:30px;
-
-    background:#111824;
-
-}
-
-.result-box img {
-
-    width:230px;
-
-    height:230px;
-
-    object-fit:contain;
-
-}
-
-.result-name {
-
-    font-size:28px;
-
-    font-weight:1000;
-
-    margin-top:10px;
-
-}
-
-.result-price {
-
-    color:#aab4c5;
-
-    margin-top:8px;
-
-}
-
-.result button {
-
-    width:100%;
-
-    margin-top:25px;
-
-    padding:15px;
-
-    border:0;
-
-    border-radius:14px;
-
-    background:white;
-
-    font-weight:1000;
-
-}
-
-@media(max-width:1100px) {
-
-    .cases {
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .contents {
-        grid-template-columns:
-            repeat(4,1fr);
-    }
-
-}
-
-@media(max-width:650px) {
-
-    .nav {
-        display:none;
-    }
-
-    .cases {
-        grid-template-columns:1fr;
-    }
-
-    .contents {
-        grid-template-columns:
-            repeat(2,1fr);
-    }
+    backdrop-filter:
+        blur(10px);
 
 }
 
@@ -748,73 +172,1024 @@ a {
 
 </head>
 
+
 <body>
 
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
-<header class="header">
+<header class="fixed top-0 left-0 right-0 z-50">
 
-<a
-    href="index.html"
-    class="logo"
->
-    CHAK<span>338</span>
+<div class="glass border-b border-white/10">
+
+<div class="max-w-7xl mx-auto px-5">
+
+<div class="h-20 flex items-center justify-between">
+
+<a href="index.html"
+   class="flex items-center gap-3">
+
+<div
+    class="w-11 h-11 rounded-2xl
+    bg-gradient-to-br from-fuchsia-500 to-violet-700
+    flex items-center justify-center
+    font-black text-xl">
+
+C
+
+</div>
+
+<div>
+
+<div class="font-black text-xl">
+CHAK338
+</div>
+
+<div
+    class="text-[10px] uppercase
+    tracking-[.22em] text-zinc-500">
+
+Gaming Hub
+
+</div>
+
+</div>
+
 </a>
 
 
-<nav class="nav">
+<nav class="hidden lg:flex gap-7 text-sm font-bold text-zinc-400">
 
-<a href="index.html">
-Главная
-</a>
+<a href="#cases"
+   class="hover:text-white">
 
-<a href="#cases">
 Кейсы
+
 </a>
 
-<a href="inventory.html">
-Инвентарь
+<a href="#news"
+   class="hover:text-white">
+
+Новости
+
 </a>
 
-<a href="upgrade.html">
-Апгрейд
+<a href="#giveaways"
+   class="hover:text-white">
+
+Розыгрыши
+
+</a>
+
+<a href="#shop"
+   class="hover:text-white">
+
+Мерч
+
 </a>
 
 </nav>
 
+
+<div class="flex gap-3">
+
+<a
+    href="upgrade.html"
+    class="hidden sm:block px-4 py-3
+    rounded-xl bg-white/5
+    border border-white/10
+    font-black text-sm">
+
+АПГРЕЙДЕР
+
+</a>
+
+<a
+    href="inventory.html"
+    class="px-4 py-3 rounded-xl
+    bg-fuchsia-500 text-white
+    font-black text-sm">
+
+ИНВЕНТАРЬ
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </header>
 
 
-<main class="container">
+<main class="pt-20">
 
 
-<section class="hero">
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="relative overflow-hidden">
+
+<div
+    class="absolute
+    -top-40
+    left-1/2
+    -translate-x-1/2
+    w-[800px]
+    h-[500px]
+    bg-fuchsia-600/20
+    blur-[130px]
+    rounded-full">
+</div>
+
+
+<div
+    class="max-w-7xl mx-auto
+    px-5
+    pt-24
+    pb-24">
+
+<div
+    class="grid lg:grid-cols-2
+    gap-16 items-center">
+
 
 <div>
 
-<h1>
-CHAK<span>338</span>
+<div
+    class="inline-flex items-center
+    gap-2 px-4 py-2
+    rounded-full
+    bg-white/5
+    border border-white/10
+    text-xs font-black
+    uppercase tracking-widest
+    text-fuchsia-300">
+
+<span
+    class="w-2 h-2
+    bg-emerald-400
+    rounded-full">
+</span>
+
+CHAK338 ONLINE
+
+</div>
+
+
+<h1
+    class="hero-title
+    font-black
+    tracking-tight
+    mt-8">
+
+ИГРАЙ.<br>
+
+ОТКРЫВАЙ.<br>
+
+<span class="text-fuchsia-400">
+ПРОКАЧИВАЙСЯ.
+</span>
+
 </h1>
 
-<p>
-Открывай кейсы, собирай редкие предметы
-и улучшай свою коллекцию.
+
+<p
+    class="mt-8 max-w-xl
+    text-lg
+    text-zinc-400
+    leading-relaxed">
+
+Добро пожаловать в CHAK338 Gaming Hub —
+место, где игровой мир, стримы,
+кейсы, розыгрыши и будущий мерч
+собираются в одном месте.
+
 </p>
+
+
+<div class="flex flex-wrap gap-4 mt-8">
+
+<a
+    href="#cases"
+    class="px-7 py-4
+    rounded-2xl
+    bg-fuchsia-500
+    hover:bg-fuchsia-400
+    text-white
+    font-black">
+
+СМОТРЕТЬ КЕЙСЫ
+
+</a>
+
+
+<a
+    href="upgrade.html"
+    class="px-7 py-4
+    rounded-2xl
+    border border-white/10
+    bg-white/5
+    font-black">
+
+АПГРЕЙДЕР →
+
+</a>
+
+</div>
+
+</div>
+
+
+<!-- HERO SIDE -->
+
+<div class="grid grid-cols-2 gap-4">
+
+<div class="card rounded-3xl p-6">
+
+<div class="text-4xl">
+🎁
+</div>
+
+<h3
+    class="mt-5
+    text-xl font-black">
+
+НАГРАДЫ
+
+</h3>
+
+<p
+    class="mt-2
+    text-sm text-zinc-500">
+
+Новые предметы
+за активность.
+
+</p>
+
+</div>
+
+
+<div class="card rounded-3xl p-6">
+
+<div class="text-4xl">
+🏆
+</div>
+
+<h3
+    class="mt-5
+    text-xl font-black">
+
+РЕЙТИНГ
+
+</h3>
+
+<p
+    class="mt-2
+    text-sm text-zinc-500">
+
+Прокачивай свой
+уровень.
+
+</p>
+
+</div>
+
+
+<div class="card rounded-3xl p-6">
+
+<div class="text-4xl">
+⚡
+</div>
+
+<h3
+    class="mt-5
+    text-xl font-black">
+
+UPGRADE
+
+</h3>
+
+<p
+    class="mt-2
+    text-sm text-zinc-500">
+
+Улучшай предметы
+из инвентаря.
+
+</p>
+
+</div>
+
+
+<div class="card rounded-3xl p-6">
+
+<div class="text-4xl">
+👑
+</div>
+
+<h3
+    class="mt-5
+    text-xl font-black">
+
+ЭКСКЛЮЗИВ
+
+</h3>
+
+<p
+    class="mt-2
+    text-sm text-zinc-500">
+
+Редкие предметы
+CHAK338.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
 
 </div>
 
 </section>
 
 
-<section id="cases">
+<!-- =====================================================
+     CASES
+===================================================== -->
 
-<div class="title">
-Кейсы
+<section id="cases"
+         class="py-24">
+
+<div
+    class="max-w-7xl mx-auto
+    px-5">
+
+<div class="mb-12">
+
+<div
+    class="text-xs
+    font-black
+    uppercase
+    tracking-[.25em]
+    text-zinc-500">
+
+CHAK338 CASES
+
+</div>
+
+<h2
+    class="mt-3
+    text-4xl sm:text-6xl
+    font-black">
+
+Открывай свой дроп.
+
+</h2>
+
+<p
+    class="mt-5
+    text-zinc-500
+    max-w-2xl">
+
+Три направления.
+Три города.
+Совершенно разные коллекции.
+
+</p>
+
+</div>
+
+
+<div
+    id="casesGrid"
+    class="grid md:grid-cols-3 gap-6">
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     LEVEL
+===================================================== -->
+
+<section
+    class="py-24
+    bg-white/[.02]
+    border-y border-white/5">
+
+<div
+    class="max-w-7xl mx-auto
+    px-5">
+
+<div
+    class="grid lg:grid-cols-2
+    gap-12 items-center">
+
+
+<div>
+
+<div
+    class="text-xs
+    font-black
+    uppercase
+    tracking-[.25em]
+    text-emerald-400">
+
+LEVEL SYSTEM
+
+</div>
+
+
+<h2
+    class="mt-4
+    text-4xl sm:text-6xl
+    font-black">
+
+Прокачивай уровень.<br>
+Получай награды.
+
+</h2>
+
+
+<p
+    class="mt-6
+    text-zinc-400
+    leading-relaxed">
+
+Открывай кейсы, получай XP
+и постепенно повышай свой уровень
+в CHAK338 Gaming Hub.
+
+</p>
+
+
+<div class="mt-8">
+
+<div
+    class="flex justify-between
+    text-sm font-bold mb-2">
+
+<span>
+LVL <span id="level">1</span>
+</span>
+
+<span>
+<span id="xp">0</span> XP
+</span>
+
+</div>
+
+
+<div
+    class="h-3
+    rounded-full
+    bg-zinc-900
+    overflow-hidden">
+
+<div
+    id="xpBar"
+    class="h-full
+    bg-fuchsia-500
+    rounded-full"
+    style="width:0%">
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div
+    class="card
+    rounded-[32px]
+    p-8">
+
+<div
+    class="text-xs
+    text-zinc-500
+    uppercase
+    tracking-widest
+    font-black">
+
+YOUR PROFILE
+
+</div>
+
+
+<div
+    class="flex
+    items-center
+    justify-between
+    mt-8">
+
+<div>
+
+<div
+    class="text-5xl
+    font-black">
+
+LVL <span id="profileLevel">
+1
+</span>
+
 </div>
 
 <div
-    class="cases"
-    id="casesGrid"
-></div>
+    class="text-zinc-500
+    mt-2">
+
+CHAK338 PLAYER
+
+</div>
+
+</div>
+
+
+<div
+    class="w-20 h-20
+    rounded-3xl
+    bg-fuchsia-500/10
+    border border-fuchsia-500/20
+    flex items-center
+    justify-center
+    text-4xl">
+
+⚡
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     NEWS
+===================================================== -->
+
+<section
+    id="news"
+    class="py-24">
+
+<div
+    class="max-w-7xl mx-auto
+    px-5">
+
+<div
+    class="mb-12">
+
+<div
+    class="text-xs
+    font-black
+    uppercase
+    tracking-[.25em]
+    text-zinc-500">
+
+LATEST
+
+</div>
+
+<h2
+    class="mt-3
+    text-4xl sm:text-5xl
+    font-black">
+
+Новости CHAK338
+
+</h2>
+
+</div>
+
+
+<div
+    class="grid md:grid-cols-3
+    gap-5">
+
+
+<article
+    class="card rounded-3xl p-7">
+
+<div class="text-4xl">
+🔥
+</div>
+
+<div
+    class="mt-7
+    text-xs
+    text-fuchsia-400
+    font-black">
+
+UPDATE #001
+
+</div>
+
+<h3
+    class="mt-2
+    text-xl font-black">
+
+CHAK338 Gaming Hub
+запущен
+
+</h3>
+
+<p
+    class="mt-3
+    text-sm
+    text-zinc-500
+    leading-relaxed">
+
+Первая версия игрового хаба
+уже доступна. Дальше будет
+ещё больше функций.
+
+</p>
+
+</article>
+
+
+<article
+    class="card rounded-3xl p-7">
+
+<div class="text-4xl">
+🎮
+</div>
+
+<div
+    class="mt-7
+    text-xs
+    text-cyan-400
+    font-black">
+
+UPDATE #002
+
+</div>
+
+<h3
+    class="mt-2
+    text-xl font-black">
+
+Новые кейсы
+
+</h3>
+
+<p
+    class="mt-3
+    text-sm
+    text-zinc-500
+    leading-relaxed">
+
+LVIV, KIYIV и VINNYTSIA.
+У каждого кейса будет
+своя коллекция.
+
+</p>
+
+</article>
+
+
+<article
+    class="card rounded-3xl p-7">
+
+<div class="text-4xl">
+⚡
+</div>
+
+<div
+    class="mt-7
+    text-xs
+    text-red-400
+    font-black">
+
+COMING SOON
+
+</div>
+
+<h3
+    class="mt-2
+    text-xl font-black">
+
+Новые игровые функции
+
+</h3>
+
+<p
+    class="mt-3
+    text-sm
+    text-zinc-500
+    leading-relaxed">
+
+Рейтинги, новые механики,
+эксклюзивные предметы
+и больше возможностей.
+
+</p>
+
+</article>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     GIVEAWAYS
+===================================================== -->
+
+<section
+    id="giveaways"
+    class="py-24
+    bg-white/[.02]
+    border-y border-white/5">
+
+<div
+    class="max-w-7xl mx-auto
+    px-5">
+
+<div
+    class="grid lg:grid-cols-2
+    gap-12 items-center">
+
+
+<div>
+
+<div
+    class="text-xs
+    font-black
+    uppercase
+    tracking-[.25em]
+    text-fuchsia-400">
+
+COMMUNITY
+
+</div>
+
+<h2
+    class="mt-4
+    text-4xl sm:text-6xl
+    font-black">
+
+Розыгрыши<br>
+уже на подходе.
+
+</h2>
+
+<p
+    class="mt-6
+    text-zinc-400
+    leading-relaxed">
+
+В будущем здесь появятся
+регулярные розыгрыши от CHAK338:
+предметы, эксклюзивы,
+мерч и другие призы.
+
+</p>
+
+</div>
+
+
+<div
+    class="card rounded-[32px]
+    p-8">
+
+<div
+    class="text-6xl">
+
+🎁
+
+</div>
+
+<h3
+    class="mt-7
+    text-3xl
+    font-black">
+
+GIVEAWAY #001
+
+</h3>
+
+<div
+    class="mt-3
+    text-fuchsia-400
+    font-black">
+
+COMING SOON
+
+</div>
+
+<p
+    class="mt-5
+    text-zinc-500">
+
+Следи за новостями,
+чтобы не пропустить старт.
+
+</p>
+
+<button
+    onclick="alert('Розыгрыш скоро будет доступен!')"
+    class="mt-7
+    w-full py-4
+    rounded-2xl
+    bg-white
+    text-black
+    font-black">
+
+УЗНАТЬ БОЛЬШЕ
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     MERCH
+===================================================== -->
+
+<section
+    id="shop"
+    class="py-24">
+
+<div
+    class="max-w-7xl mx-auto
+    px-5">
+
+<div
+    class="max-w-2xl mb-12">
+
+<div
+    class="text-xs
+    font-black
+    uppercase
+    tracking-[.25em]
+    text-zinc-500">
+
+CHAK338 SHOP
+
+</div>
+
+<h2
+    class="mt-3
+    text-4xl sm:text-6xl
+    font-black">
+
+Мерч стримера.
+
+</h2>
+
+<p
+    class="mt-5
+    text-zinc-400">
+
+Собственный мерч CHAK338
+уже в планах.
+Скоро здесь появятся первые
+коллекции.
+
+</p>
+
+</div>
+
+
+<div
+    class="grid sm:grid-cols-3
+    gap-5">
+
+
+<div class="card rounded-3xl overflow-hidden">
+
+<div
+    class="h-56
+    flex items-center
+    justify-center
+    bg-zinc-900
+    text-8xl">
+
+👕
+
+</div>
+
+<div class="p-6">
+
+<h3
+    class="font-black text-xl">
+
+CHAK338 T-Shirt
+
+</h3>
+
+<div
+    class="mt-2
+    text-zinc-500">
+
+COMING SOON
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card rounded-3xl overflow-hidden">
+
+<div
+    class="h-56
+    flex items-center
+    justify-center
+    bg-zinc-900
+    text-8xl">
+
+🧥
+
+</div>
+
+<div class="p-6">
+
+<h3
+    class="font-black text-xl">
+
+CHAK338 Hoodie
+
+</h3>
+
+<div
+    class="mt-2
+    text-zinc-500">
+
+COMING SOON
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card rounded-3xl overflow-hidden">
+
+<div
+    class="h-56
+    flex items-center
+    justify-center
+    bg-zinc-900
+    text-8xl">
+
+🧢
+
+</div>
+
+<div class="p-6">
+
+<h3
+    class="font-black text-xl">
+
+CHAK338 Cap
+
+</h3>
+
+<div
+    class="mt-2
+    text-zinc-500">
+
+COMING SOON
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 </section>
 
@@ -822,309 +1197,474 @@ CHAK<span>338</span>
 </main>
 
 
-<!-- CONTENT MODAL -->
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer
+    class="border-t
+    border-white/10
+    bg-black">
 
 <div
-    class="modal"
-    id="contentsModal"
->
-
-<div class="modal-box">
-
-
-<div class="modal-header">
+    class="max-w-7xl mx-auto
+    px-5 py-10">
 
 <div
-    class="modal-title"
-    id="modalTitle"
->
-</div>
-
-<button
-    class="close"
-    onclick="closeModal()"
->
-×
-</button>
-
-</div>
-
-
-<div
-    class="contents"
-    id="contents"
-></div>
-
-
-<button
-    class="open"
-    id="openCaseButton"
->
-ОТКРЫТЬ КЕЙС
-</button>
-
-
-</div>
-
-</div>
-
-
-<!-- SPIN -->
-
-<div
-    class="spin"
-    id="spin"
->
-
-<div class="reel">
-
-<div class="marker"></div>
-
-<div
-    class="track"
-    id="track"
-></div>
-
-</div>
-
-</div>
-
-
-<!-- RESULT -->
-
-<div
-    class="result"
-    id="result"
->
-
-<div class="result-box">
+    class="flex
+    flex-col md:flex-row
+    justify-between
+    gap-5">
 
 <div>
-ТЕБЕ ВЫПАЛО
-</div>
-
-<img
-    id="resultImage"
->
 
 <div
-    class="result-name"
-    id="resultName"
-></div>
+    class="font-black
+    text-xl">
+
+CHAK338
+
+</div>
+
+<p
+    class="mt-2
+    text-sm
+    text-zinc-600">
+
+Gaming Hub · Cases · Drops · Upgrade · Merch
+
+</p>
+
+</div>
 
 <div
-    class="result-price"
-    id="resultPrice"
-></div>
+    class="text-sm
+    text-zinc-600">
 
-<button onclick="closeResult()">
-ЗАБРАТЬ
-</button>
+© 2026 CHAK338
 
 </div>
 
 </div>
 
+</div>
+
+</footer>
+
+
+<script src="data.js"></script>
 
 <script>
 
+/* =====================================================
+   CASES
+===================================================== */
+
 const casesGrid =
-    document.getElementById(
-        "casesGrid"
-    );
+    document.getElementById("casesGrid");
 
 
-let currentCase = null;
+function renderCases() {
+
+    casesGrid.innerHTML = "";
+
+    CASES.forEach(caseData => {
+
+        const items =
+            getCaseItems(caseData.id);
+
+        const remaining =
+            getRemaining(caseData.id);
+
+        const article =
+            document.createElement("article");
+
+        article.className =
+            "case-card card rounded-[30px] overflow-hidden";
 
 
-/* ============================================================
-   CASE CARDS
-   ============================================================ */
+        article.innerHTML = `
+
+            <div
+                class="case-art"
+                style="
+                    background:
+                    radial-gradient(
+                        circle at 50% 35%,
+                        ${caseData.color}45,
+                        transparent 40%
+                    ),
+                    linear-gradient(
+                        145deg,
+                        #181820,
+                        #09090d
+                    );
+                "
+            >
+
+                ${
+                    caseData.image
+                    ? `
+                    <img
+                        src="${caseData.image}"
+                        alt="${caseData.name}"
+                        class="max-w-[80%] max-h-[190px]
+                        object-contain relative z-10"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+                    >
+                    `
+                    : ""
+                }
+
+                <div
+                    class="case-placeholder"
+                    style="
+                        display:${caseData.image ? "none" : "flex"};
+                        color:${caseData.color};
+                        text-shadow:0 0 25px ${caseData.color};
+                    "
+                >
+                    ${caseData.name}
+                </div>
+
+            </div>
 
 
-CASES.forEach(caseData => {
+            <div class="p-6">
 
-    const card =
+                <div
+                    class="text-xs
+                    font-black
+                    uppercase
+                    tracking-widest"
+                    style="
+                        color:${caseData.color}
+                    "
+                >
+
+                    ${caseData.subtitle}
+
+                </div>
+
+
+                <h3
+                    class="mt-2
+                    text-3xl
+                    font-black">
+
+                    ${caseData.name}
+
+                </h3>
+
+
+                <p
+                    class="mt-3
+                    text-zinc-500
+                    min-h-[48px]">
+
+                    ${caseData.description}
+
+                </p>
+
+
+                <div
+                    class="mt-5
+                    flex justify-between
+                    text-xs
+                    text-zinc-500">
+
+                    <span>
+                        ${items.length} предметов
+                    </span>
+
+                    <span>
+                        ${formatRemaining(remaining)}
+                    </span>
+
+                </div>
+
+
+                <button
+                    onclick="openCase('${caseData.id}')"
+                    class="w-full
+                    mt-6
+                    py-4
+                    rounded-2xl
+                    font-black
+                    text-black"
+                    style="
+                        background:${caseData.color}
+                    "
+                >
+
+                    ${
+                        remaining > 0
+                        ? "ПОСМОТРЕТЬ КЕЙС"
+                        : "ОТКРЫТЬ КЕЙС"
+                    }
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        casesGrid.appendChild(article);
+
+    });
+
+}
+
+
+renderCases();
+
+
+/* =====================================================
+   XP
+===================================================== */
+
+function updateXP() {
+
+    const xp =
+        getXP();
+
+    const level =
+        getLevel();
+
+    const current =
+        xp % 1000;
+
+    const percent =
+        current / 10;
+
+
+    document.getElementById("xp").textContent =
+        xp;
+
+    document.getElementById("level").textContent =
+        level;
+
+    document.getElementById("profileLevel").textContent =
+        level;
+
+    document.getElementById("xpBar").style.width =
+        percent + "%";
+
+}
+
+
+updateXP();
+
+
+/* =====================================================
+   CASE MODAL
+===================================================== */
+
+function openCase(caseId) {
+
+    const caseData =
+        getCase(caseId);
+
+    const items =
+        getCaseItems(caseId);
+
+
+    const modal =
         document.createElement("div");
 
+    modal.id =
+        "caseModal";
 
-    card.className =
-        "case " +
-        caseData.color;
+    modal.className =
+        "modal-bg fixed inset-0 z-[100] flex items-center justify-center p-5";
 
 
-    card.innerHTML = `
+    modal.innerHTML = `
 
-        <img
-            src="${caseData.image}"
-            onerror="
-                this.src='https://dummyimage.com/400x400/151b29/ffffff&text=${caseData.name}'
-            "
-        >
+        <div
+            class="card
+            rounded-[32px]
+            max-w-5xl
+            w-full
+            max-h-[90vh]
+            overflow-y-auto
+            p-7">
 
-        <div>
+            <div
+                class="flex
+                justify-between
+                items-center">
 
-            <div class="case-name">
-                ${caseData.name}
+                <div>
+
+                    <div
+                        class="text-xs
+                        font-black
+                        uppercase
+                        tracking-widest"
+                        style="color:${caseData.color}">
+
+                        ${caseData.subtitle}
+
+                    </div>
+
+                    <h2
+                        class="mt-2
+                        text-4xl
+                        font-black">
+
+                        ${caseData.name}
+
+                    </h2>
+
+                </div>
+
+
+                <button
+                    onclick="closeCaseModal()"
+                    class="w-11 h-11
+                    rounded-xl
+                    bg-white/5
+                    text-xl">
+
+                    ×
+
+                </button>
+
             </div>
 
-            <div class="case-description">
-                ${caseData.description}
+
+            <div
+                class="grid sm:grid-cols-2
+                lg:grid-cols-3
+                gap-4 mt-8">
+
+                ${items.map(item => {
+
+                    const rarity =
+                        getRarity(item.rarity);
+
+                    return `
+
+                    <div
+                        class="rounded-2xl
+                        border
+                        bg-zinc-950
+                        p-5"
+                        style="
+                            border-color:${rarity.color}55
+                        ">
+
+                        <div
+                            class="h-32
+                            flex
+                            items-center
+                            justify-center">
+
+                            <img
+                                src="${item.image}"
+                                alt="${item.name}"
+                                class="max-w-full
+                                max-h-full
+                                object-contain"
+                                onerror="this.style.display='none'"
+                            >
+
+                        </div>
+
+                        <div
+                            class="mt-4
+                            text-xs
+                            font-black"
+                            style="
+                                color:${rarity.color}
+                            ">
+
+                            ${rarity.name.toUpperCase()}
+
+                        </div>
+
+                        <div
+                            class="mt-1
+                            font-black">
+
+                            ${item.name}
+
+                        </div>
+
+                        <div
+                            class="mt-2
+                            text-zinc-500">
+
+                            ${formatPrice(item.price)}
+
+                        </div>
+
+                    </div>
+
+                    `;
+
+                }).join("")}
+
             </div>
+
+
+            <button
+                onclick="startOpening('${caseId}')"
+                class="w-full
+                mt-7
+                py-5
+                rounded-2xl
+                font-black
+                text-black"
+                style="
+                    background:${caseData.color}
+                "
+            >
+
+                ${
+                    canOpenCase(caseId)
+                    ? "ОТКРЫТЬ КЕЙС"
+                    : "КЕЙС ЕЩЁ НЕ ГОТОВ"
+                }
+
+            </button>
 
         </div>
 
     `;
 
 
-    card.onclick = () => {
-
-        openCaseContents(
-            caseData.id
-        );
-
-    };
-
-
-    casesGrid.appendChild(
-        card
-    );
-
-});
-
-
-/* ============================================================
-   CONTENTS
-   ============================================================ */
-
-
-function openCaseContents(caseId) {
-
-    currentCase =
-        getCase(caseId);
-
-
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        currentCase.name +
-        " — СОДЕРЖИМОЕ";
-
-
-    const container =
-        document.getElementById(
-            "contents"
-        );
-
-
-    container.innerHTML = "";
-
-
-    const items =
-        getCaseItems(caseId);
-
-
-    items.forEach(item => {
-
-        const rarity =
-            getRarity(
-                item.rarity
-            );
-
-
-        const element =
-            document.createElement(
-                "div"
-            );
-
-
-        element.className =
-            "item";
-
-
-        element.innerHTML = `
-
-            <img
-                src="${item.image}"
-                onerror="
-                    this.src='https://dummyimage.com/300x300/151b29/ffffff&text=ITEM'
-                "
-            >
-
-            <div class="item-name">
-                ${item.name}
-            </div>
-
-            <div
-                class="
-                    rarity
-                    ${item.rarity}
-                "
-            >
-                ${rarity.name}
-            </div>
-
-            <div class="price">
-                💰 ${formatPrice(item.price)}
-            </div>
-
-        `;
-
-
-        container.appendChild(
-            element
-        );
-
-    });
-
-
-    document.getElementById(
-        "contentsModal"
-    ).classList.add(
-        "show"
-    );
+    document.body.appendChild(modal);
 
 }
 
 
-function closeModal() {
+function closeCaseModal() {
 
-    document.getElementById(
-        "contentsModal"
-    ).classList.remove(
-        "show"
-    );
+    const modal =
+        document.getElementById("caseModal");
 
-}
+    if (modal) {
 
+        modal.remove();
 
-/* ============================================================
-   OPEN CASE
-   ============================================================ */
-
-
-document.getElementById(
-    "openCaseButton"
-).onclick = () => {
-
-    if (!currentCase) {
-        return;
     }
 
+}
 
-    if (
-        !canOpenCase(
-            currentCase.id
-        )
-    ) {
+
+/* =====================================================
+   OPEN
+===================================================== */
+
+function startOpening(caseId) {
+
+    if (!canOpenCase(caseId)) {
 
         alert(
-            "Кейс пока недоступен.\n\nОсталось: " +
-            formatTime(
-                getRemaining(
-                    currentCase.id
-                )
-            )
+            "Этот кейс пока недоступен."
         );
 
         return;
@@ -1132,286 +1672,146 @@ document.getElementById(
     }
 
 
-    closeModal();
+    const item =
+        randomCaseItem(caseId);
 
-    spinCase(
-        currentCase.id
-    );
 
-};
+    setCaseOpened(caseId);
 
 
-/* ============================================================
-   SPIN
-   ============================================================ */
+    closeCaseModal();
 
 
-function spinCase(caseId) {
-
-    const winner =
-        randomCaseItem(
-            caseId
-        );
-
-
-    if (!winner) {
-        return;
-    }
-
-
-    setCaseOpened(
-        caseId
-    );
-
-
-    document.getElementById(
-        "spin"
-    ).classList.add(
-        "show"
-    );
-
-
-    buildReel(
-        winner
-    );
-
-
-    setTimeout(() => {
-
-        document.getElementById(
-            "spin"
-        ).classList.remove(
-            "show"
-        );
-
-
-        showResult(
-            winner
-        );
-
-    },5300);
-
-}
-
-
-function buildReel(winner) {
-
-    const track =
-        document.getElementById(
-            "track"
-        );
-
-
-    track.innerHTML = "";
-
-
-    const items = [];
-
-
-    for (
-        let i = 0;
-        i < 50;
-        i++
-    ) {
-
-        items.push(
-            ITEMS[
-                Math.floor(
-                    Math.random() *
-                    ITEMS.length
-                )
-            ]
-        );
-
-    }
-
-
-    const winnerIndex = 40;
-
-
-    items[winnerIndex] =
-        winner;
-
-
-    items.forEach(item => {
-
-        const el =
-            document.createElement(
-                "div"
-            );
-
-
-        el.className =
-            "reel-item";
-
-
-        el.innerHTML = `
-
-            <img
-                src="${item.image}"
-            >
-
-            <span>
-                ${item.name}
-            </span>
-
-        `;
-
-
-        track.appendChild(
-            el
-        );
-
-    });
-
-
-    const width =
-        170 + 10;
-
-
-    const reelWidth =
-        document.querySelector(
-            ".reel"
-        ).clientWidth;
-
-
-    const target =
-        -(winnerIndex * width)
-        +
-        reelWidth / 2
-        -
-        width / 2;
-
-
-    track.style.transition =
-        "none";
-
-
-    track.style.transform =
-        "translateX(0)";
-
-
-    requestAnimationFrame(() => {
-
-        requestAnimationFrame(() => {
-
-            track.style.transition =
-                "transform 5s cubic-bezier(.08,.75,.12,1)";
-
-            track.style.transform =
-                `translateX(${target}px)`;
-
-        });
-
-    });
-
-}
-
-
-/* ============================================================
-   RESULT
-   ============================================================ */
-
-
-function showResult(item) {
-
-    document.getElementById(
-        "resultImage"
-    ).src =
-        item.image;
-
-
-    document.getElementById(
-        "resultName"
-    ).textContent =
-        item.name;
-
-
-    document.getElementById(
-        "resultPrice"
-    ).textContent =
-        "Стоимость: 💰 " +
-        formatPrice(
-            item.price
-        );
-
-
-    document.getElementById(
-        "result"
-    ).classList.add(
-        "show"
-    );
-
-
-    addInventoryItem(
-        item
-    );
+    addInventoryItem(item);
 
 
     const caseData =
-        getCase(
-            item.caseId
-        );
+        getCase(caseId);
 
 
-    if (caseData) {
+    addXP(caseData.xp);
 
-        addXP(
-            caseData.xp
-        );
 
-    }
+    updateXP();
+
+
+    showDrop(item);
 
 }
 
 
-function closeResult() {
+/* =====================================================
+   DROP
+===================================================== */
 
-    document.getElementById(
-        "result"
-    ).classList.remove(
-        "show"
-    );
+function showDrop(item) {
 
-}
-
-
-function formatTime(ms) {
-
-    const seconds =
-        Math.ceil(
-            ms / 1000
-        );
+    const rarity =
+        getRarity(item.rarity);
 
 
-    const h =
-        Math.floor(
-            seconds / 3600
-        );
+    const modal =
+        document.createElement("div");
+
+    modal.className =
+        "modal-bg fixed inset-0 z-[120] flex items-center justify-center p-5";
 
 
-    const m =
-        Math.floor(
-            (seconds % 3600) / 60
-        );
+    modal.innerHTML = `
+
+        <div
+            class="card
+            rounded-[35px]
+            max-w-lg
+            w-full
+            text-center
+            p-10">
+
+            <div
+                class="text-xs
+                uppercase
+                tracking-[.3em]
+                font-black"
+                style="
+                    color:${rarity.color}
+                ">
+
+                YOU WON
+
+            </div>
 
 
-    const s =
-        seconds % 60;
+            <div
+                class="h-64
+                mt-6
+                flex items-center
+                justify-center">
+
+                <img
+                    src="${item.image}"
+                    alt="${item.name}"
+                    class="max-w-full
+                    max-h-full
+                    object-contain">
+
+            </div>
 
 
-    return (
-        String(h).padStart(2,"0")
-        + ":" +
-        String(m).padStart(2,"0")
-        + ":" +
-        String(s).padStart(2,"0")
-    );
+            <div
+                class="text-sm
+                font-black"
+                style="
+                    color:${rarity.color}
+                ">
+
+                ${rarity.name.toUpperCase()}
+
+            </div>
+
+
+            <h2
+                class="text-4xl
+                font-black
+                mt-2">
+
+                ${item.name}
+
+            </h2>
+
+
+            <div
+                class="mt-3
+                text-zinc-500">
+
+                ${formatPrice(item.price)}
+
+            </div>
+
+
+            <button
+                onclick="this.closest('.modal-bg').remove()"
+                class="w-full
+                mt-8
+                py-4
+                rounded-2xl
+                bg-white
+                text-black
+                font-black">
+
+                ЗАБРАТЬ
+
+            </button>
+
+        </div>
+
+    `;
+
+
+    document.body.appendChild(modal);
 
 }
 
 </script>
 
 </body>
-
 </html>
