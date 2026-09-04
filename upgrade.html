@@ -1,0 +1,2727 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CHAK338 — Апгрейд</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(circle at 20% 10%, rgba(168,85,247,.12), transparent 28%),
+        radial-gradient(circle at 80% 20%, rgba(59,130,246,.10), transparent 30%),
+        #07070b;
+    color: white;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: -1;
+}
+
+.glass {
+    background: rgba(15,15,23,.72);
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(20px);
+}
+
+.glow-purple {
+    box-shadow:
+        0 0 80px rgba(168,85,247,.12),
+        inset 0 0 30px rgba(168,85,247,.04);
+}
+
+.glow-blue {
+    box-shadow:
+        0 0 80px rgba(59,130,246,.12),
+        inset 0 0 30px rgba(59,130,246,.04);
+}
+
+.item-card {
+    position: relative;
+    overflow: hidden;
+    transition: .25s ease;
+    cursor: pointer;
+}
+
+.item-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,.22);
+}
+
+.item-card.selected {
+    border-color: #a855f7;
+    box-shadow:
+        0 0 0 2px rgba(168,85,247,.25),
+        0 0 35px rgba(168,85,247,.15);
+}
+
+.item-card.selected::after {
+    content: "✓";
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #a855f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+}
+
+.target-card {
+    transition: .25s ease;
+    cursor: pointer;
+}
+
+.target-card:hover {
+    transform: translateY(-4px);
+}
+
+.target-card.active {
+    border-color: #f59e0b;
+    box-shadow:
+        0 0 0 2px rgba(245,158,11,.25),
+        0 0 40px rgba(245,158,11,.15);
+}
+
+.rarity-common {
+    border-color: rgba(148,163,184,.3);
+}
+
+.rarity-uncommon {
+    border-color: rgba(34,197,94,.4);
+}
+
+.rarity-rare {
+    border-color: rgba(59,130,246,.45);
+}
+
+.rarity-epic {
+    border-color: rgba(168,85,247,.5);
+}
+
+.rarity-legendary {
+    border-color: rgba(245,158,11,.55);
+}
+
+.rarity-mythic {
+    border-color: rgba(239,68,68,.65);
+}
+
+.rarity-text-common {
+    color: #94a3b8;
+}
+
+.rarity-text-uncommon {
+    color: #22c55e;
+}
+
+.rarity-text-rare {
+    color: #60a5fa;
+}
+
+.rarity-text-epic {
+    color: #c084fc;
+}
+
+.rarity-text-legendary {
+    color: #fbbf24;
+}
+
+.rarity-text-mythic {
+    color: #f87171;
+}
+
+.chance-btn {
+    transition: .2s ease;
+}
+
+.chance-btn.active {
+    background: #a855f7;
+    border-color: #a855f7;
+    box-shadow: 0 0 25px rgba(168,85,247,.3);
+}
+
+.upgrade-button {
+    background: linear-gradient(135deg, #9333ea, #c026d3);
+    box-shadow: 0 10px 40px rgba(168,85,247,.25);
+    transition: .25s ease;
+}
+
+.upgrade-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 50px rgba(168,85,247,.4);
+}
+
+.upgrade-button:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.reel-window {
+    position: relative;
+    height: 210px;
+    overflow: hidden;
+    border-radius: 25px;
+    background:
+        linear-gradient(90deg,
+            rgba(168,85,247,.06),
+            rgba(255,255,255,.025),
+            rgba(168,85,247,.06)
+        );
+    border: 1px solid rgba(255,255,255,.1);
+}
+
+.reel-window::before,
+.reel-window::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.reel-window::before {
+    left: 0;
+    background: linear-gradient(90deg, #08080d, transparent);
+}
+
+.reel-window::after {
+    right: 0;
+    background: linear-gradient(-90deg, #08080d, transparent);
+}
+
+.reel-marker {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    transform: translateX(-50%);
+    background: #fff;
+    z-index: 10;
+    box-shadow:
+        0 0 12px #fff,
+        0 0 30px #a855f7;
+}
+
+.reel {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    will-change: transform;
+}
+
+.reel-item {
+    flex: 0 0 150px;
+    width: 150px;
+    height: 160px;
+    border-radius: 18px;
+    background: rgba(20,20,30,.9);
+    border: 1px solid rgba(255,255,255,.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.reel-item .emoji {
+    font-size: 65px;
+    line-height: 1;
+}
+
+.result-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.82);
+    backdrop-filter: blur(12px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.result-overlay.show {
+    display: flex;
+}
+
+.result-box {
+    width: min(500px, calc(100% - 30px));
+    animation: resultIn .45s ease;
+}
+
+@keyframes resultIn {
+    from {
+        opacity: 0;
+        transform: scale(.75) translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%,100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.result-item {
+    animation: pulse 1.3s infinite;
+}
+
+@keyframes shake {
+    0%,100% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-10px);
+    }
+    40% {
+        transform: translateX(10px);
+    }
+    60% {
+        transform: translateX(-8px);
+    }
+    80% {
+        transform: translateX(8px);
+    }
+}
+
+.lose-animation {
+    animation: shake .5s ease;
+}
+
+.win-animation {
+    animation: resultIn .5s ease;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #07070b;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #292936;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3b3b4b;
+}
+
+@media(max-width: 700px) {
+
+    .reel-item {
+        flex-basis: 115px;
+        width: 115px;
+    }
+
+    .reel-item .emoji {
+        font-size: 50px;
+    }
+
+    .reel-window {
+        height: 180px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="sticky top-0 z-50 glass border-b border-white/10">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+
+        <div class="flex items-center justify-between">
+
+            <a href="index.html"
+               class="flex items-center gap-3">
+
+                <div class="w-11 h-11 rounded-2xl
+                            bg-gradient-to-br from-purple-500 to-fuchsia-600
+                            flex items-center justify-center
+                            font-black text-xl
+                            shadow-lg shadow-purple-500/20">
+                    C
+                </div>
+
+                <div>
+                    <div class="font-black tracking-tight text-lg">
+                        CHAK338
+                    </div>
+
+                    <div class="text-[10px] text-white/40 font-bold tracking-[.2em]">
+                        GAMING HUB
+                    </div>
+                </div>
+
+            </a>
+
+            <nav class="hidden md:flex items-center gap-7 text-sm font-bold">
+
+                <a href="index.html"
+                   class="text-white/60 hover:text-white transition">
+                    Главная
+                </a>
+
+                <a href="index.html#cases"
+                   class="text-white/60 hover:text-white transition">
+                    Кейсы
+                </a>
+
+                <a href="inventory.html"
+                   class="text-white/60 hover:text-white transition">
+                    Инвентарь
+                </a>
+
+                <a href="upgrade.html"
+                   class="text-white">
+                    Апгрейд
+                </a>
+
+                <a href="index.html#news"
+                   class="text-white/60 hover:text-white transition">
+                    Новости
+                </a>
+
+                <a href="index.html#giveaways"
+                   class="text-white/60 hover:text-white transition">
+                    Розыгрыши
+                </a>
+
+                <a href="index.html#merch"
+                   class="text-white/60 hover:text-white transition">
+                    Мерч
+                </a>
+
+            </nav>
+
+            <div class="flex items-center gap-3">
+
+                <div class="hidden sm:block text-right">
+
+                    <div class="text-xs text-white/40">
+                        Стоимость инвентаря
+                    </div>
+
+                    <div id="headerValue"
+                         class="font-black text-sm">
+                        0
+                    </div>
+
+                </div>
+
+                <a href="inventory.html"
+                   class="px-4 py-2.5 rounded-xl
+                          bg-white/5 border border-white/10
+                          hover:bg-white/10 transition
+                          text-sm font-black">
+                    🎒
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- MAIN -->
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+
+    <!-- TITLE -->
+
+    <section class="mb-10">
+
+        <div class="inline-flex items-center gap-2
+                    px-3 py-1.5 rounded-full
+                    bg-purple-500/10
+                    border border-purple-500/20
+                    text-purple-300
+                    text-xs font-black">
+
+            ⚡ UPGRADE SYSTEM
+
+        </div>
+
+        <h1 class="mt-5 text-4xl sm:text-6xl font-black tracking-tight">
+            АПГРЕЙД
+        </h1>
+
+        <p class="mt-4 text-white/45 max-w-2xl text-lg">
+            Поставь предметы из своего инвентаря,
+            выбери шанс и попробуй выбить предмет дороже.
+        </p>
+
+    </section>
+
+
+    <!-- PRICE INFO -->
+
+    <section class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-8">
+
+        <div class="glass rounded-2xl p-4">
+            <div class="text-xs text-white/40">Обычная</div>
+            <div class="mt-1 font-black">10 🪙</div>
+        </div>
+
+        <div class="glass rounded-2xl p-4">
+            <div class="text-xs text-green-400/70">Необычная</div>
+            <div class="mt-1 font-black">25 🪙</div>
+        </div>
+
+        <div class="glass rounded-2xl p-4">
+            <div class="text-xs text-blue-400/70">Редкая</div>
+            <div class="mt-1 font-black">75 🪙</div>
+        </div>
+
+        <div class="glass rounded-2xl p-4">
+            <div class="text-xs text-purple-400/70">Эпическая</div>
+            <div class="mt-1 font-black">200 🪙</div>
+        </div>
+
+        <div class="glass rounded-2xl p-4">
+            <div class="text-xs text-yellow-400/70">Легендарная</div>
+            <div class="mt-1 font-black">750 🪙</div>
+        </div>
+
+        <div class="glass rounded-2xl p-4">
+            <div class="text-xs text-red-400/70">Мифическая</div>
+            <div class="mt-1 font-black">2500 🪙</div>
+        </div>
+
+    </section>
+
+
+    <div class="grid lg:grid-cols-[1fr_420px] gap-6">
+
+
+        <!-- LEFT -->
+
+        <section class="space-y-6">
+
+
+            <!-- INVENTORY -->
+
+            <div class="glass rounded-3xl p-5 sm:p-7">
+
+                <div class="flex items-center justify-between gap-4 mb-5">
+
+                    <div>
+
+                        <h2 class="text-xl font-black">
+                            Твои предметы
+                        </h2>
+
+                        <p class="text-sm text-white/40 mt-1">
+                            Выбери предметы для ставки
+                        </p>
+
+                    </div>
+
+                    <div class="text-right">
+
+                        <div class="text-xs text-white/40">
+                            Ставка
+                        </div>
+
+                        <div id="betValue"
+                             class="font-black text-purple-300">
+                            0 🪙
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div id="inventoryGrid"
+                     class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                </div>
+
+
+                <div id="emptyInventory"
+                     class="hidden py-16 text-center">
+
+                    <div class="text-5xl mb-4">
+                        🎒
+                    </div>
+
+                    <div class="font-black text-lg">
+                        Инвентарь пуст
+                    </div>
+
+                    <div class="text-sm text-white/40 mt-2">
+                        Открой кейс, чтобы получить предметы.
+                    </div>
+
+                    <a href="index.html#cases"
+                       class="inline-block mt-5 px-5 py-3 rounded-xl
+                              bg-purple-500 hover:bg-purple-400
+                              font-black transition">
+                        Открыть кейсы
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- CHANCE -->
+
+            <div class="glass rounded-3xl p-5 sm:p-7">
+
+                <div class="mb-5">
+
+                    <h2 class="text-xl font-black">
+                        Шанс апгрейда
+                    </h2>
+
+                    <p class="text-sm text-white/40 mt-1">
+                        Чем выше шанс — тем менее дорогой предмет
+                        можно получить.
+                    </p>
+
+                </div>
+
+
+                <div class="grid grid-cols-4 gap-3">
+
+                    <button
+                        class="chance-btn border border-white/10
+                               bg-white/5 rounded-2xl p-4
+                               font-black"
+                        data-chance="10"
+                        onclick="selectChance(10)">
+                        10%
+                    </button>
+
+                    <button
+                        class="chance-btn border border-white/10
+                               bg-white/5 rounded-2xl p-4
+                               font-black"
+                        data-chance="25"
+                        onclick="selectChance(25)">
+                        25%
+                    </button>
+
+                    <button
+                        class="chance-btn active
+                               border border-white/10
+                               bg-white/5 rounded-2xl p-4
+                               font-black"
+                        data-chance="50"
+                        onclick="selectChance(50)">
+                        50%
+                    </button>
+
+                    <button
+                        class="chance-btn border border-white/10
+                               bg-white/5 rounded-2xl p-4
+                               font-black"
+                        data-chance="75"
+                        onclick="selectChance(75)">
+                        75%
+                    </button>
+
+                </div>
+
+
+                <div class="mt-5 p-4 rounded-2xl bg-white/5">
+
+                    <div class="flex justify-between text-sm">
+
+                        <span class="text-white/40">
+                            Максимальная стоимость цели
+                        </span>
+
+                        <span id="maxTargetValue"
+                              class="font-black">
+                            0 🪙
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TARGETS -->
+
+            <div class="glass rounded-3xl p-5 sm:p-7">
+
+                <div class="mb-5">
+
+                    <h2 class="text-xl font-black">
+                        Выбери предмет
+                    </h2>
+
+                    <p class="text-sm text-white/40 mt-1">
+                        Что хочешь получить при успешном апгрейде?
+                    </p>
+
+                </div>
+
+
+                <div id="targetGrid"
+                     class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                </div>
+
+
+                <div id="noTargets"
+                     class="hidden text-center py-12 text-white/40">
+                    Выбери предметы для ставки.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT -->
+
+        <aside class="space-y-6">
+
+
+            <!-- UPGRADE PANEL -->
+
+            <div class="glass glow-purple rounded-3xl p-5 sm:p-7 sticky top-24">
+
+                <div class="text-center">
+
+                    <div class="text-xs font-black
+                                text-purple-300 tracking-[.2em]">
+                        UPGRADE
+                    </div>
+
+                    <h2 class="text-3xl font-black mt-2">
+                        Готов?
+                    </h2>
+
+                </div>
+
+
+                <!-- SELECTED ITEMS -->
+
+                <div class="mt-7">
+
+                    <div class="text-xs text-white/40 mb-2">
+                        ТЫ СТАВИШЬ
+                    </div>
+
+                    <div id="selectedPreview"
+                         class="min-h-[110px]
+                                rounded-2xl
+                                bg-white/5
+                                border border-white/5
+                                flex items-center
+                                justify-center">
+
+                        <div class="text-white/30 text-sm">
+                            Выбери предмет
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ARROW -->
+
+                <div class="flex justify-center py-5">
+
+                    <div class="w-12 h-12 rounded-full
+                                bg-purple-500/10
+                                border border-purple-500/20
+                                flex items-center justify-center
+                                text-2xl">
+                        ↓
+                    </div>
+
+                </div>
+
+
+                <!-- TARGET -->
+
+                <div>
+
+                    <div class="text-xs text-white/40 mb-2">
+                        ТЫ ХОЧЕШЬ
+                    </div>
+
+                    <div id="selectedTarget"
+                         class="min-h-[145px]
+                                rounded-2xl
+                                bg-white/5
+                                border border-white/5
+                                flex items-center
+                                justify-center">
+
+                        <div class="text-white/30 text-sm">
+                            Выбери цель
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATS -->
+
+                <div class="mt-6 space-y-3">
+
+                    <div class="flex justify-between">
+
+                        <span class="text-white/40 text-sm">
+                            Ставка
+                        </span>
+
+                        <span id="sideBet"
+                              class="font-black">
+                            0 🪙
+                        </span>
+
+                    </div>
+
+                    <div class="flex justify-between">
+
+                        <span class="text-white/40 text-sm">
+                            Шанс
+                        </span>
+
+                        <span id="sideChance"
+                              class="font-black text-purple-300">
+                            50%
+                        </span>
+
+                    </div>
+
+                    <div class="flex justify-between">
+
+                        <span class="text-white/40 text-sm">
+                            Стоимость цели
+                        </span>
+
+                        <span id="sideTarget"
+                              class="font-black">
+                            0 🪙
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="upgradeButton"
+                    onclick="startUpgrade()"
+                    disabled
+                    class="upgrade-button w-full mt-7
+                           py-4 rounded-2xl
+                           font-black text-lg">
+
+                    ⚡ АПГРЕЙД
+
+                </button>
+
+
+                <div class="text-center mt-3
+                            text-[11px] text-white/25">
+                    При проигрыше поставленные предметы сгорают.
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="glass rounded-3xl p-5">
+
+                <div class="font-black mb-3">
+                    Как это работает?
+                </div>
+
+                <div class="space-y-3 text-sm text-white/45">
+
+                    <div class="flex gap-3">
+                        <span>01</span>
+                        <span>
+                            Выбери один или несколько предметов
+                            из инвентаря.
+                        </span>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <span>02</span>
+                        <span>
+                            Выбери шанс — 10, 25, 50 или 75%.
+                        </span>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <span>03</span>
+                        <span>
+                            Выбери предмет дороже своей ставки.
+                        </span>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <span>04</span>
+                        <span>
+                            Крути и попытайся забрать новую вещь.
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</main>
+
+
+<!-- REEL MODAL -->
+
+<div id="upgradeModal"
+     class="fixed inset-0 z-[80]
+            hidden items-center justify-center
+            bg-black/85 backdrop-blur-xl
+            p-4">
+
+    <div class="w-full max-w-5xl">
+
+        <div class="text-center mb-7">
+
+            <div class="text-xs text-purple-300
+                        font-black tracking-[.25em]">
+                UPGRADE
+            </div>
+
+            <h2 class="text-3xl sm:text-5xl font-black mt-2">
+                АПГРЕЙД
+            </h2>
+
+        </div>
+
+
+        <div class="reel-window">
+
+            <div class="reel-marker"></div>
+
+            <div id="upgradeReel"
+                 class="reel">
+            </div>
+
+        </div>
+
+
+        <div class="text-center mt-7">
+
+            <div id="upgradeStatus"
+                 class="text-white/50 text-sm">
+                Проверяем результат...
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div id="resultOverlay"
+     class="result-overlay">
+
+    <div class="result-box">
+
+        <div id="resultBox"
+             class="glass rounded-[32px] p-7 sm:p-10 text-center">
+
+            <div id="resultIcon"
+                 class="text-7xl result-item">
+                🎁
+            </div>
+
+            <div id="resultTitle"
+                 class="text-3xl sm:text-4xl font-black mt-5">
+                Победа!
+            </div>
+
+            <div id="resultDescription"
+                 class="text-white/45 mt-3">
+                Ты получил новый предмет.
+            </div>
+
+            <div id="resultItem"
+                 class="mt-7 p-7 rounded-3xl
+                        bg-white/5 border border-white/10">
+
+            </div>
+
+            <button
+                onclick="closeResult()"
+                class="w-full mt-6 py-4
+                       rounded-2xl
+                       bg-white text-black
+                       font-black
+                       hover:bg-white/90 transition">
+
+                ПРОДОЛЖИТЬ
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   DATA
+========================================================= */
+
+const rarityPrices = {
+
+    common: 10,
+
+    uncommon: 25,
+
+    rare: 75,
+
+    epic: 200,
+
+    legendary: 750,
+
+    mythic: 2500
+
+};
+
+
+const rarityNames = {
+
+    common: "Обычная",
+
+    uncommon: "Необычная",
+
+    rare: "Редкая",
+
+    epic: "Эпическая",
+
+    legendary: "Легендарная",
+
+    mythic: "Мифическая"
+
+};
+
+
+const items = [
+
+    {
+        id: "rookie",
+        name: "Rookie",
+        emoji: "🥷",
+        rarity: "common",
+        type: "character"
+    },
+
+    {
+        id: "masky",
+        name: "Masky",
+        emoji: "😎",
+        rarity: "common",
+        type: "character"
+    },
+
+    {
+        id: "basic-shirt",
+        name: "Basic T-Shirt",
+        emoji: "👕",
+        rarity: "common",
+        type: "outfit"
+    },
+
+    {
+        id: "wooden-sword",
+        name: "Wooden Sword",
+        emoji: "🗡️",
+        rarity: "common",
+        type: "weapon"
+    },
+
+
+    {
+        id: "cyber",
+        name: "Cyber",
+        emoji: "🤖",
+        rarity: "uncommon",
+        type: "character"
+    },
+
+    {
+        id: "chak-hoodie",
+        name: "Chak Hoodie",
+        emoji: "🧥",
+        rarity: "uncommon",
+        type: "outfit"
+    },
+
+    {
+        id: "iron-shield",
+        name: "Iron Shield",
+        emoji: "🛡️",
+        rarity: "uncommon",
+        type: "weapon"
+    },
+
+
+    {
+        id: "neon",
+        name: "Neon Jacket",
+        emoji: "🥼",
+        rarity: "rare",
+        type: "outfit"
+    },
+
+    {
+        id: "neon-blade",
+        name: "Neon Blade",
+        emoji: "⚔️",
+        rarity: "rare",
+        type: "weapon"
+    },
+
+    {
+        id: "shadow",
+        name: "Shadow",
+        emoji: "👤",
+        rarity: "rare",
+        type: "character"
+    },
+
+
+    {
+        id: "dark-mask",
+        name: "Dark Mask",
+        emoji: "🎭",
+        rarity: "epic",
+        type: "outfit"
+    },
+
+    {
+        id: "shadow-katana",
+        name: "Shadow Katana",
+        emoji: "⚔️",
+        rarity: "epic",
+        type: "weapon"
+    },
+
+    {
+        id: "glitch",
+        name: "Glitch",
+        emoji: "👾",
+        rarity: "epic",
+        type: "character"
+    },
+
+
+    {
+        id: "golden-crown",
+        name: "Golden Crown",
+        emoji: "👑",
+        rarity: "legendary",
+        type: "outfit"
+    },
+
+    {
+        id: "chak-hammer",
+        name: "Chak Hammer",
+        emoji: "🔨",
+        rarity: "legendary",
+        type: "weapon"
+    },
+
+    {
+        id: "uhilyant",
+        name: "Uhilyant",
+        emoji: "👹",
+        rarity: "legendary",
+        type: "character"
+    },
+
+
+    {
+        id: "338-outfit",
+        name: "338 Outfit",
+        emoji: "🥷",
+        rarity: "mythic",
+        type: "outfit"
+    },
+
+    {
+        id: "338-destroyer",
+        name: "338 Destroyer",
+        emoji: "🔥",
+        rarity: "mythic",
+        type: "weapon"
+    }
+
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let inventory = [];
+
+let selectedItems = [];
+
+let selectedTarget = null;
+
+let selectedChance = 50;
+
+let upgrading = false;
+
+
+/* =========================================================
+   SOUND ENGINE
+========================================================= */
+
+let audioContext = null;
+
+
+function getAudio() {
+
+    if (!audioContext) {
+
+        audioContext =
+            new (window.AudioContext ||
+                 window.webkitAudioContext)();
+
+    }
+
+    return audioContext;
+}
+
+
+function playTone(
+    frequency,
+    duration = .12,
+    type = "sine",
+    volume = .06
+) {
+
+    try {
+
+        const ctx = getAudio();
+
+        const oscillator =
+            ctx.createOscillator();
+
+        const gain =
+            ctx.createGain();
+
+        oscillator.type = type;
+
+        oscillator.frequency.value =
+            frequency;
+
+        gain.gain.value = volume;
+
+        oscillator.connect(gain);
+
+        gain.connect(ctx.destination);
+
+        oscillator.start();
+
+        gain.gain.exponentialRampToValueAtTime(
+            .001,
+            ctx.currentTime + duration
+        );
+
+        oscillator.stop(
+            ctx.currentTime + duration
+        );
+
+    } catch(e) {}
+
+}
+
+
+function playUpgradeStart() {
+
+    playTone(220, .12, "square", .04);
+
+    setTimeout(() => {
+        playTone(330, .12, "square", .04);
+    }, 90);
+
+    setTimeout(() => {
+        playTone(440, .15, "square", .04);
+    }, 180);
+
+}
+
+
+function playWinSound() {
+
+    playTone(523, .12, "sine", .07);
+
+    setTimeout(() => {
+        playTone(659, .12, "sine", .07);
+    }, 100);
+
+    setTimeout(() => {
+        playTone(784, .20, "sine", .08);
+    }, 200);
+
+    setTimeout(() => {
+        playTone(1046, .35, "sine", .08);
+    }, 320);
+
+}
+
+
+function playLoseSound() {
+
+    playTone(260, .18, "sawtooth", .05);
+
+    setTimeout(() => {
+        playTone(190, .25, "sawtooth", .05);
+    }, 150);
+
+    setTimeout(() => {
+        playTone(120, .35, "sawtooth", .04);
+    }, 320);
+
+}
+
+
+/* =========================================================
+   INVENTORY
+========================================================= */
+
+function loadInventory() {
+
+    try {
+
+        const saved =
+            localStorage.getItem("chak338_inventory");
+
+        if (saved) {
+
+            inventory =
+                JSON.parse(saved);
+
+        }
+
+    } catch(e) {
+
+        inventory = [];
+
+    }
+
+
+    /*
+        Если сайт использовал другое название
+        localStorage, можно попробовать старые варианты.
+    */
+
+    if (!Array.isArray(inventory)) {
+
+        inventory = [];
+
+    }
+
+
+    /*
+        Если инвентарь пустой, используем
+        небольшие demo-предметы.
+        Их можно убрать после подключения
+        реальной системы.
+    */
+
+    if (inventory.length === 0) {
+
+        inventory = [
+
+            {
+                ...items[0],
+                uid: crypto.randomUUID()
+            },
+
+            {
+                ...items[3],
+                uid: crypto.randomUUID()
+            },
+
+            {
+                ...items[5],
+                uid: crypto.randomUUID()
+            },
+
+            {
+                ...items[8],
+                uid: crypto.randomUUID()
+            }
+
+        ];
+
+        saveInventory();
+
+    }
+
+}
+
+
+function saveInventory() {
+
+    localStorage.setItem(
+        "chak338_inventory",
+        JSON.stringify(inventory)
+    );
+
+}
+
+
+/* =========================================================
+   NORMALIZE ITEM
+========================================================= */
+
+function normalizeItem(item) {
+
+    const source =
+        items.find(
+            x => x.id === item.id
+        );
+
+    if (source) {
+
+        return {
+            ...source,
+            ...item
+        };
+
+    }
+
+    return item;
+
+}
+
+
+function getItemPrice(item) {
+
+    const normalized =
+        normalizeItem(item);
+
+    return rarityPrices[
+        normalized.rarity
+    ] || 0;
+
+}
+
+
+/* =========================================================
+   RENDER INVENTORY
+========================================================= */
+
+function renderInventory() {
+
+    const grid =
+        document.getElementById("inventoryGrid");
+
+    const empty =
+        document.getElementById("emptyInventory");
+
+    grid.innerHTML = "";
+
+
+    if (!inventory.length) {
+
+        empty.classList.remove("hidden");
+
+        return;
+
+    }
+
+    empty.classList.add("hidden");
+
+
+    inventory.forEach(item => {
+
+        const normalized =
+            normalizeItem(item);
+
+        const price =
+            getItemPrice(normalized);
+
+        const selected =
+            selectedItems.some(
+                x => x.uid === item.uid
+            );
+
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            `item-card rounded-2xl
+             bg-white/5
+             border
+             p-3
+             rarity-${normalized.rarity}
+             ${selected ? "selected" : ""}`;
+
+
+        card.onclick =
+            () => toggleItem(item);
+
+
+        card.innerHTML = `
+
+            <div class="aspect-square
+                        rounded-xl
+                        bg-black/20
+                        flex items-center
+                        justify-center">
+
+                <div class="text-5xl">
+                    ${normalized.emoji || "🎁"}
+                </div>
+
+            </div>
+
+            <div class="mt-3">
+
+                <div class="text-xs font-black truncate">
+                    ${escapeHTML(normalized.name)}
+                </div>
+
+                <div class="text-[10px]
+                            mt-1
+                            font-bold
+                            rarity-text-${normalized.rarity}">
+                    ${rarityNames[normalized.rarity]}
+                </div>
+
+                <div class="mt-2 text-xs font-black">
+                    ${price} 🪙
+                </div>
+
+            </div>
+        `;
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   TOGGLE ITEM
+========================================================= */
+
+function toggleItem(item) {
+
+    if (upgrading) return;
+
+
+    const exists =
+        selectedItems.findIndex(
+            x => x.uid === item.uid
+        );
+
+
+    if (exists >= 0) {
+
+        selectedItems.splice(
+            exists,
+            1
+        );
+
+    } else {
+
+        selectedItems.push(item);
+
+    }
+
+
+    /*
+        Если выбранная цель теперь входит
+        в ставку — убираем её.
+    */
+
+    if (
+        selectedTarget &&
+        selectedItems.some(
+            x => x.uid === selectedTarget.uid
+        )
+    ) {
+
+        selectedTarget = null;
+
+    }
+
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   CHANCE
+========================================================= */
+
+function selectChance(chance) {
+
+    if (upgrading) return;
+
+    selectedChance = chance;
+
+
+    document
+        .querySelectorAll(".chance-btn")
+        .forEach(btn => {
+
+            btn.classList.toggle(
+                "active",
+                Number(btn.dataset.chance) === chance
+            );
+
+        });
+
+
+    renderTargets();
+
+    updateStats();
+
+}
+
+
+/* =========================================================
+   BET VALUE
+========================================================= */
+
+function getBetValue() {
+
+    return selectedItems.reduce(
+        (total, item) =>
+            total + getItemPrice(item),
+        0
+    );
+
+}
+
+
+/* =========================================================
+   MAX TARGET
+========================================================= */
+
+function getMaxTargetValue() {
+
+    const bet =
+        getBetValue();
+
+    if (!bet) return 0;
+
+    /*
+        Например:
+
+        ставка 100
+        шанс 50%
+
+        максимум цели:
+        100 / 0.50 = 200
+
+        шанс 25%:
+        100 / 0.25 = 400
+
+        шанс 10%:
+        100 / 0.10 = 1000
+    */
+
+    return Math.floor(
+        bet / (selectedChance / 100)
+    );
+
+}
+
+
+/* =========================================================
+   TARGETS
+========================================================= */
+
+function renderTargets() {
+
+    const grid =
+        document.getElementById("targetGrid");
+
+    const noTargets =
+        document.getElementById("noTargets");
+
+    grid.innerHTML = "";
+
+
+    const bet =
+        getBetValue();
+
+    const max =
+        getMaxTargetValue();
+
+
+    if (!bet) {
+
+        noTargets.classList.remove("hidden");
+
+        return;
+
+    }
+
+    noTargets.classList.add("hidden");
+
+
+    const targets =
+        items.filter(item => {
+
+            const price =
+                getItemPrice(item);
+
+            /*
+                Цель должна быть дороже ставки,
+                но не превышать максимальную стоимость
+                для выбранного процента.
+            */
+
+            return (
+                price > bet &&
+                price <= max
+            );
+
+        });
+
+
+    /*
+        Убираем повторяющиеся названия,
+        если предмет используется несколько раз.
+    */
+
+    targets.forEach(item => {
+
+        const card =
+            document.createElement("div");
+
+        const active =
+            selectedTarget &&
+            selectedTarget.id === item.id;
+
+
+        card.className =
+            `target-card
+             rounded-2xl
+             bg-white/5
+             border
+             p-3
+             rarity-${item.rarity}
+             ${active ? "active" : ""}`;
+
+
+        card.onclick =
+            () => selectTarget(item);
+
+
+        card.innerHTML = `
+
+            <div class="aspect-square
+                        rounded-xl
+                        bg-black/20
+                        flex items-center
+                        justify-center">
+
+                <div class="text-5xl">
+                    ${item.emoji}
+                </div>
+
+            </div>
+
+            <div class="mt-3">
+
+                <div class="text-xs font-black truncate">
+                    ${escapeHTML(item.name)}
+                </div>
+
+                <div class="text-[10px]
+                            mt-1
+                            font-bold
+                            rarity-text-${item.rarity}">
+                    ${rarityNames[item.rarity]}
+                </div>
+
+                <div class="mt-2 text-xs font-black">
+                    ${getItemPrice(item)} 🪙
+                </div>
+
+            </div>
+
+        `;
+
+
+        grid.appendChild(card);
+
+    });
+
+
+    if (!targets.length) {
+
+        grid.innerHTML = `
+
+            <div class="col-span-full
+                        py-10
+                        text-center
+                        text-white/40">
+
+                Для выбранной ставки и шанса
+                подходящих предметов нет.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   SELECT TARGET
+========================================================= */
+
+function selectTarget(item) {
+
+    if (upgrading) return;
+
+    selectedTarget = item;
+
+    renderTargets();
+
+    updateStats();
+
+}
+
+
+/* =========================================================
+   PREVIEW
+========================================================= */
+
+function renderSelectedPreview() {
+
+    const box =
+        document.getElementById(
+            "selectedPreview"
+        );
+
+
+    if (!selectedItems.length) {
+
+        box.innerHTML = `
+            <div class="text-white/30 text-sm">
+                Выбери предмет
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    box.innerHTML = `
+
+        <div class="flex flex-wrap
+                    justify-center
+                    gap-2 p-3">
+
+            ${selectedItems.map(item => `
+
+                <div class="w-16 h-16
+                            rounded-xl
+                            bg-black/20
+                            border
+                            border-white/10
+                            flex items-center
+                            justify-center
+                            text-3xl">
+
+                    ${item.emoji || "🎁"}
+
+                </div>
+
+            `).join("")}
+
+        </div>
+
+    `;
+
+}
+
+
+function renderSelectedTarget() {
+
+    const box =
+        document.getElementById(
+            "selectedTarget"
+        );
+
+
+    if (!selectedTarget) {
+
+        box.innerHTML = `
+            <div class="text-white/30 text-sm">
+                Выбери цель
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    box.innerHTML = `
+
+        <div class="text-center">
+
+            <div class="text-6xl">
+                ${selectedTarget.emoji}
+            </div>
+
+            <div class="font-black mt-3">
+                ${escapeHTML(selectedTarget.name)}
+            </div>
+
+            <div class="text-xs
+                        mt-1
+                        font-bold
+                        rarity-text-${selectedTarget.rarity}">
+                ${rarityNames[selectedTarget.rarity]}
+            </div>
+
+            <div class="text-sm
+                        font-black
+                        mt-2">
+                ${getItemPrice(selectedTarget)} 🪙
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   UPDATE STATS
+========================================================= */
+
+function updateStats() {
+
+    const bet =
+        getBetValue();
+
+    const max =
+        getMaxTargetValue();
+
+
+    document.getElementById(
+        "betValue"
+    ).textContent =
+        `${bet} 🪙`;
+
+
+    document.getElementById(
+        "sideBet"
+    ).textContent =
+        `${bet} 🪙`;
+
+
+    document.getElementById(
+        "sideChance"
+    ).textContent =
+        `${selectedChance}%`;
+
+
+    document.getElementById(
+        "maxTargetValue"
+    ).textContent =
+        `${max} 🪙`;
+
+
+    document.getElementById(
+        "sideTarget"
+    ).textContent =
+        selectedTarget
+            ? `${getItemPrice(selectedTarget)} 🪙`
+            : "0 🪙";
+
+
+    const header =
+        document.getElementById(
+            "headerValue"
+        );
+
+
+    header.textContent =
+        `${inventory.reduce(
+            (sum, item) =>
+                sum + getItemPrice(item),
+            0
+        )} 🪙`;
+
+
+    const button =
+        document.getElementById(
+            "upgradeButton"
+        );
+
+
+    const valid =
+        selectedItems.length > 0 &&
+        selectedTarget &&
+        !selectedItems.some(
+            x => x.uid === selectedTarget.uid
+        ) &&
+        getItemPrice(selectedTarget) > bet &&
+        getItemPrice(selectedTarget) <= max;
+
+
+    button.disabled =
+        !valid || upgrading;
+
+}
+
+
+/* =========================================================
+   RENDER ALL
+========================================================= */
+
+function renderAll() {
+
+    renderInventory();
+
+    renderTargets();
+
+    renderSelectedPreview();
+
+    renderSelectedTarget();
+
+    updateStats();
+
+}
+
+
+/* =========================================================
+   START UPGRADE
+========================================================= */
+
+function startUpgrade() {
+
+    if (upgrading) return;
+
+
+    const bet =
+        getBetValue();
+
+    const target =
+        selectedTarget;
+
+
+    if (
+        !selectedItems.length ||
+        !target
+    ) {
+
+        return;
+
+    }
+
+
+    const targetPrice =
+        getItemPrice(target);
+
+    const max =
+        getMaxTargetValue();
+
+
+    if (
+        targetPrice <= bet ||
+        targetPrice > max
+    ) {
+
+        alert(
+            "Этот предмет нельзя выбрать для данного апгрейда."
+        );
+
+        return;
+
+    }
+
+
+    upgrading = true;
+
+    updateStats();
+
+
+    playUpgradeStart();
+
+
+    const modal =
+        document.getElementById(
+            "upgradeModal"
+        );
+
+    modal.classList.remove("hidden");
+
+    modal.classList.add("flex");
+
+
+    const reel =
+        document.getElementById(
+            "upgradeReel"
+        );
+
+
+    reel.innerHTML = "";
+
+
+    /*
+        Создаём длинную ленту.
+
+        В ней будут разные предметы.
+        В конце точно устанавливаем выбранную цель
+        в позицию победителя.
+    */
+
+    const reelItems = [];
+
+
+    for (
+        let i = 0;
+        i < 35;
+        i++
+    ) {
+
+        const random =
+            items[
+                Math.floor(
+                    Math.random() *
+                    items.length
+                )
+            ];
+
+        reelItems.push(random);
+
+    }
+
+
+    /*
+        Победный предмет помещаем
+        в середину будущего центра.
+    */
+
+    const winnerIndex =
+        30;
+
+    reelItems[winnerIndex] =
+        target;
+
+
+    reelItems.forEach(
+        item => {
+
+            const el =
+                document.createElement("div");
+
+            el.className =
+                `reel-item
+                 rarity-${item.rarity}`;
+
+            el.innerHTML = `
+
+                <div class="emoji">
+                    ${item.emoji}
+                </div>
+
+                <div class="text-xs
+                            font-black
+                            mt-3
+                            text-center
+                            px-2">
+                    ${escapeHTML(item.name)}
+                </div>
+
+            `;
+
+            reel.appendChild(el);
+
+        }
+    );
+
+
+    /*
+        Сначала ставим ленту
+        в начальное положение.
+    */
+
+    reel.style.transition = "none";
+
+    reel.style.transform =
+        "translateX(0px)";
+
+
+    /*
+        Даём браузеру время
+        отрисовать начальное состояние.
+    */
+
+    requestAnimationFrame(() => {
+
+        requestAnimationFrame(() => {
+
+            const container =
+                document.querySelector(
+                    ".reel-window"
+                );
+
+            const reelItem =
+                reel.children[winnerIndex];
+
+
+            const containerWidth =
+                container.offsetWidth;
+
+
+            const itemCenter =
+                reelItem.offsetLeft +
+                reelItem.offsetWidth / 2;
+
+
+            const targetX =
+                -(itemCenter -
+                  containerWidth / 2);
+
+
+            /*
+                Большое плавное вращение.
+            */
+
+            reel.style.transition =
+                "transform 6.5s cubic-bezier(.08,.78,.08,1)";
+
+
+            reel.style.transform =
+                `translateX(${targetX}px)`;
+
+
+            const status =
+                document.getElementById(
+                    "upgradeStatus"
+                );
+
+
+            status.textContent =
+                "Крутим...";
+
+
+            /*
+                Частые тики во время прокрутки.
+            */
+
+            let tickCount = 0;
+
+            const tickTimer =
+                setInterval(() => {
+
+                    playTone(
+                        100 + Math.random() * 60,
+                        .035,
+                        "square",
+                        .018
+                    );
+
+                    tickCount++;
+
+                    if (tickCount > 55) {
+
+                        clearInterval(
+                            tickTimer
+                        );
+
+                    }
+
+                }, 110);
+
+
+            setTimeout(() => {
+
+                clearInterval(
+                    tickTimer
+                );
+
+                finishUpgrade();
+
+            }, 6900);
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   FINISH
+========================================================= */
+
+function finishUpgrade() {
+
+    /*
+        ВАЖНО:
+
+        шанс реально определяет результат.
+    */
+
+    const roll =
+        Math.random() * 100;
+
+    const won =
+        roll < selectedChance;
+
+
+    const target =
+        selectedTarget;
+
+
+    const modal =
+        document.getElementById(
+            "upgradeModal"
+        );
+
+
+    modal.classList.add("hidden");
+
+    modal.classList.remove("flex");
+
+
+    if (won) {
+
+        handleWin(target);
+
+    } else {
+
+        handleLose();
+
+    }
+
+}
+
+
+/* =========================================================
+   WIN
+========================================================= */
+
+function handleWin(target) {
+
+    playWinSound();
+
+
+    /*
+        Удаляем поставленные предметы.
+    */
+
+    const selectedIds =
+        new Set(
+            selectedItems.map(
+                item => item.uid
+            )
+        );
+
+
+    inventory =
+        inventory.filter(
+            item =>
+                !selectedIds.has(
+                    item.uid
+                )
+        );
+
+
+    /*
+        Добавляем выигранный предмет.
+
+        Новый uid нужен для того,
+        чтобы одинаковые предметы
+        могли существовать одновременно.
+    */
+
+    inventory.push({
+
+        ...target,
+
+        uid:
+            typeof crypto !== "undefined" &&
+            crypto.randomUUID
+                ? crypto.randomUUID()
+                : Date.now() +
+                  Math.random()
+
+    });
+
+
+    saveInventory();
+
+
+    showResult(
+        true,
+        target
+    );
+
+
+    selectedItems = [];
+
+    selectedTarget = null;
+
+    upgrading = false;
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   LOSE
+========================================================= */
+
+function handleLose() {
+
+    playLoseSound();
+
+
+    const selectedIds =
+        new Set(
+            selectedItems.map(
+                item => item.uid
+            )
+        );
+
+
+    inventory =
+        inventory.filter(
+            item =>
+                !selectedIds.has(
+                    item.uid
+                )
+        );
+
+
+    saveInventory();
+
+
+    showResult(
+        false,
+        null
+    );
+
+
+    selectedItems = [];
+
+    selectedTarget = null;
+
+    upgrading = false;
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+function showResult(
+    win,
+    item
+) {
+
+    const overlay =
+        document.getElementById(
+            "resultOverlay"
+        );
+
+
+    const box =
+        document.getElementById(
+            "resultBox"
+        );
+
+
+    const icon =
+        document.getElementById(
+            "resultIcon"
+        );
+
+
+    const title =
+        document.getElementById(
+            "resultTitle"
+        );
+
+
+    const description =
+        document.getElementById(
+            "resultDescription"
+        );
+
+
+    const resultItem =
+        document.getElementById(
+            "resultItem"
+        );
+
+
+    box.classList.remove(
+        "lose-animation",
+        "win-animation"
+    );
+
+
+    void box.offsetWidth;
+
+
+    if (win) {
+
+        box.classList.add(
+            "win-animation"
+        );
+
+
+        icon.textContent =
+            "🎉";
+
+
+        title.textContent =
+            "АПГРЕЙД УДАЧНЫЙ!";
+
+
+        title.className =
+            "text-3xl sm:text-4xl font-black mt-5 text-green-400";
+
+
+        description.textContent =
+            "Красиво! Предмет добавлен в твой инвентарь.";
+
+
+        resultItem.innerHTML = `
+
+            <div class="result-item">
+
+                <div class="text-8xl">
+                    ${item.emoji}
+                </div>
+
+                <div class="text-2xl
+                            font-black
+                            mt-5">
+                    ${escapeHTML(item.name)}
+                </div>
+
+                <div class="mt-2
+                            font-bold
+                            rarity-text-${item.rarity}">
+                    ${rarityNames[item.rarity]}
+                </div>
+
+                <div class="mt-4
+                            font-black
+                            text-lg">
+                    ${getItemPrice(item)} 🪙
+                </div>
+
+            </div>
+
+        `;
+
+    } else {
+
+        box.classList.add(
+            "lose-animation"
+        );
+
+
+        icon.textContent =
+            "💀";
+
+
+        title.textContent =
+            "НЕ ПОВЕЗЛО";
+
+
+        title.className =
+            "text-3xl sm:text-4xl font-black mt-5 text-red-400";
+
+
+        description.textContent =
+            "Предметы ставки сгорели. Попробуй ещё раз.";
+
+
+        resultItem.innerHTML = `
+
+            <div class="py-5">
+
+                <div class="text-7xl">
+                    💨
+                </div>
+
+                <div class="text-lg
+                            font-black
+                            mt-4">
+                    Ставка потеряна
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    overlay.classList.add("show");
+
+}
+
+
+function closeResult() {
+
+    document
+        .getElementById(
+            "resultOverlay"
+        )
+        .classList.remove("show");
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+loadInventory();
+
+selectChance(50);
+
+renderAll();
+
+
+/*
+    Обновляем страницу,
+    если localStorage изменился
+    в другой вкладке.
+*/
+
+window.addEventListener(
+    "storage",
+    event => {
+
+        if (
+            event.key ===
+            "chak338_inventory"
+        ) {
+
+            loadInventory();
+
+            selectedItems = [];
+
+            selectedTarget = null;
+
+            renderAll();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
