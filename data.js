@@ -496,6 +496,95 @@ const rawItems = [
     'mythic'
   ],
 
+   {
+    id: "hantiks",
+    name: "Hantiks",
+    image: "hantiks-case.png",
+
+    // У Hantiks пока НЕТ таймера
+    cooldown: 0,
+
+    xp: 0,
+
+    items: [
+        {
+            id: "hantiks-chips",
+            name: "Чипсы",
+            price: 10,
+            image: svgIcon("🍟")
+        },
+
+        {
+            id: "hantiks-gamos",
+            name: "Гамос",
+            price: 15,
+            image: svgIcon("🥩")
+        },
+
+        {
+            id: "hantiks-vamos",
+            name: "Вамос",
+            price: 20,
+            image: svgIcon("🌮")
+        },
+
+        {
+            id: "hantiks-lvivske",
+            name: "Львівське 1715",
+            price: 30,
+            image: svgIcon("🍺")
+        },
+
+        {
+            id: "hantiks-burger",
+            name: "Бургер",
+            price: 50,
+            image: svgIcon("🍔")
+        },
+
+        {
+            id: "hantiks-hotdog",
+            name: "Хот-дог",
+            price: 75,
+            image: svgIcon("🌭")
+        },
+
+        {
+            id: "hantiks-pizza",
+            name: "Пицца",
+            price: 100,
+            image: svgIcon("🍕")
+        },
+
+        {
+            id: "hantiks-shawarma",
+            name: "Шаурма",
+            price: 150,
+            image: svgIcon("🌯")
+        },
+
+        {
+            id: "hantiks-sushi",
+            name: "Суши",
+            price: 200,
+            image: svgIcon("🍣")
+        },
+
+        {
+            id: "hantiks-bomzh",
+            name: "Толстый бомж",
+            price: 300,
+            image: svgIcon("🧔")
+        },
+
+        {
+            id: "hantiks-hanti",
+            name: "Толстьй Hanti",
+            price: 500,
+            image: svgIcon("👑")
+        }
+    ]
+}
 
   /* =======================================================
      DOTA 2
