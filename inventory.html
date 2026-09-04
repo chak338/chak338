@@ -1,118 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="ru">
 
 <head>
 
-<meta charset="UTF-8">
+<meta charset="utf-8">
 
 <meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
+  name="viewport"
+  content="width=device-width,initial-scale=1"
 >
 
-<title>CHAK338 — Инвентарь</title>
+<title>
+  CHAK338 — Инвентарь
+</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<script src="data.js"></script>
-
 <style>
 
-html {
-  scroll-behavior: smooth;
+body{
+  background:#06070b;
+  color:#f8fafc;
 }
 
-body {
-  background: #07070b;
-  color: #f8fafc;
-}
-
-body:before {
-
-  content: "";
-
-  position: fixed;
-
-  inset: 0;
-
-  pointer-events: none;
-
-  opacity: .16;
-
-  background-image:
-    linear-gradient(
-      rgba(255,255,255,.035) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,.035) 1px,
-      transparent 1px
-    );
-
-  background-size: 36px 36px;
-}
-
-.glass {
+.glass{
 
   background:
-    rgba(12,12,18,.82);
+    rgba(8,9,14,.86);
 
   backdrop-filter:
     blur(18px);
 
 }
 
-.item-card {
+.item{
 
-  transition:
-    transform .25s,
-    box-shadow .25s;
+  transition:.2s;
 
 }
 
-.item-card:hover {
+.item:hover{
 
   transform:
-    translateY(-6px);
+    translateY(-5px);
 
   box-shadow:
-    0 0 35px
-    rgba(168,85,247,.14);
+    0 20px 50px
+    rgba(168,85,247,.1);
 
-}
-
-.rarity-COMMON {
-  border-color: #64748b;
-}
-
-.rarity-UNCOMMON {
-  border-color: #22c55e;
-}
-
-.rarity-RARE {
-  border-color: #38bdf8;
-}
-
-.rarity-EPIC {
-  border-color: #a855f7;
-}
-
-.rarity-LEGENDARY {
-  border-color: #f59e0b;
-}
-
-.rarity-MYTHIC {
-  border-color: #ef4444;
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #27272a;
-  border-radius: 20px;
 }
 
 </style>
@@ -120,465 +56,361 @@ body:before {
 </head>
 
 
-<body class="min-h-screen">
+<body>
 
 
-<header class="sticky top-0 z-50">
-
-<div class="glass border-b border-white/10">
-
-<div class="
-max-w-7xl
-mx-auto
-px-4 sm:px-6 lg:px-8
-h-20
-flex
-items-center
-justify-between
-">
-
-<a
-href="index.html"
-class="flex items-center gap-3"
+<header
+  class="
+    fixed
+    top-0
+    left-0
+    right-0
+    z-40
+    glass
+    border-b
+    border-white/10
+  "
 >
 
-<div class="
-w-11 h-11
-rounded-2xl
-bg-gradient-to-br
-from-fuchsia-500
-to-violet-700
-flex
-items-center
-justify-center
-font-black
-text-xl
-">
-C
-</div>
+<div
+  class="
+    max-w-7xl
+    mx-auto
+    px-4
+    h-20
+    flex
+    items-center
+    justify-between
+  "
+>
 
-<div>
+<a
+  href="index.html"
+  class="font-black text-xl"
+>
 
-<div class="font-black text-xl">
 CHAK338
-</div>
 
-<div class="
-text-[10px]
-uppercase
-tracking-[.22em]
-text-zinc-500
-">
-Gaming Hub
-</div>
+<span
+  class="
+    text-fuchsia-400
+    text-xs
+  "
+>
 
-</div>
+GAMING HUB
+
+</span>
 
 </a>
 
 
-<div class="flex gap-2">
+<nav
+  class="
+    flex
+    gap-5
+    text-sm
+    font-bold
+    text-zinc-400
+  "
+>
+
+<a href="index.html">
+  Кейсы
+</a>
+
+<a href="upgrade.html">
+  Апгрейдер
+</a>
 
 <a
-href="index.html#cases"
-class="
-hidden sm:inline-flex
-px-4 py-3
-rounded-xl
-bg-white/5
-border border-white/10
-text-sm
-font-black
-">
-КЕЙСЫ
+  class="text-white"
+  href="inventory.html"
+>
+  Инвентарь
 </a>
 
-
-<a
-href="upgrade.html"
-class="
-px-4 py-3
-rounded-xl
-bg-fuchsia-500
-text-white
-text-sm
-font-black
-">
-АПГРЕЙДЕР
-</a>
-
-
-<a
-href="index.html"
-class="
-px-4 py-3
-rounded-xl
-bg-white
-text-black
-text-sm
-font-black
-">
-ГЛАВНАЯ
-</a>
-
-</div>
-
-</div>
+</nav>
 
 </div>
 
 </header>
 
 
+
 <main
-class="
-max-w-7xl
-mx-auto
-px-4 sm:px-6 lg:px-8
-py-14
-">
+  class="
+    pt-28
+    max-w-7xl
+    mx-auto
+    px-4
+    pb-20
+  "
+>
 
 
 <div
-class="
-flex
-flex-col
-md:flex-row
-md:items-end
-md:justify-between
-gap-6
-"
+  class="
+    flex
+    flex-col
+    md:flex-row
+    justify-between
+    gap-5
+  "
 >
 
 <div>
 
-<div class="
-text-xs
-font-black
-uppercase
-tracking-[.25em]
-text-fuchsia-400
-">
-CHAK338 COLLECTION
+<div
+  class="
+    text-xs
+    uppercase
+    tracking-[.3em]
+    text-fuchsia-400
+    font-black
+  "
+>
+
+YOUR COLLECTION
+
 </div>
 
-<h1 class="
-mt-3
-text-5xl
-sm:text-6xl
-font-black
-tracking-tight
-">
-ИНВЕНТАРЬ
+
+<h1
+  class="
+    text-5xl
+    font-black
+    mt-3
+  "
+>
+
+Инвентарь
+
 </h1>
 
-<p class="
-mt-4
-text-zinc-400
-max-w-2xl
-">
 
-Все предметы, которые ты выбил
-из кейсов.
+<p
+  class="
+    text-zinc-500
+    mt-3
+  "
+>
+
+Все выпавшие предметы.
 
 </p>
 
 </div>
 
 
-<div class="
-grid
-grid-cols-3
-gap-2
-sm:gap-3
-">
 
-<div class="
-rounded-2xl
-border border-white/10
-bg-zinc-950
-px-4 py-4
-min-w-24
-">
+<div
+  class="
+    grid
+    grid-cols-3
+    gap-3
+  "
+>
 
-<div class="text-xs text-zinc-500">
+<div
+  class="
+    rounded-2xl
+    border
+    border-white/10
+    bg-zinc-950
+    p-4
+  "
+>
+
+<div
+  class="
+    text-xs
+    text-zinc-600
+  "
+>
+
 ПРЕДМЕТОВ
+
 </div>
+
+<b
+  id="count"
+  class="text-2xl"
+>
+
+0
+
+</b>
+
+</div>
+
+
 
 <div
-id="total"
-class="
-text-2xl
-font-black
-mt-1
-">
-0
-</div>
+  class="
+    rounded-2xl
+    border
+    border-white/10
+    bg-zinc-950
+    p-4
+  "
+>
 
-</div>
+<div
+  class="
+    text-xs
+    text-zinc-600
+  "
+>
 
-
-<div class="
-rounded-2xl
-border border-white/10
-bg-zinc-950
-px-4 py-4
-min-w-24
-">
-
-<div class="text-xs text-zinc-500">
 СТОИМОСТЬ
-</div>
-
-<div
-id="value"
-class="
-text-lg
-font-black
-mt-1
-">
-0 ₴
-</div>
 
 </div>
 
+<b
+  id="total"
+  class="text-2xl"
+>
 
-<div class="
-rounded-2xl
-border border-white/10
-bg-zinc-950
-px-4 py-4
-min-w-24
-">
-
-<div class="text-xs text-zinc-500">
-MYTHIC
-</div>
-
-<div
-id="mythic"
-class="
-text-2xl
-font-black
-mt-1
-">
 0
-</div>
+
+</b>
 
 </div>
 
-</div>
-
-</div>
-
-
-<div class="
-mt-10
-flex
-flex-wrap
-gap-2
-">
-
-<button
-class="
-filter
-active
-px-4 py-2.5
-rounded-xl
-bg-white
-text-black
-text-sm
-font-black
-"
-data-filter="ALL"
->
-ВСЕ
-</button>
-
-
-<button
-class="
-filter
-px-4 py-2.5
-rounded-xl
-bg-white/5
-border border-white/10
-text-sm
-font-black
-"
-data-filter="Персонажи"
->
-ПЕРСОНАЖИ
-</button>
-
-
-<button
-class="
-filter
-px-4 py-2.5
-rounded-xl
-bg-white/5
-border border-white/10
-text-sm
-font-black
-"
-data-filter="Одежда"
->
-ОДЕЖДА
-</button>
-
-
-<button
-class="
-filter
-px-4 py-2.5
-rounded-xl
-bg-white/5
-border border-white/10
-text-sm
-font-black
-"
-data-filter="Dota 2"
->
-DOTA 2
-</button>
-
-
-<button
-id="clearBtn"
-class="
-ml-auto
-px-4 py-2.5
-rounded-xl
-bg-red-500/10
-border border-red-500/20
-text-red-300
-text-sm
-font-black
-"
->
-ОЧИСТИТЬ
-</button>
-
-</div>
 
 
 <div
-id="grid"
-class="
-mt-8
-grid
-grid-cols-2
-md:grid-cols-3
-lg:grid-cols-4
-xl:grid-cols-5
-gap-4
-">
+  class="
+    rounded-2xl
+    border
+    border-white/10
+    bg-zinc-950
+    p-4
+  "
+>
+
+<div
+  class="
+    text-xs
+    text-zinc-600
+  "
+>
+
+XP
+
 </div>
 
+<b
+  id="xp"
+  class="text-2xl"
+>
+
+0
+
+</b>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div
+  id="grid"
+  class="
+    mt-10
+    grid
+    sm:grid-cols-2
+    lg:grid-cols-4
+    xl:grid-cols-5
+    gap-4
+  "
+></div>
 
 </main>
 
 
+
+<script src="data.js"></script>
+
+
 <script>
 
-let currentFilter = "ALL";
+function render(){
 
-
-function render() {
-
-  const all =
+  const inventory =
     getInventory();
 
 
-  const items =
-    currentFilter === "ALL"
-      ? all
-      : all.filter(
-          x => x.type === currentFilter
-        );
+  document.getElementById(
+    'count'
+  ).textContent =
+    inventory.length;
 
 
   document.getElementById(
-    "total"
+    'total'
   ).textContent =
-    all.length;
-
-
-  document.getElementById(
-    "value"
-  ).textContent =
-    formatMoney(
-      all.reduce(
-        (sum, item) =>
-          sum + Number(item.price || 0),
+    inventory
+      .reduce(
+        (sum,item) =>
+          sum +
+          Number(
+            item.price || 0
+          ),
         0
       )
-    );
+      .toLocaleString(
+        'ru-RU'
+      )
+      +
+      ' монет';
 
 
   document.getElementById(
-    "mythic"
+    'xp'
   ).textContent =
-    all.filter(
-      x => x.rarity === "MYTHIC"
-    ).length;
+    getXP();
 
 
   const grid =
     document.getElementById(
-      "grid"
+      'grid'
     );
 
 
-  if (!items.length) {
+  if(!inventory.length){
 
     grid.innerHTML = `
 
       <div
         class="
-        col-span-full
-        rounded-[30px]
-        border border-white/10
-        bg-zinc-950
-        p-14
-        text-center
+          col-span-full
+          rounded-3xl
+          border
+          border-dashed
+          border-white/10
+          p-12
+          text-center
+          text-zinc-500
         "
       >
 
-        <div class="text-6xl">
-          📦
-        </div>
-
-        <h2
-          class="
-          mt-5
-          text-2xl
-          font-black
-          "
-        >
-          Инвентарь пуст
-        </h2>
-
-        <p class="
-          mt-3
-          text-zinc-500
-        ">
-          Открой кейс и получи первый предмет.
-        </p>
+        Инвентарь пуст.
 
         <a
-          href="index.html#cases"
           class="
-          inline-block
-          mt-6
-          px-6 py-3
-          rounded-xl
-          bg-fuchsia-500
-          font-black
+            text-fuchsia-400
+            font-black
           "
+          href="index.html#cases"
         >
-          ОТКРЫТЬ КЕЙС
+
+          Открыть кейс →
+
         </a>
 
       </div>
@@ -590,273 +422,98 @@ function render() {
   }
 
 
-  /*
-    Группируем одинаковые предметы.
-  */
-
-  const grouped = {};
-
-
-  items.forEach(item => {
-
-    const key =
-      item.id + "_" +
-      item.caseId;
-
-
-    if (!grouped[key]) {
-
-      grouped[key] = {
-        ...item,
-        count: 0
-      };
-
-    }
-
-
-    grouped[key].count++;
-
-  });
-
-
   grid.innerHTML =
-    Object.values(grouped)
-      .map(item => `
+    inventory
+      .slice()
+      .reverse()
+      .map(
+        item => `
 
         <article
           class="
-          item-card
-          rounded-3xl
-          border-2
-          rarity-${item.rarity}
-          bg-zinc-950
-          p-5
+            item
+            rounded-3xl
+            border
+            border-white/10
+            bg-zinc-950
+            p-4
           "
         >
 
           <div
             class="
-            h-40
-            rounded-2xl
-            bg-white/[.03]
-            flex
-            items-center
-            justify-center
-            relative
+              h-40
+              rounded-2xl
+              bg-black/30
             "
           >
 
             <img
               src="${item.image}"
               class="
-              w-28
-              h-28
-              object-contain
+                w-full
+                h-full
+                object-contain
               "
+              alt="${item.name}"
             >
 
-
-            ${
-              item.count > 1
-              ? `
-                <div
-                  class="
-                  absolute
-                  top-3
-                  right-3
-                  px-2.5
-                  py-1
-                  rounded-lg
-                  bg-white
-                  text-black
-                  text-xs
-                  font-black
-                  "
-                >
-                  x${item.count}
-                </div>
-              `
-              : ""
-            }
-
-          </div>
-
-
-          <div class="
-            mt-4
-            text-[10px]
-            uppercase
-            tracking-widest
-            text-zinc-500
-          ">
-            ${item.type}
           </div>
 
 
           <h3
             class="
-            mt-2
-            font-black
-            text-lg
-            leading-tight
+              font-black
+              mt-4
             "
           >
+
             ${item.name}
+
           </h3>
 
 
           <div
             class="
-            mt-2
-            text-xs
-            font-bold
+              text-xs
+              mt-1
             "
-          >
-            ${item.rarity}
-          </div>
-
-
-          <div
-            class="
-            mt-3
-            flex
-            justify-between
-            items-center
+            style="
+              color:
+              ${
+                RARITIES[item.rarity]
+                  ?.color || '#fff'
+              }
             "
           >
 
-            <span
-              class="text-zinc-500 text-xs"
-            >
-              Цена
-            </span>
-
-            <span
-              class="font-black"
-            >
-              ${formatMoney(item.price)}
-            </span>
+            ${
+              RARITIES[item.rarity]
+                ?.name || 'Предмет'
+            }
 
           </div>
 
 
           <div
             class="
-            mt-2
-            pt-2
-            border-t
-            border-white/5
-            flex
-            justify-between
-            text-xs
+              text-amber-400
+              font-black
+              mt-2
             "
           >
 
-            <span class="text-zinc-600">
-              Всего
-            </span>
-
-            <span class="font-black">
-              ${formatMoney(
-                item.price *
-                item.count
-              )}
-            </span>
+            🪙 ${item.price}
 
           </div>
 
         </article>
 
-      `)
-      .join("");
+      `
+      )
+      .join('');
 
 }
-
-
-document
-  .querySelectorAll(".filter")
-  .forEach(button => {
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        currentFilter =
-          button.dataset.filter;
-
-
-        document
-          .querySelectorAll(".filter")
-          .forEach(x => {
-
-            x.classList.remove(
-              "bg-white",
-              "text-black"
-            );
-
-            x.classList.add(
-              "bg-white/5",
-              "border",
-              "border-white/10"
-            );
-
-          });
-
-
-        button.classList.remove(
-          "bg-white/5",
-          "border",
-          "border-white/10"
-        );
-
-
-        button.classList.add(
-          "bg-white",
-          "text-black"
-        );
-
-
-        render();
-
-      }
-    );
-
-  });
-
-
-document
-  .getElementById("clearBtn")
-  .addEventListener(
-    "click",
-    () => {
-
-      if (!getInventory().length) {
-        return;
-      }
-
-
-      if (
-        confirm(
-          "Удалить весь инвентарь?"
-        )
-      ) {
-
-        localStorage.removeItem(
-          "chak338_inventory"
-        );
-
-        render();
-
-      }
-
-    }
-  );
-
-
-window.addEventListener(
-  "storage",
-  render
-);
 
 
 render();
