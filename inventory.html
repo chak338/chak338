@@ -7,7 +7,7 @@
 
 <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width,initial-scale=1"
 >
 
 <title>CHAK338 — Инвентарь</title>
@@ -17,278 +17,264 @@
 <style>
 
 * {
-    box-sizing: border-box;
+    box-sizing:border-box;
 }
 
 body {
 
-    margin: 0;
+    margin:0;
 
-    min-height: 100vh;
+    min-height:100vh;
+
+    color:white;
 
     font-family:
-        Inter,
         Arial,
         sans-serif;
 
-    color: white;
-
     background:
         radial-gradient(
-            circle at 50% -10%,
-            #26365e,
-            #080b12 65%
+            circle at top,
+            #25345a,
+            #070a10 70%
         );
+
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
+    color:inherit;
+    text-decoration:none;
 }
 
 .header {
 
-    position: sticky;
+    display:flex;
 
-    top: 0;
+    justify-content:space-between;
 
-    z-index: 20;
+    align-items:center;
 
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    padding: 18px 5vw;
+    padding:18px 5%;
 
     background:
-        rgba(7,10,17,.85);
-
-    backdrop-filter: blur(18px);
+        rgba(5,8,14,.85);
 
     border-bottom:
-        1px solid rgba(255,255,255,.08);
+        1px solid
+        rgba(255,255,255,.08);
+
 }
 
 .logo {
 
-    font-size: 27px;
+    font-size:27px;
 
-    font-weight: 1000;
+    font-weight:1000;
+
 }
 
 .logo span {
-    color: #6ea8ff;
+    color:#6ea8ff;
 }
 
 .nav {
 
-    display: flex;
+    display:flex;
 
-    gap: 22px;
+    gap:22px;
 
-    color: #9da7bb;
+    color:#9ba6ba;
 
-    font-size: 14px;
+    font-size:14px;
 
-    font-weight: 800;
-}
+    font-weight:800;
 
-.nav a:hover {
-    color: white;
 }
 
 .container {
 
-    width: min(1250px,90%);
+    width:min(1250px,90%);
 
-    margin: auto;
+    margin:auto;
 
-    padding: 55px 0;
+    padding:55px 0;
+
 }
 
-.title {
+h1 {
 
-    font-size: 42px;
+    font-size:42px;
 
-    font-weight: 1000;
+    margin:0;
 
-    margin-bottom: 10px;
+    font-weight:1000;
+
 }
 
 .subtitle {
 
-    color: #8f9aad;
+    margin-top:10px;
 
-    margin-bottom: 35px;
+    color:#8e99ad;
+
 }
 
 .stats {
 
-    display: flex;
+    display:flex;
 
-    gap: 14px;
+    gap:15px;
 
-    margin-bottom: 35px;
+    margin:35px 0;
 
-    flex-wrap: wrap;
+    flex-wrap:wrap;
+
 }
 
 .stat {
 
-    padding: 15px 22px;
+    padding:17px 22px;
 
-    border-radius: 15px;
+    border-radius:15px;
 
     background:
         rgba(255,255,255,.05);
 
     border:
-        1px solid rgba(255,255,255,.08);
+        1px solid
+        rgba(255,255,255,.08);
+
 }
 
 .stat span {
 
-    display: block;
+    display:block;
 
-    color: #8e99ae;
+    color:#8994a8;
 
-    font-size: 11px;
+    font-size:10px;
 
-    text-transform: uppercase;
+    text-transform:uppercase;
 
-    margin-bottom: 5px;
 }
 
 .stat strong {
-    font-size: 20px;
+
+    display:block;
+
+    margin-top:5px;
+
+    font-size:20px;
+
 }
 
 .inventory {
 
-    display: grid;
+    display:grid;
 
     grid-template-columns:
         repeat(5,1fr);
 
-    gap: 15px;
+    gap:15px;
+
 }
 
 .card {
 
-    position: relative;
+    padding:14px;
 
-    min-height: 260px;
-
-    padding: 15px;
-
-    border-radius: 20px;
+    border-radius:20px;
 
     background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.07),
-            rgba(255,255,255,.025)
-        );
+        rgba(255,255,255,.045);
 
     border:
-        1px solid rgba(255,255,255,.08);
+        1px solid
+        rgba(255,255,255,.08);
 
-    transition:
-        transform .2s,
-        border-color .2s;
 }
 
-.card:hover {
+.card img {
 
-    transform:
-        translateY(-5px);
+    width:100%;
 
-    border-color:
-        rgba(255,255,255,.2);
+    height:170px;
+
+    object-fit:contain;
+
 }
 
-.item-img {
+.name {
 
-    width: 100%;
+    font-size:14px;
 
-    height: 165px;
+    font-weight:1000;
 
-    object-fit: contain;
 }
 
-.item-name {
+.rarity {
 
-    font-size: 14px;
+    margin-top:6px;
 
-    font-weight: 1000;
+    font-size:10px;
 
-    white-space: nowrap;
+    font-weight:1000;
 
-    overflow: hidden;
+    text-transform:uppercase;
 
-    text-overflow: ellipsis;
 }
 
-.item-rarity {
+.price {
 
-    margin-top: 5px;
+    margin-top:8px;
 
-    font-size: 10px;
+    font-size:14px;
 
-    font-weight: 1000;
+    font-weight:1000;
 
-    text-transform: uppercase;
-}
-
-.item-price {
-
-    margin-top: 7px;
-
-    color: #d9e1ef;
-
-    font-weight: 900;
-
-    font-size: 13px;
 }
 
 .common {
-    color: #aeb7c8;
+    color:#aeb7c8;
 }
 
 .uncommon {
-    color: #62d98b;
+    color:#62d98b;
 }
 
 .rare {
-    color: #55a8ff;
+    color:#55a8ff;
 }
 
 .epic {
-    color: #b87cff;
+    color:#b87cff;
 }
 
 .legendary {
-    color: #ffb84d;
+    color:#ffb84d;
 }
 
 .mythic {
-    color: #ff4c72;
+    color:#ff4c72;
 }
 
 .empty {
 
-    padding: 80px 20px;
+    grid-column:
+        1/-1;
 
-    text-align: center;
+    text-align:center;
+
+    padding:80px;
+
+    color:#7f8a9d;
 
     border:
-        1px dashed rgba(255,255,255,.12);
+        1px dashed
+        rgba(255,255,255,.15);
 
-    border-radius: 25px;
+    border-radius:20px;
 
-    color: #818ca0;
 }
 
 @media(max-width:1000px) {
@@ -297,18 +283,20 @@ a {
         grid-template-columns:
             repeat(3,1fr);
     }
+
 }
 
 @media(max-width:600px) {
 
     .nav {
-        display: none;
+        display:none;
     }
 
     .inventory {
         grid-template-columns:
             repeat(2,1fr);
     }
+
 }
 
 </style>
@@ -320,98 +308,100 @@ a {
 
 <header class="header">
 
-    <a class="logo" href="index.html">
-        CHAK<span>338</span>
-    </a>
+<a
+    href="index.html"
+    class="logo"
+>
+CHAK<span>338</span>
+</a>
 
-    <nav class="nav">
 
-        <a href="index.html">
-            Главная
-        </a>
+<nav class="nav">
 
-        <a href="index.html#cases">
-            Кейсы
-        </a>
+<a href="index.html">
+Главная
+</a>
 
-        <a href="inventory.html">
-            Инвентарь
-        </a>
+<a href="inventory.html">
+Инвентарь
+</a>
 
-        <a href="upgrade.html">
-            Апгрейд
-        </a>
+<a href="upgrade.html">
+Апгрейд
+</a>
 
-    </nav>
+</nav>
 
 </header>
 
 
 <main class="container">
 
-    <div class="title">
-        Мой инвентарь
-    </div>
 
-    <div class="subtitle">
-        Все предметы, которые ты получил из кейсов.
-    </div>
+<h1>
+МОЙ ИНВЕНТАРЬ
+</h1>
 
-
-    <div class="stats">
-
-        <div class="stat">
-
-            <span>
-                Предметов
-            </span>
-
-            <strong id="count">
-                0
-            </strong>
-
-        </div>
+<div class="subtitle">
+Все полученные предметы
+</div>
 
 
-        <div class="stat">
+<div class="stats">
 
-            <span>
-                Общая стоимость
-            </span>
+<div class="stat">
 
-            <strong id="total">
-                0
-            </strong>
+<span>
+Предметов
+</span>
 
-        </div>
+<strong id="count">
+0
+</strong>
 
-
-        <div class="stat">
-
-            <span>
-                XP
-            </span>
-
-            <strong id="xp">
-                0
-            </strong>
-
-        </div>
-
-    </div>
+</div>
 
 
-    <div
-        class="inventory"
-        id="inventory"
-    ></div>
+<div class="stat">
+
+<span>
+Стоимость
+</span>
+
+<strong id="total">
+💰 0
+</strong>
+
+</div>
+
+
+<div class="stat">
+
+<span>
+XP
+</span>
+
+<strong id="xp">
+0
+</strong>
+
+</div>
+
+</div>
+
+
+<div
+    class="inventory"
+    id="inventory"
+></div>
+
 
 </main>
 
 
 <script>
 
-function renderInventory() {
+function render() {
 
     const inventory =
         getInventory();
@@ -431,8 +421,14 @@ function renderInventory() {
 
     const total =
         inventory.reduce(
-            (sum, item) =>
-                sum + Number(item.price || 0),
+            (
+                sum,
+                item
+            ) =>
+                sum +
+                Number(
+                    item.price || 0
+                ),
             0
         );
 
@@ -441,13 +437,17 @@ function renderInventory() {
         "total"
     ).textContent =
         "💰 " +
-        formatPrice(total);
+        formatPrice(
+            total
+        );
 
 
     document.getElementById(
         "xp"
     ).textContent =
-        formatPrice(getXP());
+        formatPrice(
+            getXP()
+        );
 
 
     container.innerHTML = "";
@@ -457,15 +457,14 @@ function renderInventory() {
 
         container.innerHTML = `
 
-            <div class="empty"
-                 style="grid-column:1/-1">
+            <div class="empty">
 
                 <h2>
                     Инвентарь пуст
                 </h2>
 
                 <p>
-                    Открой первый кейс,
+                    Открой кейс,
                     чтобы получить предмет.
                 </p>
 
@@ -474,6 +473,7 @@ function renderInventory() {
         `;
 
         return;
+
     }
 
 
@@ -482,53 +482,61 @@ function renderInventory() {
         .reverse()
         .forEach(item => {
 
+            const rarity =
+                getRarity(
+                    item.rarity
+                );
+
+
             const card =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             card.className =
                 "card";
 
 
-            const rarity =
-                getRarity(item.rarity);
-
-
             card.innerHTML = `
 
                 <img
-                    class="item-img"
                     src="${item.image}"
                     onerror="
-                        this.src='https://dummyimage.com/400x400/151b29/ffffff&text=${encodeURIComponent(item.name)}'
+                        this.src='https://dummyimage.com/400x400/151b29/ffffff&text=ITEM'
                     "
                 >
 
-                <div class="item-name">
+                <div class="name">
                     ${item.name}
                 </div>
 
-                <div class="
-                    item-rarity
-                    ${item.rarity}
-                ">
+                <div
+                    class="
+                        rarity
+                        ${item.rarity}
+                    "
+                >
                     ${rarity.name}
                 </div>
 
-                <div class="item-price">
+                <div class="price">
                     💰 ${formatPrice(item.price)}
                 </div>
 
             `;
 
 
-            container.appendChild(card);
+            container.appendChild(
+                card
+            );
 
         });
 
 }
 
 
-renderInventory();
+render();
 
 </script>
 
