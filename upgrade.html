@@ -6,63 +6,287 @@
 <meta charset="UTF-8">
 
 <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
 
 <title>CHAK338 — Апгрейдер</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
+<script src="data.js"></script>
+
 <style>
 
-body {
-    background:#07070b;
-    color:#f8fafc;
+html {
+  scroll-behavior: smooth;
 }
 
-.card {
+body {
+  background: #07070b;
+  color: #f8fafc;
+}
 
-    background:#0c0c12;
+body:before {
 
-    border:
-        1px solid
-        rgba(255,255,255,.08);
+  content: "";
+
+  position: fixed;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: .16;
+
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 36px 36px;
+}
+
+.glass {
+
+  background:
+    rgba(12,12,18,.82);
+
+  backdrop-filter:
+    blur(18px);
+
+}
+
+.panel {
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.045),
+      rgba(255,255,255,.015)
+    );
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
 
 }
 
 .item {
 
-    transition:.2s;
+  transition:
+    transform .2s,
+    border-color .2s,
+    box-shadow .2s;
 
 }
 
 .item:hover {
 
+  transform:
+    translateY(-4px);
+
+}
+
+.item.selected {
+
+  border-color:
+    #a855f7;
+
+  box-shadow:
+    0 0 30px
+    rgba(168,85,247,.18);
+
+}
+
+.target {
+
+  transition:
+    transform .2s,
+    border-color .2s,
+    box-shadow .2s;
+
+}
+
+.target:hover {
+
+  transform:
+    translateY(-4px);
+
+}
+
+.target.active {
+
+  border-color:
+    #f59e0b;
+
+  box-shadow:
+    0 0 35px
+    rgba(245,158,11,.18);
+
+}
+
+.rarity-COMMON {
+  border-color: #64748b;
+}
+
+.rarity-UNCOMMON {
+  border-color: #22c55e;
+}
+
+.rarity-RARE {
+  border-color: #38bdf8;
+}
+
+.rarity-EPIC {
+  border-color: #a855f7;
+}
+
+.rarity-LEGENDARY {
+  border-color: #f59e0b;
+}
+
+.rarity-MYTHIC {
+  border-color: #ef4444;
+}
+
+.chance {
+
+  transition:
+    .2s;
+
+}
+
+.chance.active {
+
+  background:
+    #a855f7;
+
+  color:
+    white;
+
+  border-color:
+    #a855f7;
+
+  box-shadow:
+    0 0 25px
+    rgba(168,85,247,.25);
+
+}
+
+.upgrade-core {
+
+  width: 210px;
+  height: 210px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(168,85,247,.25),
+      rgba(168,85,247,.05) 45%,
+      transparent 70%
+    );
+
+  border:
+    1px solid
+    rgba(168,85,247,.35);
+
+  box-shadow:
+    0 0 80px
+    rgba(168,85,247,.14);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+.upgrade-core:before {
+
+  content: "";
+
+  position: absolute;
+
+  width: 145px;
+  height: 145px;
+
+  border-radius: 50%;
+
+  border:
+    1px dashed
+    rgba(255,255,255,.2);
+
+  animation:
+    rotate 10s linear infinite;
+
+}
+
+@keyframes rotate {
+
+  to {
     transform:
-        translateY(-3px);
+      rotate(360deg);
+  }
 
 }
 
-.selected {
+.core-arrow {
 
-    border-color:
-        #d946ef !important;
+  font-size:
+    55px;
 
-    box-shadow:
-        0 0 25px
-        rgba(217,70,239,.15);
+  color:
+    #a855f7;
+
+  text-shadow:
+    0 0 30px
+    rgba(168,85,247,.7);
 
 }
 
-.target-selected {
+.result-win {
 
-    border-color:
-        #ef4444 !important;
+  animation:
+    win .6s
+    cubic-bezier(.2,.9,.25,1.3);
 
-    box-shadow:
-        0 0 25px
-        rgba(239,68,68,.2);
+}
 
+@keyframes win {
+
+  0% {
+    transform: scale(.7);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.08);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 20px;
 }
 
 </style>
@@ -70,56 +294,90 @@ body {
 </head>
 
 
-<body>
+<body class="min-h-screen">
 
 
-<header
-    class="fixed top-0
-    left-0 right-0 z-50
-    bg-[#0c0c12]/90
-    backdrop-blur-xl
-    border-b border-white/10">
+<header class="sticky top-0 z-50">
 
-<div
-    class="max-w-7xl
-    mx-auto px-5">
+<div class="glass border-b border-white/10">
 
-<div
-    class="h-20
-    flex items-center
-    justify-between">
+<div class="
+max-w-[1500px]
+mx-auto
+px-4 sm:px-6 lg:px-8
+h-20
+flex
+items-center
+justify-between
+">
 
 <a
-    href="index.html"
-    class="font-black text-xl">
+href="index.html"
+class="flex items-center gap-3"
+>
 
+<div class="
+w-11 h-11
+rounded-2xl
+bg-gradient-to-br
+from-fuchsia-500
+to-violet-700
+flex
+items-center
+justify-center
+font-black
+text-xl
+">
+C
+</div>
+
+<div>
+
+<div class="font-black text-xl">
 CHAK338
+</div>
+
+<div class="
+text-[10px]
+uppercase
+tracking-[.22em]
+text-zinc-500
+">
+Gaming Hub
+</div>
+
+</div>
 
 </a>
 
 
-<div class="flex gap-3">
+<div class="flex gap-2">
 
 <a
-    href="index.html"
-    class="px-4 py-3
-    rounded-xl
-    bg-white/5
-    font-bold">
-
+href="index.html"
+class="
+px-4 py-3
+rounded-xl
+bg-white/5
+border border-white/10
+text-sm
+font-black
+">
 ГЛАВНАЯ
-
 </a>
 
+
 <a
-    href="inventory.html"
-    class="px-4 py-3
-    rounded-xl
-    bg-white/5
-    font-bold">
-
+href="inventory.html"
+class="
+px-4 py-3
+rounded-xl
+bg-fuchsia-500
+text-white
+text-sm
+font-black
+">
 ИНВЕНТАРЬ
-
 </a>
 
 </div>
@@ -132,43 +390,44 @@ CHAK338
 
 
 <main
-    class="max-w-7xl
-    mx-auto
-    px-5
-    pt-32
-    pb-20">
+class="
+max-w-[1500px]
+mx-auto
+px-4 sm:px-6 lg:px-8
+py-10
+">
 
 
-<div class="mb-10">
+<div class="mb-8">
 
-<div
-    class="text-xs
-    text-fuchsia-400
-    uppercase
-    tracking-[.3em]
-    font-black">
-
-CHAK338 UPGRADE
-
+<div class="
+text-xs
+font-black
+uppercase
+tracking-[.25em]
+text-fuchsia-400
+">
+CHAK338 SYSTEM
 </div>
 
-
-<h1
-    class="text-5xl
-    font-black
-    mt-3">
-
+<h1 class="
+mt-3
+text-5xl
+sm:text-6xl
+font-black
+">
 АПГРЕЙДЕР
-
 </h1>
 
+<p class="
+mt-4
+text-zinc-400
+max-w-3xl
+">
 
-<p
-    class="text-zinc-500
-    mt-4">
-
-Выбери предметы,
-шанс и цель улучшения.
+Выбери один или несколько предметов,
+выбери шанс и попробуй получить
+более дорогой предмет.
 
 </p>
 
@@ -176,828 +435,1511 @@ CHAK338 UPGRADE
 
 
 <div
-    class="grid
-    lg:grid-cols-[1fr_320px_1fr]
-    gap-5">
+class="
+grid
+xl:grid-cols-[1fr_420px_1fr]
+gap-5
+items-start
+">
 
 
-<!-- =====================================================
-     STAKE
-===================================================== -->
+<!-- STAKE -->
+
+<section
+class="
+panel
+rounded-[30px]
+p-5
+"
+>
+
+<div class="
+flex
+items-center
+justify-between
+mb-5
+">
 
 <div>
 
-<div
-    class="flex
-    justify-between
-    mb-4">
-
-<h2
-    class="font-black
-    text-xl">
-
-ТВОИ ПРЕДМЕТЫ
-
-</h2>
-
-<span
-    id="stakeValue"
-    class="text-zinc-500">
-
-0 коп.
-
-</span>
-
+<div class="
+text-xs
+font-black
+uppercase
+tracking-widest
+text-zinc-500
+">
+ТВОЯ СТАВКА
 </div>
 
-
-<div
-    id="stakeItems"
-    class="grid
-    grid-cols-2
-    sm:grid-cols-3
-    gap-3">
-
-</div>
-
-</div>
-
-
-<!-- =====================================================
-     CENTER
-===================================================== -->
-
-<div
-    class="card
-    rounded-3xl
-    p-6
-    h-fit">
-
-
-<div
-    class="text-center">
-
-<div
-    class="text-xs
-    uppercase
-    tracking-widest
-    text-zinc-500
-    font-black">
-
-Шанс
-
-</div>
-
-
-<div
-    id="chanceText"
-    class="text-5xl
-    font-black
-    mt-2">
-
-50%
-
-</div>
-
-</div>
-
-
-<div
-    class="grid
-    grid-cols-4
-    gap-2
-    mt-6">
-
-
-<button
-    class="chance px-3 py-3
-    rounded-xl
-    bg-white/5
-    font-black"
-    data-chance="10">
-
-10%
-
-</button>
-
-
-<button
-    class="chance px-3 py-3
-    rounded-xl
-    bg-white/5
-    font-black"
-    data-chance="25">
-
-25%
-
-</button>
-
-
-<button
-    class="chance px-3 py-3
-    rounded-xl
-    bg-fuchsia-500
-    font-black"
-    data-chance="50">
-
-50%
-
-</button>
-
-
-<button
-    class="chance px-3 py-3
-    rounded-xl
-    bg-white/5
-    font-black"
-    data-chance="75">
-
-75%
-
-</button>
-
-</div>
-
-
-<div
-    class="mt-7
-    rounded-2xl
-    bg-black/30
-    p-4">
-
-<div
-    class="text-xs
-    text-zinc-500">
-
-МАКСИМАЛЬНАЯ ЦЕНА ЦЕЛИ
-
-</div>
-
-<div
-    id="maxTarget"
-    class="text-2xl
-    font-black
-    mt-1">
-
-0 коп.
-
-</div>
-
-</div>
-
-
-<button
-    id="upgradeButton"
-    class="w-full
-    mt-5
-    py-4
-    rounded-2xl
-    bg-fuchsia-500
-    text-white
-    font-black">
-
-УЛУЧШИТЬ
-
-</button>
-
-
-<div
-    id="status"
-    class="text-center
-    text-sm
-    text-zinc-500
-    mt-4">
-
+<h2 class="
+text-2xl
+font-black
+mt-1
+">
 Выбери предметы
+</h2>
 
+</div>
+
+
+<div
+id="stakeValue"
+class="
+text-fuchsia-400
+font-black
+"
+>
+0 ₴
 </div>
 
 </div>
 
 
-<!-- =====================================================
-     TARGET
-===================================================== -->
+<div
+id="inventoryGrid"
+class="
+grid
+grid-cols-2
+sm:grid-cols-3
+gap-3
+"
+>
+</div>
+
+</section>
+
+
+<!-- CENTER -->
+
+<section
+class="
+panel
+rounded-[30px]
+p-6
+xl:sticky
+xl:top-28
+"
+>
+
+<div class="
+text-center
+">
+
+<div class="
+text-xs
+font-black
+uppercase
+tracking-widest
+text-zinc-500
+">
+UPGRADE CHANCE
+</div>
+
+
+<div
+id="chanceValue"
+class="
+mt-3
+text-6xl
+font-black
+text-fuchsia-400
+"
+>
+50%
+</div>
+
+
+<div
+class="
+mt-6
+flex
+justify-center
+gap-2
+"
+>
+
+<button
+class="
+chance
+px-4
+py-3
+rounded-xl
+bg-white/5
+border border-white/10
+font-black
+"
+data-chance="10"
+>
+10%
+</button>
+
+
+<button
+class="
+chance
+px-4
+py-3
+rounded-xl
+bg-white/5
+border border-white/10
+font-black
+"
+data-chance="25"
+>
+25%
+</button>
+
+
+<button
+class="
+chance active
+px-4
+py-3
+rounded-xl
+bg-white/5
+border border-white/10
+font-black
+"
+data-chance="50"
+>
+50%
+</button>
+
+
+<button
+class="
+chance
+px-4
+py-3
+rounded-xl
+bg-white/5
+border border-white/10
+font-black
+"
+data-chance="75"
+>
+75%
+</button>
+
+</div>
+
+
+<div class="
+mt-10
+flex
+justify-center
+">
+
+<div
+class="
+upgrade-core
+relative
+"
+>
+
+<div class="
+core-arrow
+relative
+z-10
+">
+↗
+</div>
+
+</div>
+
+</div>
+
+
+<div
+class="
+mt-8
+grid
+grid-cols-2
+gap-3
+"
+>
+
+<div
+class="
+rounded-2xl
+bg-white/[.03]
+border border-white/5
+p-4
+"
+>
+
+<div class="
+text-[10px]
+text-zinc-500
+font-black
+uppercase
+">
+СТАВКА
+</div>
+
+<div
+id="centerStake"
+class="
+mt-2
+font-black
+text-xl
+">
+0 ₴
+</div>
+
+</div>
+
+
+<div
+class="
+rounded-2xl
+bg-white/[.03]
+border border-white/5
+p-4
+"
+>
+
+<div class="
+text-[10px]
+text-zinc-500
+font-black
+uppercase
+">
+МАКС. ЦЕЛЬ
+</div>
+
+<div
+id="maxTarget"
+class="
+mt-2
+font-black
+text-xl
+">
+0 ₴
+</div>
+
+</div>
+
+</div>
+
+
+<div
+id="selectedTarget"
+class="
+mt-4
+rounded-2xl
+border border-amber-500/20
+bg-amber-500/5
+p-4
+text-left
+"
+>
+
+<div class="
+text-[10px]
+text-amber-400
+font-black
+uppercase
+">
+ЦЕЛЬ
+</div>
+
+<div
+id="selectedTargetName"
+class="
+mt-1
+font-black
+"
+>
+Не выбрана
+</div>
+
+</div>
+
+
+<button
+id="upgradeBtn"
+onclick="doUpgrade()"
+class="
+w-full
+mt-5
+py-5
+rounded-2xl
+bg-fuchsia-500
+hover:bg-fuchsia-400
+font-black
+text-lg
+disabled:opacity-30
+disabled:cursor-not-allowed
+"
+>
+
+АПГРЕЙДИТЬ
+
+</button>
+
+
+<div
+class="
+mt-4
+text-center
+text-xs
+text-zinc-600
+"
+>
+
+При проигрыше ставка сгорает.
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- TARGETS -->
+
+<section
+class="
+panel
+rounded-[30px]
+p-5
+"
+>
+
+<div class="
+flex
+items-center
+justify-between
+mb-5
+">
 
 <div>
 
-<div
-    class="flex
-    justify-between
-    mb-4">
+<div class="
+text-xs
+font-black
+uppercase
+tracking-widest
+text-zinc-500
+">
+TARGET ITEMS
+</div>
 
-<h2
-    class="font-black
-    text-xl">
-
-ЦЕЛЬ
-
+<h2 class="
+text-2xl
+font-black
+mt-1
+">
+Возможные цели
 </h2>
 
-<span
-    id="targetValue"
-    class="text-zinc-500">
+</div>
 
-0 коп.
 
-</span>
+<div
+id="targetHint"
+class="
+text-xs
+text-zinc-500
+text-right
+"
+>
+Выбери ставку
+</div>
 
 </div>
 
 
 <div
-    id="targetItems"
-    class="grid
-    grid-cols-2
-    sm:grid-cols-3
-    gap-3">
-
+id="targetsGrid"
+class="
+grid
+grid-cols-2
+sm:grid-cols-3
+gap-3
+"
+>
 </div>
 
-</div>
+</section>
+
 
 </div>
 
 </main>
 
 
-<script src="data.js"></script>
-
 <script>
 
-let inventory =
+let inventory = [];
+
+let selectedStake = [];
+
+let selectedTarget = null;
+
+let chance = 50;
+
+let upgrading = false;
+
+
+/* =========================================================
+   INVENTORY
+   ========================================================= */
+
+function loadInventory() {
+
+  inventory =
     getInventory();
-
-
-let selectedStake =
-    [];
-
-
-let selectedTarget =
-    null;
-
-
-let selectedChance =
-    50;
-
-
-/* =====================================================
-   RENDER STAKE
-===================================================== */
-
-function renderStake() {
-
-    const box =
-        document.getElementById(
-            "stakeItems"
-        );
-
-
-    box.innerHTML = "";
-
-
-    inventory.forEach(
-        (item,index) => {
-
-            const rarity =
-                getRarity(
-                    item.rarity
-                );
-
-
-            const selected =
-                selectedStake.includes(index);
-
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                `item card rounded-2xl p-3 cursor-pointer ${
-                    selected
-                    ? "selected"
-                    : ""
-                }`;
-
-
-            card.onclick =
-                () => toggleStake(index);
-
-
-            card.innerHTML = `
-
-                <div
-                    class="h-28
-                    flex items-center
-                    justify-center">
-
-                    <img
-                        src="${item.image}"
-                        class="max-w-full
-                        max-h-full
-                        object-contain">
-
-                </div>
-
-
-                <div
-                    class="text-[10px]
-                    font-black
-                    uppercase"
-                    style="
-                        color:${rarity.color}
-                    ">
-
-                    ${rarity.name}
-
-                </div>
-
-
-                <div
-                    class="font-bold
-                    text-sm mt-1">
-
-                    ${item.name}
-
-                </div>
-
-
-                <div
-                    class="text-xs
-                    text-zinc-500 mt-1">
-
-                    ${formatPrice(item.price)}
-
-                </div>
-
-            `;
-
-
-            box.appendChild(card);
-
-        }
-    );
-
-
-    updateValues();
 
 }
 
 
-/* =====================================================
-   TOGGLE STAKE
-===================================================== */
+function renderInventory() {
+
+  const grid =
+    document.getElementById(
+      "inventoryGrid"
+    );
+
+
+  if (!inventory.length) {
+
+    grid.innerHTML = `
+
+      <div
+        class="
+        col-span-full
+        text-center
+        py-12
+        "
+      >
+
+        <div class="text-5xl">
+          📦
+        </div>
+
+        <div
+          class="
+          mt-4
+          font-black
+          "
+        >
+          Инвентарь пуст
+        </div>
+
+        <a
+          href="index.html#cases"
+          class="
+          inline-block
+          mt-5
+          px-5 py-3
+          rounded-xl
+          bg-fuchsia-500
+          font-black
+          "
+        >
+          ОТКРЫТЬ КЕЙС
+        </a>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML =
+    inventory
+      .map(
+        (item, index) => `
+
+          <button
+            onclick="toggleStake(${index})"
+            class="
+            item
+            rounded-2xl
+            border-2
+            rarity-${item.rarity}
+            bg-black/20
+            p-3
+            text-left
+            ${
+              selectedStake.includes(index)
+              ? "selected"
+              : ""
+            }
+            "
+          >
+
+            <div
+              class="
+              h-24
+              rounded-xl
+              bg-white/[.03]
+              flex
+              items-center
+              justify-center
+              "
+            >
+
+              <img
+                src="${item.image}"
+                class="
+                w-20
+                h-20
+                object-contain
+                "
+              >
+
+            </div>
+
+
+            <div
+              class="
+              mt-3
+              text-xs
+              font-black
+              truncate
+              "
+            >
+              ${item.name}
+            </div>
+
+
+            <div
+              class="
+              mt-1
+              text-[10px]
+              text-zinc-500
+              "
+            >
+              ${item.rarity}
+            </div>
+
+
+            <div
+              class="
+              mt-2
+              font-black
+              text-xs
+              "
+            >
+              ${formatMoney(item.price)}
+            </div>
+
+          </button>
+
+        `
+      )
+      .join("");
+
+}
+
 
 function toggleStake(index) {
 
-    if (
-        selectedStake.includes(index)
-    ) {
+  if (
+    selectedStake.includes(index)
+  ) {
 
-        selectedStake =
-            selectedStake.filter(
-                i => i !== index
-            );
+    selectedStake =
+      selectedStake.filter(
+        x => x !== index
+      );
 
-    } else {
+  } else {
 
-        selectedStake.push(index);
+    selectedStake.push(index);
 
-    }
+  }
 
 
-    selectedTarget = null;
+  selectedTarget = null;
 
-    renderStake();
+  renderInventory();
 
-    renderTargets();
+  renderTargets();
+
+  updateCenter();
 
 }
 
 
-/* =====================================================
+/* =========================================================
    STAKE VALUE
-===================================================== */
+   ========================================================= */
 
 function getStakeValue() {
 
-    return selectedStake.reduce(
-        (sum,index) => {
+  return selectedStake.reduce(
+    (sum, index) => {
 
-            return sum +
-                Number(
-                    inventory[index].price
-                );
+      return (
+        sum +
+        Number(
+          inventory[index]?.price || 0
+        )
+      );
 
-        },
-        0
-    );
+    },
+    0
+  );
 
 }
 
 
-/* =====================================================
+function getMaxTargetValue() {
+
+  const stake =
+    getStakeValue();
+
+
+  if (!stake) return 0;
+
+
+  return Math.floor(
+    stake /
+    (chance / 100)
+  );
+
+}
+
+
+/* =========================================================
+   CENTER
+   ========================================================= */
+
+function updateCenter() {
+
+  const stake =
+    getStakeValue();
+
+
+  const max =
+    getMaxTargetValue();
+
+
+  document.getElementById(
+    "stakeValue"
+  ).textContent =
+    formatMoney(stake);
+
+
+  document.getElementById(
+    "centerStake"
+  ).textContent =
+    formatMoney(stake);
+
+
+  document.getElementById(
+    "maxTarget"
+  ).textContent =
+    formatMoney(max);
+
+
+  document.getElementById(
+    "chanceValue"
+  ).textContent =
+    chance + "%";
+
+
+  document.getElementById(
+    "selectedTargetName"
+  ).textContent =
+    selectedTarget
+      ? selectedTarget.name +
+        " · " +
+        formatMoney(
+          selectedTarget.price
+        )
+      : "Не выбрана";
+
+
+  document.getElementById(
+    "upgradeBtn"
+  ).disabled =
+    !selectedStake.length ||
+    !selectedTarget ||
+    upgrading;
+
+
+  document.getElementById(
+    "targetHint"
+  ).textContent =
+    stake
+      ? "до " +
+        formatMoney(max)
+      : "Выбери ставку";
+
+}
+
+
+/* =========================================================
+   CHANCE
+   ========================================================= */
+
+document
+  .querySelectorAll(".chance")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        chance =
+          Number(
+            button.dataset.chance
+          );
+
+
+        document
+          .querySelectorAll(".chance")
+          .forEach(x =>
+            x.classList.remove(
+              "active"
+            )
+          );
+
+
+        button.classList.add(
+          "active"
+        );
+
+
+        selectedTarget = null;
+
+        renderTargets();
+
+        updateCenter();
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
    TARGETS
-===================================================== */
+   ========================================================= */
 
 function renderTargets() {
 
-    const box =
-        document.getElementById(
-            "targetItems"
-        );
-
-
-    box.innerHTML = "";
-
-
-    const stake =
-        getStakeValue();
-
-
-    if (!stake) {
-
-        box.innerHTML = `
-            <div
-                class="col-span-full
-                text-center
-                text-zinc-600
-                py-16">
-
-                Сначала выбери
-                предметы для ставки.
-
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    const max =
-        stake /
-        (selectedChance / 100);
-
-
-    const targets =
-        ITEMS.filter(item => {
-
-            return (
-                item.price > stake &&
-                item.price <= max
-            );
-
-        });
-
-
-    if (!targets.length) {
-
-        box.innerHTML = `
-            <div
-                class="col-span-full
-                text-center
-                text-zinc-600
-                py-16">
-
-                Для этого шанса
-                подходящих целей нет.
-
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    targets.forEach(item => {
-
-        const rarity =
-            getRarity(item.rarity);
-
-
-        const card =
-            document.createElement("div");
-
-
-        card.className =
-            `item card rounded-2xl
-            p-3 cursor-pointer ${
-                selectedTarget &&
-                selectedTarget.id === item.id
-                ? "target-selected"
-                : ""
-            }`;
-
-
-        card.onclick = () => {
-
-            selectedTarget = item;
-
-            renderTargets();
-
-        };
-
-
-        card.innerHTML = `
-
-            <div
-                class="h-28
-                flex items-center
-                justify-center">
-
-                <img
-                    src="${item.image}"
-                    class="max-w-full
-                    max-h-full
-                    object-contain">
-
-            </div>
-
-
-            <div
-                class="text-[10px]
-                uppercase
-                font-black"
-                style="
-                    color:${rarity.color}
-                ">
-
-                ${rarity.name}
-
-            </div>
-
-
-            <div
-                class="font-bold
-                text-sm mt-1">
-
-                ${item.name}
-
-            </div>
-
-
-            <div
-                class="text-xs
-                text-zinc-500 mt-1">
-
-                ${formatPrice(item.price)}
-
-            </div>
-
-        `;
-
-
-        box.appendChild(card);
-
-    });
-
-}
-
-
-/* =====================================================
-   VALUES
-===================================================== */
-
-function updateValues() {
-
-    const stake =
-        getStakeValue();
-
-
-    const max =
-        stake
-        ? stake /
-          (selectedChance / 100)
-        : 0;
-
-
+  const grid =
     document.getElementById(
-        "stakeValue"
-    ).textContent =
-        formatPrice(stake);
-
-
-    document.getElementById(
-        "maxTarget"
-    ).textContent =
-        formatPrice(max);
-
-
-    document.getElementById(
-        "chanceText"
-    ).textContent =
-        selectedChance + "%";
-
-
-    document.getElementById(
-        "targetValue"
-    ).textContent =
-        selectedTarget
-        ? formatPrice(
-            selectedTarget.price
-          )
-        : "0 коп.";
-
-
-    const button =
-        document.getElementById(
-            "upgradeButton"
-        );
-
-
-    const status =
-        document.getElementById(
-            "status"
-        );
-
-
-    if (!stake) {
-
-        button.disabled = true;
-
-        button.classList.add(
-            "opacity-40"
-        );
-
-        status.textContent =
-            "Выбери предметы";
-
-        return;
-
-    }
-
-
-    if (!selectedTarget) {
-
-        button.disabled = true;
-
-        button.classList.add(
-            "opacity-40"
-        );
-
-        status.textContent =
-            "Выбери предмет-цель";
-
-        return;
-
-    }
-
-
-    button.disabled = false;
-
-    button.classList.remove(
-        "opacity-40"
+      "targetsGrid"
     );
 
-    status.textContent =
-        `Шанс успеха: ${selectedChance}%`;
+
+  const max =
+    getMaxTargetValue();
+
+
+  const stake =
+    getStakeValue();
+
+
+  if (!stake) {
+
+    grid.innerHTML = `
+
+      <div
+        class="
+        col-span-full
+        py-16
+        text-center
+        text-zinc-600
+        "
+      >
+
+        <div class="text-4xl">
+          🎯
+        </div>
+
+        <div class="mt-3">
+          Сначала выбери предметы
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  const targets =
+    getAllItems()
+      .filter(
+        item =>
+          item.price > stake &&
+          item.price <= max
+      );
+
+
+  if (!targets.length) {
+
+    grid.innerHTML = `
+
+      <div
+        class="
+        col-span-full
+        py-16
+        text-center
+        text-zinc-600
+        "
+      >
+
+        <div class="text-4xl">
+          🔒
+        </div>
+
+        <div class="mt-3">
+          Нет подходящих целей
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML =
+    targets
+      .map(item => {
+
+        const active =
+          selectedTarget &&
+          selectedTarget.id === item.id;
+
+
+        return `
+
+          <button
+            onclick="selectTarget('${item.id}','${item.caseId}')"
+            class="
+            target
+            rounded-2xl
+            border-2
+            rarity-${item.rarity}
+            bg-black/20
+            p-3
+            text-left
+            ${
+              active
+              ? "active"
+              : ""
+            }
+            "
+          >
+
+            <div
+              class="
+              h-24
+              rounded-xl
+              bg-white/[.03]
+              flex
+              items-center
+              justify-center
+              "
+            >
+
+              <img
+                src="${item.image}"
+                class="
+                w-20
+                h-20
+                object-contain
+                "
+              >
+
+            </div>
+
+
+            <div
+              class="
+              mt-3
+              text-xs
+              font-black
+              truncate
+              "
+            >
+              ${item.name}
+            </div>
+
+
+            <div
+              class="
+              mt-1
+              text-[10px]
+              text-zinc-500
+              "
+            >
+              ${item.rarity}
+            </div>
+
+
+            <div
+              class="
+              mt-2
+              font-black
+              text-xs
+              "
+            >
+              ${formatMoney(item.price)}
+            </div>
+
+          </button>
+
+        `;
+
+      })
+      .join("");
 
 }
 
 
-/* =====================================================
-   CHANCE
-===================================================== */
+function selectTarget(
+  itemId,
+  caseId
+) {
 
-document
-    .querySelectorAll(".chance")
-    .forEach(button => {
-
-        button.onclick = () => {
-
-            selectedChance =
-                Number(
-                    button.dataset.chance
-                );
+  const item =
+    getItem(
+      caseId,
+      itemId
+    );
 
 
-            document
-                .querySelectorAll(".chance")
-                .forEach(b => {
-
-                    b.classList.remove(
-                        "bg-fuchsia-500"
-                    );
-
-                    b.classList.add(
-                        "bg-white/5"
-                    );
-
-                });
+  if (!item) return;
 
 
-            button.classList.remove(
-                "bg-white/5"
-            );
-
-            button.classList.add(
-                "bg-fuchsia-500"
-            );
+  selectedTarget =
+    item;
 
 
-            selectedTarget = null;
+  renderTargets();
+
+  updateCenter();
+
+}
 
 
-            updateValues();
-
-            renderTargets();
-
-        };
-
-    });
-
-
-/* =====================================================
+/* =========================================================
    UPGRADE
-===================================================== */
+   ========================================================= */
 
-document.getElementById(
-    "upgradeButton"
-).onclick = () => {
+function doUpgrade() {
 
-    if (
-        !selectedStake.length ||
-        !selectedTarget
-    ) {
+  if (upgrading) return;
 
-        return;
+
+  const stake =
+    getStakeValue();
+
+
+  if (
+    !selectedStake.length ||
+    !selectedTarget
+  ) {
+
+    showMessage(
+      "Выбери предметы для ставки и цель."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    selectedTarget.price <= stake
+  ) {
+
+    showMessage(
+      "Цель должна быть дороже ставки."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    selectedTarget.price >
+    getMaxTargetValue()
+  ) {
+
+    showMessage(
+      "Эта цель недоступна при выбранном шансе."
+    );
+
+    return;
+
+  }
+
+
+  upgrading = true;
+
+  updateCenter();
+
+
+  const button =
+    document.getElementById(
+      "upgradeBtn"
+    );
+
+
+  button.textContent =
+    "ПРОВЕРКА...";
+
+
+  setTimeout(
+    () => {
+
+      const win =
+        Math.random() <
+        chance / 100;
+
+
+      if (win) {
+
+        finishWin();
+
+      } else {
+
+        finishLoss();
+
+      }
+
+    },
+    1400
+  );
+
+}
+
+
+/* =========================================================
+   WIN
+   ========================================================= */
+
+function finishWin() {
+
+  const indexes =
+    [...selectedStake]
+      .sort(
+        (a,b) => b-a
+      );
+
+
+  let inv =
+    getInventory();
+
+
+  indexes.forEach(
+    index => {
+
+      inv.splice(
+        index,
+        1
+      );
 
     }
+  );
 
 
-    const roll =
-        Math.random() * 100;
+  inv.unshift({
+
+    uid:
+      Date.now() +
+      "-" +
+      Math.random()
+        .toString(16)
+        .slice(2),
+
+    id:
+      selectedTarget.id,
+
+    caseId:
+      selectedTarget.caseId,
+
+    caseName:
+      selectedTarget.caseName,
+
+    name:
+      selectedTarget.name,
+
+    rarity:
+      selectedTarget.rarity,
+
+    rarityName:
+      selectedTarget.rarityName,
+
+    price:
+      selectedTarget.price,
+
+    image:
+      selectedTarget.image,
+
+    type:
+      selectedTarget.type,
+
+    date:
+      new Date().toISOString()
+
+  });
 
 
-    const win =
-        roll < selectedChance;
+  saveInventory(inv);
 
 
-    if (win) {
-
-        removeInventoryItems(
-            selectedStake
-        );
-
-
-        addInventoryItem(
-            selectedTarget
-        );
+  showResult(
+    true,
+    selectedTarget
+  );
 
 
-        alert(
-            `УСПЕХ!\n\nТы получил: ${selectedTarget.name}`
-        );
+  resetUpgrade();
 
-    } else {
-
-        removeInventoryItems(
-            selectedStake
-        );
+}
 
 
-        alert(
-            "НЕУДАЧА!\n\nПредметы ставки потеряны."
-        );
+/* =========================================================
+   LOSS
+   ========================================================= */
+
+function finishLoss() {
+
+  let inv =
+    getInventory();
+
+
+  const indexes =
+    [...selectedStake]
+      .sort(
+        (a,b) => b-a
+      );
+
+
+  indexes.forEach(
+    index => {
+
+      inv.splice(
+        index,
+        1
+      );
 
     }
+  );
 
 
-    inventory =
-        getInventory();
+  saveInventory(inv);
 
 
-    selectedStake = [];
+  showResult(
+    false,
+    selectedTarget
+  );
 
-    selectedTarget = null;
+
+  resetUpgrade();
+
+}
 
 
-    renderStake();
+/* =========================================================
+   RESULT
+   ========================================================= */
+
+function showResult(
+  win,
+  item
+) {
+
+  const message =
+    win
+      ? `
+        ПОБЕДА!<br>
+        Ты получил ${item.name}.
+      `
+      : `
+        ПРОИГРЫШ<br>
+        Предметы ставки потеряны.
+      `;
+
+
+  const color =
+    win
+      ? "text-emerald-400"
+      : "text-red-400";
+
+
+  const box =
+    document.createElement(
+      "div"
+    );
+
+
+  box.className = `
+    fixed
+    inset-0
+    z-[100]
+    bg-black/80
+    backdrop-blur
+    flex
+    items-center
+    justify-center
+    p-5
+  `;
+
+
+  box.innerHTML = `
+
+    <div
+      class="
+      result-win
+      panel
+      rounded-[35px]
+      p-10
+      max-w-md
+      w-full
+      text-center
+      "
+    >
+
+      <div
+        class="
+        text-xs
+        uppercase
+        tracking-widest
+        font-black
+        ${color}
+        "
+      >
+        ${win ? "UPGRADE SUCCESS" : "UPGRADE FAILED"}
+      </div>
+
+
+      <div
+        class="
+        mt-4
+        text-4xl
+        font-black
+        ${color}
+        "
+      >
+        ${win ? "ПОБЕДА!" : "НЕ ПОВЕЗЛО"}
+      </div>
+
+
+      ${
+        win
+        ? `
+          <img
+            src="${item.image}"
+            class="
+            mx-auto
+            mt-7
+            w-36
+            h-36
+            object-contain
+            "
+          >
+
+          <div
+            class="
+            mt-4
+            text-2xl
+            font-black
+            "
+          >
+            ${item.name}
+          </div>
+
+          <div
+            class="
+            mt-2
+            text-zinc-500
+            "
+          >
+            ${formatMoney(item.price)}
+          </div>
+        `
+        : `
+          <div
+            class="
+            mt-8
+            text-7xl
+            "
+          >
+            💥
+          </div>
+
+          <div
+            class="
+            mt-5
+            text-zinc-500
+            "
+          >
+            Твои предметы ставки сгорели.
+          </div>
+        `
+      }
+
+
+      <button
+        onclick="this.closest('.fixed').remove()"
+        class="
+        mt-8
+        w-full
+        py-4
+        rounded-2xl
+        bg-white
+        text-black
+        font-black
+        "
+      >
+        ПРОДОЛЖИТЬ
+      </button>
+
+    </div>
+
+  `;
+
+
+  document.body.appendChild(
+    box
+  );
+
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+function resetUpgrade() {
+
+  loadInventory();
+
+  selectedStake = [];
+
+  selectedTarget = null;
+
+  upgrading = false;
+
+  renderInventory();
+
+  renderTargets();
+
+  updateCenter();
+
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+function showMessage(message) {
+
+  const old =
+    document.getElementById(
+      "toast"
+    );
+
+  if (old) old.remove();
+
+
+  const toast =
+    document.createElement(
+      "div"
+    );
+
+
+  toast.id = "toast";
+
+
+  toast.className = `
+    fixed
+    bottom-6
+    left-1/2
+    -translate-x-1/2
+    z-[200]
+    max-w-md
+    w-[calc(100%-32px)]
+    bg-white
+    text-black
+    px-5
+    py-4
+    rounded-2xl
+    shadow-2xl
+    text-sm
+    font-black
+    text-center
+  `;
+
+
+  toast.textContent =
+    message;
+
+
+  document.body.appendChild(
+    toast
+  );
+
+
+  setTimeout(
+    () => toast.remove(),
+    3200
+  );
+
+}
+
+
+/* =========================================================
+   INIT
+   ========================================================= */
+
+function init() {
+
+  loadInventory();
+
+  renderInventory();
+
+  renderTargets();
+
+  updateCenter();
+
+}
+
+
+init();
+
+
+window.addEventListener(
+  "storage",
+  () => {
+
+    loadInventory();
+
+    renderInventory();
 
     renderTargets();
 
-    updateValues();
+    updateCenter();
 
-};
-
-
-/* =====================================================
-   START
-===================================================== */
-
-renderStake();
-
-renderTargets();
-
-updateValues();
+  }
+);
 
 </script>
 
 </body>
-
 </html>
