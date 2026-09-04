@@ -1,2249 +1,1387 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="ru">
-
 <head>
-
-<meta charset="utf-8">
-
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1"
->
-
-<title>
-  CHAK338 — Gaming Hub
-</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  margin:0;
-  background:#06070b;
-  color:#f8fafc;
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-}
-
-.grid-bg{
-
-  background-image:
-    linear-gradient(
-      rgba(255,255,255,.025) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,.025) 1px,
-      transparent 1px
-    );
-
-  background-size:38px 38px;
-
-}
-
-.glass{
-
-  background:
-    rgba(8,9,14,.82);
-
-  backdrop-filter:
-    blur(18px);
-
-}
-
-.case-card{
-
-  transition:.25s;
-
-  position:relative;
-
-  overflow:hidden;
-
-}
-
-.case-card:hover{
-
-  transform:
-    translateY(-7px);
-
-}
-
-.case-art{
-
-  height:250px;
-
-  background:#090a10;
-
-  overflow:hidden;
-
-}
-
-.case-art img{
-
-  width:100%;
-
-  height:100%;
-
-  object-fit:cover;
-
-}
-
-.coolbox{
-
-  background:
-    rgba(255,255,255,.035);
-
-  border:
-    1px solid
-    rgba(255,255,255,.08);
-
-}
-
-.reel-window{
-
-  height:235px;
-
-  position:relative;
-
-  overflow:hidden;
-
-  border-radius:24px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.12);
-
-  background:#07080d;
-
-  box-shadow:
-    inset 0 0 70px #000;
-
-}
-
-.reel-window:before{
-
-  content:"";
-
-  position:absolute;
-
-  z-index:8;
-
-  top:0;
-
-  bottom:0;
-
-  left:50%;
-
-  width:3px;
-
-  transform:
-    translateX(-50%);
-
-  background:#fff;
-
-  box-shadow:
-    0 0 20px #fff;
-
-}
-
-.reel-window:after{
-
-  content:"";
-
-  position:absolute;
-
-  z-index:7;
-
-  inset:0;
-
-  pointer-events:none;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(0,0,0,.9),
-      transparent 22%,
-      transparent 78%,
-      rgba(0,0,0,.9)
-    );
-
-}
-
-.reel-track{
-
-  display:flex;
-
-  gap:12px;
-
-  padding:22px;
-
-  position:absolute;
-
-  left:0;
-
-  top:0;
-
-  will-change:transform;
-
-}
-
-.reel-item{
-
-  width:150px;
-
-  min-width:150px;
-
-  height:188px;
-
-  border-radius:20px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.12);
-
-  background:
-    linear-gradient(
-      180deg,
-      #181922,
-      #090a0e
-    );
-
-  padding:12px;
-
-  display:flex;
-
-  flex-direction:column;
-
-  align-items:center;
-
-  justify-content:center;
-
-}
-
-.reel-item img{
-
-  width:115px;
-
-  height:105px;
-
-  object-fit:contain;
-
-}
-
-.reel-item b{
-
-  font-size:12px;
-
-  text-align:center;
-
-  margin-top:7px;
-
-}
-
-.reel-item small{
-
-  font-size:10px;
-
-  margin-top:4px;
-
-}
-
-.pointer{
-
-  position:absolute;
-
-  z-index:10;
-
-  left:50%;
-
-  top:0;
-
-  transform:
-    translateX(-50%);
-
-  width:0;
-
-  height:0;
-
-  border-left:
-    11px solid transparent;
-
-  border-right:
-    11px solid transparent;
-
-  border-top:
-    18px solid #fff;
-
-  filter:
-    drop-shadow(
-      0 0 8px #fff
-    );
-
-}
-
-.drop-card{
-
-  animation:
-    drop .65s
-    cubic-bezier(.2,.9,.25,1);
-
-}
-
-@keyframes drop{
-
-  from{
-
-    opacity:0;
-
-    transform:
-      scale(.55)
-      translateY(20px);
-
-  }
-
-  to{
-
-    opacity:1;
-
-    transform:
-      scale(1)
-      translateY(0);
-
-  }
-
-}
-
-.modal{
-
-  background:
-    rgba(0,0,0,.86);
-
-  backdrop-filter:
-    blur(10px);
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CHAK338 — Gaming Hub</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="data.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at 20% 0%, rgba(124,58,237,.15), transparent 30%),
+                radial-gradient(circle at 90% 10%, rgba(6,182,212,.12), transparent 25%),
+                #050507;
+            color: white;
+            font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        }
+
+        ::selection {
+            background: #a855f7;
+            color: white;
+        }
+
+        .glass {
+            background: rgba(10,10,15,.72);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg,#fff,#a855f7,#22d3ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .case-card {
+            position: relative;
+            overflow: hidden;
+            transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+        }
+
+        .case-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .case-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(255,255,255,.07),
+                transparent 35%
+            );
+            pointer-events: none;
+        }
+
+        .case-art {
+            min-height: 250px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .case-art::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.05);
+            filter: blur(35px);
+        }
+
+        .case-logo {
+            position: relative;
+            z-index: 2;
+            width: 145px;
+            height: 180px;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 1000;
+            letter-spacing: .05em;
+            transform: perspective(500px) rotateY(-8deg) rotateX(3deg);
+            box-shadow:
+                inset 0 0 0 1px rgba(255,255,255,.16),
+                0 30px 70px rgba(0,0,0,.5);
+        }
+
+        .case-logo::before {
+            content: "";
+            position: absolute;
+            inset: 10px;
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 16px;
+        }
+
+        .clash {
+            background:
+                radial-gradient(circle at 50% 20%, rgba(168,85,247,.5), transparent 40%),
+                linear-gradient(145deg,#24113b,#09090d);
+        }
+
+        .clash .case-logo {
+            background: linear-gradient(145deg,#7136b7,#21102f);
+            box-shadow:
+                0 0 60px rgba(168,85,247,.3),
+                inset 0 0 25px rgba(255,255,255,.06);
+        }
+
+        .cs2 {
+            background:
+                radial-gradient(circle at 50% 20%, rgba(34,211,238,.35), transparent 42%),
+                linear-gradient(145deg,#09262c,#07090b);
+        }
+
+        .cs2 .case-logo {
+            background: linear-gradient(145deg,#164b58,#0a161b);
+            box-shadow:
+                0 0 60px rgba(34,211,238,.25),
+                inset 0 0 25px rgba(255,255,255,.06);
+        }
+
+        .dota {
+            background:
+                radial-gradient(circle at 50% 20%, rgba(239,68,68,.3), transparent 42%),
+                linear-gradient(145deg,#321313,#080809);
+        }
+
+        .dota .case-logo {
+            background: linear-gradient(145deg,#762020,#1c0808);
+            box-shadow:
+                0 0 60px rgba(239,68,68,.25),
+                inset 0 0 25px rgba(255,255,255,.06);
+        }
+
+        .hantiks {
+            background:
+                radial-gradient(circle at 50% 20%, rgba(34,197,94,.4), transparent 42%),
+                linear-gradient(145deg,#0d321b,#070909);
+        }
+
+        .hantiks .case-logo {
+            background: linear-gradient(145deg,#17652f,#09170e);
+            box-shadow:
+                0 0 70px rgba(34,197,94,.28),
+                inset 0 0 25px rgba(255,255,255,.06);
+        }
+
+        .modal-bg {
+            background: rgba(0,0,0,.82);
+            backdrop-filter: blur(10px);
+        }
+
+        .item-card {
+            transition: transform .2s ease, border-color .2s ease;
+        }
+
+        .item-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,.25);
+        }
+
+        .rarity-common {
+            border-color: rgba(148,163,184,.25);
+        }
+
+        .rarity-uncommon {
+            border-color: rgba(34,197,94,.4);
+        }
+
+        .rarity-rare {
+            border-color: rgba(56,189,248,.45);
+        }
+
+        .rarity-epic {
+            border-color: rgba(168,85,247,.5);
+        }
+
+        .rarity-legendary {
+            border-color: rgba(245,158,11,.55);
+        }
+
+        .rarity-mythic {
+            border-color: rgba(239,68,68,.6);
+        }
+
+        .reel-window {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,.1);
+            background: #07070a;
+        }
+
+        .reel-window::before {
+            content: "";
+            position: absolute;
+            z-index: 10;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 3px;
+            transform: translateX(-50%);
+            background: white;
+            box-shadow:
+                0 0 8px white,
+                0 0 20px white;
+        }
+
+        .reel-window::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 9;
+            pointer-events: none;
+            background:
+                linear-gradient(
+                    90deg,
+                    #07070a 0%,
+                    transparent 15%,
+                    transparent 85%,
+                    #07070a 100%
+                );
+        }
+
+        .reel {
+            display: flex;
+            gap: 12px;
+            will-change: transform;
+        }
+
+        .reel-item {
+            flex: 0 0 125px;
+            height: 150px;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,.1);
+            background: #101014;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        @media (max-width: 640px) {
+            .reel-item {
+                flex-basis: 105px;
+            }
+        }
+    </style>
 </head>
 
+<body>
 
-<body class="grid-bg">
+<header class="fixed top-0 left-0 right-0 z-50">
+    <div class="glass border-b border-white/10">
 
+        <div class="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="h-20 flex items-center justify-between">
 
-<!-- HEADER -->
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-fuchsia-500 to-violet-700 flex items-center justify-center font-black text-xl">
+                        C
+                    </div>
 
-<header
-  class="
-    fixed
-    top-0
-    left-0
-    right-0
-    z-40
-    glass
-    border-b
-    border-white/10
-  "
->
+                    <div>
+                        <div class="font-black text-xl">CHAK338</div>
+                        <div class="text-[10px] uppercase tracking-[.22em] text-zinc-500">
+                            Gaming Hub
+                        </div>
+                    </div>
+                </a>
 
-<div
-  class="
-    max-w-7xl
-    mx-auto
-    px-4
-    h-20
-    flex
-    items-center
-    justify-between
-  "
->
+                <nav class="hidden lg:flex items-center gap-8 text-sm font-bold text-zinc-400">
+                    <a href="#cases" class="hover:text-white transition">Кейсы</a>
+                    <a href="inventory.html" class="hover:text-white transition">Инвентарь</a>
+                    <a href="upgrade.html" class="hover:text-white transition">Апгрейдер</a>
+                    <a href="#news" class="hover:text-white transition">Новости</a>
+                </nav>
 
-<a
-  href="index.html"
-  class="font-black text-xl tracking-tight"
->
+                <div class="flex items-center gap-3">
+                    <a
+                        href="inventory.html"
+                        class="hidden sm:block px-4 py-2.5 rounded-xl border border-white/10 bg-white/5 text-sm font-bold"
+                    >
+                        🎒 Инвентарь
+                    </a>
 
-CHAK338
+                    <a
+                        href="upgrade.html"
+                        class="px-5 py-3 rounded-xl bg-white text-black text-sm font-black hover:bg-zinc-200 transition"
+                    >
+                        UPGRADE
+                    </a>
+                </div>
 
-<span
-  class="
-    text-fuchsia-400
-    text-xs
-    tracking-[.3em]
-  "
->
-
-GAMING HUB
-
-</span>
-
-</a>
-
-
-<nav
-  class="
-    hidden
-    md:flex
-    gap-6
-    text-sm
-    font-bold
-    text-zinc-400
-  "
->
-
-<a href="#cases">
-  Кейсы
-</a>
-
-<a href="#news">
-  Новости
-</a>
-
-<a href="#giveaways">
-  Розыгрыши
-</a>
-
-<a href="inventory.html">
-  Инвентарь
-</a>
-
-<a href="upgrade.html">
-  Апгрейдер
-</a>
-
-</nav>
-
-
-<div class="text-right">
-
-<div
-  class="
-    text-[10px]
-    text-zinc-500
-  "
->
-
-LVL
-
-<span id="level">
-1
-</span>
-
-</div>
-
-<div class="text-sm font-black">
-
-<span id="xp">
-0
-</span>
-
-XP
-
-</div>
-
-</div>
-
-</div>
-
+            </div>
+        </div>
+    </div>
 </header>
 
 
+<main>
 
-<main
-  class="
-    pt-28
-    pb-20
-    max-w-7xl
-    mx-auto
-    px-4
-  "
->
+<section class="hero-grid relative overflow-hidden pt-36 pb-20 lg:pt-48 lg:pb-28">
 
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute left-[10%] top-20 w-64 h-64 bg-fuchsia-600/10 blur-[100px] rounded-full"></div>
+        <div class="absolute right-[10%] top-40 w-72 h-72 bg-cyan-500/10 blur-[110px] rounded-full"></div>
+    </div>
 
-<!-- HERO -->
+    <div class="relative max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
 
-<section
-  class="
-    py-10
-    md:py-16
-  "
->
+        <div class="max-w-4xl">
 
-<div
-  class="
-    max-w-3xl
-  "
->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-xs font-black uppercase tracking-widest text-zinc-300">
+                <span class="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_12px_#4ade80]"></span>
+                CHAK338 ONLINE
+            </div>
 
-<div
-  class="
-    text-xs
-    uppercase
-    tracking-[.35em]
-    text-fuchsia-400
-    font-black
-  "
->
+            <h1 class="mt-7 text-5xl sm:text-6xl lg:text-8xl font-black tracking-tight leading-[.92]">
+                GAMING
+                <br>
+                <span class="gradient-text">HUB.</span>
+            </h1>
 
-CHAK338 GAMING HUB
+            <p class="mt-7 max-w-2xl text-lg text-zinc-400 leading-relaxed">
+                Открывай кейсы, собирай коллекцию, продавай предметы за XP
+                и рискуй в апгрейдере.
+            </p>
 
-</div>
+            <div class="mt-9 flex flex-wrap gap-3">
 
+                <a
+                    href="#cases"
+                    class="px-7 py-4 rounded-2xl bg-fuchsia-500 hover:bg-fuchsia-400 font-black transition"
+                >
+                    ОТКРЫТЬ КЕЙС
+                </a>
 
-<h1
-  class="
-    mt-4
-    text-5xl
-    md:text-7xl
-    font-black
-    leading-[.9]
-  "
->
+                <a
+                    href="upgrade.html"
+                    class="px-7 py-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 font-black transition"
+                >
+                    ⚡ АПГРЕЙДЕР
+                </a>
 
-ВЫБЕРИ
+                <a
+                    href="inventory.html"
+                    class="px-7 py-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 font-black transition"
+                >
+                    🎒 ИНВЕНТАРЬ
+                </a>
 
-<br>
+            </div>
 
-<span class="text-fuchsia-400">
-
-СВОЙ ДРОП
-
-</span>
-
-</h1>
-
-
-<p
-  class="
-    mt-6
-    text-zinc-400
-    text-lg
-  "
->
-
-Открывай кейсы,
-собирай коллекцию
-и апгрейдь лучшие предметы.
-
-</p>
-
-</div>
-
+        </div>
+    </div>
 </section>
 
 
+<section id="cases" class="py-20 border-t border-white/5">
 
-<!-- CASES -->
+    <div class="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
 
-<section id="cases">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-5 mb-10">
 
-<div
-  class="
-    flex
-    items-end
-    justify-between
-    gap-4
-    mb-6
-  "
->
+            <div>
+                <div class="text-xs font-black uppercase tracking-[.25em] text-fuchsia-400">
+                    THE CASES
+                </div>
 
-<div>
+                <h2 class="mt-3 text-4xl sm:text-5xl font-black">
+                    Выбери свой дроп.
+                </h2>
 
-<div
-  class="
-    text-xs
-    text-zinc-600
-    uppercase
-    tracking-[.25em]
-    font-black
-  "
->
+                <p class="mt-4 text-zinc-500 max-w-2xl">
+                    Четыре разных кейса. Каждый со своей коллекцией предметов.
+                </p>
+            </div>
 
-DROP COLLECTION
+            <div class="text-sm text-zinc-500">
+                4 кейса · 47+ предметов
+            </div>
 
-</div>
-
-<h2
-  class="
-    text-3xl
-    font-black
-    mt-2
-  "
->
-
-Три кейса. Три игры.
-
-</h2>
-
-</div>
+        </div>
 
 
-<div
-  class="
-    text-xs
-    text-zinc-600
-  "
->
+        <!-- ВАЖНО: 4 КЕЙСА -->
+        <div
+            class="grid
+                   grid-cols-1
+                   sm:grid-cols-2
+                   xl:grid-cols-4
+                   gap-5"
+        >
 
-Шансы скрыты — решает удача.
+            <!-- CLASH -->
+            <article class="case-card clash rounded-[30px] border border-fuchsia-500/30 bg-zinc-950">
 
-</div>
+                <div class="case-art">
+                    <div class="case-logo">
+                        ⚔️
+                        <span class="absolute bottom-7 left-0 right-0 text-xs">
+                            CLASH
+                        </span>
+                    </div>
+                </div>
 
-</div>
+                <div class="p-6">
+
+                    <div class="text-xs font-black uppercase tracking-widest text-fuchsia-400">
+                        01 · CLASH
+                    </div>
+
+                    <h3 class="mt-2 text-2xl font-black">
+                        Clash of Clans
+                    </h3>
+
+                    <p class="mt-3 text-sm text-zinc-500 min-h-[42px]">
+                        Персонажи и легендарные юниты.
+                    </p>
+
+                    <div class="mt-5 flex justify-between text-xs text-zinc-500">
+                        <span>14 предметов</span>
+                        <span>5ч cooldown</span>
+                    </div>
+
+                    <button
+                        onclick="openCase('clash')"
+                        class="w-full mt-6 py-4 rounded-2xl bg-fuchsia-500 hover:bg-fuchsia-400 font-black transition"
+                    >
+                        ОТКРЫТЬ CLASH
+                    </button>
+
+                </div>
+            </article>
 
 
-<div
-  id="casesGrid"
-  class="
-    grid
-    lg:grid-cols-3
-    gap-5
-  "
-></div>
+            <!-- CS2 -->
+            <article class="case-card cs2 rounded-[30px] border border-cyan-500/30 bg-zinc-950">
 
+                <div class="case-art">
+                    <div class="case-logo">
+                        🔫
+                        <span class="absolute bottom-7 left-0 right-0 text-xs">
+                            CS2
+                        </span>
+                    </div>
+                </div>
+
+                <div class="p-6">
+
+                    <div class="text-xs font-black uppercase tracking-widest text-cyan-400">
+                        02 · SHOOTER
+                    </div>
+
+                    <h3 class="mt-2 text-2xl font-black">
+                        CS2
+                    </h3>
+
+                    <p class="mt-3 text-sm text-zinc-500 min-h-[42px]">
+                        Оружие, ножи и легендарный Dragon Lore.
+                    </p>
+
+                    <div class="mt-5 flex justify-between text-xs text-zinc-500">
+                        <span>13 предметов</span>
+                        <span>12ч cooldown</span>
+                    </div>
+
+                    <button
+                        onclick="openCase('cs2')"
+                        class="w-full mt-6 py-4 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-black font-black transition"
+                    >
+                        ОТКРЫТЬ CS2
+                    </button>
+
+                </div>
+            </article>
+
+
+            <!-- DOTA -->
+            <article class="case-card dota rounded-[30px] border border-red-500/30 bg-zinc-950">
+
+                <div class="case-art">
+                    <div class="case-logo">
+                        🛡️
+                        <span class="absolute bottom-7 left-0 right-0 text-xs">
+                            DOTA 2
+                        </span>
+                    </div>
+                </div>
+
+                <div class="p-6">
+
+                    <div class="text-xs font-black uppercase tracking-widest text-red-400">
+                        03 · MOBA
+                    </div>
+
+                    <h3 class="mt-2 text-2xl font-black">
+                        Dota 2
+                    </h3>
+
+                    <p class="mt-3 text-sm text-zinc-500 min-h-[42px]">
+                        Артефакты от Tango до Divine Rapier.
+                    </p>
+
+                    <div class="mt-5 flex justify-between text-xs text-zinc-500">
+                        <span>19 предметов</span>
+                        <span>24ч cooldown</span>
+                    </div>
+
+                    <button
+                        onclick="openCase('dota')"
+                        class="w-full mt-6 py-4 rounded-2xl bg-red-500 hover:bg-red-400 font-black transition"
+                    >
+                        ОТКРЫТЬ DOTA
+                    </button>
+
+                </div>
+            </article>
+
+
+            <!-- HANTIKS -->
+            <article class="case-card hantiks rounded-[30px] border border-green-500/40 bg-zinc-950">
+
+                <div class="case-art">
+                    <div class="case-logo">
+                        😎
+                        <span class="absolute bottom-7 left-0 right-0 text-xs">
+                            HANTIKS
+                        </span>
+                    </div>
+                </div>
+
+                <div class="p-6">
+
+                    <div class="text-xs font-black uppercase tracking-widest text-green-400">
+                        04 · MEME
+                    </div>
+
+                    <h3 class="mt-2 text-2xl font-black">
+                        Hantiks
+                    </h3>
+
+                    <p class="mt-3 text-sm text-zinc-500 min-h-[42px]">
+                        Мемный кейс без таймера. Открывай сколько хочешь.
+                    </p>
+
+                    <div class="mt-5 flex justify-between text-xs">
+                        <span class="text-zinc-500">
+                            11 предметов
+                        </span>
+
+                        <span class="text-green-400 font-bold">
+                            БЕЗ ТАЙМЕРА
+                        </span>
+                    </div>
+
+                    <button
+                        onclick="openCase('hantiks')"
+                        class="w-full mt-6 py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-black transition"
+                    >
+                        ОТКРЫТЬ HANTIKS
+                    </button>
+
+                </div>
+            </article>
+
+        </div>
+    </div>
 </section>
 
 
+<section id="news" class="py-20 border-t border-white/5">
 
-<!-- NEWS -->
+    <div class="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
 
-<section
-  id="news"
-  class="
-    mt-16
-    grid
-    lg:grid-cols-3
-    gap-5
-  "
->
+        <div class="text-xs font-black uppercase tracking-[.25em] text-cyan-400">
+            CHAK338
+        </div>
 
-<div
-  class="
-    lg:col-span-2
-    rounded-3xl
-    border
-    border-white/10
-    bg-zinc-950
-    p-7
-  "
->
+        <h2 class="mt-3 text-4xl font-black">
+            Играй. Открывай. Апгрейдь.
+        </h2>
 
-<div
-  class="
-    text-xs
-    uppercase
-    tracking-[.25em]
-    text-fuchsia-400
-    font-black
-  "
->
+        <div class="grid md:grid-cols-3 gap-5 mt-10">
 
-НОВОСТИ
+            <div class="p-7 rounded-3xl border border-white/10 bg-white/[.03]">
+                <div class="text-4xl">🎁</div>
+                <h3 class="mt-5 text-xl font-black">Кейсы</h3>
+                <p class="mt-3 text-sm text-zinc-500">
+                    Открывай четыре коллекции с разными предметами.
+                </p>
+            </div>
 
-</div>
+            <div class="p-7 rounded-3xl border border-white/10 bg-white/[.03]">
+                <div class="text-4xl">⚡</div>
+                <h3 class="mt-5 text-xl font-black">Апгрейдер</h3>
+                <p class="mt-3 text-sm text-zinc-500">
+                    Ставь предмет и пытайся получить более дорогой.
+                </p>
+            </div>
 
+            <div class="p-7 rounded-3xl border border-white/10 bg-white/[.03]">
+                <div class="text-4xl">🎒</div>
+                <h3 class="mt-5 text-xl font-black">Инвентарь</h3>
+                <p class="mt-3 text-sm text-zinc-500">
+                    Все выигранные предметы сохраняются в твоём инвентаре.
+                </p>
+            </div>
 
-<h2
-  class="
-    text-3xl
-    font-black
-    mt-2
-  "
->
-
-CHAK338 HUB развивается
-
-</h2>
-
-
-<p
-  class="
-    text-zinc-500
-    mt-3
-  "
->
-
-Добавлены Clash of Clans,
-CS2 и Dota 2.
-Теперь вся коллекция
-работает через общий инвентарь
-и апгрейдер.
-
-</p>
-
-</div>
-
-
-
-<div
-  id="giveaways"
-  class="
-    rounded-3xl
-    border
-    border-white/10
-    bg-zinc-950
-    p-7
-  "
->
-
-<div
-  class="
-    text-xs
-    uppercase
-    tracking-[.25em]
-    text-amber-400
-    font-black
-  "
->
-
-РОЗЫГРЫШИ
-
-</div>
-
-
-<h2
-  class="
-    text-2xl
-    font-black
-    mt-2
-  "
->
-
-Скоро
-
-</h2>
-
-
-<p
-  class="
-    text-zinc-500
-    mt-3
-  "
->
-
-Крупные дропы
-и бонусы для активных игроков.
-
-</p>
-
-</div>
-
+        </div>
+    </div>
 </section>
 
 </main>
 
 
-
-<!-- CASE MODAL -->
+<!-- =========================================================
+     CASE MODAL
+     ========================================================= -->
 
 <div
-  id="modal"
-  class="
-    hidden
-    fixed
-    inset-0
-    z-50
-    modal
-    p-4
-    overflow-y-auto
-  "
+    id="caseModal"
+    class="hidden fixed inset-0 z-[100] modal-bg items-center justify-center p-4"
 >
 
+    <div
+        class="w-full max-w-5xl max-h-[92vh] overflow-y-auto rounded-[30px] border border-white/10 bg-[#09090d] shadow-2xl"
+    >
+
+        <div class="p-5 sm:p-7 border-b border-white/10 flex items-center justify-between">
+
+            <div>
+                <div id="modalCaseLabel" class="text-xs uppercase tracking-widest text-fuchsia-400">
+                    CASE
+                </div>
+
+                <h2 id="modalCaseTitle" class="mt-1 text-3xl font-black">
+                    Case
+                </h2>
+            </div>
+
+            <button
+                onclick="closeCase()"
+                class="w-11 h-11 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-400"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="p-5 sm:p-7">
+
+            <div class="grid lg:grid-cols-[280px_1fr] gap-7">
+
+                <div>
+
+                    <div
+                        id="modalCaseVisual"
+                        class="h-64 rounded-3xl flex items-center justify-center border border-white/10 bg-white/[.03]"
+                    >
+                        <div id="modalCaseIcon" class="text-8xl">
+                            🎁
+                        </div>
+                    </div>
+
+                    <div
+                        id="cooldownBox"
+                        class="mt-4 p-4 rounded-2xl border border-white/10 bg-white/[.03]"
+                    >
+                        <div class="text-[10px] text-zinc-500 uppercase tracking-widest">
+                            Следующее открытие
+                        </div>
+
+                        <div
+                            id="cooldownText"
+                            class="mt-2 text-2xl font-black"
+                        >
+                            00:00:00
+                        </div>
+                    </div>
+
+                    <div class="mt-4 p-4 rounded-2xl border border-white/10 bg-white/[.03]">
+
+                        <div class="text-xs text-zinc-500">
+                            XP за открытие
+                        </div>
+
+                        <div id="caseXP" class="mt-1 text-xl font-black">
+                            +100 XP
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <div class="flex items-center justify-between gap-4 mb-4">
+
+                        <div>
+                            <h3 class="text-xl font-black">
+                                Содержимое кейса
+                            </h3>
+
+                            <p class="text-sm text-zinc-500">
+                                Выбери риск и открывай кейс.
+                            </p>
+                        </div>
+
+                        <div
+                            id="itemCount"
+                            class="text-xs text-zinc-500"
+                        >
+                            0 предметов
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="caseItems"
+                        class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3"
+                    ></div>
+
+
+                    <div
+                        id="reelBlock"
+                        class="hidden mt-7"
+                    >
+
+                        <div class="text-xs text-zinc-500 uppercase tracking-widest mb-3">
+                            ROLL
+                        </div>
+
+                        <div class="reel-window h-[170px]">
+                            <div
+                                id="caseReel"
+                                class="reel h-full items-center"
+                            ></div>
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="openCaseButton"
+                        onclick="spinCase()"
+                        class="w-full mt-7 py-5 rounded-2xl bg-white text-black font-black text-lg hover:bg-zinc-200 transition"
+                    >
+                        ОТКРЫТЬ КЕЙС
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<!-- RESULT -->
+
 <div
-  class="
-    min-h-full
-    flex
-    items-center
-    justify-center
-  "
+    id="resultModal"
+    class="hidden fixed inset-0 z-[120] modal-bg items-center justify-center p-4"
 >
 
-<div
-  class="
-    w-full
-    max-w-5xl
-    rounded-[30px]
-    border
-    border-white/10
-    bg-[#090a0f]
-    shadow-2xl
-    overflow-hidden
-  "
->
+    <div class="w-full max-w-md rounded-[32px] border border-white/10 bg-[#0b0b10] p-7 text-center">
 
+        <div class="text-xs uppercase tracking-[.3em] text-green-400 font-black">
+            DROP
+        </div>
 
-<!-- MODAL HEADER -->
+        <div
+            id="dropIcon"
+            class="mt-7 text-8xl"
+        >
+            🎁
+        </div>
 
-<div
-  class="
-    p-5
-    md:p-7
-    border-b
-    border-white/10
-    flex
-    items-center
-    justify-between
-  "
->
+        <h2
+            id="dropName"
+            class="mt-6 text-3xl font-black"
+        >
+            Item
+        </h2>
 
-<div>
+        <div
+            id="dropRarity"
+            class="mt-2 text-sm text-zinc-500"
+        >
+            Rare
+        </div>
 
-<div
-  id="modalCaseName"
-  class="
-    text-2xl
-    font-black
-  "
-></div>
+        <div
+            id="dropPrice"
+            class="mt-4 text-4xl font-black"
+        >
+            100 монет
+        </div>
 
+        <div class="mt-7 flex gap-3">
 
-<div
-  id="modalStatus"
-  class="
-    text-sm
-    text-zinc-500
-    mt-1
-  "
-></div>
+            <button
+                onclick="closeResult()"
+                class="flex-1 py-4 rounded-2xl bg-white text-black font-black"
+            >
+                ЗАБРАТЬ
+            </button>
 
+            <button
+                onclick="closeResult(); closeCase();"
+                class="px-5 py-4 rounded-2xl border border-white/10 bg-white/5 font-black"
+            >
+                ЗАКРЫТЬ
+            </button>
+
+        </div>
+
+    </div>
 </div>
-
-
-<button
-  onclick="closeModal()"
-  class="
-    w-10
-    h-10
-    rounded-xl
-    bg-white/5
-    text-zinc-400
-  "
->
-
-✕
-
-</button>
-
-</div>
-
-
-
-<div class="p-5 md:p-7">
-
-
-<!-- PREVIEW -->
-
-<div id="preview">
-
-<div
-  class="
-    grid
-    lg:grid-cols-[.8fr_1.2fr]
-    gap-6
-  "
->
-
-
-<div>
-
-<img
-  id="modalCaseImage"
-  class="
-    w-full
-    h-64
-    object-cover
-    rounded-3xl
-    border
-    border-white/10
-  "
-  alt="Кейс"
->
-
-
-<div
-  id="cooldownModal"
-  class="
-    coolbox
-    rounded-2xl
-    p-4
-    mt-4
-  "
-></div>
-
-
-<button
-  id="openButton"
-  onclick="startOpen()"
-  class="
-    w-full
-    mt-4
-    py-4
-    rounded-2xl
-    font-black
-    text-black
-  "
->
-
-ОТКРЫТЬ КЕЙС
-
-</button>
-
-</div>
-
-
-
-<div>
-
-<div
-  class="
-    text-xs
-    uppercase
-    tracking-[.25em]
-    text-zinc-600
-    font-black
-  "
->
-
-СОДЕРЖИМОЕ
-
-</div>
-
-
-<div
-  id="contents"
-  class="
-    mt-4
-    grid
-    grid-cols-2
-    sm:grid-cols-3
-    gap-3
-    max-h-[480px]
-    overflow-y-auto
-    pr-1
-  "
-></div>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- OPENING -->
-
-<div
-  id="opening"
-  class="hidden"
->
-
-<div class="text-center">
-
-<div
-  class="
-    text-xs
-    uppercase
-    tracking-[.25em]
-    text-fuchsia-400
-    font-black
-  "
->
-
-ОТКРЫВАЕМ...
-
-</div>
-
-
-<h3
-  class="
-    text-3xl
-    font-black
-    mt-2
-  "
->
-
-Прокрутка предметов
-
-</h3>
-
-
-<p
-  class="
-    text-zinc-500
-    mt-2
-  "
->
-
-Следи за центральной линией —
-на ней остановится дроп.
-
-</p>
-
-</div>
-
-
-
-<div class="mt-6">
-
-<div class="reel-window">
-
-<div class="pointer"></div>
-
-<div
-  id="reelTrack"
-  class="reel-track"
-></div>
-
-</div>
-
-</div>
-
-
-<div
-  id="dropResult"
-  class="
-    hidden
-    mt-6
-    text-center
-  "
-></div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<script src="data.js"></script>
 
 
 <script>
 
-let currentCase = null;
-
-let busy = false;
-
-let reelTimer = null;
-
-let audioCtx = null;
+let activeCase = null;
+let spinning = false;
+let cooldownTimer = null;
 
 
-/* =========================================
-   ЗВУК
-========================================= */
+/* ---------------------------------------------------------
+   OPEN CASE
+   --------------------------------------------------------- */
 
-function sound(type){
+function openCase(id) {
 
-  try{
+    const data = getCaseById(id);
 
-    audioCtx =
-      audioCtx ||
-      new (
-        window.AudioContext ||
-        window.webkitAudioContext
-      )();
+    if (!data) return;
 
-    if(
-      audioCtx.state === 'suspended'
-    ){
+    activeCase = data;
 
-      audioCtx.resume();
+    document.getElementById("modalCaseLabel").textContent =
+        "CASE · " + data.short;
 
+    document.getElementById("modalCaseTitle").textContent =
+        data.name;
+
+    document.getElementById("modalCaseIcon").textContent =
+        data.icon;
+
+    document.getElementById("caseXP").textContent =
+        data.xp > 0 ? "+" + data.xp + " XP" : "БЕЗ XP";
+
+    document.getElementById("itemCount").textContent =
+        data.items.length + " предметов";
+
+    renderCaseItems(data);
+
+    document.getElementById("reelBlock").classList.add("hidden");
+
+    const modal = document.getElementById("caseModal");
+
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+
+    updateCooldown();
+
+    if (cooldownTimer) {
+        clearInterval(cooldownTimer);
     }
 
-
-    const oscillator =
-      audioCtx.createOscillator();
-
-    const gain =
-      audioCtx.createGain();
-
-    oscillator.connect(gain);
-
-    gain.connect(
-      audioCtx.destination
-    );
+    cooldownTimer = setInterval(updateCooldown, 1000);
+}
 
 
-    const now =
-      audioCtx.currentTime;
+function closeCase() {
+
+    const modal = document.getElementById("caseModal");
+
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+
+    activeCase = null;
+
+    if (cooldownTimer) {
+        clearInterval(cooldownTimer);
+        cooldownTimer = null;
+    }
+}
 
 
-    if(type === 'tick'){
+/* ---------------------------------------------------------
+   CASE ITEMS
+   --------------------------------------------------------- */
 
-      oscillator.type =
-        'square';
+function renderCaseItems(data) {
 
-      oscillator.frequency.setValueAtTime(
-        120 +
-        Math.random() * 80,
-        now
-      );
+    const container = document.getElementById("caseItems");
 
-      gain.gain.setValueAtTime(
-        .045,
-        now
-      );
+    container.innerHTML = "";
 
-      gain.gain.exponentialRampToValueAtTime(
-        .001,
-        now + .055
-      );
+    data.items.forEach(item => {
 
-      oscillator.start(now);
+        const card = document.createElement("div");
 
-      oscillator.stop(
-        now + .06
-      );
+        card.className =
+            "item-card rarity-" +
+            item.rarity +
+            " rounded-2xl border bg-white/[.025] p-4";
 
+        card.innerHTML = `
+            <div class="text-4xl text-center">
+                ${item.icon}
+            </div>
+
+            <div class="mt-3 text-sm font-black text-center">
+                ${escapeHTML(item.name)}
+            </div>
+
+            <div class="mt-1 text-xs text-center text-zinc-500">
+                ${formatPrice(item.price)}
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+
+/* ---------------------------------------------------------
+   COOLDOWN
+   --------------------------------------------------------- */
+
+function getCooldownLeft(data) {
+
+    if (!data || data.noCooldown) {
+        return 0;
     }
 
+    const key = "chak338_case_" + data.id;
 
-    else if(type === 'win'){
+    const last = Number(localStorage.getItem(key) || 0);
 
-      oscillator.type =
-        'sine';
+    if (!last) return 0;
 
-      oscillator.frequency.setValueAtTime(
-        420,
-        now
-      );
+    return Math.max(0, data.cooldown - (Date.now() - last));
+}
 
-      oscillator.frequency.exponentialRampToValueAtTime(
-        980,
-        now + .35
-      );
 
-      gain.gain.setValueAtTime(
-        .001,
-        now
-      );
+function updateCooldown() {
 
-      gain.gain.exponentialRampToValueAtTime(
-        .22,
-        now + .03
-      );
+    if (!activeCase) return;
 
-      gain.gain.exponentialRampToValueAtTime(
-        .001,
-        now + .8
-      );
+    const box = document.getElementById("cooldownBox");
+    const text = document.getElementById("cooldownText");
+    const button = document.getElementById("openCaseButton");
 
-      oscillator.start(now);
+    if (activeCase.noCooldown) {
 
-      oscillator.stop(
-        now + .82
-      );
+        box.classList.add("hidden");
 
-      setTimeout(
-        () => sound('chime'),
-        160
-      );
+        button.disabled = spinning;
+        button.textContent =
+            spinning ? "ОТКРЫВАЕМ..." : "ОТКРЫТЬ HANTIKS";
 
+        return;
     }
 
+    box.classList.remove("hidden");
 
-    else{
+    const left = getCooldownLeft(activeCase);
 
-      oscillator.type =
-        'triangle';
+    if (left <= 0) {
 
-      oscillator.frequency.setValueAtTime(
-        180,
-        now
-      );
+        text.textContent = "ГОТОВО";
 
-      oscillator.frequency.exponentialRampToValueAtTime(
-        90,
-        now + .45
-      );
+        button.disabled = spinning;
 
-      gain.gain.setValueAtTime(
-        .12,
-        now
-      );
+        button.textContent =
+            spinning ? "ОТКРЫВАЕМ..." : "ОТКРЫТЬ КЕЙС";
 
-      gain.gain.exponentialRampToValueAtTime(
-        .001,
-        now + .5
-      );
+    } else {
 
-      oscillator.start(now);
+        text.textContent = formatTime(left);
 
-      oscillator.stop(
-        now + .52
-      );
+        button.disabled = true;
+        button.textContent = "ДОСТУПНО ЧЕРЕЗ " + formatTime(left);
+    }
+}
 
+
+/* ---------------------------------------------------------
+   PICK ITEM
+   --------------------------------------------------------- */
+
+function pickCaseItem(items) {
+
+    const total = items.reduce(
+        (sum, item) => sum + Math.max(1, 1001 - item.price),
+        0
+    );
+
+    let random = Math.random() * total;
+
+    for (const item of items) {
+
+        random -= Math.max(1, 1001 - item.price);
+
+        if (random <= 0) {
+            return item;
+        }
     }
 
-  }catch(e){}
-
+    return items[0];
 }
 
 
-function chime(){
+/* ---------------------------------------------------------
+   REEL
+   --------------------------------------------------------- */
 
-  try{
+function buildReel(data, winningItem) {
 
-    const oscillator =
-      audioCtx.createOscillator();
+    const reel = document.getElementById("caseReel");
 
-    const gain =
-      audioCtx.createGain();
+    reel.innerHTML = "";
 
-    const now =
-      audioCtx.currentTime;
+    const list = [];
 
-    oscillator.connect(gain);
+    for (let i = 0; i < 50; i++) {
 
-    gain.connect(
-      audioCtx.destination
-    );
+        if (i === 42) {
+            list.push(winningItem);
+        } else {
+            list.push(
+                data.items[
+                    Math.floor(Math.random() * data.items.length)
+                ]
+            );
+        }
+    }
 
-    oscillator.frequency.value =
-      1320;
+    list.forEach(item => {
 
-    gain.gain.setValueAtTime(
-      .001,
-      now
-    );
+        const el = document.createElement("div");
 
-    gain.gain.exponentialRampToValueAtTime(
-      .14,
-      now + .02
-    );
+        el.className =
+            "reel-item rarity-" + item.rarity;
 
-    gain.gain.exponentialRampToValueAtTime(
-      .001,
-      now + .3
-    );
+        el.innerHTML = `
+            <div class="text-4xl">
+                ${item.icon}
+            </div>
 
-    oscillator.start(now);
+            <div class="mt-2 text-xs font-black px-2">
+                ${escapeHTML(item.name)}
+            </div>
 
-    oscillator.stop(
-      now + .32
-    );
+            <div class="mt-1 text-[10px] text-zinc-500">
+                ${item.price} монет
+            </div>
+        `;
 
-  }catch(e){}
-
+        reel.appendChild(el);
+    });
 }
 
 
-/* =========================================
-   TIME
-========================================= */
+/* ---------------------------------------------------------
+   SPIN
+   --------------------------------------------------------- */
 
-function fmt(ms){
+function spinCase() {
 
-  let seconds =
-    Math.max(
-      0,
-      Math.floor(ms / 1000)
-    );
+    if (spinning || !activeCase) return;
 
-  let hours =
-    Math.floor(
-      seconds / 3600
-    );
+    const cooldown = getCooldownLeft(activeCase);
 
-  seconds %= 3600;
+    if (cooldown > 0) {
+        return;
+    }
 
-  let minutes =
-    Math.floor(
-      seconds / 60
-    );
+    spinning = true;
 
-  seconds %= 60;
+    const button = document.getElementById("openCaseButton");
 
-  return [
-    hours,
-    minutes,
-    seconds
-  ]
-  .map(
-    value =>
-      String(value)
-        .padStart(2,'0')
-  )
-  .join(':');
+    button.disabled = true;
+    button.textContent = "ОТКРЫВАЕМ...";
 
-}
+    const win = pickCaseItem(activeCase.items);
 
+    document.getElementById("reelBlock").classList.remove("hidden");
 
-function nextText(c){
+    buildReel(activeCase, win);
 
-  const remaining =
-    getRemaining(c.id);
+    const reel = document.getElementById("caseReel");
 
+    reel.style.transition = "none";
+    reel.style.transform = "translateX(0)";
 
-  if(!remaining){
+    /*
+       ВАЖНО:
+       Всегда одинаковая ширина карточки + gap.
+    */
 
-    return `
+    const itemWidth = 125 + 12;
 
-      <div class="flex justify-between">
+    const windowWidth =
+        reel.parentElement.clientWidth;
 
-        <span class="text-zinc-500">
-          СЛЕДУЮЩЕЕ ОТКРЫТИЕ
-        </span>
+    const targetIndex = 42;
 
-        <b class="text-emerald-400">
-          ГОТОВ
-        </b>
+    const centerOffset =
+        windowWidth / 2 - 125 / 2;
 
-      </div>
+    const targetOffset =
+        targetIndex * itemWidth;
 
-      <div
-        class="h-1.5 mt-3 rounded-full bg-white/10"
-      >
+    const finalX =
+        centerOffset - targetOffset;
 
-        <div
-          class="h-full rounded-full"
-          style="
-            width:100%;
-            background:${c.color}
-          "
-        ></div>
+    /*
+       Визуальная прокрутка.
+    */
 
-      </div>
+    requestAnimationFrame(() => {
 
-    `;
+        requestAnimationFrame(() => {
 
-  }
+            reel.style.transition =
+                "transform 4.8s cubic-bezier(.08,.72,.12,1)";
 
-
-  const next =
-    getNextOpenTime(c.id);
-
-
-  return `
-
-    <div class="flex justify-between gap-3">
-
-      <span class="text-zinc-500">
-        ПРОКРУТКА ЧЕРЕЗ
-      </span>
-
-      <b
-        style="color:${c.color}"
-        data-countdown="${c.id}"
-      >
-
-        ${fmt(remaining)}
-
-      </b>
-
-    </div>
-
-    <div class="text-xs text-zinc-600 mt-2">
-
-      Следующее открытие:
-      ${next.toLocaleString('ru-RU')}
-
-    </div>
-
-    <div
-      class="
-        h-1.5
-        mt-3
-        rounded-full
-        bg-white/10
-      "
-    >
-
-      <div
-        class="h-full rounded-full"
-        style="
-          width:${Math.max(
-            2,
-            100 -
-            remaining /
-            (c.cooldownHours * 3600000) *
-            100
-          )}%;
-
-          background:${c.color}
-        "
-      ></div>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =========================================
-   CASE CARDS
-========================================= */
-
-function renderCases(){
-
-  document.getElementById(
-    'casesGrid'
-  ).innerHTML = CASES.map(
-    (c,index) => `
-
-    <article
-      class="
-        case-card
-        rounded-3xl
-        border
-        bg-zinc-950
-      "
-      style="
-        border-color:${c.color}55;
-        box-shadow:
-          0 0 35px ${c.color}10;
-      "
-    >
-
-      <div class="case-art">
-
-        <img
-          src="${c.image}"
-          alt="${c.name}"
-        >
-
-      </div>
-
-
-      <div class="p-5">
-
-        <div
-          class="
-            text-xs
-            font-black
-            tracking-[.2em]
-          "
-          style="color:${c.color}"
-        >
-
-          ${String(index + 1).padStart(2,'0')}
-          ·
-          ${c.subtitle}
-
-        </div>
-
-
-        <h3
-          class="
-            text-2xl
-            font-black
-            mt-2
-          "
-        >
-
-          ${c.name}
-
-        </h3>
-
-
-        <p
-          class="
-            text-sm
-            text-zinc-500
-            mt-2
-            min-h-[42px]
-          "
-        >
-
-          ${c.description}
-
-        </p>
-
-
-        <div
-          class="
-            flex
-            justify-between
-            text-xs
-            text-zinc-500
-            mt-4
-          "
-        >
-
-          <span>
-
-            ${getCaseItems(c.id).length}
-            предметов
-
-          </span>
-
-          <span>
-
-            +${c.xp} XP
-
-          </span>
-
-        </div>
-
-
-        <div
-          class="
-            coolbox
-            rounded-2xl
-            p-3
-            mt-4
-          "
-          data-cool="${c.id}"
-        >
-
-          ${nextText(c)}
-
-        </div>
-
-
-        <button
-          onclick="openModal('${c.id}')"
-          class="
-            w-full
-            mt-4
-            py-4
-            rounded-2xl
-            font-black
-            text-black
-          "
-          style="
-            background:${c.color}
-          "
-        >
-
-          ОТКРЫТЬ ${c.short}
-
-        </button>
-
-      </div>
-
-    </article>
-
-  `
-  ).join('');
-
-}
-
-
-/* =========================================
-   COUNTDOWN
-========================================= */
-
-function renderCountdowns(){
-
-  document
-    .querySelectorAll('[data-cool]')
-    .forEach(el => {
-
-      const c =
-        getCase(
-          el.dataset.cool
-        );
-
-      el.innerHTML =
-        nextText(c);
-
+            reel.style.transform =
+                "translateX(" + finalX + "px)";
+        });
     });
 
 
-  if(
-    currentCase &&
-    !busy
-  ){
+    /*
+       Тик во время вращения.
+    */
 
-    document.getElementById(
-      'cooldownModal'
-    ).innerHTML =
-      nextText(currentCase);
+    playSpinSound();
 
 
-    const ready =
-      canOpenCase(
-        currentCase.id
-      );
+    setTimeout(() => {
+
+        /*
+           Теперь предмет реально сохраняется
+           в inventory.
+        */
+
+        const inventory = getInventory();
+
+        inventory.push(
+            createInventoryItem(
+                win,
+                activeCase.name
+            )
+        );
+
+        saveInventory(inventory);
+
+        /*
+           XP.
+        */
+
+        if (activeCase.xp > 0) {
+            addXP(activeCase.xp);
+        }
+
+        /*
+           Cooldown.
+        */
+
+        if (!activeCase.noCooldown) {
+
+            localStorage.setItem(
+                "chak338_case_" + activeCase.id,
+                String(Date.now())
+            );
+        }
 
 
-    document.getElementById(
-      'openButton'
-    ).disabled =
-      !ready;
+        playWinSound();
 
-    document.getElementById(
-      'openButton'
-    ).style.opacity =
-      ready ? 1 : .35;
+        showDrop(win);
 
-    document.getElementById(
-      'openButton'
-    ).textContent =
-      ready
-        ? 'ОТКРЫТЬ КЕЙС'
-        : 'КЕЙС ЕЩЁ НА КУЛДАУНЕ';
+        spinning = false;
 
-  }
+        updateCooldown();
 
+    }, 4900);
 }
 
 
-/* =========================================
-   OPEN MODAL
-========================================= */
+/* ---------------------------------------------------------
+   DROP
+   --------------------------------------------------------- */
 
-function openModal(id){
+function showDrop(item) {
 
-  currentCase =
-    getCase(id);
+    document.getElementById("dropIcon").textContent =
+        item.icon;
 
-  busy = false;
+    document.getElementById("dropName").textContent =
+        item.name;
 
+    document.getElementById("dropRarity").textContent =
+        item.rarity.toUpperCase();
 
-  document
-    .getElementById('modal')
-    .classList
-    .remove('hidden');
+    document.getElementById("dropPrice").textContent =
+        formatPrice(item.price);
 
+    const modal = document.getElementById("resultModal");
 
-  document.getElementById(
-    'modalCaseName'
-  ).textContent =
-    currentCase.name;
-
-
-  document.getElementById(
-    'modalStatus'
-  ).textContent =
-    currentCase.description;
-
-
-  document.getElementById(
-    'modalCaseImage'
-  ).src =
-    currentCase.image;
-
-
-  document.getElementById(
-    'preview'
-  ).classList.remove(
-    'hidden'
-  );
-
-
-  document.getElementById(
-    'opening'
-  ).classList.add(
-    'hidden'
-  );
-
-
-  document.getElementById(
-    'dropResult'
-  ).classList.add(
-    'hidden'
-  );
-
-
-  document.getElementById(
-    'cooldownModal'
-  ).innerHTML =
-    nextText(currentCase);
-
-
-  const ready =
-    canOpenCase(id);
-
-
-  document.getElementById(
-    'openButton'
-  ).disabled =
-    !ready;
-
-
-  document.getElementById(
-    'openButton'
-  ).style.background =
-    currentCase.color;
-
-
-  document.getElementById(
-    'openButton'
-  ).style.opacity =
-    ready ? 1 : .35;
-
-
-  document.getElementById(
-    'openButton'
-  ).textContent =
-    ready
-      ? 'ОТКРЫТЬ КЕЙС'
-      : 'КЕЙС ЕЩЁ НА КУЛДАУНЕ';
-
-
-  document.getElementById(
-    'contents'
-  ).innerHTML =
-    getCaseItems(id)
-      .map(
-        (item,index) => `
-
-        <div
-          class="
-            rounded-2xl
-            border
-            border-white/10
-            bg-black/20
-            p-3
-          "
-        >
-
-          <div
-            class="
-              h-24
-              flex
-              items-center
-              justify-center
-            "
-          >
-
-            <img
-              src="${item.image}"
-              class="
-                w-full
-                h-full
-                object-contain
-              "
-              alt="${item.name}"
-            >
-
-          </div>
-
-
-          <div
-            class="
-              text-xs
-              text-zinc-600
-              mt-1
-            "
-          >
-
-            ${index + 1}
-
-          </div>
-
-
-          <div
-            class="
-              font-black
-              text-sm
-              mt-1
-            "
-          >
-
-            ${item.name}
-
-          </div>
-
-
-          <div
-            class="
-              text-xs
-              mt-1
-            "
-            style="
-              color:
-              ${RARITIES[item.rarity].color}
-            "
-          >
-
-            ${RARITIES[item.rarity].name}
-
-          </div>
-
-
-          <div
-            class="
-              text-xs
-              text-amber-400
-              mt-1
-            "
-          >
-
-            🪙 ${item.price}
-
-          </div>
-
-        </div>
-
-      `
-      )
-      .join('');
-
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
 }
 
 
-function closeModal(){
+function closeResult() {
 
-  if(busy){
-    return;
-  }
+    const modal = document.getElementById("resultModal");
 
-  document
-    .getElementById('modal')
-    .classList
-    .add('hidden');
-
-  currentCase = null;
-
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
 }
 
 
-/* =========================================
-   BUILD REEL
-========================================= */
+/* ---------------------------------------------------------
+   SOUNDS
+   --------------------------------------------------------- */
 
-function buildReel(
-  caseId,
-  win
-){
+let audioContext = null;
 
-  const items =
-    getCaseItems(caseId);
+function getAudioContext() {
 
-  const arr = [];
+    if (!audioContext) {
 
+        audioContext =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+    }
 
-  for(
-    let i = 0;
-    i < 34;
-    i++
-  ){
-
-    arr.push(
-      items[
-        Math.floor(
-          Math.random() *
-          items.length
-        )
-      ]
-    );
-
-  }
-
-
-  const stopIndex = 27;
-
-  arr[stopIndex] = win;
-
-
-  const track =
-    document.getElementById(
-      'reelTrack'
-    );
-
-
-  track.innerHTML =
-    arr.map(
-      (item,index) => `
-
-      <div
-        class="reel-item"
-        data-index="${index}"
-      >
-
-        <img
-          src="${item.image}"
-          alt=""
-        >
-
-        <b>
-          ${item.name}
-        </b>
-
-        <small
-          style="
-            color:
-            ${RARITIES[item.rarity].color}
-          "
-        >
-
-          ${RARITIES[item.rarity].name}
-
-        </small>
-
-        <small class="text-amber-400">
-
-          🪙 ${item.price}
-
-        </small>
-
-      </div>
-
-    `
-    ).join('');
-
-
-  return {
-    track,
-    stopIndex
-  };
-
+    return audioContext;
 }
 
 
-/* =========================================
-   OPEN CASE
-========================================= */
+function beep(freq, duration, type = "sine", volume = .04) {
 
-function startOpen(){
+    try {
 
-  if(
-    !currentCase ||
-    busy ||
-    !canOpenCase(
-      currentCase.id
-    )
-  ){
+        const ctx = getAudioContext();
 
-    return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
 
-  }
+        osc.type = type;
+        osc.frequency.value = freq;
 
+        gain.gain.value = volume;
 
-  busy = true;
+        osc.connect(gain);
+        gain.connect(ctx.destination);
 
-  sound('start');
+        const now = ctx.currentTime;
 
+        gain.gain.setValueAtTime(volume, now);
 
-  const win =
-    randomCaseItem(
-      currentCase.id
-    );
+        gain.gain.exponentialRampToValueAtTime(
+            .001,
+            now + duration
+        );
 
+        osc.start(now);
+        osc.stop(now + duration);
 
-  document.getElementById(
-    'preview'
-  ).classList.add(
-    'hidden'
-  );
+    } catch {}
+}
 
 
-  document.getElementById(
-    'opening'
-  ).classList.remove(
-    'hidden'
-  );
+function playSpinSound() {
 
+    let ticks = 0;
 
-  document.getElementById(
-    'dropResult'
-  ).classList.add(
-    'hidden'
-  );
+    const timer = setInterval(() => {
 
-
-  const {
-    track,
-    stopIndex
-  } =
-    buildReel(
-      currentCase.id,
-      win
-    );
-
-
-  const itemWidth = 150;
-
-  const gap = 12;
-
-  const padding = 22;
-
-  const center =
-    track.parentElement
-      .clientWidth / 2;
-
-
-  const targetCenter =
-    padding +
-    stopIndex *
-    (itemWidth + gap) +
-    itemWidth / 2;
-
-
-  const distance =
-    targetCenter -
-    center;
-
-
-  track.style.transform =
-    'translateX(0px)';
-
-
-  let ticks = 0;
-
-
-  reelTimer =
-    setInterval(
-      () => {
-
-        sound('tick');
+        beep(
+            160 + Math.random() * 100,
+            .025,
+            "square",
+            .018
+        );
 
         ticks++;
 
-
-        if(ticks > 24){
-
-          clearInterval(
-            reelTimer
-          );
-
+        if (ticks >= 32) {
+            clearInterval(timer);
         }
 
-      },
-      135
-    );
+    }, 135);
+}
 
 
-  requestAnimationFrame(
-    () => {
+function playWinSound() {
 
-      track.style.transition =
-        'transform 4.8s cubic-bezier(.08,.72,.13,1)';
+    beep(520, .12, "sine", .06);
 
-      track.style.transform =
-        `translateX(${-distance}px)`;
+    setTimeout(() => {
+        beep(780, .15, "sine", .06);
+    }, 100);
 
+    setTimeout(() => {
+        beep(1040, .22, "sine", .05);
+    }, 220);
+}
+
+
+/* ---------------------------------------------------------
+   SECURITY / HTML
+   --------------------------------------------------------- */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+/* ---------------------------------------------------------
+   ESC
+   --------------------------------------------------------- */
+
+document.addEventListener("keydown", event => {
+
+    if (event.key === "Escape") {
+
+        closeResult();
+        closeCase();
     }
-  );
-
-
-  setTimeout(
-    () => {
-
-      clearInterval(
-        reelTimer
-      );
-
-
-      sound('win');
-
-
-      setCaseOpened(
-        currentCase.id
-      );
-
-
-      addXP(
-        currentCase.xp
-      );
-
-
-      addInventoryItem(
-        win
-      );
-
-
-      document.getElementById(
-        'dropResult'
-      ).classList.remove(
-        'hidden'
-      );
-
-
-      document.getElementById(
-        'dropResult'
-      ).innerHTML = `
-
-        <div
-          class="
-            drop-card
-            inline-block
-            rounded-3xl
-            border
-            p-6
-            min-w-[290px]
-          "
-          style="
-            border-color:
-            ${RARITIES[win.rarity].color};
-
-            box-shadow:
-            0 0 55px
-            ${RARITIES[win.rarity].color}25;
-          "
-        >
-
-          <div
-            class="
-              text-xs
-              uppercase
-              tracking-[.3em]
-            "
-            style="
-              color:
-              ${RARITIES[win.rarity].color}
-            "
-          >
-
-            ТЕБЕ ВЫПАЛО
-
-          </div>
-
-
-          <div
-            class="
-              h-40
-              mt-3
-            "
-          >
-
-            <img
-              src="${win.image}"
-              class="
-                w-full
-                h-full
-                object-contain
-              "
-              alt="${win.name}"
-            >
-
-          </div>
-
-
-          <h3
-            class="
-              text-2xl
-              font-black
-              mt-3
-            "
-          >
-
-            ${win.name}
-
-          </h3>
-
-
-          <div
-            class="
-              font-black
-              mt-1
-            "
-            style="
-              color:
-              ${RARITIES[win.rarity].color}
-            "
-          >
-
-            ${RARITIES[win.rarity].name}
-
-          </div>
-
-
-          <div
-            class="
-              text-amber-400
-              font-black
-              mt-2
-            "
-          >
-
-            🪙 ${win.price} монет
-
-          </div>
-
-
-          <button
-            onclick="
-              closeModal();
-              renderCases();
-              updateTop();
-            "
-            class="
-              mt-5
-              w-full
-              py-3
-              rounded-xl
-              bg-white
-              text-black
-              font-black
-            "
-          >
-
-            ЗАБРАТЬ
-
-          </button>
-
-        </div>
-
-      `;
-
-
-      busy = false;
-
-      renderCountdowns();
-
-      updateTop();
-
-    },
-    5100
-  );
-
-}
-
-
-/* =========================================
-   TOP
-========================================= */
-
-function updateTop(){
-
-  document.getElementById(
-    'level'
-  ).textContent =
-    getLevel();
-
-
-  document.getElementById(
-    'xp'
-  ).textContent =
-    getXP();
-
-}
-
-
-renderCases();
-
-updateTop();
-
-
-setInterval(
-  () => {
-
-    renderCountdowns();
-
-    updateTop();
-
-  },
-  1000
-);
+});
 
 </script>
 
