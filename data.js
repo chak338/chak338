@@ -39,7 +39,7 @@ const CASES = [
     cooldownHours: 5,
     xp: 100,
     description: 'Персонажи Clash of Clans — от варвара до королевы лучниц.',
-    image: 'assets/cases/clash-case.png'
+    image: 'clash-case.png'
   },
 
   {
@@ -51,7 +51,7 @@ const CASES = [
     cooldownHours: 12,
     xp: 150,
     description: 'Оружие, ножи и легендарные скины.',
-    image: 'assets/cases/cs2-case.png'
+    image: 'cs2-case.png'
   },
 
   {
@@ -63,7 +63,7 @@ const CASES = [
     cooldownHours: 24,
     xp: 250,
     description: 'Артефакты, расходники и дорогие предметы Dota 2.',
-    image: 'assets/cases/dota-case.png'
+    image: 'dota-case.png'
   }
 
 ];
