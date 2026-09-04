@@ -6,54 +6,113 @@
 <meta charset="UTF-8">
 
 <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
 
 <title>CHAK338 — Инвентарь</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
+<script src="data.js"></script>
+
 <style>
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-    background:#07070b;
-    color:#f8fafc;
+  background: #07070b;
+  color: #f8fafc;
 }
 
-body::before {
+body:before {
 
-    content:"";
+  content: "";
 
-    position:fixed;
-    inset:0;
+  position: fixed;
 
-    pointer-events:none;
+  inset: 0;
 
-    opacity:.15;
+  pointer-events: none;
 
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,.035) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.035) 1px,
-            transparent 1px
-        );
+  opacity: .16;
 
-    background-size:36px 36px;
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 36px 36px;
+}
+
+.glass {
+
+  background:
+    rgba(12,12,18,.82);
+
+  backdrop-filter:
+    blur(18px);
 
 }
 
-.card {
+.item-card {
 
-    background:#0c0c12;
+  transition:
+    transform .25s,
+    box-shadow .25s;
 
-    border:
-        1px solid
-        rgba(255,255,255,.08);
+}
 
+.item-card:hover {
+
+  transform:
+    translateY(-6px);
+
+  box-shadow:
+    0 0 35px
+    rgba(168,85,247,.14);
+
+}
+
+.rarity-COMMON {
+  border-color: #64748b;
+}
+
+.rarity-UNCOMMON {
+  border-color: #22c55e;
+}
+
+.rarity-RARE {
+  border-color: #38bdf8;
+}
+
+.rarity-EPIC {
+  border-color: #a855f7;
+}
+
+.rarity-LEGENDARY {
+  border-color: #f59e0b;
+}
+
+.rarity-MYTHIC {
+  border-color: #ef4444;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 20px;
 }
 
 </style>
@@ -61,57 +120,105 @@ body::before {
 </head>
 
 
-<body>
+<body class="min-h-screen">
 
 
-<header
-    class="fixed top-0
-    left-0 right-0 z-50
-    bg-[#0c0c12]/90
-    backdrop-blur-xl
-    border-b border-white/10">
+<header class="sticky top-0 z-50">
 
-<div
-    class="max-w-7xl
-    mx-auto px-5">
+<div class="glass border-b border-white/10">
 
-<div
-    class="h-20
-    flex items-center
-    justify-between">
+<div class="
+max-w-7xl
+mx-auto
+px-4 sm:px-6 lg:px-8
+h-20
+flex
+items-center
+justify-between
+">
 
 <a
-    href="index.html"
-    class="font-black
-    text-xl">
+href="index.html"
+class="flex items-center gap-3"
+>
 
+<div class="
+w-11 h-11
+rounded-2xl
+bg-gradient-to-br
+from-fuchsia-500
+to-violet-700
+flex
+items-center
+justify-center
+font-black
+text-xl
+">
+C
+</div>
+
+<div>
+
+<div class="font-black text-xl">
 CHAK338
+</div>
+
+<div class="
+text-[10px]
+uppercase
+tracking-[.22em]
+text-zinc-500
+">
+Gaming Hub
+</div>
+
+</div>
 
 </a>
 
 
-<div class="flex gap-3">
+<div class="flex gap-2">
 
 <a
-    href="index.html"
-    class="px-4 py-3
-    rounded-xl
-    bg-white/5
-    font-bold">
-
-ГЛАВНАЯ
-
+href="index.html#cases"
+class="
+hidden sm:inline-flex
+px-4 py-3
+rounded-xl
+bg-white/5
+border border-white/10
+text-sm
+font-black
+">
+КЕЙСЫ
 </a>
 
-<a
-    href="upgrade.html"
-    class="px-4 py-3
-    rounded-xl
-    bg-fuchsia-500
-    font-black">
 
+<a
+href="upgrade.html"
+class="
+px-4 py-3
+rounded-xl
+bg-fuchsia-500
+text-white
+text-sm
+font-black
+">
 АПГРЕЙДЕР
+</a>
 
+
+<a
+href="index.html"
+class="
+px-4 py-3
+rounded-xl
+bg-white
+text-black
+text-sm
+font-black
+">
+ГЛАВНАЯ
 </a>
 
 </div>
@@ -124,306 +231,635 @@ CHAK338
 
 
 <main
-    class="max-w-7xl
-    mx-auto
-    px-5
-    pt-32
-    pb-20">
+class="
+max-w-7xl
+mx-auto
+px-4 sm:px-6 lg:px-8
+py-14
+">
 
-
-<div class="mb-12">
 
 <div
-    class="text-xs
-    text-fuchsia-400
-    uppercase
-    tracking-[.3em]
-    font-black">
+class="
+flex
+flex-col
+md:flex-row
+md:items-end
+md:justify-between
+gap-6
+"
+>
 
-CHAK338 PLAYER
+<div>
 
+<div class="
+text-xs
+font-black
+uppercase
+tracking-[.25em]
+text-fuchsia-400
+">
+CHAK338 COLLECTION
 </div>
 
-
-<h1
-    class="text-5xl
-    font-black
-    mt-3">
-
+<h1 class="
+mt-3
+text-5xl
+sm:text-6xl
+font-black
+tracking-tight
+">
 ИНВЕНТАРЬ
-
 </h1>
 
+<p class="
+mt-4
+text-zinc-400
+max-w-2xl
+">
 
-<p
-    class="text-zinc-500
-    mt-4">
-
-Все предметы, которые
-ты получил в CHAK338.
-
-</p>
-
-</div>
-
-
-<div
-    class="grid
-    sm:grid-cols-3
-    gap-4
-    mb-10">
-
-
-<div class="card rounded-3xl p-6">
-
-<div
-    class="text-xs
-    text-zinc-500
-    uppercase">
-
-Предметов
-
-</div>
-
-<div
-    id="itemCount"
-    class="text-4xl
-    font-black mt-2">
-
-0
-
-</div>
-
-</div>
-
-
-<div class="card rounded-3xl p-6">
-
-<div
-    class="text-xs
-    text-zinc-500
-    uppercase">
-
-Стоимость
-
-</div>
-
-<div
-    id="totalValue"
-    class="text-4xl
-    font-black mt-2">
-
-0
-
-</div>
-
-</div>
-
-
-<div class="card rounded-3xl p-6">
-
-<div
-    class="text-xs
-    text-zinc-500
-    uppercase">
-
-XP
-
-</div>
-
-<div
-    id="xp"
-    class="text-4xl
-    font-black mt-2">
-
-0
-
-</div>
-
-</div>
-
-</div>
-
-
-<div
-    id="inventory"
-    class="grid
-    grid-cols-2
-    sm:grid-cols-3
-    lg:grid-cols-5
-    gap-4">
-
-</div>
-
-
-<div
-    id="empty"
-    class="hidden
-    text-center
-    py-32">
-
-<div class="text-7xl">
-🎒
-</div>
-
-<h2
-    class="text-3xl
-    font-black
-    mt-6">
-
-Инвентарь пуст
-
-</h2>
-
-<p
-    class="text-zinc-500
-    mt-3">
-
-Открой первый кейс
-на главной странице.
+Все предметы, которые ты выбил
+из кейсов.
 
 </p>
 
-<a
-    href="index.html#cases"
-    class="inline-block
-    mt-7
-    px-6 py-4
-    rounded-2xl
-    bg-fuchsia-500
-    font-black">
+</div>
 
-ОТКРЫТЬ КЕЙС
 
-</a>
+<div class="
+grid
+grid-cols-3
+gap-2
+sm:gap-3
+">
 
+<div class="
+rounded-2xl
+border border-white/10
+bg-zinc-950
+px-4 py-4
+min-w-24
+">
+
+<div class="text-xs text-zinc-500">
+ПРЕДМЕТОВ
+</div>
+
+<div
+id="total"
+class="
+text-2xl
+font-black
+mt-1
+">
+0
+</div>
+
+</div>
+
+
+<div class="
+rounded-2xl
+border border-white/10
+bg-zinc-950
+px-4 py-4
+min-w-24
+">
+
+<div class="text-xs text-zinc-500">
+СТОИМОСТЬ
+</div>
+
+<div
+id="value"
+class="
+text-lg
+font-black
+mt-1
+">
+0 ₴
+</div>
+
+</div>
+
+
+<div class="
+rounded-2xl
+border border-white/10
+bg-zinc-950
+px-4 py-4
+min-w-24
+">
+
+<div class="text-xs text-zinc-500">
+MYTHIC
+</div>
+
+<div
+id="mythic"
+class="
+text-2xl
+font-black
+mt-1
+">
+0
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="
+mt-10
+flex
+flex-wrap
+gap-2
+">
+
+<button
+class="
+filter
+active
+px-4 py-2.5
+rounded-xl
+bg-white
+text-black
+text-sm
+font-black
+"
+data-filter="ALL"
+>
+ВСЕ
+</button>
+
+
+<button
+class="
+filter
+px-4 py-2.5
+rounded-xl
+bg-white/5
+border border-white/10
+text-sm
+font-black
+"
+data-filter="Персонажи"
+>
+ПЕРСОНАЖИ
+</button>
+
+
+<button
+class="
+filter
+px-4 py-2.5
+rounded-xl
+bg-white/5
+border border-white/10
+text-sm
+font-black
+"
+data-filter="Одежда"
+>
+ОДЕЖДА
+</button>
+
+
+<button
+class="
+filter
+px-4 py-2.5
+rounded-xl
+bg-white/5
+border border-white/10
+text-sm
+font-black
+"
+data-filter="Dota 2"
+>
+DOTA 2
+</button>
+
+
+<button
+id="clearBtn"
+class="
+ml-auto
+px-4 py-2.5
+rounded-xl
+bg-red-500/10
+border border-red-500/20
+text-red-300
+text-sm
+font-black
+"
+>
+ОЧИСТИТЬ
+</button>
+
+</div>
+
+
+<div
+id="grid"
+class="
+mt-8
+grid
+grid-cols-2
+md:grid-cols-3
+lg:grid-cols-4
+xl:grid-cols-5
+gap-4
+">
 </div>
 
 
 </main>
 
 
-<script src="data.js"></script>
-
 <script>
 
-const inventory =
+let currentFilter = "ALL";
+
+
+function render() {
+
+  const all =
     getInventory();
 
 
-document.getElementById(
-    "itemCount"
-).textContent =
-    inventory.length;
+  const items =
+    currentFilter === "ALL"
+      ? all
+      : all.filter(
+          x => x.type === currentFilter
+        );
 
 
-document.getElementById(
-    "xp"
-).textContent =
-    getXP();
+  document.getElementById(
+    "total"
+  ).textContent =
+    all.length;
 
 
-const total =
-    inventory.reduce(
-        (sum,item) =>
-            sum + Number(item.price || 0),
+  document.getElementById(
+    "value"
+  ).textContent =
+    formatMoney(
+      all.reduce(
+        (sum, item) =>
+          sum + Number(item.price || 0),
         0
+      )
     );
 
 
-document.getElementById(
-    "totalValue"
-).textContent =
-    total + " коп.";
+  document.getElementById(
+    "mythic"
+  ).textContent =
+    all.filter(
+      x => x.rarity === "MYTHIC"
+    ).length;
 
 
-const container =
+  const grid =
     document.getElementById(
-        "inventory"
+      "grid"
     );
 
 
-if (!inventory.length) {
+  if (!items.length) {
 
-    document.getElementById(
-        "empty"
-    ).classList.remove("hidden");
+    grid.innerHTML = `
+
+      <div
+        class="
+        col-span-full
+        rounded-[30px]
+        border border-white/10
+        bg-zinc-950
+        p-14
+        text-center
+        "
+      >
+
+        <div class="text-6xl">
+          📦
+        </div>
+
+        <h2
+          class="
+          mt-5
+          text-2xl
+          font-black
+          "
+        >
+          Инвентарь пуст
+        </h2>
+
+        <p class="
+          mt-3
+          text-zinc-500
+        ">
+          Открой кейс и получи первый предмет.
+        </p>
+
+        <a
+          href="index.html#cases"
+          class="
+          inline-block
+          mt-6
+          px-6 py-3
+          rounded-xl
+          bg-fuchsia-500
+          font-black
+          "
+        >
+          ОТКРЫТЬ КЕЙС
+        </a>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  /*
+    Группируем одинаковые предметы.
+  */
+
+  const grouped = {};
+
+
+  items.forEach(item => {
+
+    const key =
+      item.id + "_" +
+      item.caseId;
+
+
+    if (!grouped[key]) {
+
+      grouped[key] = {
+        ...item,
+        count: 0
+      };
+
+    }
+
+
+    grouped[key].count++;
+
+  });
+
+
+  grid.innerHTML =
+    Object.values(grouped)
+      .map(item => `
+
+        <article
+          class="
+          item-card
+          rounded-3xl
+          border-2
+          rarity-${item.rarity}
+          bg-zinc-950
+          p-5
+          "
+        >
+
+          <div
+            class="
+            h-40
+            rounded-2xl
+            bg-white/[.03]
+            flex
+            items-center
+            justify-center
+            relative
+            "
+          >
+
+            <img
+              src="${item.image}"
+              class="
+              w-28
+              h-28
+              object-contain
+              "
+            >
+
+
+            ${
+              item.count > 1
+              ? `
+                <div
+                  class="
+                  absolute
+                  top-3
+                  right-3
+                  px-2.5
+                  py-1
+                  rounded-lg
+                  bg-white
+                  text-black
+                  text-xs
+                  font-black
+                  "
+                >
+                  x${item.count}
+                </div>
+              `
+              : ""
+            }
+
+          </div>
+
+
+          <div class="
+            mt-4
+            text-[10px]
+            uppercase
+            tracking-widest
+            text-zinc-500
+          ">
+            ${item.type}
+          </div>
+
+
+          <h3
+            class="
+            mt-2
+            font-black
+            text-lg
+            leading-tight
+            "
+          >
+            ${item.name}
+          </h3>
+
+
+          <div
+            class="
+            mt-2
+            text-xs
+            font-bold
+            "
+          >
+            ${item.rarity}
+          </div>
+
+
+          <div
+            class="
+            mt-3
+            flex
+            justify-between
+            items-center
+            "
+          >
+
+            <span
+              class="text-zinc-500 text-xs"
+            >
+              Цена
+            </span>
+
+            <span
+              class="font-black"
+            >
+              ${formatMoney(item.price)}
+            </span>
+
+          </div>
+
+
+          <div
+            class="
+            mt-2
+            pt-2
+            border-t
+            border-white/5
+            flex
+            justify-between
+            text-xs
+            "
+          >
+
+            <span class="text-zinc-600">
+              Всего
+            </span>
+
+            <span class="font-black">
+              ${formatMoney(
+                item.price *
+                item.count
+              )}
+            </span>
+
+          </div>
+
+        </article>
+
+      `)
+      .join("");
 
 }
 
 
-inventory
-    .slice()
-    .reverse()
-    .forEach(item => {
+document
+  .querySelectorAll(".filter")
+  .forEach(button => {
 
-        const rarity =
-            getRarity(item.rarity);
+    button.addEventListener(
+      "click",
+      () => {
 
-
-        const card =
-            document.createElement("div");
-
-        card.className =
-            "card rounded-3xl p-4";
+        currentFilter =
+          button.dataset.filter;
 
 
-        card.innerHTML = `
+        document
+          .querySelectorAll(".filter")
+          .forEach(x => {
 
-            <div
-                class="h-40
-                flex items-center
-                justify-center">
+            x.classList.remove(
+              "bg-white",
+              "text-black"
+            );
 
-                <img
-                    src="${item.image}"
-                    alt="${item.name}"
-                    class="max-w-full
-                    max-h-full
-                    object-contain"
-                    onerror="this.style.display='none'"
-                >
+            x.classList.add(
+              "bg-white/5",
+              "border",
+              "border-white/10"
+            );
 
-            </div>
-
-
-            <div
-                class="text-[10px]
-                uppercase
-                font-black
-                mt-3"
-                style="
-                    color:${rarity.color}
-                ">
-
-                ${rarity.name}
-
-            </div>
+          });
 
 
-            <div
-                class="font-black
-                mt-1">
-
-                ${item.name}
-
-            </div>
+        button.classList.remove(
+          "bg-white/5",
+          "border",
+          "border-white/10"
+        );
 
 
-            <div
-                class="text-zinc-500
-                text-sm mt-2">
-
-                ${formatPrice(item.price)}
-
-            </div>
-
-        `;
+        button.classList.add(
+          "bg-white",
+          "text-black"
+        );
 
 
-        container.appendChild(card);
+        render();
 
-    });
+      }
+    );
+
+  });
+
+
+document
+  .getElementById("clearBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      if (!getInventory().length) {
+        return;
+      }
+
+
+      if (
+        confirm(
+          "Удалить весь инвентарь?"
+        )
+      ) {
+
+        localStorage.removeItem(
+          "chak338_inventory"
+        );
+
+        render();
+
+      }
+
+    }
+  );
+
+
+window.addEventListener(
+  "storage",
+  render
+);
+
+
+render();
 
 </script>
 
