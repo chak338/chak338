@@ -1,582 +1,979 @@
-/* =========================================================
-   CHAK338 — ЕДИНЫЙ КАТАЛОГ ПРЕДМЕТОВ
-   =========================================================
+/* ============================================================
+   CHAK338 DATABASE
+   ============================================================
 
-   Здесь ты можешь самостоятельно менять:
+   ВСЕ ПРЕДМЕТЫ САЙТА ХРАНЯТСЯ ЗДЕСЬ.
 
-   name   = название
-   image  = путь к картинке
-   rarity = редкость
-   price  = стоимость
-   type   = тип предмета
-   caseId = в каком кейсе выпадает
+   Чтобы добавить предмет:
 
-   ========================================================= */
+   1. Загрузи картинку в:
+      assets/items/
+
+   2. Добавь объект ниже.
+
+   ============================================================ */
+
+
+/* ============================================================
+   РЕДКОСТИ
+   ============================================================ */
 
 const RARITIES = {
+
     common: {
         name: "Обычный",
-        short: "COMMON",
-        price: 10
+        color: "#aeb7c8"
     },
 
     uncommon: {
         name: "Необычный",
-        short: "UNCOMMON",
-        price: 25
+        color: "#62d98b"
     },
 
     rare: {
         name: "Редкий",
-        short: "RARE",
-        price: 75
+        color: "#55a8ff"
     },
 
     epic: {
         name: "Эпический",
-        short: "EPIC",
-        price: 200
+        color: "#b87cff"
     },
 
     legendary: {
         name: "Легендарный",
-        short: "LEGENDARY",
-        price: 750
+        color: "#ffb84d"
     },
 
     mythic: {
         name: "Мифический",
-        short: "MYTHIC",
-        price: 2500
+        color: "#ff4c72"
     }
+
 };
 
 
-/* =========================================================
+/* ============================================================
    КЕЙСЫ
-   ========================================================= */
+   ============================================================ */
 
 const CASES = [
+
     {
         id: "uhilyant",
+
         name: "UHILYANT",
-        description: "Персонажи",
-        color: "blue",
+
+        description: "Уникальные персонажи",
+
         image: "assets/cases/uhilyant.png",
 
-        cooldown: 5 * 60 * 60 * 1000,
+        color: "blue",
+
+        cooldown:
+            5 * 60 * 60 * 1000,
 
         xp: 100
     },
 
+
     {
         id: "kitaen",
+
         name: "KITAEN",
-        description: "Одежда",
-        color: "purple",
+
+        description: "Уникальная одежда",
+
         image: "assets/cases/kitaen.png",
 
-        cooldown: 12 * 60 * 60 * 1000,
+        color: "purple",
+
+        cooldown:
+            12 * 60 * 60 * 1000,
 
         xp: 150
     },
 
+
     {
         id: "chak",
+
         name: "CHAK",
+
         description: "Оружие и экипировка",
-        color: "red",
+
         image: "assets/cases/chak.png",
 
-        cooldown: 24 * 60 * 60 * 1000,
+        color: "red",
+
+        cooldown:
+            24 * 60 * 60 * 1000,
 
         xp: 200
+    },
+
+
+    /* ========================================================
+       НОВЫЙ КЕЙС ВИННИТСА
+       ======================================================== */
+
+    {
+        id: "vinnitsa",
+
+        name: "VINNITSA",
+
+        description: "Только Dota 2",
+
+        image: "assets/cases/vinnitsa.png",
+
+        color: "dota",
+
+        cooldown:
+            24 * 60 * 60 * 1000,
+
+        xp: 250
     }
+
 ];
 
 
-/* =========================================================
+/* ============================================================
    ПРЕДМЕТЫ
-   =========================================================
+   ============================================================
 
-   ВАЖНО:
+   price = цена предмета В CHAK338
 
-   image:
-   сюда указываешь свою картинку.
+   chance = шанс выпадения
 
-   Например:
+   caseId = из какого кейса выпадает
 
-   image: "assets/items/my_character.png"
+   ============================================================ */
 
-   price:
-   цена предмета.
-
-   caseId:
-   кейс, из которого он выпадает.
-
-   chance:
-   шанс выпадения.
-
-   ========================================================= */
 
 const ITEMS = [
 
-    /* =====================================================
-       UHILYANT — ПЕРСОНАЖИ
-       ===================================================== */
+    /* ========================================================
+       UHILYANT
+       ПЕРСОНАЖИ
+       ======================================================== */
 
     {
         id: "rookie",
+
         name: "Rookie",
+
         image: "assets/items/rookie.png",
+
         rarity: "common",
+
         price: 10,
+
         type: "character",
+
         caseId: "uhilyant",
+
         chance: 55
     },
 
-    {
-        id: "masky",
-        name: "Masky",
-        image: "assets/items/masky.png",
-        rarity: "common",
-        price: 10,
-        type: "character",
-        caseId: "uhilyant",
-        chance: 0
-    },
 
     {
         id: "cyber",
+
         name: "Cyber",
+
         image: "assets/items/cyber.png",
+
         rarity: "uncommon",
+
         price: 25,
+
         type: "character",
+
         caseId: "uhilyant",
+
         chance: 25
     },
+
 
     {
         id: "shadow",
+
         name: "Shadow",
+
         image: "assets/items/shadow.png",
+
         rarity: "rare",
+
         price: 75,
+
         type: "character",
+
         caseId: "uhilyant",
+
         chance: 12
     },
+
 
     {
         id: "glitch",
+
         name: "Glitch",
+
         image: "assets/items/glitch.png",
+
         rarity: "epic",
+
         price: 200,
+
         type: "character",
+
         caseId: "uhilyant",
+
         chance: 6
     },
+
 
     {
         id: "uhilyant_character",
+
         name: "UHILYANT",
-        image: "assets/items/uhilyant_character.png",
+
+        image:
+            "assets/items/uhilyant_character.png",
+
         rarity: "legendary",
+
         price: 750,
+
         type: "character",
+
         caseId: "uhilyant",
+
         chance: 1.8
     },
 
+
     {
-        id: "338_outfit",
+        id: "338_character",
+
         name: "338",
-        image: "assets/items/338.png",
+
+        image:
+            "assets/items/338_character.png",
+
         rarity: "mythic",
+
         price: 2500,
+
         type: "character",
+
         caseId: "uhilyant",
+
         chance: 0.2
     },
 
 
-    /* =====================================================
-       KITAEN — ОДЕЖДА
-       ===================================================== */
+    /* ========================================================
+       KITAEN
+       ОДЕЖДА
+       ======================================================== */
 
     {
         id: "basic_tshirt",
+
         name: "Basic T-Shirt",
-        image: "assets/items/basic_tshirt.png",
+
+        image:
+            "assets/items/basic_tshirt.png",
+
         rarity: "common",
+
         price: 10,
+
         type: "clothing",
+
         caseId: "kitaen",
+
         chance: 55
     },
+
 
     {
         id: "chak_hoodie",
+
         name: "CHAK Hoodie",
-        image: "assets/items/chak_hoodie.png",
+
+        image:
+            "assets/items/chak_hoodie.png",
+
         rarity: "uncommon",
+
         price: 25,
+
         type: "clothing",
+
         caseId: "kitaen",
+
         chance: 25
     },
+
 
     {
         id: "neon_jacket",
+
         name: "Neon Jacket",
-        image: "assets/items/neon_jacket.png",
+
+        image:
+            "assets/items/neon_jacket.png",
+
         rarity: "rare",
+
         price: 75,
+
         type: "clothing",
+
         caseId: "kitaen",
+
         chance: 12
     },
 
+
     {
-        id: "dark_mask",
+        id: "dark_outfit",
+
         name: "Dark Outfit",
-        image: "assets/items/dark_outfit.png",
+
+        image:
+            "assets/items/dark_outfit.png",
+
         rarity: "epic",
+
         price: 200,
+
         type: "clothing",
+
         caseId: "kitaen",
+
         chance: 6
     },
 
+
     {
-        id: "golden_crown",
+        id: "golden_outfit",
+
         name: "Golden Outfit",
-        image: "assets/items/golden_outfit.png",
+
+        image:
+            "assets/items/golden_outfit.png",
+
         rarity: "legendary",
+
         price: 750,
+
         type: "clothing",
+
         caseId: "kitaen",
+
         chance: 1.8
     },
 
+
     {
-        id: "mythic_outfit",
+        id: "338_outfit",
+
         name: "338 Outfit",
-        image: "assets/items/338_outfit.png",
+
+        image:
+            "assets/items/338_outfit.png",
+
         rarity: "mythic",
+
         price: 2500,
+
         type: "clothing",
+
         caseId: "kitaen",
+
         chance: 0.2
     },
 
 
-    /* =====================================================
-       CHAK — ОРУЖИЕ
-       ===================================================== */
+    /* ========================================================
+       CHAK
+       ОРУЖИЕ
+       ======================================================== */
 
     {
         id: "wooden_sword",
+
         name: "Wooden Sword",
-        image: "assets/items/wooden_sword.png",
+
+        image:
+            "assets/items/wooden_sword.png",
+
         rarity: "common",
+
         price: 10,
+
         type: "weapon",
+
         caseId: "chak",
+
         chance: 55
     },
 
+
     {
         id: "iron_shield",
+
         name: "Iron Shield",
-        image: "assets/items/iron_shield.png",
+
+        image:
+            "assets/items/iron_shield.png",
+
         rarity: "uncommon",
+
         price: 25,
+
         type: "shield",
+
         caseId: "chak",
+
         chance: 25
     },
 
+
     {
         id: "neon_blade",
+
         name: "Neon Blade",
-        image: "assets/items/neon_blade.png",
+
+        image:
+            "assets/items/neon_blade.png",
+
         rarity: "rare",
+
         price: 75,
+
         type: "weapon",
+
         caseId: "chak",
+
         chance: 12
     },
 
+
     {
         id: "shadow_katana",
+
         name: "Shadow Katana",
-        image: "assets/items/shadow_katana.png",
+
+        image:
+            "assets/items/shadow_katana.png",
+
         rarity: "epic",
+
         price: 200,
+
         type: "weapon",
+
         caseId: "chak",
+
         chance: 6
     },
 
+
     {
         id: "chak_hammer",
+
         name: "CHAK Hammer",
-        image: "assets/items/chak_hammer.png",
+
+        image:
+            "assets/items/chak_hammer.png",
+
         rarity: "legendary",
+
         price: 750,
+
         type: "weapon",
+
         caseId: "chak",
+
         chance: 1.8
     },
 
+
     {
         id: "338_destroyer",
+
         name: "338 Destroyer",
-        image: "assets/items/338_destroyer.png",
+
+        image:
+            "assets/items/338_destroyer.png",
+
         rarity: "mythic",
+
         price: 2500,
+
         type: "weapon",
+
         caseId: "chak",
+
+        chance: 0.2
+    },
+
+
+    /* ========================================================
+       VINNITSA
+       DOTA 2
+       ========================================================
+
+       Здесь ТОЛЬКО DOTA.
+
+       Цены уже наши CHAK338.
+
+       Tango       = 10
+       Branch      = 25
+       Blink       = 75
+       Black King  = 200
+       Aghanim     = 750
+       Divine Rapier=2500
+
+       ======================================================== */
+
+
+    {
+        id: "dota_tango",
+
+        name: "Tango",
+
+        image:
+            "assets/items/dota/tango.png",
+
+        rarity: "common",
+
+        price: 10,
+
+        type: "dota",
+
+        caseId: "vinnitsa",
+
+        chance: 55
+    },
+
+
+    {
+        id: "dota_branches",
+
+        name: "Iron Branch",
+
+        image:
+            "assets/items/dota/branches.png",
+
+        rarity: "uncommon",
+
+        price: 25,
+
+        type: "dota",
+
+        caseId: "vinnitsa",
+
+        chance: 25
+    },
+
+
+    {
+        id: "dota_blink",
+
+        name: "Blink Dagger",
+
+        image:
+            "assets/items/dota/blink.png",
+
+        rarity: "rare",
+
+        price: 75,
+
+        type: "dota",
+
+        caseId: "vinnitsa",
+
+        chance: 12
+    },
+
+
+    {
+        id: "dota_bkb",
+
+        name: "Black King Bar",
+
+        image:
+            "assets/items/dota/bkb.png",
+
+        rarity: "epic",
+
+        price: 200,
+
+        type: "dota",
+
+        caseId: "vinnitsa",
+
+        chance: 6
+    },
+
+
+    {
+        id: "dota_aghanim",
+
+        name: "Aghanim's Scepter",
+
+        image:
+            "assets/items/dota/aghanim.png",
+
+        rarity: "legendary",
+
+        price: 750,
+
+        type: "dota",
+
+        caseId: "vinnitsa",
+
+        chance: 1.8
+    },
+
+
+    {
+        id: "dota_rapier",
+
+        name: "Divine Rapier",
+
+        image:
+            "assets/items/dota/rapier.png",
+
+        rarity: "mythic",
+
+        price: 2500,
+
+        type: "dota",
+
+        caseId: "vinnitsa",
+
         chance: 0.2
     }
+
 ];
 
 
-/* =========================================================
-   ФУНКЦИИ
-   ========================================================= */
+/* ============================================================
+   HELPER FUNCTIONS
+   ============================================================ */
+
 
 function getRarity(rarity) {
-    return RARITIES[rarity] || RARITIES.common;
+
+    return (
+        RARITIES[rarity] ||
+        RARITIES.common
+    );
+
 }
 
 
 function getCase(caseId) {
-    return CASES.find(item => item.id === caseId);
+
+    return CASES.find(
+        item => item.id === caseId
+    );
+
 }
 
 
 function getItem(itemId) {
-    return ITEMS.find(item => item.id === itemId);
+
+    return ITEMS.find(
+        item => item.id === itemId
+    );
+
 }
 
 
 function getCaseItems(caseId) {
-    return ITEMS.filter(item => item.caseId === caseId);
+
+    return ITEMS.filter(
+        item => item.caseId === caseId
+    );
+
 }
 
 
 function formatPrice(price) {
-    return Number(price).toLocaleString("ru-RU");
+
+    return Number(price)
+        .toLocaleString("ru-RU");
+
 }
 
 
-function createInventoryItem(item) {
-    return {
-        uid:
-            Date.now().toString(36) +
-            Math.random().toString(36).substring(2, 10),
-
-        itemId: item.id,
-
-        name: item.name,
-
-        image: item.image,
-
-        rarity: item.rarity,
-
-        rarityName: getRarity(item.rarity).name,
-
-        price: item.price,
-
-        type: item.type,
-
-        caseId: item.caseId,
-
-        date: new Date().toISOString()
-    };
-}
-
-
-/* =========================================================
+/* ============================================================
    INVENTORY
-   ========================================================= */
+   ============================================================ */
+
 
 function getInventory() {
+
     try {
-        const data = localStorage.getItem("chak338_inventory");
+
+        const data =
+            localStorage.getItem(
+                "chak338_inventory"
+            );
 
         if (!data) {
             return [];
         }
 
-        const inventory = JSON.parse(data);
+        const parsed =
+            JSON.parse(data);
 
-        if (!Array.isArray(inventory)) {
-            return [];
-        }
+        return Array.isArray(parsed)
+            ? parsed
+            : [];
 
-        return inventory;
-
-    } catch (error) {
-        console.error("Inventory error:", error);
+    } catch {
 
         return [];
+
     }
+
 }
 
 
 function saveInventory(inventory) {
+
     localStorage.setItem(
         "chak338_inventory",
         JSON.stringify(inventory)
     );
+
 }
 
 
 function addInventoryItem(item) {
-    const inventory = getInventory();
 
-    inventory.push(createInventoryItem(item));
+    const inventory =
+        getInventory();
 
-    saveInventory(inventory);
 
-    return inventory;
+    inventory.push({
+
+        uid:
+            Date.now().toString(36) +
+            Math.random()
+                .toString(36)
+                .substring(2,10),
+
+        itemId:
+            item.id,
+
+        name:
+            item.name,
+
+        image:
+            item.image,
+
+        rarity:
+            item.rarity,
+
+        rarityName:
+            getRarity(item.rarity).name,
+
+        price:
+            item.price,
+
+        type:
+            item.type,
+
+        caseId:
+            item.caseId,
+
+        date:
+            new Date().toISOString()
+
+    });
+
+
+    saveInventory(
+        inventory
+    );
+
 }
 
 
 function removeInventoryItems(uids) {
-    const inventory = getInventory();
 
-    const result = inventory.filter(
-        item => !uids.includes(item.uid)
+    const inventory =
+        getInventory();
+
+
+    const result =
+        inventory.filter(
+            item =>
+                !uids.includes(
+                    item.uid
+                )
+        );
+
+
+    saveInventory(
+        result
     );
 
-    saveInventory(result);
-
-    return result;
 }
 
 
-/* =========================================================
-   XP
-   ========================================================= */
-
 function getXP() {
-    return Number(localStorage.getItem("chak338_xp") || 0);
+
+    return Number(
+        localStorage.getItem(
+            "chak338_xp"
+        ) || 0
+    );
+
 }
 
 
 function addXP(amount) {
-    const current = getXP();
 
-    const newXP = current + amount;
+    const xp =
+        getXP() + amount;
+
 
     localStorage.setItem(
         "chak338_xp",
-        String(newXP)
+        String(xp)
     );
 
-    return newXP;
+
+    return xp;
+
 }
 
 
-/* =========================================================
-   КУЛДАУНЫ
-   ========================================================= */
+/* ============================================================
+   COOLDOWNS
+   ============================================================ */
+
 
 function getCooldownKey(caseId) {
-    return "chak338_case_" + caseId;
-}
 
-
-function getCaseLastOpen(caseId) {
-    return Number(
-        localStorage.getItem(
-            getCooldownKey(caseId)
-        ) || 0
+    return (
+        "chak338_cooldown_" +
+        caseId
     );
+
 }
 
 
-function getCaseRemaining(caseId) {
+function getRemaining(caseId) {
 
-    const caseData = getCase(caseId);
+    const caseData =
+        getCase(caseId);
+
 
     if (!caseData) {
         return 0;
     }
 
-    const lastOpen = getCaseLastOpen(caseId);
 
-    const finish =
-        lastOpen +
-        caseData.cooldown;
+    const last =
+        Number(
+            localStorage.getItem(
+                getCooldownKey(caseId)
+            ) || 0
+        );
+
 
     return Math.max(
         0,
-        finish - Date.now()
+        last +
+        caseData.cooldown -
+        Date.now()
     );
+
 }
 
 
 function canOpenCase(caseId) {
-    return getCaseRemaining(caseId) <= 0;
+
+    return (
+        getRemaining(caseId) <= 0
+    );
+
 }
 
 
 function setCaseOpened(caseId) {
 
     localStorage.setItem(
+
         getCooldownKey(caseId),
+
         String(Date.now())
+
     );
+
 }
 
 
-/* =========================================================
-   ВЫБОР ПРЕДМЕТА
-   ========================================================= */
+/* ============================================================
+   РАНДОМНЫЙ ПРЕДМЕТ
+   ============================================================ */
+
 
 function randomCaseItem(caseId) {
 
-    const items = getCaseItems(caseId);
+    const items =
+        getCaseItems(caseId);
 
-    if (!items.length) {
-        return null;
-    }
 
-    /*
-       Используем реальные веса.
+    const total =
+        items.reduce(
 
-       chance 55
-       chance 25
-       chance 12
-       chance 6
-       chance 1.8
-       chance 0.2
-    */
+            (sum, item) =>
+                sum +
+                Number(
+                    item.chance || 0
+                ),
 
-    const total = items.reduce(
-        (sum, item) =>
-            sum + Number(item.chance || 0),
-        0
-    );
+            0
 
-    let random = Math.random() * total;
+        );
+
+
+    let random =
+        Math.random() *
+        total;
+
 
     for (const item of items) {
 
-        random -= Number(item.chance || 0);
+        random -=
+            Number(
+                item.chance || 0
+            );
+
 
         if (random <= 0) {
+
             return item;
+
         }
+
     }
 
-    return items[items.length - 1];
+
+    return items[
+        items.length - 1
+    ];
+
 }
