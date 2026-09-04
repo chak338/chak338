@@ -3,2741 +3,3635 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>CHAK338 — Gaming Hub</title>
-<meta name="description" content="CHAK338 Gaming Hub — кейсы, персонажи, одежда, оружие, розыгрыши, новости и мерч.">
+
+<meta
+    name="description"
+    content="CHAK338 Gaming Hub — кейсы, персонажи, одежда, оружие, инвентарь, розыгрыши и мерч."
+>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
 <script>
 tailwind.config = {
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Inter','ui-sans-serif','system-ui']
-      },
-      boxShadow: {
-        neon: '0 0 45px rgba(168,85,247,.28)',
-        redneon: '0 0 45px rgba(239,68,68,.28)'
-      }
+    theme: {
+        extend: {
+            fontFamily: {
+                sans: ['Inter', 'ui-sans-serif', 'system-ui']
+            }
+        }
     }
-  }
 }
 </script>
 
 <style>
-html{
-  scroll-behavior:smooth
+
+html {
+    scroll-behavior: smooth;
 }
 
-body{
-  background:#07070b;
-  color:#f8fafc
+body {
+    margin: 0;
+    background: #06070b;
+    color: #fff;
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
-body:before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.18;
-  background-image:
-    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
-  background-size:36px 36px
+body:before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .15;
+
+    background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+
+    background-size: 36px 36px;
+
+    z-index: -1;
 }
 
-.glass{
-  background:rgba(12,12,18,.78);
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px)
+* {
+    box-sizing: border-box;
 }
 
-.case-card{
-  transition:.3s transform,.3s box-shadow
+button {
+    font-family: inherit;
 }
 
-.case-card:hover{
-  transform:translateY(-8px)
+.glass {
+    background: rgba(8,9,14,.82);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 }
 
-.case-art{
-  position:relative;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 50% 35%,rgba(168,85,247,.35),transparent 38%),
-    linear-gradient(145deg,#15111f,#09090d 65%)
-}
-
-.case-art:after{
-  content:"";
-  position:absolute;
-  width:240px;
-  height:240px;
-  border-radius:50%;
-  background:rgba(168,85,247,.2);
-  filter:blur(55px);
-  top:10%;
-  left:50%;
-  transform:translateX(-50%)
-}
-
-.case-box{
-  position:relative;
-  z-index:2;
-  width:210px;
-  height:145px;
-  border-radius:24px;
-  transform:perspective(700px) rotateX(8deg) rotateY(-8deg);
-  background:linear-gradient(145deg,#2a173d,#100b19);
-  border:1px solid rgba(255,255,255,.15);
-  box-shadow:
-    0 28px 70px rgba(0,0,0,.55),
-    inset 0 0 35px rgba(168,85,247,.22)
-}
-
-.case-box:before{
-  content:"";
-  position:absolute;
-  inset:12px;
-  border-radius:17px;
-  border:1px solid rgba(216,180,254,.25)
-}
-
-.case-logo{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:1000;
-  font-size:25px;
-  letter-spacing:.08em;
-  color:#fff;
-  text-shadow:0 0 20px #a855f7
-}
-
-.rarity-common{border-color:#64748b}
-.rarity-uncommon{border-color:#22c55e}
-.rarity-rare{border-color:#38bdf8}
-.rarity-epic{border-color:#a855f7}
-.rarity-legendary{border-color:#f59e0b}
-.rarity-mythic{border-color:#ef4444}
-
-.reel{
-  display:flex;
-  gap:12px;
-  will-change:transform
-}
-
-.reel-item{
-  position:relative;
-  flex:0 0 118px;
-  height:145px;
-  border-radius:18px;
-  border:1px solid rgba(255,255,255,.1);
-  background:#111117;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  overflow:hidden
-}
-
-.reel-item:before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(
-      120deg,
-      transparent 35%,
-      rgba(255,255,255,.10) 50%,
-      transparent 65%
+.gradient-text {
+    background: linear-gradient(
+        90deg,
+        #22d3ee,
+        #8b5cf6,
+        #ef4444
     );
-  transform:translateX(-120%);
-  animation:reelShine 2.8s linear infinite
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
-.reel-item > *{
-  position:relative;
-  z-index:1
+.case-card {
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease,
+        border-color .3s ease;
 }
 
-@keyframes reelShine{
-  to{
-    transform:translateX(120%)
-  }
+.case-card:hover {
+    transform: translateY(-8px);
 }
 
-.drop-pop{
-  animation:dropPop .55s cubic-bezier(.2,.9,.25,1.3)
+.case-art {
+    position: relative;
+    overflow: hidden;
 }
 
-@keyframes dropPop{
-  0%{
-    transform:scale(.65) rotate(-6deg);
-    opacity:0
-  }
-  70%{
-    transform:scale(1.08) rotate(2deg)
-  }
-  100%{
-    transform:scale(1);
-    opacity:1
-  }
+.case-box {
+    position: relative;
+    z-index: 2;
+
+    width: 220px;
+    height: 145px;
+
+    border-radius: 24px;
+
+    transform:
+        perspective(700px)
+        rotateX(8deg)
+        rotateY(-8deg);
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    transition:
+        transform .4s ease,
+        box-shadow .4s ease;
 }
 
-.reel-window{
-  overflow:hidden;
-  position:relative
+.case-card:hover .case-box {
+    transform:
+        perspective(700px)
+        rotateX(3deg)
+        rotateY(-3deg)
+        translateY(-5px)
+        scale(1.03);
 }
 
-.reel-window:before{
-  content:"";
-  position:absolute;
-  z-index:4;
-  left:50%;
-  top:0;
-  bottom:0;
-  width:3px;
-  transform:translateX(-50%);
-  background:#fff;
-  box-shadow:0 0 18px #fff
+.case-box:before {
+    content: "";
+
+    position: absolute;
+    inset: 12px;
+
+    border-radius: 17px;
+
+    border: 1px solid rgba(255,255,255,.18);
 }
 
-.reel-window:after{
-  content:"";
-  position:absolute;
-  z-index:3;
-  inset:0;
-  background:
-    linear-gradient(
-      90deg,
-      #0a0a0f,
-      transparent 12%,
-      transparent 88%,
-      #0a0a0f
-    )
+.case-logo {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+    font-weight: 1000;
+
+    letter-spacing: .1em;
+
+    color: white;
 }
 
-.modal-bg{
-  background:rgba(0,0,0,.78);
-  backdrop-filter:blur(9px)
+.rarity-common {
+    border-color: #64748b !important;
 }
 
-::-webkit-scrollbar{
-  width:8px
+.rarity-uncommon {
+    border-color: #22c55e !important;
 }
 
-::-webkit-scrollbar-thumb{
-  background:#27272a;
-  border-radius:20px
+.rarity-rare {
+    border-color: #38bdf8 !important;
 }
+
+.rarity-epic {
+    border-color: #a855f7 !important;
+}
+
+.rarity-legendary {
+    border-color: #f59e0b !important;
+}
+
+.rarity-mythic {
+    border-color: #ef4444 !important;
+}
+
+.rarity-text-common {
+    color: #94a3b8;
+}
+
+.rarity-text-uncommon {
+    color: #4ade80;
+}
+
+.rarity-text-rare {
+    color: #38bdf8;
+}
+
+.rarity-text-epic {
+    color: #c084fc;
+}
+
+.rarity-text-legendary {
+    color: #fbbf24;
+}
+
+.rarity-text-mythic {
+    color: #f87171;
+}
+
+.reel-window {
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 22px;
+
+    border: 1px solid rgba(255,255,255,.1);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.025),
+            rgba(255,255,255,.01)
+        );
+}
+
+.reel-window:before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    left: 50%;
+
+    width: 3px;
+
+    transform: translateX(-50%);
+
+    background: white;
+
+    box-shadow:
+        0 0 18px rgba(255,255,255,.9);
+
+    z-index: 20;
+
+    pointer-events: none;
+}
+
+.reel-window:after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.8),
+            transparent 18%,
+            transparent 82%,
+            rgba(0,0,0,.8)
+        );
+
+    z-index: 10;
+}
+
+.reel {
+    display: flex;
+
+    gap: 10px;
+
+    width: max-content;
+
+    transform: translateX(0);
+}
+
+.reel-item {
+    width: 120px;
+    min-width: 120px;
+    height: 155px;
+
+    border-radius: 18px;
+
+    border: 2px solid;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.015)
+        );
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 10px;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.25);
+
+    transition: transform .2s ease;
+}
+
+.reel-item:hover {
+    transform: translateY(-3px);
+}
+
+.drop-result {
+    animation: dropIn .55s ease forwards;
+}
+
+@keyframes dropIn {
+
+    0% {
+        opacity: 0;
+        transform: scale(.65) translateY(20px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+.drop-icon {
+    animation:
+        dropFloat 2.2s ease-in-out infinite,
+        dropGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes dropFloat {
+
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-9px);
+    }
+
+}
+
+@keyframes dropGlow {
+
+    from {
+        filter: drop-shadow(0 0 5px rgba(255,255,255,.2));
+    }
+
+    to {
+        filter: drop-shadow(0 0 25px rgba(255,255,255,.8));
+    }
+
+}
+
+.modal-bg {
+    background: rgba(0,0,0,.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.inventory-card {
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.inventory-card:hover {
+    transform: translateY(-4px);
+}
+
+.inventory-icon {
+    font-size: 1.5rem !important;
+    line-height: 1;
+}
+
+.stat-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.015)
+        );
+}
+
+.page-hidden {
+    display: none !important;
+}
+
+.toast {
+    animation: toastIn .3s ease;
+}
+
+@keyframes toastIn {
+
+    from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+
+}
+
+.shake {
+    animation: shake .35s ease;
+}
+
+@keyframes shake {
+
+    0%,100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-7px);
+    }
+
+    75% {
+        transform: translateX(7px);
+    }
+
+}
+
 </style>
 </head>
 
-<body class="antialiased">
+
+<body>
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
 
 <header class="fixed top-0 left-0 right-0 z-50">
 
-  <div class="glass border-b border-white/10">
+    <div class="glass border-b border-white/10">
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      <div class="h-20 flex items-center justify-between">
+            <div class="h-20 flex items-center justify-between">
 
-        <a href="#" class="flex items-center gap-3">
+                <!-- LOGO -->
 
-          <div class="w-11 h-11 rounded-2xl
-                      bg-gradient-to-br from-fuchsia-500 to-violet-700
-                      flex items-center justify-center
-                      font-black text-xl shadow-neon">
-            C
-          </div>
+                <a
+                    href="#home"
+                    onclick="showPage('home')"
+                    class="flex items-center gap-3"
+                >
 
-          <div>
-            <div class="font-black text-xl tracking-tight">
-              CHAK338
+                    <div
+                        class="w-11 h-11 rounded-2xl bg-gradient-to-br from-cyan-400 via-violet-500 to-red-500 flex items-center justify-center font-black text-black"
+                    >
+                        338
+                    </div>
+
+                    <div>
+
+                        <div class="font-black text-xl tracking-tight">
+                            CHAK338
+                        </div>
+
+                        <div class="text-[10px] text-zinc-500 font-bold tracking-[.25em]">
+                            GAMING HUB
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <!-- NAV -->
+
+                <nav class="hidden md:flex items-center gap-7 text-sm font-bold">
+
+                    <a
+                        href="#cases"
+                        onclick="showPage('home')"
+                        class="text-zinc-300 hover:text-white transition"
+                    >
+                        Кейсы
+                    </a>
+
+                    <a
+                        href="#news"
+                        onclick="showPage('home')"
+                        class="text-zinc-300 hover:text-white transition"
+                    >
+                        Новости
+                    </a>
+
+                    <a
+                        href="#giveaways"
+                        onclick="showPage('home')"
+                        class="text-zinc-300 hover:text-white transition"
+                    >
+                        Розыгрыши
+                    </a>
+
+                    <a
+                        href="#merch"
+                        onclick="showPage('home')"
+                        class="text-zinc-300 hover:text-white transition"
+                    >
+                        Мерч
+                    </a>
+
+                    <button
+                        onclick="showPage('inventory')"
+                        class="text-cyan-300 hover:text-cyan-200 transition"
+                    >
+                        Инвентарь
+                    </button>
+
+                </nav>
+
+
+                <!-- PLAYER -->
+
+                <div class="flex items-center gap-3">
+
+                    <button
+                        onclick="showPage('inventory')"
+                        class="hidden sm:flex items-center gap-3 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
+                    >
+
+                        <div class="text-right">
+
+                            <div class="text-[10px] text-zinc-500 font-bold">
+                                LEVEL
+                            </div>
+
+                            <div
+                                id="headerLevel"
+                                class="font-black"
+                            >
+                                1
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="w-9 h-9 rounded-xl bg-violet-500/20 text-violet-300 flex items-center justify-center font-black"
+                        >
+                            ★
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        onclick="openAuth()"
+                        class="px-4 py-2.5 rounded-xl bg-white text-black font-black text-sm hover:bg-zinc-200 transition"
+                    >
+                        ВОЙТИ
+                    </button>
+
+                </div>
+
             </div>
-
-            <div class="text-[10px] uppercase tracking-[.22em] text-zinc-500">
-              Gaming Hub
-            </div>
-          </div>
-
-        </a>
-
-        <nav class="hidden lg:flex items-center gap-7 text-sm font-bold text-zinc-400">
-
-          <a href="#cases" class="hover:text-white">
-            Кейсы
-          </a>
-
-          <a href="#news" class="hover:text-white">
-            Новости
-          </a>
-
-          <a href="#giveaways" class="hover:text-white">
-            Розыгрыши
-          </a>
-
-          <a href="#shop" class="hover:text-white">
-            Мерч
-          </a>
-
-          <a href="inventory.html"
-             class="px-3 py-2 rounded-xl
-                    bg-fuchsia-500/10
-                    border border-fuchsia-500/20
-                    text-fuchsia-300
-                    hover:bg-fuchsia-500/20">
-            Инвентарь
-          </a>
-
-        </nav>
-
-        <div class="flex items-center gap-3">
-
-          <div class="hidden sm:block text-right">
-
-            <div class="text-[10px] text-zinc-500">
-              ТВОЙ УРОВЕНЬ
-            </div>
-
-            <div class="font-black">
-              LVL <span id="level">1</span>
-              ·
-              <span id="xp">0</span> XP
-            </div>
-
-          </div>
-
-          <a href="inventory.html"
-             class="px-4 py-3 rounded-xl
-                    bg-fuchsia-500/10
-                    border border-fuchsia-500/20
-                    text-fuchsia-300
-                    text-sm font-black
-                    hover:bg-fuchsia-500/20">
-            ИНВЕНТАРЬ
-          </a>
-
-          <button onclick="openAuth()"
-                  class="px-5 py-3 rounded-xl
-                         bg-white text-black
-                         text-sm font-black
-                         hover:bg-zinc-200">
-            ВОЙТИ
-          </button>
 
         </div>
 
-      </div>
-
     </div>
-
-  </div>
 
 </header>
 
 
-<main class="pt-20">
+<!-- =========================================================
+     MAIN HOME PAGE
+========================================================= -->
 
-<!-- HERO -->
-
-<section class="relative overflow-hidden">
-
-  <div class="absolute -top-40 left-1/2
-              -translate-x-1/2
-              w-[700px] h-[500px]
-              bg-fuchsia-600/15
-              blur-[120px]
-              rounded-full">
-  </div>
-
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
-
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
-
-      <div>
-
-        <div class="inline-flex items-center gap-2
-                    px-4 py-2 rounded-full
-                    bg-white/5 border border-white/10
-                    text-xs font-black uppercase
-                    tracking-widest text-fuchsia-300">
-
-          <span class="w-2 h-2 bg-emerald-400
-                       rounded-full animate-pulse">
-          </span>
-
-          CHAK338 ONLINE
-
-        </div>
-
-        <h1 class="mt-7 text-5xl sm:text-7xl
-                   font-black leading-[.9]
-                   tracking-tight">
-
-          ИГРАЙ.<br>
-          ОТКРЫВАЙ.<br>
-
-          <span class="text-fuchsia-400">
-            ПРОКАЧИВАЙСЯ.
-          </span>
-
-        </h1>
-
-        <p class="mt-7 max-w-xl
-                  text-zinc-400 text-lg
-                  leading-relaxed">
-
-          Кейсы, уникальные персонажи,
-          экипировка, розыгрыши и мерч
-          от CHAK338.
-
-          Собери свою коллекцию и докажи,
-          что ты настоящий легенд.
-
-        </p>
-
-        <div class="mt-8 flex flex-wrap gap-3">
-
-          <a href="#cases"
-             class="px-7 py-4 rounded-2xl
-                    bg-fuchsia-500
-                    hover:bg-fuchsia-400
-                    text-white font-black
-                    shadow-neon">
-            ОТКРЫТЬ КЕЙС
-          </a>
-
-          <a href="#news"
-             class="px-7 py-4 rounded-2xl
-                    bg-white/5
-                    border border-white/10
-                    font-black
-                    hover:bg-white/10">
-            ЧТО НОВОГО?
-          </a>
-
-        </div>
-
-        <div class="mt-10 grid grid-cols-3
-                    max-w-lg gap-5">
-
-          <div>
-            <div class="text-2xl font-black">
-              3
-            </div>
-            <div class="text-xs text-zinc-500 mt-1">
-              кейса
-            </div>
-          </div>
-
-          <div>
-            <div class="text-2xl font-black">
-              30+
-            </div>
-            <div class="text-xs text-zinc-500 mt-1">
-              предметов
-            </div>
-          </div>
-
-          <div>
-            <div class="text-2xl font-black">
-              100
-            </div>
-            <div class="text-xs text-zinc-500 mt-1">
-              уровней
-            </div>
-          </div>
-
-        </div>
-
-      </div>
+<main id="homePage" class="pt-20">
 
 
-      <div class="relative">
+<!-- =========================================================
+     HERO
+========================================================= -->
 
-        <div class="absolute inset-8
-                    rounded-[40px]
-                    bg-fuchsia-500/10
-                    blur-3xl">
-        </div>
+<section
+    id="home"
+    class="relative overflow-hidden"
+>
 
-        <div class="relative
-                    rounded-[36px]
-                    border border-white/10
-                    bg-zinc-950/90
-                    p-6
-                    shadow-neon">
+    <div
+        class="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-violet-600/20 blur-[140px] rounded-full pointer-events-none"
+    ></div>
 
-          <div class="flex items-center justify-between mb-5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <span class="text-xs font-black
-                         uppercase tracking-widest
-                         text-zinc-500">
-              Featured Drop
-            </span>
-
-            <span class="px-3 py-1
-                         rounded-full
-                         bg-red-500/10
-                         text-red-300
-                         text-xs font-black">
-              MYTHIC 0.2%
-            </span>
-
-          </div>
-
-          <div class="case-art h-80
-                      rounded-[28px]
-                      flex items-center justify-center">
-
-            <div class="case-box">
-
-              <div class="case-logo">
-                UHILYANT
-              </div>
-
-            </div>
-
-          </div>
-
-          <div class="mt-5
-                      flex items-end
-                      justify-between">
+        <div class="grid lg:grid-cols-2 gap-12 items-center min-h-[720px] py-24">
 
             <div>
 
-              <div class="text-sm text-zinc-500">
-                CASE #001
-              </div>
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-300 text-xs font-black uppercase tracking-widest"
+                >
 
-              <div class="text-2xl font-black">
-                UHILYANT
-              </div>
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+
+                    CHAK338 ONLINE
+
+                </div>
+
+
+                <h1
+                    class="mt-7 text-5xl sm:text-6xl lg:text-8xl font-black leading-[.92] tracking-tight"
+                >
+
+                    ИГРАЙ.<br>
+
+                    <span class="gradient-text">
+                        ОТКРЫВАЙ.
+                    </span>
+
+                    <br>
+
+                    ПРОКАЧИВАЙСЯ.
+
+                </h1>
+
+
+                <p
+                    class="mt-7 max-w-xl text-lg text-zinc-400 leading-relaxed"
+                >
+                    Открывай кейсы, собирай персонажей, одежду и оружие.
+                    Собери собственную коллекцию CHAK338.
+                </p>
+
+
+                <div class="mt-9 flex flex-wrap gap-4">
+
+                    <button
+                        onclick="document.getElementById('cases').scrollIntoView()"
+                        class="px-7 py-4 rounded-2xl bg-white text-black font-black hover:bg-zinc-200 transition"
+                    >
+                        ОТКРЫТЬ КЕЙС
+                    </button>
+
+                    <button
+                        onclick="showPage('inventory')"
+                        class="px-7 py-4 rounded-2xl border border-white/10 bg-white/5 font-black hover:bg-white/10 transition"
+                    >
+                        МОЙ ИНВЕНТАРЬ
+                    </button>
+
+                </div>
+
+
+                <div class="mt-10 grid grid-cols-3 max-w-lg gap-3">
+
+                    <div class="stat-card border border-white/10 rounded-2xl p-4">
+
+                        <div class="text-2xl font-black">
+                            3
+                        </div>
+
+                        <div class="text-xs text-zinc-500 mt-1">
+                            КЕЙСА
+                        </div>
+
+                    </div>
+
+                    <div class="stat-card border border-white/10 rounded-2xl p-4">
+
+                        <div class="text-2xl font-black">
+                            18+
+                        </div>
+
+                        <div class="text-xs text-zinc-500 mt-1">
+                            ПРЕДМЕТОВ
+                        </div>
+
+                    </div>
+
+                    <div class="stat-card border border-white/10 rounded-2xl p-4">
+
+                        <div class="text-2xl font-black">
+                            ∞
+                        </div>
+
+                        <div class="text-xs text-zinc-500 mt-1">
+                            КОЛЛЕКЦИЯ
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
-            <button onclick="openCase('Uhilyant')"
-                    class="px-5 py-3 rounded-xl
-                           bg-white text-black
-                           font-black">
-              ОТКРЫТЬ
-            </button>
 
-          </div>
+            <!-- HERO CASE -->
 
-        </div>
+            <div class="relative">
 
-      </div>
+                <div
+                    class="absolute inset-0 bg-cyan-500/10 blur-[100px]"
+                ></div>
 
-    </div>
+                <div
+                    class="relative rounded-[40px] border border-cyan-400/20 bg-zinc-950/80 p-5 shadow-[0_0_100px_rgba(34,211,238,.12)]"
+                >
 
-  </div>
+                    <div
+                        class="rounded-[32px] overflow-hidden border border-white/10"
+                    >
 
-</section>
+                        <div
+                            class="h-[430px] flex items-center justify-center"
+                            style="
+                                background:
+                                radial-gradient(circle at 50% 35%,rgba(34,211,238,.35),transparent 35%),
+                                linear-gradient(145deg,#0d2730,#08090d 70%);
+                            "
+                        >
 
+                            <div
+                                class="case-box"
+                                style="
+                                    background:linear-gradient(145deg,#155e75,#07151b);
+                                    box-shadow:
+                                    0 35px 90px rgba(0,0,0,.7),
+                                    0 0 60px rgba(34,211,238,.18),
+                                    inset 0 0 40px rgba(34,211,238,.3);
+                                "
+                            >
 
-<!-- CASES -->
+                                <div
+                                    class="case-logo"
+                                    style="text-shadow:0 0 25px #22d3ee"
+                                >
+                                    UHILYANT
+                                </div>
 
-<section id="cases"
-         class="py-20
-                border-t border-white/5">
+                            </div>
 
-  <div class="max-w-7xl mx-auto
-              px-4 sm:px-6 lg:px-8">
-
-    <div class="max-w-2xl mb-10">
-
-      <div class="text-xs font-black
-                  uppercase tracking-[.25em]
-                  text-fuchsia-400">
-        THE CASES
-      </div>
-
-      <h2 class="mt-3
-                 text-4xl sm:text-5xl
-                 font-black">
-        Выбери свой дроп.
-      </h2>
-
-      <p class="mt-4 text-zinc-400">
-        Три направления коллекции.
-        Персонажи, одежда и всё,
-        что делает CHAK338 опасным.
-      </p>
-
-    </div>
+                        </div>
 
 
-    <div class="grid lg:grid-cols-3 gap-6">
+                        <div class="p-6 bg-black/30">
 
+                            <div class="flex items-center justify-between">
 
-      <!-- UHILYANT -->
+                                <div>
 
-      <article class="case-card
-                      rounded-[30px]
-                      border border-fuchsia-500/30
-                      bg-zinc-950
-                      overflow-hidden
-                      shadow-neon">
+                                    <div class="text-xs text-cyan-400 font-black tracking-[.25em]">
+                                        FEATURED CASE
+                                    </div>
 
-        <div class="case-art h-64
-                    flex items-center
-                    justify-center">
+                                    <div class="text-3xl font-black mt-1">
+                                        UHILYANT
+                                    </div>
 
-          <div class="case-box">
+                                </div>
 
-            <div class="case-logo">
-              UHILYANT
+                                <div class="text-right">
+
+                                    <div class="text-xs text-zinc-500">
+                                        XP
+                                    </div>
+
+                                    <div class="font-black text-cyan-300">
+                                        +100
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
 
-          </div>
-
         </div>
 
-        <div class="p-6">
+    </div>
 
-          <div class="text-xs font-black
-                      uppercase tracking-widest
-                      text-fuchsia-400">
-            01 · CHARACTERS
-          </div>
-
-          <h3 class="mt-2
-                     text-3xl font-black">
-            Uhilyant
-          </h3>
-
-          <p class="mt-3 text-zinc-500">
-            Только персонажи.
-            От новичка до мифического героя.
-          </p>
-
-          <div class="mt-5
-                      flex justify-between
-                      text-xs text-zinc-500">
-
-            <span>6 редкостей</span>
-            <span>12 персонажей</span>
-
-          </div>
-
-          <button onclick="openCase('Uhilyant')"
-                  class="w-full mt-6 py-4
-                         rounded-2xl
-                         bg-fuchsia-500
-                         hover:bg-fuchsia-400
-                         font-black">
-            ОТКРЫТЬ UHILYANT
-          </button>
-
-        </div>
-
-      </article>
+</section>
 
 
-      <!-- SHKAF -->
+<!-- =========================================================
+     CASES
+========================================================= -->
 
-      <article class="case-card
-                      rounded-[30px]
-                      border border-cyan-500/20
-                      bg-zinc-950
-                      overflow-hidden">
+<section
+    id="cases"
+    class="py-24 border-t border-white/5"
+>
 
-        <div class="case-art h-64
-                    flex items-center
-                    justify-center"
-             style="
-               background:
-               radial-gradient(
-                 circle at 50% 35%,
-                 rgba(34,211,238,.25),
-                 transparent 38%
-               ),
-               linear-gradient(
-                 145deg,
-                 #101b21,
-                 #09090d 65%
-               )">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          <div class="case-box"
-               style="
-                 background:
-                 linear-gradient(
-                   145deg,
-                   #12313a,
-                   #0b1014
-                 )">
+        <div class="max-w-2xl mb-12">
 
-            <div class="case-logo"
-                 style="text-shadow:0 0 20px #22d3ee">
-              SHKAF
+            <div class="text-xs font-black uppercase tracking-[.25em] text-fuchsia-400">
+                THE CASES
             </div>
 
-          </div>
+            <h2 class="mt-3 text-4xl sm:text-5xl font-black">
+                Три кейса.
+            </h2>
+
+            <p class="mt-4 text-zinc-400">
+                У каждого кейса своё направление и свой таймер.
+            </p>
 
         </div>
 
-        <div class="p-6">
 
-          <div class="text-xs font-black
-                      uppercase tracking-widest
-                      text-cyan-400">
-            02 · OUTFITS
-          </div>
+        <div class="grid lg:grid-cols-3 gap-7">
 
-          <h3 class="mt-2
-                     text-3xl font-black">
-            Shkaf
-          </h3>
 
-          <p class="mt-3 text-zinc-500">
-            Одежда, маски, очки,
-            худи и редкие образы.
-          </p>
+            <!-- UHILYANT -->
 
-          <div class="mt-5
-                      flex justify-between
-                      text-xs text-zinc-500">
+            <article
+                class="case-card rounded-[30px] border border-cyan-400/30 bg-zinc-950 overflow-hidden shadow-[0_0_50px_rgba(34,211,238,.08)]"
+            >
 
-            <span>6 редкостей</span>
-            <span>18 вещей</span>
+                <div
+                    class="case-art h-64 flex items-center justify-center"
+                    style="
+                        background:
+                        radial-gradient(circle at 50% 35%,rgba(34,211,238,.35),transparent 38%),
+                        linear-gradient(145deg,#0c2730,#09090d 65%);
+                    "
+                >
 
-          </div>
+                    <div
+                        class="case-box"
+                        style="
+                            background:linear-gradient(145deg,#164e63,#07151b);
+                            box-shadow:
+                            0 28px 70px rgba(0,0,0,.55),
+                            inset 0 0 35px rgba(34,211,238,.25);
+                        "
+                    >
 
-          <button onclick="openCase('Shkaf')"
-                  class="w-full mt-6 py-4
-                         rounded-2xl
-                         bg-cyan-400
-                         text-black
-                         font-black
-                         hover:bg-cyan-300">
-            ОТКРЫТЬ SHKAF
-          </button>
+                        <div
+                            class="case-logo"
+                            style="text-shadow:0 0 20px #22d3ee"
+                        >
+                            UHILYANT
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="p-6">
+
+                    <div class="text-xs font-black uppercase tracking-widest text-cyan-400">
+                        01 · CHARACTERS
+                    </div>
+
+                    <h3 class="mt-2 text-3xl font-black">
+                        UHILYANT
+                    </h3>
+
+                    <p class="mt-3 text-zinc-500">
+                        Самый простой кейс. Только персонажи.
+                    </p>
+
+
+                    <div class="mt-6 flex items-center justify-between">
+
+                        <div class="text-sm font-black text-cyan-300">
+                            +100 XP
+                        </div>
+
+                        <div
+                            id="cooldown-Uhilyant"
+                            class="text-xs font-black text-emerald-400"
+                        >
+                            ГОТОВ
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="caseBtn-Uhilyant"
+                        onclick="openCase('Uhilyant')"
+                        class="w-full mt-6 py-4 rounded-2xl bg-cyan-400 text-black font-black hover:bg-cyan-300 transition"
+                    >
+                        ОТКРЫТЬ UHILYANT
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- KITAEN -->
+
+            <article
+                class="case-card rounded-[30px] border border-violet-500/30 bg-zinc-950 overflow-hidden shadow-[0_0_50px_rgba(139,92,246,.1)]"
+            >
+
+                <div
+                    class="case-art h-64 flex items-center justify-center"
+                    style="
+                        background:
+                        radial-gradient(circle at 50% 35%,rgba(139,92,246,.38),transparent 38%),
+                        linear-gradient(145deg,#26133f,#09090d 65%);
+                    "
+                >
+
+                    <div
+                        class="case-box"
+                        style="
+                            background:linear-gradient(145deg,#4c1d95,#10071c);
+                            box-shadow:
+                            0 28px 70px rgba(0,0,0,.55),
+                            inset 0 0 35px rgba(139,92,246,.28);
+                        "
+                    >
+
+                        <div
+                            class="case-logo"
+                            style="text-shadow:0 0 20px #8b5cf6"
+                        >
+                            KITAEN
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="p-6">
+
+                    <div class="text-xs font-black uppercase tracking-widest text-violet-400">
+                        02 · OUTFITS
+                    </div>
+
+                    <h3 class="mt-2 text-3xl font-black">
+                        KITAEN
+                    </h3>
+
+                    <p class="mt-3 text-zinc-500">
+                        Одежда, маски, очки, худи и уникальные образы.
+                    </p>
+
+
+                    <div class="mt-6 flex items-center justify-between">
+
+                        <div class="text-sm font-black text-violet-300">
+                            +150 XP
+                        </div>
+
+                        <div
+                            id="cooldown-Kitaen"
+                            class="text-xs font-black text-emerald-400"
+                        >
+                            ГОТОВ
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="caseBtn-Kitaen"
+                        onclick="openCase('Kitaen')"
+                        class="w-full mt-6 py-4 rounded-2xl bg-violet-500 hover:bg-violet-400 font-black transition"
+                    >
+                        ОТКРЫТЬ KITAEN
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- CHAK -->
+
+            <article
+                class="case-card rounded-[30px] border border-red-500/30 bg-zinc-950 overflow-hidden shadow-[0_0_50px_rgba(239,68,68,.1)]"
+            >
+
+                <div
+                    class="case-art h-64 flex items-center justify-center"
+                    style="
+                        background:
+                        radial-gradient(circle at 50% 35%,rgba(239,68,68,.38),transparent 38%),
+                        linear-gradient(145deg,#341010,#09090d 65%);
+                    "
+                >
+
+                    <div
+                        class="case-box"
+                        style="
+                            background:linear-gradient(145deg,#7f1d1d,#180707);
+                            box-shadow:
+                            0 28px 70px rgba(0,0,0,.55),
+                            inset 0 0 35px rgba(239,68,68,.28);
+                        "
+                    >
+
+                        <div
+                            class="case-logo"
+                            style="text-shadow:0 0 20px #ef4444"
+                        >
+                            CHAK
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="p-6">
+
+                    <div class="text-xs font-black uppercase tracking-widest text-red-400">
+                        03 · DAMAGE
+                    </div>
+
+                    <h3 class="mt-2 text-3xl font-black">
+                        CHAK
+                    </h3>
+
+                    <p class="mt-3 text-zinc-500">
+                        Мечи, щиты, молоты и оружие для DAMAGE.
+                    </p>
+
+
+                    <div class="mt-6 flex items-center justify-between">
+
+                        <div class="text-sm font-black text-red-300">
+                            +200 XP
+                        </div>
+
+                        <div
+                            id="cooldown-Chak"
+                            class="text-xs font-black text-emerald-400"
+                        >
+                            ГОТОВ
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="caseBtn-Chak"
+                        onclick="openCase('Chak')"
+                        class="w-full mt-6 py-4 rounded-2xl bg-red-500 hover:bg-red-400 font-black transition"
+                    >
+                        ОТКРЫТЬ CHAK
+                    </button>
+
+                </div>
+
+            </article>
 
         </div>
 
-      </article>
+    </div>
+
+</section>
 
 
-      <!-- CHAK -->
+<!-- =========================================================
+     PLAYER LEVEL
+========================================================= -->
 
-      <article class="case-card
-                      rounded-[30px]
-                      border border-red-500/20
-                      bg-zinc-950
-                      overflow-hidden">
+<section class="py-20 border-t border-white/5">
 
-        <div class="case-art h-64
-                    flex items-center
-                    justify-center"
-             style="
-               background:
-               radial-gradient(
-                 circle at 50% 35%,
-                 rgba(239,68,68,.3),
-                 transparent 38%
-               ),
-               linear-gradient(
-                 145deg,
-                 #241010,
-                 #09090d 65%
-               )">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          <div class="case-box"
-               style="
-                 background:
-                 linear-gradient(
-                   145deg,
-                   #3a1414,
-                   #100909
-                 )">
+        <div class="rounded-[32px] border border-white/10 bg-zinc-950 p-7 sm:p-10">
 
-            <div class="case-logo"
-                 style="text-shadow:0 0 20px #ef4444">
-              CHAK
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+
+                <div>
+
+                    <div class="text-xs text-fuchsia-400 font-black tracking-[.25em]">
+                        PLAYER PROGRESS
+                    </div>
+
+                    <h2 class="mt-2 text-3xl font-black">
+                        Твой прогресс
+                    </h2>
+
+                </div>
+
+
+                <div class="flex items-center gap-5">
+
+                    <div class="text-right">
+
+                        <div class="text-xs text-zinc-500">
+                            LEVEL
+                        </div>
+
+                        <div
+                            id="level"
+                            class="text-4xl font-black"
+                        >
+                            1
+                        </div>
+
+                    </div>
+
+
+                    <div class="w-px h-12 bg-white/10"></div>
+
+
+                    <div>
+
+                        <div class="text-xs text-zinc-500">
+                            XP
+                        </div>
+
+                        <div
+                            id="xp"
+                            class="text-2xl font-black"
+                        >
+                            0
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
 
-          </div>
+
+            <div class="mt-8">
+
+                <div class="flex justify-between text-xs text-zinc-500 mb-2">
+
+                    <span>
+                        XP ДО СЛЕДУЮЩЕГО LEVEL
+                    </span>
+
+                    <span>
+                        <span id="xpCurrent">0</span> / 1000
+                    </span>
+
+                </div>
+
+
+                <div class="h-4 rounded-full bg-white/5 overflow-hidden">
+
+                    <div
+                        id="xpbar"
+                        class="h-full rounded-full bg-gradient-to-r from-cyan-400 via-violet-500 to-red-500 transition-all duration-500"
+                        style="width:0%"
+                    ></div>
+
+                </div>
+
+            </div>
 
         </div>
-
-        <div class="p-6">
-
-          <div class="text-xs font-black
-                      uppercase tracking-widest
-                      text-red-400">
-            03 · DAMAGE
-          </div>
-
-          <h3 class="mt-2
-                     text-3xl font-black">
-            Chak
-          </h3>
-
-          <p class="mt-3 text-zinc-500">
-            Мечи, щиты, молоты
-            и оружие, которое
-            повышает DAMAGE.
-          </p>
-
-          <div class="mt-5
-                      flex justify-between
-                      text-xs text-zinc-500">
-
-            <span>6 редкостей</span>
-            <span>20 предметов</span>
-
-          </div>
-
-          <button onclick="openCase('Chak')"
-                  class="w-full mt-6 py-4
-                         rounded-2xl
-                         bg-red-500
-                         hover:bg-red-400
-                         font-black">
-            ОТКРЫТЬ CHAK
-          </button>
-
-        </div>
-
-      </article>
 
     </div>
-
-  </div>
 
 </section>
 
 
-<!-- LEVEL -->
+<!-- =========================================================
+     NEWS
+========================================================= -->
 
-<section class="py-20
-                bg-white/[.02]
-                border-y border-white/5">
+<section
+    id="news"
+    class="py-24 border-t border-white/5"
+>
 
-  <div class="max-w-7xl mx-auto
-              px-4 sm:px-6 lg:px-8
-              grid lg:grid-cols-2
-              gap-12 items-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <div>
+        <div class="flex items-end justify-between gap-5 mb-10">
 
-      <div class="text-xs font-black
-                  uppercase tracking-[.25em]
-                  text-emerald-400">
-        LEVEL SYSTEM
-      </div>
+            <div>
 
-      <h2 class="mt-3
-                 text-4xl sm:text-5xl
-                 font-black">
-        Прокачивай уровень.<br>
-        Открывай награды.
-      </h2>
+                <div class="text-xs font-black tracking-[.25em] text-cyan-400">
+                    NEWS
+                </div>
 
-      <p class="mt-5
-                text-zinc-400
-                leading-relaxed">
-        За открытия кейсов и активность
-        ты получаешь XP.
-        Повышай уровень и собирай
-        эксклюзивные награды CHAK338.
-      </p>
+                <h2 class="mt-3 text-4xl font-black">
+                    Новости CHAK338
+                </h2>
 
-      <div class="mt-7 max-w-xl">
-
-        <div class="flex justify-between
-                    text-xs font-bold mb-2">
-
-          <span>
-            LVL <span id="level2">1</span>
-          </span>
-
-          <span>
-            <span id="xp2">0</span>
-            / 1000 XP
-          </span>
+            </div>
 
         </div>
 
-        <div class="h-3
-                    rounded-full
-                    bg-zinc-900
-                    overflow-hidden">
 
-          <div id="xpbar"
-               class="h-full
-                      bg-fuchsia-500
-                      rounded-full"
-               style="width:0%">
-          </div>
+        <div class="grid md:grid-cols-3 gap-6">
+
+
+            <article
+                class="rounded-3xl border border-white/10 bg-zinc-950 p-6"
+            >
+
+                <div class="text-xs text-cyan-400 font-black">
+                    НОВОЕ
+                </div>
+
+                <h3 class="mt-4 text-2xl font-black">
+                    UHILYANT уже здесь
+                </h3>
+
+                <p class="mt-3 text-zinc-500 leading-relaxed">
+                    Самый простой кейс для коллекционеров.
+                    Собирай персонажей и повышай уровень.
+                </p>
+
+            </article>
+
+
+            <article
+                class="rounded-3xl border border-white/10 bg-zinc-950 p-6"
+            >
+
+                <div class="text-xs text-violet-400 font-black">
+                    UPDATE
+                </div>
+
+                <h3 class="mt-4 text-2xl font-black">
+                    KITAEN
+                </h3>
+
+                <p class="mt-3 text-zinc-500 leading-relaxed">
+                    Новая коллекция одежды, масок и редких образов.
+                </p>
+
+            </article>
+
+
+            <article
+                class="rounded-3xl border border-white/10 bg-zinc-950 p-6"
+            >
+
+                <div class="text-xs text-red-400 font-black">
+                    DAMAGE
+                </div>
+
+                <h3 class="mt-4 text-2xl font-black">
+                    Арсенал CHAK
+                </h3>
+
+                <p class="mt-3 text-zinc-500 leading-relaxed">
+                    Оружие становится частью твоего персонажа.
+                </p>
+
+            </article>
 
         </div>
 
-      </div>
-
     </div>
-
-
-    <div class="grid sm:grid-cols-2 gap-4">
-
-      <div class="rounded-3xl
-                  border border-white/10
-                  bg-zinc-950 p-6">
-
-        <div class="text-3xl">🎁</div>
-
-        <h3 class="mt-5
-                   font-black text-xl">
-          Награды
-        </h3>
-
-        <p class="mt-2
-                  text-sm text-zinc-500">
-          Новые предметы за каждый этап.
-        </p>
-
-      </div>
-
-      <div class="rounded-3xl
-                  border border-white/10
-                  bg-zinc-950 p-6">
-
-        <div class="text-3xl">🏆</div>
-
-        <h3 class="mt-5
-                   font-black text-xl">
-          Рейтинг
-        </h3>
-
-        <p class="mt-2
-                  text-sm text-zinc-500">
-          Стань легендой среди игроков.
-        </p>
-
-      </div>
-
-      <div class="rounded-3xl
-                  border border-white/10
-                  bg-zinc-950 p-6">
-
-        <div class="text-3xl">⚡</div>
-
-        <h3 class="mt-5
-                   font-black text-xl">
-          Damage
-        </h3>
-
-        <p class="mt-2
-                  text-sm text-zinc-500">
-          Усиливай персонажа оружием.
-        </p>
-
-      </div>
-
-      <div class="rounded-3xl
-                  border border-white/10
-                  bg-zinc-950 p-6">
-
-        <div class="text-3xl">👑</div>
-
-        <h3 class="mt-5
-                   font-black text-xl">
-          Эксклюзив
-        </h3>
-
-        <p class="mt-2
-                  text-sm text-zinc-500">
-          Редкие предметы CHAK338.
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- NEWS -->
+<!-- =========================================================
+     GIVEAWAYS
+========================================================= -->
 
-<section id="news" class="py-20">
+<section
+    id="giveaways"
+    class="py-24 border-t border-white/5"
+>
 
-  <div class="max-w-7xl mx-auto
-              px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <div class="flex items-end
-                justify-between mb-10">
+        <div
+            class="rounded-[35px] border border-fuchsia-500/20 bg-gradient-to-br from-fuchsia-950/30 via-zinc-950 to-zinc-950 p-8 sm:p-12"
+        >
 
-      <div>
+            <div class="max-w-3xl">
 
-        <div class="text-xs font-black
-                    uppercase tracking-[.25em]
-                    text-zinc-500">
-          LATEST
+                <div class="text-xs text-fuchsia-400 font-black tracking-[.25em]">
+                    GIVEAWAYS
+                </div>
+
+                <h2 class="mt-3 text-4xl sm:text-5xl font-black">
+                    Розыгрыши для сообщества.
+                </h2>
+
+                <p class="mt-5 text-zinc-400 text-lg">
+                    Следи за новыми событиями CHAK338 и участвуй
+                    в розыгрышах эксклюзивных предметов.
+                </p>
+
+
+                <button
+                    onclick="showMessage('Раздел розыгрышей скоро будет активен!')"
+                    class="mt-7 px-6 py-4 rounded-2xl bg-white text-black font-black hover:bg-zinc-200 transition"
+                >
+                    УЗНАТЬ БОЛЬШЕ
+                </button>
+
+            </div>
+
         </div>
-
-        <h2 class="mt-3
-                   text-4xl font-black">
-          Новости
-        </h2>
-
-      </div>
-
-      <span class="text-sm text-zinc-600">
-        CHAK338 MEDIA
-      </span>
 
     </div>
-
-    <div class="grid md:grid-cols-3 gap-5">
-
-      <div class="rounded-3xl
-                  border border-white/10
-                  bg-zinc-950 p-6">
-
-        <div class="text-4xl">🔥</div>
-
-        <div class="mt-7
-                    text-xs text-fuchsia-400
-                    font-black">
-          UPDATE #001
-        </div>
-
-        <h3 class="mt-2
-                   text-xl font-black">
-          UHILYANT уже доступен
-        </h3>
-
-        <p class="mt-2
-                  text-sm text-zinc-500">
-          Первый кейс с коллекцией
-          персонажей открыт.
-        </p>
-
-      </div>
-
-
-      <div class="rounded-3xl
-                  border border-white/10
-                  bg-zinc-950 p-6">
-
-        <div class="text-4xl">🎁</div>
-
-        <div class="mt-7
-                    text-xs text-cyan-400
-                    font-black">
-          GIVEAWAY
-        </div>
-
-        <h3 class="mt-2
-                   text-xl font-black">
-          Розыгрыш мерча
-        </h3>
-
-        <p class="mt-2
-                  text-sm text-zinc-500">
-          Следи за новостями
-          и не пропусти следующий дроп.
-        </p>
-
-      </div>
-
-
-      <div class="rounded-3xl
-                  border border-white/10
-                  bg-zinc-950 p-6">
-
-        <div class="text-4xl">⚔️</div>
-
-        <div class="mt-7
-                    text-xs text-red-400
-                    font-black">
-          COMING SOON
-        </div>
-
-        <h3 class="mt-2
-                   text-xl font-black">
-          CHAK Damage System
-        </h3>
-
-        <p class="mt-2
-                  text-sm text-zinc-500">
-          Оружие начнёт влиять
-          на характеристики персонажа.
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- GIVEAWAYS -->
+<!-- =========================================================
+     MERCH
+========================================================= -->
 
-<section id="giveaways"
-         class="py-20
-                bg-gradient-to-br
-                from-fuchsia-950/30
-                via-zinc-950
-                to-red-950/20
-                border-y border-white/5">
+<section
+    id="merch"
+    class="py-24 border-t border-white/5"
+>
 
-  <div class="max-w-5xl mx-auto
-              px-4 text-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <div class="text-5xl">🎁</div>
+        <div class="mb-10">
 
-    <h2 class="mt-5
-               text-4xl sm:text-6xl
-               font-black">
+            <div class="text-xs text-red-400 font-black tracking-[.25em]">
+                CHAK338 SHOP
+            </div>
 
-      РОЗЫГРЫШИ<br>
+            <h2 class="mt-3 text-4xl font-black">
+                Мерч
+            </h2>
 
-      <span class="text-fuchsia-400">
-        CHAK338
-      </span>
-
-    </h2>
-
-    <p class="mt-5
-              text-zinc-400
-              max-w-2xl mx-auto">
-
-      Эксклюзивные персонажи,
-      предметы и настоящий мерч
-      от стримера.
-
-    </p>
-
-    <button onclick="showMessage('Раздел розыгрышей скоро откроется!')"
-            class="mt-8 px-8 py-4
-                   rounded-2xl
-                   bg-white text-black
-                   font-black">
-
-      УЗНАТЬ БОЛЬШЕ
-
-    </button>
-
-  </div>
-
-</section>
+        </div>
 
 
-<!-- SHOP -->
+        <div class="grid md:grid-cols-3 gap-6">
 
-<section id="shop" class="py-20">
 
-  <div class="max-w-7xl mx-auto
-              px-4 sm:px-6 lg:px-8">
+            <div class="rounded-3xl border border-white/10 bg-zinc-950 overflow-hidden">
 
-    <div class="max-w-2xl mb-10">
+                <div
+                    class="h-64 flex items-center justify-center bg-zinc-900"
+                >
 
-      <div class="text-xs font-black
-                  uppercase tracking-[.25em]
-                  text-zinc-500">
-        CHAK338 SHOP
-      </div>
+                    <div class="text-7xl">
+                        👕
+                    </div>
 
-      <h2 class="mt-3
-                 text-4xl sm:text-5xl
-                 font-black">
-        Мерч стримера.
-      </h2>
+                </div>
 
-      <p class="mt-4 text-zinc-400">
-        Физические вещи из мира CHAK338.
-      </p>
+                <div class="p-6">
+
+                    <h3 class="text-xl font-black">
+                        CHAK338 T-Shirt
+                    </h3>
+
+                    <p class="mt-2 text-zinc-500">
+                        Базовая футболка CHAK338.
+                    </p>
+
+                    <button
+                        onclick="showMessage('Магазин скоро откроется!')"
+                        class="mt-5 w-full py-3 rounded-xl bg-white text-black font-black"
+                    >
+                        СКОРО
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="rounded-3xl border border-white/10 bg-zinc-950 overflow-hidden">
+
+                <div
+                    class="h-64 flex items-center justify-center bg-zinc-900"
+                >
+
+                    <div class="text-7xl">
+                        🧥
+                    </div>
+
+                </div>
+
+                <div class="p-6">
+
+                    <h3 class="text-xl font-black">
+                        CHAK338 Hoodie
+                    </h3>
+
+                    <p class="mt-2 text-zinc-500">
+                        Фирменный худи для игроков.
+                    </p>
+
+                    <button
+                        onclick="showMessage('Магазин скоро откроется!')"
+                        class="mt-5 w-full py-3 rounded-xl bg-white text-black font-black"
+                    >
+                        СКОРО
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="rounded-3xl border border-white/10 bg-zinc-950 overflow-hidden">
+
+                <div
+                    class="h-64 flex items-center justify-center bg-zinc-900"
+                >
+
+                    <div class="text-7xl">
+                        🧢
+                    </div>
+
+                </div>
+
+                <div class="p-6">
+
+                    <h3 class="text-xl font-black">
+                        CHAK338 Cap
+                    </h3>
+
+                    <p class="mt-2 text-zinc-500">
+                        Кепка с символикой CHAK338.
+                    </p>
+
+                    <button
+                        onclick="showMessage('Магазин скоро откроется!')"
+                        class="mt-5 w-full py-3 rounded-xl bg-white text-black font-black"
+                    >
+                        СКОРО
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
-    <div class="grid sm:grid-cols-3 gap-5">
-
-      <div class="rounded-3xl
-                  border border-white/10
-                  bg-zinc-950
-                  overflow-hidden">
-
-        <div class="h-56
-                    flex items-center
-                    justify-center
-                    bg-zinc-900
-                    text-8xl">
-          👕
-        </div>
-
-        <div class="p-5">
-
-          <h3 class="font-black text-xl">
-            CHAK338 T-Shirt
-          </h3>
-
-          <div class="mt-2 text-zinc-500">
-            1 490 ₴
-          </div>
-
-          <button onclick="showMessage('Покупка мерча будет доступна после подключения магазина.')"
-                  class="w-full mt-5 py-3
-                         rounded-xl
-                         bg-white text-black
-                         font-black">
-
-            В МАГАЗИН
-
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <div class="rounded-3xl
-                  border border-white/10
-                  bg-zinc-950
-                  overflow-hidden">
-
-        <div class="h-56
-                    flex items-center
-                    justify-center
-                    bg-zinc-900
-                    text-8xl">
-          🧥
-        </div>
-
-        <div class="p-5">
-
-          <h3 class="font-black text-xl">
-            CHAK338 Hoodie
-          </h3>
-
-          <div class="mt-2 text-zinc-500">
-            2 990 ₴
-          </div>
-
-          <button onclick="showMessage('Покупка мерча будет доступна после подключения магазина.')"
-                  class="w-full mt-5 py-3
-                         rounded-xl
-                         bg-white text-black
-                         font-black">
-
-            В МАГАЗИН
-
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <div class="rounded-3xl
-                  border border-white/10
-                  bg-zinc-950
-                  overflow-hidden">
-
-        <div class="h-56
-                    flex items-center
-                    justify-center
-                    bg-zinc-900
-                    text-8xl">
-          🧢
-        </div>
-
-        <div class="p-5">
-
-          <h3 class="font-black text-xl">
-            CHAK338 Cap
-          </h3>
-
-          <div class="mt-2 text-zinc-500">
-            990 ₴
-          </div>
-
-          <button onclick="showMessage('Покупка мерча будет доступна после подключения магазина.')"
-                  class="w-full mt-5 py-3
-                         rounded-xl
-                         bg-white text-black
-                         font-black">
-
-            В МАГАЗИН
-
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
 </section>
+
 
 </main>
 
 
-<footer class="border-t border-white/10 bg-black">
+<!-- =========================================================
+     INVENTORY PAGE
+========================================================= -->
 
-  <div class="max-w-7xl mx-auto
-              px-4 sm:px-6 lg:px-8
-              py-10
-              flex flex-col md:flex-row
-              justify-between gap-5">
+<main
+    id="inventoryPage"
+    class="page-hidden pt-20 min-h-screen"
+>
 
-    <div>
+    <section class="py-16">
 
-      <div class="font-black text-xl">
-        CHAK338
-      </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      <p class="mt-2
-                text-sm text-zinc-600">
-        Gaming Hub · Cases · Drops · Merch
-      </p>
+
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+
+                <div>
+
+                    <div class="text-xs text-cyan-400 font-black tracking-[.25em]">
+                        PLAYER INVENTORY
+                    </div>
+
+                    <h1 class="mt-3 text-5xl font-black">
+                        Инвентарь
+                    </h1>
+
+                    <p class="mt-4 text-zinc-500">
+                        Здесь находятся все предметы, которые тебе выпали.
+                    </p>
+
+                </div>
+
+
+                <button
+                    onclick="showPage('home')"
+                    class="px-6 py-3 rounded-xl bg-white text-black font-black"
+                >
+                    ← К КЕЙСАМ
+                </button>
+
+            </div>
+
+
+            <!-- PLAYER INFO -->
+
+            <div class="grid sm:grid-cols-3 gap-4 mb-10">
+
+
+                <div
+                    class="rounded-2xl border border-white/10 bg-zinc-950 p-5"
+                >
+
+                    <div class="text-xs text-zinc-500 font-bold">
+                        LEVEL
+                    </div>
+
+                    <div
+                        id="inventoryLevel"
+                        class="mt-2 text-3xl font-black"
+                    >
+                        1
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="rounded-2xl border border-white/10 bg-zinc-950 p-5"
+                >
+
+                    <div class="text-xs text-zinc-500 font-bold">
+                        ПРЕДМЕТОВ
+                    </div>
+
+                    <div
+                        id="inventoryCount"
+                        class="mt-2 text-3xl font-black"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="rounded-2xl border border-white/10 bg-zinc-950 p-5"
+                >
+
+                    <div class="text-xs text-zinc-500 font-bold">
+                        XP
+                    </div>
+
+                    <div
+                        id="inventoryXP"
+                        class="mt-2 text-3xl font-black"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTER -->
+
+            <div class="flex flex-wrap gap-2 mb-7">
+
+                <button
+                    onclick="filterInventory('ALL')"
+                    class="inventory-filter px-4 py-2 rounded-xl bg-white text-black font-black text-sm"
+                    data-filter="ALL"
+                >
+                    ВСЕ
+                </button>
+
+                <button
+                    onclick="filterInventory('CHARACTER')"
+                    class="inventory-filter px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-sm font-bold"
+                    data-filter="CHARACTER"
+                >
+                    ПЕРСОНАЖИ
+                </button>
+
+                <button
+                    onclick="filterInventory('OUTFIT')"
+                    class="inventory-filter px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-sm font-bold"
+                    data-filter="OUTFIT"
+                >
+                    ОДЕЖДА
+                </button>
+
+                <button
+                    onclick="filterInventory('WEAPON')"
+                    class="inventory-filter px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-sm font-bold"
+                    data-filter="WEAPON"
+                >
+                    ОРУЖИЕ
+                </button>
+
+            </div>
+
+
+            <!-- INVENTORY GRID -->
+
+            <div
+                id="inventoryGrid"
+                class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3"
+            >
+            </div>
+
+
+            <!-- EMPTY -->
+
+            <div
+                id="emptyInventory"
+                class="hidden rounded-3xl border border-dashed border-white/10 bg-zinc-950 p-16 text-center"
+            >
+
+                <div class="text-5xl">
+                    📦
+                </div>
+
+                <h2 class="mt-5 text-2xl font-black">
+                    Инвентарь пуст
+                </h2>
+
+                <p class="mt-2 text-zinc-500">
+                    Открой свой первый кейс.
+                </p>
+
+                <button
+                    onclick="showPage('home'); setTimeout(()=>document.getElementById('cases').scrollIntoView(),100)"
+                    class="mt-6 px-6 py-3 rounded-xl bg-white text-black font-black"
+                >
+                    ОТКРЫТЬ КЕЙС
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =========================================================
+     CASE MODAL
+========================================================= -->
+
+<div
+    id="caseModal"
+    class="hidden fixed inset-0 z-[100] modal-bg items-center justify-center p-4"
+>
+
+    <div
+        class="w-full max-w-5xl rounded-[32px] border border-white/10 bg-[#090a0f] shadow-2xl overflow-hidden"
+    >
+
+        <div class="p-5 sm:p-7 border-b border-white/10">
+
+            <div class="flex items-center justify-between">
+
+                <div>
+
+                    <div
+                        id="modalType"
+                        class="text-xs text-cyan-400 font-black tracking-[.25em]"
+                    >
+                        01 · CHARACTERS
+                    </div>
+
+                    <h2
+                        id="modalTitle"
+                        class="mt-2 text-3xl sm:text-4xl font-black"
+                    >
+                        UHILYANT
+                    </h2>
+
+                </div>
+
+
+                <button
+                    onclick="closeCase()"
+                    class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="p-5 sm:p-8">
+
+
+            <!-- REEL -->
+
+            <div class="reel-window">
+
+                <div
+                    id="reel"
+                    class="reel p-5"
+                ></div>
+
+            </div>
+
+
+            <!-- OPEN BUTTON -->
+
+            <button
+                id="spinBtn"
+                onclick="spinCase()"
+                class="w-full mt-7 py-5 rounded-2xl bg-white text-black font-black text-lg hover:bg-zinc-200 transition"
+            >
+                ОТКРЫТЬ
+            </button>
+
+
+            <!-- RESULT -->
+
+            <div
+                id="dropResult"
+                class="hidden drop-result mt-8 rounded-3xl border border-white/10 bg-white/[.025] p-8 text-center"
+            >
+
+                <div class="text-xs text-fuchsia-400 font-black tracking-[.3em]">
+                    ТЕБЕ ВЫПАЛО
+                </div>
+
+
+                <div
+                    id="dropEmoji"
+                    class="drop-icon mt-5 text-8xl"
+                >
+                    👾
+                </div>
+
+
+                <h3
+                    id="dropName"
+                    class="mt-5 text-4xl font-black"
+                >
+                    Glitch
+                </h3>
+
+
+                <div
+                    id="dropRarity"
+                    class="mt-2 text-sm font-black"
+                >
+                    LEGENDARY
+                </div>
+
+
+                <div
+                    id="dropStat"
+                    class="mt-3 text-zinc-500"
+                >
+                    Предмет добавлен в коллекцию
+                </div>
+
+
+                <div class="mt-6 flex justify-center">
+
+                    <button
+                        onclick="showPage('inventory'); closeCase()"
+                        class="px-6 py-3 rounded-xl bg-white text-black font-black"
+                    >
+                        ОТКРЫТЬ ИНВЕНТАРЬ
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
-    <div class="text-sm text-zinc-600">
-      © 2026 CHAK338.
-      Все права защищены.
+</div>
+
+
+<!-- =========================================================
+     AUTH MODAL
+========================================================= -->
+
+<div
+    id="authModal"
+    class="hidden fixed inset-0 z-[110] modal-bg items-center justify-center p-4"
+>
+
+    <div
+        class="w-full max-w-md rounded-3xl border border-white/10 bg-zinc-950 p-7"
+    >
+
+        <div class="flex justify-between">
+
+            <div>
+
+                <div class="text-xs text-fuchsia-400 font-black tracking-[.25em]">
+                    CHAK338 ACCOUNT
+                </div>
+
+                <h2 class="text-3xl font-black mt-2">
+                    Войти в игру
+                </h2>
+
+            </div>
+
+
+            <button onclick="closeAuth()">
+                ✕
+            </button>
+
+        </div>
+
+
+        <input
+            class="mt-7 w-full px-4 py-4 rounded-xl bg-white/5 border border-white/10 outline-none"
+            placeholder="Email"
+        >
+
+
+        <input
+            type="password"
+            class="mt-3 w-full px-4 py-4 rounded-xl bg-white/5 border border-white/10 outline-none"
+            placeholder="Пароль"
+        >
+
+
+        <button
+            onclick="closeAuth();showMessage('Демо-авторизация: настоящий аккаунт подключим позже.')"
+            class="w-full mt-5 py-4 rounded-xl bg-white text-black font-black"
+        >
+            ПРОДОЛЖИТЬ
+        </button>
+
     </div>
 
-  </div>
+</div>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="border-t border-white/5 py-12">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex flex-col md:flex-row justify-between gap-8">
+
+            <div>
+
+                <div class="font-black text-2xl">
+                    CHAK338
+                </div>
+
+                <div class="text-xs text-zinc-600 mt-2">
+                    GAMING HUB
+                </div>
+
+            </div>
+
+
+            <div class="text-sm text-zinc-600">
+                © 2026 CHAK338. Все права защищены.
+            </div>
+
+        </div>
+
+    </div>
 
 </footer>
 
 
-<!-- CASE MODAL -->
-
-<div id="caseModal"
-     class="hidden fixed inset-0
-            z-[100]
-            modal-bg
-            items-center
-            justify-center p-4">
-
-  <div class="w-full max-w-5xl
-              rounded-[32px]
-              border border-white/10
-              bg-zinc-950
-              shadow-2xl
-              overflow-hidden">
-
-    <div class="p-5 sm:p-7
-                flex justify-between
-                items-start
-                border-b border-white/10">
-
-      <div>
-
-        <div id="modalType"
-             class="text-xs uppercase
-                    tracking-widest
-                    font-black
-                    text-fuchsia-400">
-          CASE
-        </div>
-
-        <h2 id="modalTitle"
-            class="mt-1
-                   text-3xl font-black">
-          UHILYANT
-        </h2>
-
-      </div>
-
-      <button onclick="closeCase()"
-              class="w-10 h-10
-                     rounded-xl
-                     bg-white/5
-                     hover:bg-white/10">
-        ✕
-      </button>
-
-    </div>
-
-
-    <div class="p-5 sm:p-7">
-
-      <div class="reel-window
-                  rounded-2xl
-                  border border-white/10
-                  bg-black/60 p-4">
-
-        <div id="reel"
-             class="reel">
-        </div>
-
-      </div>
-
-
-      <!-- DROP -->
-
-      <div id="dropResult"
-           class="hidden mt-6
-                  rounded-3xl
-                  border border-fuchsia-500/30
-                  bg-fuchsia-500/5
-                  p-6 text-center">
-
-        <div class="text-xs font-black
-                    uppercase tracking-widest
-                    text-fuchsia-300">
-          YOU GOT
-        </div>
-
-        <div id="dropEmoji"
-             class="text-6xl mt-3 drop-pop">
-          🧑
-        </div>
-
-        <div id="dropName"
-             class="text-3xl font-black mt-2">
-          Shadow
-        </div>
-
-        <div id="dropRarity"
-             class="mt-2
-                    text-sm font-bold">
-          LEGENDARY · 1.8%
-        </div>
-
-        <div id="dropStat"
-             class="mt-2 text-zinc-400">
-          Предмет добавлен в инвентарь
-        </div>
-
-        <a href="inventory.html"
-           class="inline-block mt-4
-                  px-5 py-3
-                  rounded-xl
-                  bg-white text-black
-                  font-black">
-          ОТКРЫТЬ ИНВЕНТАРЬ
-        </a>
-
-      </div>
-
-
-      <div class="mt-6
-                  flex flex-col
-                  sm:flex-row gap-3">
-
-        <button id="spinBtn"
-                onclick="spinCase()"
-                class="flex-1 py-4
-                       rounded-2xl
-                       bg-fuchsia-500
-                       hover:bg-fuchsia-400
-                       font-black">
-
-          ОТКРЫТЬ КЕЙС
-
-        </button>
-
-        <button onclick="closeCase()"
-                class="px-6 py-4
-                       rounded-2xl
-                       bg-white/5
-                       border border-white/10
-                       font-black">
-
-          ЗАКРЫТЬ
-
-        </button>
-
-      </div>
-
-
-      <div class="mt-7
-                  grid grid-cols-2
-                  sm:grid-cols-6
-                  gap-2
-                  text-[11px]
-                  font-bold
-                  text-zinc-500">
-
-        <div>
-          ⚪ COMMON<br>
-          <b class="text-zinc-300">55%</b>
-        </div>
-
-        <div>
-          🟢 UNCOMMON<br>
-          <b class="text-green-400">25%</b>
-        </div>
-
-        <div>
-          🔵 RARE<br>
-          <b class="text-sky-400">12%</b>
-        </div>
-
-        <div>
-          🟣 EPIC<br>
-          <b class="text-fuchsia-400">6%</b>
-        </div>
-
-        <div>
-          🟡 LEGENDARY<br>
-          <b class="text-amber-400">1.8%</b>
-        </div>
-
-        <div>
-          🔴 MYTHIC<br>
-          <b class="text-red-400">0.2%</b>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- AUTH -->
-
-<div id="authModal"
-     class="hidden fixed inset-0
-            z-[110]
-            modal-bg
-            items-center
-            justify-center p-4">
-
-  <div class="w-full max-w-md
-              rounded-3xl
-              border border-white/10
-              bg-zinc-950 p-7">
-
-    <div class="flex justify-between">
-
-      <div>
-
-        <div class="text-xs
-                    text-fuchsia-400
-                    font-black
-                    uppercase
-                    tracking-widest">
-          CHAK338 ACCOUNT
-        </div>
-
-        <h2 class="text-3xl
-                   font-black mt-2">
-          Войти в игру
-        </h2>
-
-      </div>
-
-      <button onclick="closeAuth()">
-        ✕
-      </button>
-
-    </div>
-
-    <input
-      class="mt-7 w-full
-             px-4 py-4
-             rounded-xl
-             bg-white/5
-             border border-white/10
-             outline-none"
-      placeholder="Email">
-
-    <input
-      type="password"
-      class="mt-3 w-full
-             px-4 py-4
-             rounded-xl
-             bg-white/5
-             border border-white/10
-             outline-none"
-      placeholder="Пароль">
-
-    <button
-      onclick="
-        closeAuth();
-        showMessage('Демо-авторизация: подключим настоящий аккаунт позже.')
-      "
-      class="w-full mt-5
-             py-4 rounded-xl
-             bg-white text-black
-             font-black">
-
-      ПРОДОЛЖИТЬ
-
-    </button>
-
-  </div>
-
-</div>
-
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
 
 <script>
 
 /* =========================================================
-   CHAK338 CASE SYSTEM V2
-   =========================================================
-   Исправления:
-
-   1. В ленте много разных предметов.
-   2. Победитель действительно случайный.
-   3. Редкость выбирается по процентам.
-   4. Предмет внутри редкости тоже выбирается случайно.
-   5. Прокрутка имеет много разных предметов.
-   6. Добавлен звук запуска.
-   7. Добавлены звуки тиков.
-   8. Добавлен отдельный звук выпадения.
-   9. Legendary/Mythic имеют более мощный звук.
-   10. Предметы сохраняются в localStorage.
-   11. XP сохраняется.
-   ========================================================= */
-
+   CASE DATA
+========================================================= */
 
 const cases = {
 
-  Uhilyant: [
+    Uhilyant: [
 
-    ['Rookie','🧑','COMMON','Обычный'],
-    ['Masky','😎','COMMON','Обычный'],
+        {
+            name: 'Rookie',
+            icon: '🧑',
+            rarity: 'COMMON',
+            type: 'CHARACTER'
+        },
 
-    ['Street Kid','🧢','UNCOMMON','Необычный'],
-    ['Pixel','👦','UNCOMMON','Необычный'],
+        {
+            name: 'Masky',
+            icon: '😎',
+            rarity: 'UNCOMMON',
+            type: 'CHARACTER'
+        },
 
-    ['Cyber','🤖','RARE','Редкий'],
-    ['Neon Soul','🧬','RARE','Редкий'],
+        {
+            name: 'Cyber',
+            icon: '🤖',
+            rarity: 'RARE',
+            type: 'CHARACTER'
+        },
 
-    ['Shadow','🥷','EPIC','Эпический'],
-    ['Night Crawler','🕷️','EPIC','Эпический'],
+        {
+            name: 'Shadow',
+            icon: '🥷',
+            rarity: 'EPIC',
+            type: 'CHARACTER'
+        },
 
-    ['Glitch','👾','LEGENDARY','Легендарный'],
-    ['Void','👤','LEGENDARY','Легендарный'],
+        {
+            name: 'Glitch',
+            icon: '👾',
+            rarity: 'LEGENDARY',
+            type: 'CHARACTER'
+        },
 
-    ['Uhilyant','👹','MYTHIC','Мифический'],
-    ['CHAK Phantom','👺','MYTHIC','Мифический']
+        {
+            name: 'Uhilyant',
+            icon: '👹',
+            rarity: 'MYTHIC',
+            type: 'CHARACTER'
+        }
 
-  ],
-
-
-  Shkaf: [
-
-    ['Basic T-Shirt','👕','COMMON','Обычный'],
-    ['Grey Pants','👖','COMMON','Обычный'],
-
-    ['Chak Hoodie','🧥','UNCOMMON','Необычный'],
-    ['Street Cap','🧢','UNCOMMON','Необычный'],
-
-    ['Neon Jacket','🥼','RARE','Редкий'],
-    ['Cyber Glasses','🥽','RARE','Редкий'],
-
-    ['Dark Mask','🎭','EPIC','Эпический'],
-    ['Tech Suit','🥋','EPIC','Эпический'],
-
-    ['Golden Crown','👑','LEGENDARY','Легендарный'],
-    ['Diamond Jacket','💎','LEGENDARY','Легендарный'],
-
-    ['338 Outfit','🕶️','MYTHIC','Мифический'],
-    ['CHAK King Set','👑','MYTHIC','Мифический']
-
-  ],
+    ],
 
 
-  Chak: [
+    Kitaen: [
 
-    ['Wooden Sword','🗡️','COMMON','Обычный'],
-    ['Training Shield','🛡️','COMMON','Обычный'],
+        {
+            name: 'Basic T-Shirt',
+            icon: '👕',
+            rarity: 'COMMON',
+            type: 'OUTFIT'
+        },
 
-    ['Iron Axe','🪓','UNCOMMON','Необычный'],
-    ['Steel Shield','🛡️','UNCOMMON','Необычный'],
+        {
+            name: 'Chak Hoodie',
+            icon: '🧥',
+            rarity: 'UNCOMMON',
+            type: 'OUTFIT'
+        },
 
-    ['Neon Blade','⚔️','RARE','Редкий'],
-    ['Plasma Bow','🏹','RARE','Редкий'],
+        {
+            name: 'Neon Jacket',
+            icon: '🥼',
+            rarity: 'RARE',
+            type: 'OUTFIT'
+        },
 
-    ['Shadow Katana','🔪','EPIC','Эпический'],
-    ['Twin Blades','⚔️','EPIC','Эпический'],
+        {
+            name: 'Dark Mask',
+            icon: '🎭',
+            rarity: 'EPIC',
+            type: 'OUTFIT'
+        },
 
-    ['Chak Hammer','🔨','LEGENDARY','Легендарный'],
-    ['Inferno Spear','🔱','LEGENDARY','Легендарный'],
+        {
+            name: 'Golden Crown',
+            icon: '👑',
+            rarity: 'LEGENDARY',
+            type: 'OUTFIT'
+        },
 
-    ['338 Destroyer','☠️','MYTHIC','Мифический'],
-    ['Chaos Reaper','🪄','MYTHIC','Мифический']
+        {
+            name: '338 Outfit',
+            icon: '🕶️',
+            rarity: 'MYTHIC',
+            type: 'OUTFIT'
+        }
 
-  ]
+    ],
+
+
+    Chak: [
+
+        {
+            name: 'Wooden Sword',
+            icon: '🗡️',
+            rarity: 'COMMON',
+            type: 'WEAPON',
+            damage: 5
+        },
+
+        {
+            name: 'Iron Shield',
+            icon: '🛡️',
+            rarity: 'UNCOMMON',
+            type: 'WEAPON',
+            damage: 10
+        },
+
+        {
+            name: 'Neon Blade',
+            icon: '⚔️',
+            rarity: 'RARE',
+            type: 'WEAPON',
+            damage: 20
+        },
+
+        {
+            name: 'Shadow Katana',
+            icon: '🔪',
+            rarity: 'EPIC',
+            type: 'WEAPON',
+            damage: 35
+        },
+
+        {
+            name: 'Chak Hammer',
+            icon: '🔨',
+            rarity: 'LEGENDARY',
+            type: 'WEAPON',
+            damage: 55
+        },
+
+        {
+            name: '338 Destroyer',
+            icon: '🔱',
+            rarity: 'MYTHIC',
+            type: 'WEAPON',
+            damage: 100
+        }
+
+    ]
 
 };
 
 
-const rarityWeights = {
+/* =========================================================
+   CASE SETTINGS
+========================================================= */
 
-  COMMON:55,
-  UNCOMMON:25,
-  RARE:12,
-  EPIC:6,
-  LEGENDARY:1.8,
-  MYTHIC:0.2
+const caseSettings = {
+
+    Uhilyant: {
+        cooldown: 5 * 60 * 60 * 1000,
+        xp: 100
+    },
+
+    Kitaen: {
+        cooldown: 12 * 60 * 60 * 1000,
+        xp: 150
+    },
+
+    Chak: {
+        cooldown: 24 * 60 * 60 * 1000,
+        xp: 200
+    }
 
 };
 
 
-const rarityPercent = {
-
-  COMMON:'55%',
-  UNCOMMON:'25%',
-  RARE:'12%',
-  EPIC:'6%',
-  LEGENDARY:'1.8%',
-  MYTHIC:'0.2%'
-
-};
-
+/* =========================================================
+   PLAYER
+========================================================= */
 
 let activeCase = 'Uhilyant';
 
 let spinning = false;
 
-let xp =
-  Number(
-    localStorage.getItem('chak338_xp') || 0
-  );
+let xp = Number(
+    localStorage.getItem('chak_xp') || 0
+);
 
-let level =
-  Number(
-    localStorage.getItem('chak338_level') || 1
-  );
+let level = Number(
+    localStorage.getItem('chak_level') || 1
+);
 
-
-/* AUDIO */
-
-let audioCtx = null;
-
-let lastTick = 0;
+let inventory = JSON.parse(
+    localStorage.getItem('chak_inventory') || '[]'
+);
 
 
 /* =========================================================
-   INVENTORY
-   ========================================================= */
+   AUDIO
+========================================================= */
 
-function getInventory(){
+let audioContext = null;
 
-  try{
-
-    return JSON.parse(
-      localStorage.getItem(
-        'chak338_inventory'
-      ) || '[]'
-    );
-
-  }catch(e){
-
-    return [];
-
-  }
-
-}
+let spinAudioTimer = null;
 
 
-function saveInventory(items){
+function initAudio() {
 
-  localStorage.setItem(
-    'chak338_inventory',
-    JSON.stringify(items)
-  );
+    if (!audioContext) {
 
-}
-
-
-function addToInventory(item){
-
-  const inventory = getInventory();
-
-  inventory.unshift({
-
-    id:
-      Date.now() +
-      '-' +
-      Math.random()
-        .toString(16)
-        .slice(2),
-
-    caseName:activeCase,
-
-    name:item[0],
-
-    emoji:item[1],
-
-    rarity:item[2],
-
-    rarityName:item[3],
-
-    type:
-      activeCase === 'Uhilyant'
-        ? 'Персонаж'
-        : activeCase === 'Shkaf'
-          ? 'Одежда'
-          : 'Оружие',
-
-    date:new Date().toISOString()
-
-  });
-
-  saveInventory(inventory);
-
-}
-
-
-/* =========================================================
-   XP
-   ========================================================= */
-
-function saveProgress(){
-
-  localStorage.setItem(
-    'chak338_xp',
-    String(xp)
-  );
-
-  localStorage.setItem(
-    'chak338_level',
-    String(level)
-  );
-
-}
-
-
-function addXP(amount){
-
-  xp += amount;
-
-  while(xp >= 1000){
-
-    xp -= 1000;
-    level++;
-
-  }
-
-  saveProgress();
-
-  updateProgress();
-
-}
-
-
-function updateProgress(){
-
-  const xpEl =
-    document.getElementById('xp');
-
-  const xp2El =
-    document.getElementById('xp2');
-
-  const levelEl =
-    document.getElementById('level');
-
-  const level2El =
-    document.getElementById('level2');
-
-  if(xpEl)
-    xpEl.textContent = xp;
-
-  if(xp2El)
-    xp2El.textContent = xp;
-
-  if(levelEl)
-    levelEl.textContent = level;
-
-  if(level2El)
-    level2El.textContent = level;
-
-  const bar =
-    document.getElementById('xpbar');
-
-  if(bar){
-
-    bar.style.width =
-      (xp / 10) + '%';
-
-  }
-
-}
-
-
-/* =========================================================
-   AUDIO ENGINE
-   ========================================================= */
-
-function openAudio(){
-
-  if(!audioCtx){
-
-    const AudioContext =
-      window.AudioContext ||
-      window.webkitAudioContext;
-
-    if(AudioContext){
-
-      audioCtx =
-        new AudioContext();
+        audioContext =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
 
     }
 
-  }
+    if (audioContext.state === 'suspended') {
 
-  if(
-    audioCtx &&
-    audioCtx.state === 'suspended'
-  ){
+        audioContext.resume();
 
-    audioCtx.resume();
-
-  }
+    }
 
 }
 
 
-/* basic oscillator sound */
-
-function tone(
-  frequency,
-  duration,
-  type='sine',
-  volume=.035,
-  delay=0
-){
-
-  if(!audioCtx)
-    return;
-
-  const oscillator =
-    audioCtx.createOscillator();
-
-  const gain =
-    audioCtx.createGain();
-
-  oscillator.type = type;
-
-  oscillator.frequency.setValueAtTime(
+function playTone(
     frequency,
-    audioCtx.currentTime + delay
-  );
+    duration,
+    type = 'sine',
+    volume = 0.04
+) {
 
-  gain.gain.setValueAtTime(
-    .0001,
-    audioCtx.currentTime + delay
-  );
+    try {
 
-  gain.gain.exponentialRampToValueAtTime(
-    volume,
-    audioCtx.currentTime +
-    delay +
-    .008
-  );
+        initAudio();
 
-  gain.gain.exponentialRampToValueAtTime(
-    .0001,
-    audioCtx.currentTime +
-    delay +
-    duration
-  );
+        const oscillator =
+            audioContext.createOscillator();
 
-  oscillator.connect(gain);
-
-  gain.connect(
-    audioCtx.destination
-  );
-
-  oscillator.start(
-    audioCtx.currentTime + delay
-  );
-
-  oscillator.stop(
-    audioCtx.currentTime +
-    delay +
-    duration +
-    .02
-  );
-
-}
+        const gain =
+            audioContext.createGain();
 
 
-/* sound when opening starts */
+        oscillator.type = type;
 
-function playSpinStart(){
+        oscillator.frequency.value =
+            frequency;
 
-  openAudio();
 
-  tone(
-    170,
-    .08,
-    'square',
-    .025
-  );
+        gain.gain.setValueAtTime(
+            0.0001,
+            audioContext.currentTime
+        );
 
-  tone(
-    260,
-    .07,
-    'square',
-    .02,
-    .08
-  );
+
+        gain.gain.exponentialRampToValueAtTime(
+            volume,
+            audioContext.currentTime + 0.01
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            audioContext.currentTime + duration
+        );
+
+
+        oscillator.connect(gain);
+
+        gain.connect(
+            audioContext.destination
+        );
+
+
+        oscillator.start();
+
+        oscillator.stop(
+            audioContext.currentTime + duration
+        );
+
+    } catch (e) {
+
+        console.log('Audio unavailable');
+
+    }
 
 }
 
 
-/* every reel movement */
+function startSpinSound() {
 
-function playReelTick(){
+    initAudio();
 
-  openAudio();
+    stopSpinSound();
 
-  tone(
-    95 + Math.random() * 35,
-    .035,
-    'square',
-    .018
-  );
+    let step = 0;
+
+    spinAudioTimer = setInterval(() => {
+
+        step++;
+
+        const frequency =
+            160 + Math.min(step * 8, 220);
+
+        playTone(
+            frequency,
+            0.055,
+            'square',
+            0.025
+        );
+
+    }, 115);
 
 }
 
 
-/* =========================================================
-   DROP SOUND
-   ========================================================= */
+function stopSpinSound() {
 
-function playDropSound(rarity){
+    if (spinAudioTimer) {
 
-  openAudio();
+        clearInterval(
+            spinAudioTimer
+        );
 
-  const sequences = {
+        spinAudioTimer = null;
 
-    COMMON:[
-      330,
-      440
-    ],
+    }
 
-    UNCOMMON:[
-      360,
-      480,
-      620
-    ],
-
-    RARE:[
-      390,
-      520,
-      700,
-      850
-    ],
-
-    EPIC:[
-      420,
-      560,
-      740,
-      980,
-      1180
-    ],
-
-    LEGENDARY:[
-      440,
-      600,
-      800,
-      1050,
-      1350,
-      1650
-    ],
-
-    MYTHIC:[
-      300,
-      520,
-      760,
-      1050,
-      1450,
-      1900,
-      2400
-    ]
-
-  };
+}
 
 
-  const sequence =
-    sequences[rarity] ||
-    [440,660];
+function playDropSound(rarity) {
+
+    stopSpinSound();
 
 
-  sequence.forEach(
-    (frequency,index)=>{
+    if (rarity === 'MYTHIC') {
 
-      tone(
-        frequency,
+        playTone(330, .12, 'sine', .08);
+
+        setTimeout(
+            () => playTone(495, .14, 'sine', .09),
+            100
+        );
+
+        setTimeout(
+            () => playTone(660, .25, 'sine', .1),
+            220
+        );
+
+        return;
+    }
+
+
+    if (rarity === 'LEGENDARY') {
+
+        playTone(300, .1, 'triangle', .07);
+
+        setTimeout(
+            () => playTone(450, .18, 'triangle', .08),
+            120
+        );
+
+        return;
+    }
+
+
+    if (rarity === 'EPIC') {
+
+        playTone(270, .1, 'sine', .06);
+
+        setTimeout(
+            () => playTone(380, .16, 'sine', .07),
+            110
+        );
+
+        return;
+    }
+
+
+    playTone(
+        220,
         .16,
         'sine',
-        rarity === 'MYTHIC'
-          ? .055
-          : .035,
-        index * .075
-      );
-
-    }
-  );
-
-
-  if(
-    rarity === 'MYTHIC' ||
-    rarity === 'LEGENDARY'
-  ){
-
-    tone(
-      80,
-      .45,
-      'sawtooth',
-      .025,
-      .18
+        .055
     );
 
-  }
-
 }
 
 
 /* =========================================================
-   RANDOM ITEMS
-   ========================================================= */
+   PAGE NAVIGATION
+========================================================= */
 
-function randomItem(array){
+function showPage(page) {
 
-  return array[
-    Math.floor(
-      Math.random() *
-      array.length
-    )
-  ];
+    const home =
+        document.getElementById('homePage');
 
-}
+    const inventoryPage =
+        document.getElementById('inventoryPage');
 
 
-/* =========================================================
-   PICK WINNER
-   ========================================================= */
+    if (page === 'inventory') {
 
-function pick(){
+        home.classList.add(
+            'page-hidden'
+        );
 
-  const number =
-    Math.random() * 100;
+        inventoryPage.classList.remove(
+            'page-hidden'
+        );
 
-  let total = 0;
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
 
-  let rarity = 'COMMON';
+        renderInventory();
 
+        history.replaceState(
+            null,
+            '',
+            '#inventory'
+        );
 
-  for(
-    const [key,weight]
-    of Object.entries(rarityWeights)
-  ){
+    } else {
 
-    total += weight;
+        inventoryPage.classList.add(
+            'page-hidden'
+        );
 
-    if(number < total){
+        home.classList.remove(
+            'page-hidden'
+        );
 
-      rarity = key;
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
 
-      break;
+        history.replaceState(
+            null,
+            '',
+            '#home'
+        );
 
     }
 
-  }
-
-
-  const pool =
-    cases[activeCase]
-      .filter(
-        item =>
-          item[2] === rarity
-      );
-
-
-  return randomItem(pool);
-
 }
 
 
 /* =========================================================
-   ITEM HTML
-   ========================================================= */
+   COOLDOWNS
+========================================================= */
 
-function itemHTML(item){
+function cooldownKey(name) {
 
-  return `
-
-    <div class="text-4xl">
-      ${item[1]}
-    </div>
-
-    <div class="mt-2
-                text-xs
-                font-black
-                px-2">
-
-      ${item[0]}
-
-    </div>
-
-    <div class="mt-1
-                text-[10px]
-                text-zinc-500">
-
-      ${item[2]}
-      ·
-      ${rarityPercent[item[2]]}
-
-    </div>
-
-  `;
-
-}
-
-
-/* =========================================================
-   CREATE RANDOM REEL
-   ========================================================= */
-
-function shuffledReelItems(count){
-
-  const source =
-    cases[activeCase];
-
-  const result = [];
-
-
-  for(
-    let i = 0;
-    i < count;
-    i++
-  ){
-
-    result.push(
-      randomItem(source)
+    return (
+        'chak_cooldown_' +
+        name
     );
 
-  }
+}
 
 
-  return result;
+function getCooldown(name) {
+
+    return Number(
+        localStorage.getItem(
+            cooldownKey(name)
+        ) || 0
+    );
+
+}
+
+
+function isCaseReady(name) {
+
+    return Date.now() >=
+        getCooldown(name);
+
+}
+
+
+function startCooldown(name) {
+
+    const finish =
+        Date.now() +
+        caseSettings[name].cooldown;
+
+
+    localStorage.setItem(
+        cooldownKey(name),
+        finish
+    );
+
+
+    updateCooldowns();
+
+}
+
+
+function formatTime(ms) {
+
+    if (ms <= 0) {
+
+        return 'ГОТОВ';
+
+    }
+
+
+    const seconds =
+        Math.ceil(ms / 1000);
+
+
+    const hours =
+        Math.floor(
+            seconds / 3600
+        );
+
+
+    const minutes =
+        Math.floor(
+            (seconds % 3600) / 60
+        );
+
+
+    const secs =
+        seconds % 60;
+
+
+    return (
+        String(hours).padStart(2, '0') +
+        ':' +
+        String(minutes).padStart(2, '0') +
+        ':' +
+        String(secs).padStart(2, '0')
+    );
+
+}
+
+
+function updateCooldowns() {
+
+    Object.keys(
+        caseSettings
+    ).forEach(name => {
+
+        const remaining =
+            getCooldown(name) -
+            Date.now();
+
+
+        let labelId =
+            'cooldown-' + name;
+
+        let buttonId =
+            'caseBtn-' + name;
+
+
+        const label =
+            document.getElementById(
+                labelId
+            );
+
+        const button =
+            document.getElementById(
+                buttonId
+            );
+
+
+        if (!label || !button) {
+
+            return;
+
+        }
+
+
+        if (remaining <= 0) {
+
+            label.textContent =
+                'ГОТОВ';
+
+            label.className =
+                'text-xs font-black text-emerald-400';
+
+            button.disabled = false;
+
+            button.classList.remove(
+                'opacity-40',
+                'cursor-not-allowed'
+            );
+
+
+            if (name === 'Uhilyant') {
+
+                button.textContent =
+                    'ОТКРЫТЬ UHILYANT';
+
+            }
+
+
+            if (name === 'Kitaen') {
+
+                button.textContent =
+                    'ОТКРЫТЬ KITAEN';
+
+            }
+
+
+            if (name === 'Chak') {
+
+                button.textContent =
+                    'ОТКРЫТЬ CHAK';
+
+            }
+
+        } else {
+
+            label.textContent =
+                formatTime(
+                    remaining
+                );
+
+            label.className =
+                'text-xs font-black text-amber-400';
+
+            button.disabled = true;
+
+            button.classList.add(
+                'opacity-40',
+                'cursor-not-allowed'
+            );
+
+            button.textContent =
+                'ДОСТУПНО ЧЕРЕЗ ' +
+                formatTime(remaining);
+
+        }
+
+    });
 
 }
 
 
 /* =========================================================
    OPEN CASE
-   ========================================================= */
+========================================================= */
 
-function openCase(name){
+function openCase(name) {
 
-  activeCase = name;
-
-  document.getElementById(
-    'modalTitle'
-  ).textContent =
-    name.toUpperCase();
+    initAudio();
 
 
-  document.getElementById(
-    'modalType'
-  ).textContent =
+    if (!isCaseReady(name)) {
 
-    name === 'Uhilyant'
-      ? '01 · CHARACTERS'
-      : name === 'Shkaf'
-        ? '02 · OUTFITS'
-        : '03 · DAMAGE';
+        showMessage(
+            'Этот кейс пока недоступен.'
+        );
 
+        return;
 
-  document.getElementById(
-    'dropResult'
-  ).classList.add('hidden');
+    }
 
 
-  document.getElementById(
-    'caseModal'
-  ).classList.remove('hidden');
+    activeCase = name;
 
 
-  document.getElementById(
-    'caseModal'
-  ).classList.add('flex');
+    document.getElementById(
+        'modalTitle'
+    ).textContent =
+        name.toUpperCase();
 
 
-  buildReel();
+    if (name === 'Uhilyant') {
+
+        document.getElementById(
+            'modalType'
+        ).textContent =
+            '01 · CHARACTERS';
+
+    }
+
+
+    if (name === 'Kitaen') {
+
+        document.getElementById(
+            'modalType'
+        ).textContent =
+            '02 · OUTFITS';
+
+    }
+
+
+    if (name === 'Chak') {
+
+        document.getElementById(
+            'modalType'
+        ).textContent =
+            '03 · DAMAGE';
+
+    }
+
+
+    document.getElementById(
+        'dropResult'
+    ).classList.add(
+        'hidden'
+    );
+
+
+    const modal =
+        document.getElementById(
+            'caseModal'
+        );
+
+
+    modal.classList.remove(
+        'hidden'
+    );
+
+    modal.classList.add(
+        'flex'
+    );
+
+
+    buildReel();
 
 }
 
 
 /* =========================================================
    CLOSE CASE
-   ========================================================= */
+========================================================= */
 
-function closeCase(){
+function closeCase() {
 
-  if(spinning)
-    return;
+    if (spinning) {
 
-  const modal =
+        return;
+
+    }
+
+
     document.getElementById(
-      'caseModal'
+        'caseModal'
+    ).classList.add(
+        'hidden'
     );
 
-  modal.classList.add('hidden');
 
-  modal.classList.remove('flex');
+    document.getElementById(
+        'caseModal'
+    ).classList.remove(
+        'flex'
+    );
 
 }
 
 
 /* =========================================================
    BUILD REEL
-   ========================================================= */
+========================================================= */
 
-function buildReel(winner=null){
+function buildReel() {
 
-  const reel =
-    document.getElementById(
-      'reel'
-    );
-
-
-  reel.style.transition =
-    'none';
-
-  reel.style.transform =
-    'translateX(0)';
-
-  reel.innerHTML = '';
+    const reel =
+        document.getElementById(
+            'reel'
+        );
 
 
-  const items =
-    shuffledReelItems(60);
+    reel.innerHTML = '';
+
+    reel.style.transition =
+        'none';
+
+    reel.style.transform =
+        'translateX(0)';
 
 
-  /*
-    Победитель ставится ближе
-    к концу длинной ленты.
-  */
-
-  if(winner){
-
-    items[48] =
-      winner;
-
-  }
+    const source =
+        cases[activeCase];
 
 
-  items.forEach(item=>{
+    /*
+       Делаем длинную ленту.
+       Каждый элемент визуально настоящий,
+       а победитель вставляется в конкретную
+       позицию перед остановкой.
+    */
 
-    const element =
-      document.createElement(
-        'div'
-      );
+    for (
+        let i = 0;
+        i < 45;
+        i++
+    ) {
 
-    element.className =
-      'reel-item rarity-' +
-      item[2].toLowerCase();
-
-
-    element.innerHTML =
-      itemHTML(item);
+        const item =
+            source[
+                i % source.length
+            ];
 
 
-    reel.appendChild(
-      element
-    );
+        const div =
+            document.createElement(
+                'div'
+            );
 
-  });
+
+        div.className =
+            'reel-item rarity-' +
+            item.rarity.toLowerCase();
+
+
+        div.innerHTML = `
+
+            <div class="text-4xl">
+                ${item.icon}
+            </div>
+
+            <div class="mt-2 text-xs font-black">
+                ${item.name}
+            </div>
+
+            <div class="
+                mt-1
+                text-[9px]
+                font-black
+                rarity-text-${item.rarity.toLowerCase()}
+            ">
+                ${item.rarity}
+            </div>
+
+        `;
+
+
+        reel.appendChild(div);
+
+    }
 
 }
 
 
 /* =========================================================
-   SPIN CASE
-   ========================================================= */
+   RANDOM DROP
+========================================================= */
 
-function spinCase(){
+function pickDrop() {
 
-  if(spinning)
-    return;
-
-
-  spinning = true;
-
-  openAudio();
-
-  playSpinStart();
+    const source =
+        cases[activeCase];
 
 
-  const button =
-    document.getElementById(
-      'spinBtn'
-    );
-
-
-  button.disabled = true;
-
-  button.textContent =
-    'ОТКРЫВАЕМ...';
-
-
-  /*
-    Сначала определяем настоящий
-    случайный выигрыш.
-  */
-
-  const winner =
-    pick();
-
-
-  /*
-    Создаём новую случайную ленту.
-  */
-
-  buildReel(winner);
-
-
-  const reel =
-    document.getElementById(
-      'reel'
-    );
-
-
-  const targetIndex = 48;
-
-  const target =
-    reel.children[targetIndex];
-
-
-  const itemWidth = 118;
-
-  const gap = 12;
-
-  const step =
-    itemWidth + gap;
-
-
-  const windowWidth =
-    reel.parentElement.clientWidth;
-
-
-  const targetCenter =
-    targetIndex * step +
-    itemWidth / 2;
-
-
-  const offset =
-    targetCenter -
-    windowWidth / 2;
-
-
-  /*
-    Звуки прокрутки.
-    В начале быстро.
-    В конце медленно.
-  */
-
-  const start =
-    performance.now();
-
-  const duration = 5000;
-
-
-  function tickLoop(now){
-
-    if(!spinning)
-      return;
-
-
-    const progress =
-      Math.min(
-        (now - start) /
-        duration,
-        1
-      );
+    const roll =
+        Math.random();
 
 
     /*
-      55ms -> 265ms.
-      Поэтому в начале много
-      быстрых кликов,
-      а в конце они становятся
-      редкими.
+       Шансы существуют только внутри игры.
+       Пользователю они нигде не показываются.
     */
 
-    const interval =
-      55 +
-      Math.pow(progress,2) *
-      210;
+    if (roll < 0.002) {
 
-
-    if(
-      now - lastTick >= interval
-    ){
-
-      playReelTick();
-
-      lastTick = now;
+        return source[5];
 
     }
 
 
-    if(progress < 1){
+    if (roll < 0.02) {
 
-      requestAnimationFrame(
-        tickLoop
-      );
+        return source[4];
 
     }
 
-  }
+
+    if (roll < 0.08) {
+
+        return source[3];
+
+    }
 
 
-  lastTick = 0;
+    if (roll < 0.20) {
 
-  requestAnimationFrame(
-    tickLoop
-  );
+        return source[2];
 
-
-  /*
-    Плавная прокрутка.
-  */
-
-  reel.style.transition =
-    'transform 5s cubic-bezier(.07,.72,.12,1)';
+    }
 
 
-  reel.style.transform =
-    'translateX(' +
-    (-offset) +
-    'px)';
+    if (roll < 0.45) {
+
+        return source[1];
+
+    }
 
 
-  /*
-    Когда остановилось.
-  */
+    return source[0];
 
-  setTimeout(()=>{
-
-    /*
-      Дополнительная страховка:
-      центральный предмет
-      всегда совпадает
-      с победителем.
-    */
-
-    target.innerHTML =
-      itemHTML(winner);
+}
 
 
-    target.style.boxShadow =
-      '0 0 35px rgba(255,255,255,.22)';
+/* =========================================================
+   SPIN
+========================================================= */
+
+function spinCase() {
+
+    if (spinning) {
+
+        return;
+
+    }
 
 
-    document.getElementById(
-      'dropEmoji'
-    ).textContent =
-      winner[1];
+    if (!isCaseReady(activeCase)) {
+
+        showMessage(
+            'Этот кейс пока недоступен.'
+        );
+
+        return;
+
+    }
 
 
-    document.getElementById(
-      'dropName'
-    ).textContent =
-      winner[0];
+    initAudio();
 
 
-    document.getElementById(
-      'dropRarity'
-    ).textContent =
-      winner[2] +
-      ' · ' +
-      rarityPercent[winner[2]];
+    spinning = true;
 
 
-    document.getElementById(
-      'dropStat'
-    ).textContent =
-
-      activeCase === 'Chak'
-
-        ? 'Оружие добавлено в инвентарь · DAMAGE будет учитываться в системе прокачки'
-
-        : 'Предмет добавлен в инвентарь';
+    const button =
+        document.getElementById(
+            'spinBtn'
+        );
 
 
-    /*
-      Сохраняем предмет.
-    */
-
-    addToInventory(winner);
-
-
-    /*
-      Даём XP.
-    */
-
-    addXP(150);
-
-
-    /*
-      Звук выпадения.
-    */
-
-    playDropSound(
-      winner[2]
-    );
-
-
-    /*
-      Показываем результат.
-    */
-
-    document.getElementById(
-      'dropResult'
-    ).classList.remove(
-      'hidden'
-    );
-
-
-    spinning = false;
-
-    button.disabled = false;
+    button.disabled = true;
 
     button.textContent =
-      'ОТКРЫТЬ ЕЩЁ';
+        'ПРОКРУТКА...';
 
-  },5100);
+
+    const winner =
+        pickDrop();
+
+
+    const reel =
+        document.getElementById(
+            'reel'
+        );
+
+
+    const items =
+        Array.from(
+            reel.children
+        );
+
+
+    /*
+       ВАЖНО:
+       Теперь победитель реально заменяет
+       предмет в центре рулетки.
+    */
+
+    const targetIndex = 36;
+
+
+    const target =
+        items[targetIndex];
+
+
+    target.className =
+        'reel-item rarity-' +
+        winner.rarity.toLowerCase();
+
+
+    target.innerHTML = `
+
+        <div class="text-4xl">
+            ${winner.icon}
+        </div>
+
+        <div class="mt-2 text-xs font-black">
+            ${winner.name}
+        </div>
+
+        <div class="
+            mt-1
+            text-[9px]
+            font-black
+            rarity-text-${winner.rarity.toLowerCase()}
+        ">
+            ${winner.rarity}
+        </div>
+
+    `;
+
+
+    const itemWidth = 130;
+
+
+    const reelWindow =
+        reel.parentElement;
+
+
+    const centerOffset =
+        (
+            reelWindow.clientWidth / 2
+        ) -
+        (
+            itemWidth / 2
+        );
+
+
+    const targetPosition =
+        targetIndex *
+        itemWidth;
+
+
+    const finalOffset =
+        targetPosition -
+        centerOffset;
+
+
+    reel.style.transition =
+        'transform 5.2s cubic-bezier(.08,.7,.15,1)';
+
+
+    /*
+       Небольшой стартовый звук.
+    */
+
+    playTone(
+        100,
+        .08,
+        'square',
+        .025
+    );
+
+
+    startSpinSound();
+
+
+    requestAnimationFrame(() => {
+
+        reel.style.transform =
+            'translateX(-' +
+            finalOffset +
+            'px)';
+
+    });
+
+
+    setTimeout(() => {
+
+        stopSpinSound();
+
+
+        playDropSound(
+            winner.rarity
+        );
+
+
+        showWinner(
+            winner
+        );
+
+
+        addToInventory(
+            winner
+        );
+
+
+        addXP(
+            caseSettings[
+                activeCase
+            ].xp
+        );
+
+
+        startCooldown(
+            activeCase
+        );
+
+
+        spinning = false;
+
+
+        button.disabled = false;
+
+        button.textContent =
+            'ОТКРЫТЬ ЕЩЁ';
+
+
+        updateCooldowns();
+
+
+    }, 5400);
+
+}
+
+
+/* =========================================================
+   SHOW WINNER
+========================================================= */
+
+function showWinner(item) {
+
+    document.getElementById(
+        'dropEmoji'
+    ).textContent =
+        item.icon;
+
+
+    document.getElementById(
+        'dropName'
+    ).textContent =
+        item.name;
+
+
+    document.getElementById(
+        'dropRarity'
+    ).textContent =
+        item.rarity;
+
+
+    let description =
+        'Предмет добавлен в коллекцию';
+
+
+    if (item.type === 'CHARACTER') {
+
+        description =
+            'Персонаж добавлен в коллекцию';
+
+    }
+
+
+    if (item.type === 'OUTFIT') {
+
+        description =
+            'Одежда добавлена в коллекцию';
+
+    }
+
+
+    if (item.type === 'WEAPON') {
+
+        description =
+            'Оружие добавлено в арсенал · DAMAGE +' +
+            (item.damage || 0);
+
+    }
+
+
+    document.getElementById(
+        'dropStat'
+    ).textContent =
+        description;
+
+
+    const result =
+        document.getElementById(
+            'dropResult'
+        );
+
+
+    result.classList.remove(
+        'hidden'
+    );
+
+
+    /*
+       Особый визуальный эффект
+       для легендарных и мифических.
+    */
+
+    result.classList.remove(
+        'shadow-[0_0_80px_rgba(239,68,68,.25)]'
+    );
+
+
+    if (
+        item.rarity === 'MYTHIC'
+    ) {
+
+        result.classList.add(
+            'shadow-[0_0_100px_rgba(239,68,68,.3)]'
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   INVENTORY
+========================================================= */
+
+function addToInventory(item) {
+
+    const inventoryItem = {
+
+        id:
+            Date.now() +
+            '_' +
+            Math.random()
+                .toString(36)
+                .slice(2),
+
+        name: item.name,
+
+        icon: item.icon,
+
+        rarity: item.rarity,
+
+        type: item.type,
+
+        damage: item.damage || 0,
+
+        caseName: activeCase,
+
+        created:
+            new Date()
+                .toISOString()
+
+    };
+
+
+    inventory.unshift(
+        inventoryItem
+    );
+
+
+    localStorage.setItem(
+        'chak_inventory',
+        JSON.stringify(
+            inventory
+        )
+    );
+
+
+    renderInventory();
+
+}
+
+
+function renderInventory(
+    filter = currentInventoryFilter
+) {
+
+    const grid =
+        document.getElementById(
+            'inventoryGrid'
+        );
+
+
+    const empty =
+        document.getElementById(
+            'emptyInventory'
+        );
+
+
+    if (!grid) {
+
+        return;
+
+    }
+
+
+    grid.innerHTML = '';
+
+
+    let items =
+        inventory;
+
+
+    if (filter !== 'ALL') {
+
+        items =
+            inventory.filter(
+                item =>
+                    item.type === filter
+            );
+
+    }
+
+
+    document.getElementById(
+        'inventoryCount'
+    ).textContent =
+        inventory.length;
+
+
+    document.getElementById(
+        'inventoryLevel'
+    ).textContent =
+        level;
+
+
+    document.getElementById(
+        'inventoryXP'
+    ).textContent =
+        xp;
+
+
+    if (items.length === 0) {
+
+        empty.classList.remove(
+            'hidden'
+        );
+
+        return;
+
+    }
+
+
+    empty.classList.add(
+        'hidden'
+    );
+
+
+    items.forEach(item => {
+
+        const card =
+            document.createElement(
+                'div'
+            );
+
+
+        card.className =
+            `
+            inventory-card
+            rounded-2xl
+            border
+            bg-zinc-950
+            p-3
+            rarity-${item.rarity.toLowerCase()}
+            `;
+
+
+        card.innerHTML = `
+
+            <div class="
+                h-20
+                rounded-xl
+                bg-white/[.025]
+                flex
+                items-center
+                justify-center
+            ">
+
+                <div class="inventory-icon">
+                    ${item.icon}
+                </div>
+
+            </div>
+
+
+            <div class="
+                mt-3
+                text-xs
+                font-black
+                truncate
+            ">
+                ${item.name}
+            </div>
+
+
+            <div class="
+                mt-1
+                text-[9px]
+                font-black
+                rarity-text-${item.rarity.toLowerCase()}
+            ">
+                ${item.rarity}
+            </div>
+
+
+            ${
+                item.damage
+                    ? `
+                        <div class="
+                            mt-2
+                            text-[10px]
+                            text-red-400
+                            font-black
+                        ">
+                            DAMAGE +${item.damage}
+                        </div>
+                    `
+                    : ''
+            }
+
+        `;
+
+
+        grid.appendChild(
+            card
+        );
+
+    });
+
+}
+
+
+let currentInventoryFilter =
+    'ALL';
+
+
+function filterInventory(
+    filter
+) {
+
+    currentInventoryFilter =
+        filter;
+
+
+    document
+        .querySelectorAll(
+            '.inventory-filter'
+        )
+        .forEach(button => {
+
+            const active =
+                button.dataset.filter ===
+                filter;
+
+
+            if (active) {
+
+                button.classList.remove(
+                    'bg-white/5',
+                    'border',
+                    'border-white/10',
+                    'text-sm',
+                    'font-bold'
+                );
+
+                button.classList.add(
+                    'bg-white',
+                    'text-black',
+                    'font-black'
+                );
+
+            } else {
+
+                button.classList.remove(
+                    'bg-white',
+                    'text-black',
+                    'font-black'
+                );
+
+                button.classList.add(
+                    'bg-white/5',
+                    'border',
+                    'border-white/10',
+                    'text-sm',
+                    'font-bold'
+                );
+
+            }
+
+        });
+
+
+    renderInventory(
+        filter
+    );
+
+}
+
+
+/* =========================================================
+   XP
+========================================================= */
+
+function addXP(value) {
+
+    xp += value;
+
+
+    while (xp >= 1000) {
+
+        xp -= 1000;
+
+        level++;
+
+        showMessage(
+            '🎉 Новый уровень! LEVEL ' +
+            level
+        );
+
+    }
+
+
+    localStorage.setItem(
+        'chak_xp',
+        xp
+    );
+
+
+    localStorage.setItem(
+        'chak_level',
+        level
+    );
+
+
+    updatePlayerUI();
+
+}
+
+
+function updatePlayerUI() {
+
+    document.getElementById(
+        'xp'
+    ).textContent =
+        xp;
+
+
+    document.getElementById(
+        'level'
+    ).textContent =
+        level;
+
+
+    document.getElementById(
+        'xpCurrent'
+    ).textContent =
+        xp;
+
+
+    document.getElementById(
+        'headerLevel'
+    ).textContent =
+        level;
+
+
+    document.getElementById(
+        'inventoryLevel'
+    ).textContent =
+        level;
+
+
+    document.getElementById(
+        'inventoryXP'
+    ).textContent =
+        xp;
+
+
+    const bar =
+        document.getElementById(
+            'xpbar'
+        );
+
+
+    bar.style.width =
+        (xp / 10) +
+        '%';
 
 }
 
 
 /* =========================================================
    TOAST
-   ========================================================= */
+========================================================= */
 
-function showMessage(message){
+function showMessage(message) {
 
-  let toast =
-    document.getElementById(
-      'toast'
+    const old =
+        document.getElementById(
+            'toast'
+        );
+
+
+    if (old) {
+
+        old.remove();
+
+    }
+
+
+    const toast =
+        document.createElement(
+            'div'
+        );
+
+
+    toast.id =
+        'toast';
+
+
+    toast.className =
+        `
+        toast
+        fixed
+        bottom-6
+        left-1/2
+        -translate-x-1/2
+        z-[200]
+        max-w-md
+        w-[calc(100%-32px)]
+        bg-white
+        text-black
+        px-5
+        py-4
+        rounded-2xl
+        shadow-2xl
+        text-sm
+        font-black
+        text-center
+        `;
+
+
+    toast.textContent =
+        message;
+
+
+    document.body.appendChild(
+        toast
     );
 
 
-  if(toast)
-    toast.remove();
+    setTimeout(() => {
 
+        toast.remove();
 
-  toast =
-    document.createElement(
-      'div'
-    );
-
-
-  toast.id = 'toast';
-
-
-  toast.className =
-    'fixed bottom-6 left-1/2 ' +
-    '-translate-x-1/2 z-[200] ' +
-    'max-w-md w-[calc(100%-32px)] ' +
-    'bg-white text-black ' +
-    'px-5 py-4 rounded-2xl ' +
-    'shadow-2xl text-sm ' +
-    'font-black text-center';
-
-
-  toast.textContent =
-    message;
-
-
-  document.body.appendChild(
-    toast
-  );
-
-
-  setTimeout(
-    ()=>toast.remove(),
-    3200
-  );
+    }, 3200);
 
 }
 
 
 /* =========================================================
    AUTH
-   ========================================================= */
+========================================================= */
 
-function openAuth(){
+function openAuth() {
 
-  const modal =
-    document.getElementById(
-      'authModal'
+    const modal =
+        document.getElementById(
+            'authModal'
+        );
+
+
+    modal.classList.remove(
+        'hidden'
     );
 
-  modal.classList.remove(
-    'hidden'
-  );
-
-  modal.classList.add(
-    'flex'
-  );
+    modal.classList.add(
+        'flex'
+    );
 
 }
 
 
-function closeAuth(){
+function closeAuth() {
 
-  const modal =
-    document.getElementById(
-      'authModal'
+    const modal =
+        document.getElementById(
+            'authModal'
+        );
+
+
+    modal.classList.add(
+        'hidden'
     );
 
-  modal.classList.add(
-    'hidden'
-  );
-
-  modal.classList.remove(
-    'flex'
-  );
+    modal.classList.remove(
+        'flex'
+    );
 
 }
 
 
-/* INIT */
-
-updateProgress();
-
-
-/* ESC */
+/* =========================================================
+   ESCAPE
+========================================================= */
 
 document.addEventListener(
-  'keydown',
-  event=>{
+    'keydown',
+    event => {
 
-    if(event.key === 'Escape'){
+        if (
+            event.key ===
+            'Escape'
+        ) {
 
-      if(!spinning){
+            if (!spinning) {
 
-        closeCase();
-        closeAuth();
+                closeCase();
 
-      }
+            }
+
+            closeAuth();
+
+        }
 
     }
+);
 
-  }
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+document.addEventListener(
+    'DOMContentLoaded',
+    () => {
+
+        updatePlayerUI();
+
+        updateCooldowns();
+
+        renderInventory();
+
+        setInterval(
+            updateCooldowns,
+            1000
+        );
+
+
+        /*
+           Если пользователь сразу открыл
+           #inventory
+        */
+
+        if (
+            window.location.hash ===
+            '#inventory'
+        ) {
+
+            showPage(
+                'inventory'
+            );
+
+        }
+
+    }
 );
 
 </script>
