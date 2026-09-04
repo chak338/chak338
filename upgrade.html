@@ -3,1310 +3,1797 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHAK338 — Upgrader</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
+<title>CHAK338 — Upgrade</title>
 
 <style>
-    * {
-        box-sizing: border-box;
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(20, 70, 40, .12),
+            transparent 35%
+        ),
+        #06080b;
+    color: white;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+button {
+    font-family: inherit;
+}
+
+.header {
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 28px;
+
+    background: rgba(5, 7, 10, .94);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 21px;
+    font-weight: 1000;
+    letter-spacing: 1px;
+}
+
+.logoIcon {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 11px;
+
+    display: grid;
+    place-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #22c55e,
+            #15803d
+        );
+
+    box-shadow:
+        0 0 25px
+        rgba(34,197,94,.25);
+}
+
+.nav {
+    display: flex;
+    gap: 7px;
+}
+
+.nav a {
+    text-decoration: none;
+
+    color: #8b929d;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    padding: 10px 14px;
+
+    border-radius: 9px;
+
+    transition: .2s;
+}
+
+.nav a:hover,
+.nav a.active {
+    color: white;
+    background: rgba(255,255,255,.07);
+}
+
+.main {
+    width: min(1500px, 100%);
+
+    margin: 0 auto;
+
+    padding:
+        35px 22px
+        70px;
+}
+
+.pageTitle {
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+.pageTitle h1 {
+    margin: 0;
+
+    font-size:
+        clamp(34px, 5vw, 56px);
+
+    font-weight: 1000;
+
+    letter-spacing: -2px;
+}
+
+.pageTitle h1 span {
+    color: #22c55e;
+
+    text-shadow:
+        0 0 30px
+        rgba(34,197,94,.4);
+}
+
+.pageTitle p {
+    color: #69717d;
+
+    margin:
+        10px 0 0;
+
+    font-size: 14px;
+}
+
+.layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(280px, 1fr)
+        540px
+        minmax(280px, 1fr);
+
+    gap: 22px;
+
+    align-items: start;
+}
+
+.panel {
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.075);
+
+    box-shadow:
+        0 30px 80px
+        rgba(0,0,0,.35);
+
+    overflow: hidden;
+}
+
+.panelHeader {
+    height: 58px;
+
+    padding: 0 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.06);
+}
+
+.panelHeader strong {
+    font-size: 14px;
+    font-weight: 1000;
+}
+
+.panelHeader span {
+    color: #626a75;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.inventoryGrid,
+.targetGrid {
+    padding: 14px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    max-height: 590px;
+
+    overflow-y: auto;
+}
+
+.inventoryGrid::-webkit-scrollbar,
+.targetGrid::-webkit-scrollbar {
+    width: 5px;
+}
+
+.inventoryGrid::-webkit-scrollbar-thumb,
+.targetGrid::-webkit-scrollbar-thumb {
+    background: #252b33;
+    border-radius: 99px;
+}
+
+.inventoryItem,
+.targetItem {
+    position: relative;
+
+    min-width: 0;
+
+    padding: 8px;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.045),
+            rgba(0,0,0,.18)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    cursor: pointer;
+
+    transition:
+        .18s;
+}
+
+.inventoryItem:hover,
+.targetItem:hover {
+    transform:
+        translateY(-2px);
+
+    border-color:
+        rgba(255,255,255,.18);
+}
+
+.inventoryItem.selected,
+.targetItem.selected {
+    border-color: #22c55e;
+
+    background:
+        rgba(34,197,94,.09);
+
+    box-shadow:
+        0 0 0 1px
+        rgba(34,197,94,.15),
+
+        0 0 25px
+        rgba(34,197,94,.12);
+}
+
+.itemImage {
+    height: 100px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 9px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.07),
+            transparent 65%
+        ),
+        #090c10;
+
+    overflow: hidden;
+}
+
+.itemImage img {
+    width: 88%;
+    height: 88%;
+
+    object-fit: contain;
+}
+
+.itemName {
+    margin-top: 8px;
+
+    color: #d2d7dd;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.itemPrice {
+    margin-top: 3px;
+
+    color: #22c55e;
+
+    font-size: 13px;
+    font-weight: 1000;
+}
+
+.selectedMark {
+    position: absolute;
+
+    top: 6px;
+    right: 6px;
+
+    width: 20px;
+    height: 20px;
+
+    display: none;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    color: #031007;
+
+    font-size: 11px;
+    font-weight: 1000;
+
+    box-shadow:
+        0 0 15px
+        rgba(34,197,94,.6);
+}
+
+.inventoryItem.selected .selectedMark,
+.targetItem.selected .selectedMark {
+    display: grid;
+}
+
+.locked {
+    opacity: .35;
+    cursor: not-allowed;
+}
+
+.targetChance {
+    position: absolute;
+
+    left: 6px;
+    top: 6px;
+
+    padding:
+        4px 6px;
+
+    border-radius: 6px;
+
+    background:
+        rgba(0,0,0,.75);
+
+    color: #22c55e;
+
+    font-size: 9px;
+    font-weight: 1000;
+
+    z-index: 2;
+}
+
+.locked .targetChance {
+    color: #777;
+}
+
+.empty {
+    grid-column: 1 / -1;
+
+    padding: 65px 20px;
+
+    text-align: center;
+
+    color: #5f6670;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   CENTER
+========================================================= */
+
+.center {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.upgradeCard {
+    padding: 23px;
+
+    border-radius: 22px;
+
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(34,197,94,.045),
+            transparent 45%
+        ),
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.075);
+
+    box-shadow:
+        0 30px 90px
+        rgba(0,0,0,.45);
+}
+
+.values {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        45px
+        1fr;
+
+    gap: 8px;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.valueBox {
+    padding: 12px;
+
+    text-align: center;
+
+    border-radius: 12px;
+
+    background:
+        rgba(0,0,0,.23);
+
+    border:
+        1px solid
+        rgba(255,255,255,.055);
+}
+
+.valueLabel {
+    color: #656d77;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+.valueNumber {
+    margin-top: 4px;
+
+    font-size: 23px;
+    font-weight: 1000;
+}
+
+.green {
+    color: #22c55e;
+}
+
+.arrowBetween {
+    text-align: center;
+
+    color: #59616c;
+
+    font-size: 23px;
+}
+
+.chanceHeader {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 9px;
+}
+
+.chanceHeader span:first-child {
+    color: #8b939e;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.chanceNumber {
+    color: #22c55e;
+
+    font-size: 20px;
+    font-weight: 1000;
+}
+
+.chanceButtons {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 7px;
+
+    margin-bottom: 15px;
+}
+
+.chanceButton {
+    height: 40px;
+
+    border-radius: 10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.035);
+
+    color: #8d95a0;
+
+    font-weight: 1000;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.chanceButton:hover {
+    color: white;
+
+    background:
+        rgba(255,255,255,.07);
+}
+
+.chanceButton.active {
+    color: #031007;
+
+    background: #22c55e;
+
+    border-color: #22c55e;
+
+    box-shadow:
+        0 0 25px
+        rgba(34,197,94,.2);
+}
+
+
+/* =========================================================
+   WHEEL
+========================================================= */
+
+.wheelArea {
+    width: 430px;
+    height: 430px;
+
+    margin:
+        0 auto
+        15px;
+
+    position: relative;
+
+    display: grid;
+    place-items: center;
+}
+
+.wheelGlow {
+    position: absolute;
+
+    width: 360px;
+    height: 360px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(34,197,94,.08);
+
+    filter: blur(40px);
+}
+
+.wheel {
+    width: 350px;
+    height: 350px;
+
+    position: relative;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            from -90deg,
+
+            #20d94e 0deg,
+
+            #20d94e
+            calc(var(--chance) * 3.6deg),
+
+            #11151b
+            calc(var(--chance) * 3.6deg),
+
+            #080a0d 360deg
+        );
+
+    box-shadow:
+        0 0 0 9px #090c10,
+
+        0 0 0 11px
+        rgba(255,255,255,.06),
+
+        0 0 70px
+        rgba(0,0,0,.85),
+
+        0 0 50px
+        rgba(34,197,94,.09);
+}
+
+.wheel::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 18px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    box-shadow:
+        inset
+        0 0 50px
+        rgba(0,0,0,.65);
+}
+
+.wheel::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: 50%;
+
+    background:
+        repeating-conic-gradient(
+            from -90deg,
+
+            rgba(255,255,255,.12)
+            0deg,
+
+            rgba(255,255,255,.12)
+            .6deg,
+
+            transparent
+            .6deg,
+
+            transparent
+            30deg
+        );
+
+    opacity: .12;
+}
+
+
+/* =========================================================
+   ЦЕНТР КОЛЕСА
+========================================================= */
+
+.wheelCenter {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    width: 126px;
+    height: 126px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            #343b44,
+            #101419 65%
+        );
+
+    border:
+        5px solid
+        #080b0e;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(255,255,255,.08),
+
+        0 15px 40px
+        rgba(0,0,0,.75);
+
+    z-index: 10;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.wheelPercent {
+    font-size: 28px;
+    font-weight: 1000;
+}
+
+.wheelSmall {
+    color: #656d77;
+
+    margin-top: 4px;
+
+    font-size: 8px;
+    font-weight: 1000;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   НОВАЯ СТРЕЛКА
+   ПОВТОРЯЕТ ФОРМУ С КАРТИНКИ
+========================================================= */
+
+.rotatingArrow {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 230px;
+    height: 160px;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(0deg);
+
+    transform-origin:
+        50% 50%;
+
+    z-index: 25;
+
+    pointer-events: none;
+
+    will-change: transform;
+}
+
+
+/*
+    Внешняя синяя часть
+*/
+
+.arrowOuter {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 180px;
+    height: 125px;
+
+    transform:
+        translate(-50%, -50%);
+
+    clip-path:
+        polygon(
+            0 0,
+            54% 50%,
+            0 100%,
+            45% 100%,
+            100% 50%,
+            45% 0
+        );
+
+    background:
+        linear-gradient(
+            135deg,
+            #04111f 0%,
+            #075291 35%,
+            #1398ef 70%,
+            #063865 100%
+        );
+
+    filter:
+        drop-shadow(
+            0 0 4px
+            rgba(0,150,255,.95)
+        )
+        drop-shadow(
+            0 0 17px
+            rgba(0,130,255,.55)
+        );
+}
+
+
+/*
+    Внутренняя зелёная часть
+*/
+
+.arrowInner {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 162px;
+    height: 107px;
+
+    transform:
+        translate(-50%, -50%);
+
+    clip-path:
+        polygon(
+            0 0,
+            54% 50%,
+            0 100%,
+            45% 100%,
+            100% 50%,
+            45% 0
+        );
+
+    background:
+        linear-gradient(
+            135deg,
+            #031b0d 0%,
+            #08752c 35%,
+            #21ed57 70%,
+            #075b22 100%
+        );
+
+    filter:
+        drop-shadow(
+            0 0 4px
+            rgba(35,255,90,.95)
+        )
+        drop-shadow(
+            0 0 13px
+            rgba(35,255,90,.55)
+        );
+}
+
+
+/*
+    Блик
+*/
+
+.arrowInner::after {
+    content: "";
+
+    position: absolute;
+
+    left: 10%;
+    top: 10%;
+
+    width: 55%;
+    height: 18%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.6),
+            transparent
+        );
+
+    transform:
+        rotate(22deg);
+
+    filter:
+        blur(4px);
+
+    opacity: .4;
+}
+
+
+/*
+    Анимация стрелки
+
+    ВАЖНО:
+
+    JS передаёт сюда конкретный угол.
+
+    Поэтому стрелка не выбирает результат
+    после остановки.
+*/
+
+.rotatingArrow.spinning {
+    animation:
+        upgraderArrowSpin
+        4.5s
+        cubic-bezier(.10,.74,.10,1)
+        forwards;
+}
+
+@keyframes upgraderArrowSpin {
+
+    0% {
+        transform:
+            translate(-50%, -50%)
+            rotate(0deg);
     }
 
-    html, body {
-        margin: 0;
-        padding: 0;
-        min-height: 100%;
-        background:
-            radial-gradient(circle at 50% 20%, rgba(74, 222, 128, .08), transparent 30%),
-            radial-gradient(circle at 10% 80%, rgba(59, 130, 246, .08), transparent 30%),
-            #07090d;
-        color: #fff;
-        font-family: Arial, Helvetica, sans-serif;
+    100% {
+        transform:
+            translate(-50%, -50%)
+            rotate(var(--final-angle));
+    }
+}
+
+
+/*
+    Победа
+*/
+
+.rotatingArrow.win {
+    animation:
+        winGlow
+        .7s
+        ease-in-out
+        2;
+}
+
+@keyframes winGlow {
+
+    0% {
+        filter:
+            brightness(1)
+            drop-shadow(
+                0 0 5px
+                rgba(34,197,94,.4)
+            );
     }
 
-    body {
-        overflow-x: hidden;
+    50% {
+        filter:
+            brightness(1.5)
+            drop-shadow(
+                0 0 25px
+                rgba(34,197,94,1)
+            );
     }
 
-    button {
-        font-family: inherit;
+    100% {
+        filter:
+            brightness(1)
+            drop-shadow(
+                0 0 5px
+                rgba(34,197,94,.4)
+            );
+    }
+}
+
+
+/* =========================================================
+   КНОПКА
+========================================================= */
+
+.upgradeButton {
+    width: 100%;
+    height: 59px;
+
+    border: 0;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #22c55e,
+            #15803d
+        );
+
+    color: #031007;
+
+    font-size: 16px;
+    font-weight: 1000;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 12px 35px
+        rgba(34,197,94,.17);
+
+    transition: .2s;
+}
+
+.upgradeButton:hover:not(:disabled) {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 15px 45px
+        rgba(34,197,94,.3);
+}
+
+.upgradeButton:disabled {
+    opacity: .35;
+
+    cursor: not-allowed;
+
+    box-shadow: none;
+}
+
+.hint {
+    margin-top: 9px;
+
+    text-align: center;
+
+    color: #4d555f;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   TARGET INFO
+========================================================= */
+
+.targetInfo {
+    padding:
+        12px 17px;
+
+    background:
+        rgba(34,197,94,.035);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.055);
+}
+
+.targetInfoRow {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 6px;
+
+    font-size: 11px;
+}
+
+.targetInfoRow:last-child {
+    margin-bottom: 0;
+}
+
+.muted {
+    color: #646c76;
+}
+
+.targetMax {
+    color: #22c55e;
+
+    font-weight: 1000;
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,.78);
+
+    backdrop-filter:
+        blur(15px);
+}
+
+.modal.show {
+    display: flex;
+}
+
+.resultBox {
+    width:
+        min(450px, 100%);
+
+    padding: 30px;
+
+    text-align: center;
+
+    border-radius: 24px;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(34,197,94,.12),
+            transparent 40%
+        ),
+        #0d1117;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    box-shadow:
+        0 40px 120px
+        rgba(0,0,0,.7);
+
+    animation:
+        resultIn
+        .3s
+        ease;
+}
+
+@keyframes resultIn {
+
+    from {
+        opacity: 0;
+        transform:
+            scale(.9)
+            translateY(20px);
     }
 
-    .page {
-        min-height: 100vh;
+    to {
+        opacity: 1;
+        transform:
+            scale(1)
+            translateY(0);
+    }
+}
+
+.resultStatus {
+    font-size: 12px;
+
+    font-weight: 1000;
+
+    letter-spacing: 2px;
+}
+
+.resultStatus.win {
+    color: #22c55e;
+}
+
+.resultStatus.loss {
+    color: #ef4444;
+}
+
+.resultTitle {
+    margin:
+        7px 0 20px;
+
+    font-size: 34px;
+
+    font-weight: 1000;
+}
+
+.resultImage {
+    width: 220px;
+    height: 180px;
+
+    margin:
+        0 auto
+        17px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 18px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(34,197,94,.1),
+            transparent 65%
+        ),
+        #090c10;
+
+    overflow: hidden;
+}
+
+.resultImage img {
+    width: 90%;
+    height: 90%;
+
+    object-fit: contain;
+}
+
+.resultName {
+    font-size: 19px;
+
+    font-weight: 1000;
+}
+
+.resultPrice {
+    margin-top: 5px;
+
+    color: #22c55e;
+
+    font-size: 17px;
+    font-weight: 1000;
+}
+
+.resultButtons {
+    display: flex;
+
+    gap: 9px;
+
+    margin-top: 24px;
+}
+
+.resultButton {
+    flex: 1;
+
+    height: 50px;
+
+    border: 0;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-weight: 1000;
+
+    transition: .2s;
+}
+
+.resultButton:hover {
+    transform:
+        translateY(-2px);
+}
+
+.resultButton.close {
+    color: white;
+
+    background:
+        rgba(255,255,255,.07);
+}
+
+.resultButton.take {
+    color: #031007;
+
+    background: #22c55e;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1250px) {
+
+    .layout {
+        grid-template-columns:
+            1fr 1fr;
     }
 
-    /* =========================
-       HEADER
-    ========================= */
+    .center {
+        grid-column:
+            1 / -1;
+
+        grid-row: 1;
+
+        width: 600px;
+        max-width: 100%;
+
+        margin: 0 auto;
+    }
+
+    .inventory {
+        grid-column: 1;
+    }
+
+    .targets {
+        grid-column: 2;
+    }
+}
+
+@media (max-width: 800px) {
 
     .header {
-        height: 72px;
-        border-bottom: 1px solid rgba(255,255,255,.07);
-        background: rgba(7,9,13,.92);
-        backdrop-filter: blur(18px);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 30px;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-    }
-
-    .logo {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-weight: 900;
-        font-size: 22px;
-        letter-spacing: 1px;
-    }
-
-    .logo-icon {
-        width: 38px;
-        height: 38px;
-        border-radius: 12px;
-        background: linear-gradient(135deg, #22c55e, #16a34a);
-        display: grid;
-        place-items: center;
-        box-shadow: 0 0 25px rgba(34,197,94,.25);
-    }
-
-    .nav {
-        display: flex;
-        gap: 8px;
+        padding:
+            0 13px;
     }
 
     .nav a {
-        color: #9ca3af;
-        text-decoration: none;
-        padding: 10px 15px;
-        border-radius: 10px;
-        transition: .2s;
-        font-weight: 700;
-        font-size: 14px;
+        padding:
+            8px;
+
+        font-size: 11px;
     }
 
-    .nav a:hover,
-    .nav a.active {
-        color: #fff;
-        background: rgba(255,255,255,.07);
+    .logo {
+        font-size: 16px;
     }
-
-    /* =========================
-       MAIN
-    ========================= */
 
     .main {
-        max-width: 1500px;
-        margin: 0 auto;
-        padding: 35px 25px 70px;
+        padding:
+            25px 12px
+            50px;
     }
 
-    .title {
-        text-align: center;
-        margin-bottom: 30px;
-    }
-
-    .title h1 {
-        margin: 0;
-        font-size: clamp(32px, 5vw, 54px);
-        font-weight: 1000;
-        letter-spacing: -2px;
-    }
-
-    .title h1 span {
-        color: #22c55e;
-        text-shadow: 0 0 30px rgba(34,197,94,.35);
-    }
-
-    .title p {
-        color: #6b7280;
-        margin: 10px 0 0;
-    }
-
-    /* =========================
-       LAYOUT
-    ========================= */
-
-    .upgrade-layout {
-        display: grid;
-        grid-template-columns: 1fr 540px 1fr;
-        gap: 24px;
-        align-items: start;
-    }
-
-    .panel {
-        background:
-            linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018));
-        border: 1px solid rgba(255,255,255,.08);
-        border-radius: 20px;
-        box-shadow:
-            0 25px 80px rgba(0,0,0,.35),
-            inset 0 1px 0 rgba(255,255,255,.03);
-        overflow: hidden;
-    }
-
-    .panel-head {
+    .layout {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 18px 20px;
-        border-bottom: 1px solid rgba(255,255,255,.06);
-    }
 
-    .panel-head h2 {
-        margin: 0;
-        font-size: 17px;
-        font-weight: 900;
-    }
-
-    .counter {
-        color: #6b7280;
-        font-size: 12px;
-    }
-
-    /* =========================
-       INVENTORY
-    ========================= */
-
-    .inventory {
-        min-height: 580px;
-    }
-
-    .inventory-grid {
-        padding: 15px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        max-height: 580px;
-        overflow-y: auto;
-    }
-
-    .inventory-grid::-webkit-scrollbar,
-    .targets-grid::-webkit-scrollbar {
-        width: 5px;
-    }
-
-    .inventory-grid::-webkit-scrollbar-thumb,
-    .targets-grid::-webkit-scrollbar-thumb {
-        background: #272d36;
-        border-radius: 99px;
-    }
-
-    .item {
-        position: relative;
-        border-radius: 14px;
-        border: 1px solid rgba(255,255,255,.07);
-        background:
-            linear-gradient(180deg, rgba(255,255,255,.045), rgba(0,0,0,.18));
-        padding: 8px;
-        cursor: pointer;
-        transition:
-            transform .18s,
-            border-color .18s,
-            box-shadow .18s,
-            background .18s;
-        min-width: 0;
-    }
-
-    .item:hover {
-        transform: translateY(-2px);
-        border-color: rgba(255,255,255,.2);
-    }
-
-    .item.selected {
-        border-color: #22c55e;
-        background:
-            linear-gradient(180deg, rgba(34,197,94,.15), rgba(34,197,94,.035));
-        box-shadow:
-            0 0 0 1px rgba(34,197,94,.2),
-            0 0 25px rgba(34,197,94,.12);
-    }
-
-    .item-image {
-        height: 105px;
-        border-radius: 10px;
-        background:
-            radial-gradient(circle, rgba(255,255,255,.07), transparent 65%),
-            #0b0e13;
-        display: grid;
-        place-items: center;
-        overflow: hidden;
-    }
-
-    .item-image img,
-    .item-image svg {
-        width: 85%;
-        height: 85%;
-        object-fit: contain;
-    }
-
-    .item-name {
-        margin-top: 8px;
-        font-size: 11px;
-        font-weight: 800;
-        color: #d1d5db;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .item-price {
-        margin-top: 3px;
-        color: #22c55e;
-        font-weight: 900;
-        font-size: 13px;
-    }
-
-    .check {
-        position: absolute;
-        top: 7px;
-        right: 7px;
-        width: 21px;
-        height: 21px;
-        border-radius: 50%;
-        background: #22c55e;
-        display: none;
-        place-items: center;
-        font-size: 12px;
-        font-weight: 900;
-        box-shadow: 0 0 15px rgba(34,197,94,.5);
-    }
-
-    .item.selected .check {
-        display: grid;
-    }
-
-    .empty {
-        padding: 60px 20px;
-        text-align: center;
-        color: #6b7280;
-        grid-column: 1/-1;
-    }
-
-    /* =========================
-       CENTER
-    ========================= */
-
-    .center {
-        display: flex;
         flex-direction: column;
-        gap: 18px;
     }
 
-    .upgrade-card {
-        background:
-            radial-gradient(circle at 50% 45%, rgba(34,197,94,.055), transparent 45%),
-            linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
-        border: 1px solid rgba(255,255,255,.08);
-        border-radius: 24px;
-        padding: 25px;
-        box-shadow: 0 30px 90px rgba(0,0,0,.4);
+    .center,
+    .inventory,
+    .targets {
+        width: 100%;
     }
 
-    .values {
-        display: grid;
-        grid-template-columns: 1fr 70px 1fr;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 24px;
-    }
+    .wheelArea {
+        width: 360px;
+        height: 360px;
 
-    .value-box {
-        text-align: center;
-        padding: 13px;
-        background: rgba(0,0,0,.22);
-        border: 1px solid rgba(255,255,255,.06);
-        border-radius: 14px;
-    }
+        max-width: 100%;
 
-    .value-label {
-        color: #6b7280;
-        font-size: 10px;
-        text-transform: uppercase;
-        font-weight: 800;
-        letter-spacing: .8px;
-    }
-
-    .value {
-        margin-top: 4px;
-        font-size: 23px;
-        font-weight: 1000;
-    }
-
-    .value.green {
-        color: #22c55e;
-    }
-
-    .arrow-between {
-        text-align: center;
-        color: #4b5563;
-        font-size: 25px;
-    }
-
-    /* =========================
-       CHANCE
-    ========================= */
-
-    .chance-title {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-
-    .chance-title span:first-child {
-        font-size: 13px;
-        color: #9ca3af;
-        font-weight: 800;
-    }
-
-    .chance-value {
-        color: #22c55e;
-        font-size: 20px;
-        font-weight: 1000;
-    }
-
-    .chance-buttons {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
-        margin-bottom: 22px;
-    }
-
-    .chance-btn {
-        height: 42px;
-        border-radius: 11px;
-        border: 1px solid rgba(255,255,255,.08);
-        background: rgba(255,255,255,.035);
-        color: #9ca3af;
-        cursor: pointer;
-        font-weight: 900;
-        transition: .2s;
-    }
-
-    .chance-btn:hover {
-        color: #fff;
-        background: rgba(255,255,255,.07);
-    }
-
-    .chance-btn.active {
-        color: #07100a;
-        background: #22c55e;
-        border-color: #22c55e;
-        box-shadow: 0 0 25px rgba(34,197,94,.2);
-    }
-
-    /* =========================
-       WHEEL
-    ========================= */
-
-    .wheel-zone {
-        position: relative;
-        width: 400px;
-        height: 400px;
-        margin: 0 auto 24px;
-        display: grid;
-        place-items: center;
-    }
-
-    .wheel-glow {
-        position: absolute;
-        inset: 12px;
-        border-radius: 50%;
-        background: rgba(34,197,94,.08);
-        filter: blur(35px);
-        opacity: .7;
-        pointer-events: none;
+        transform:
+            scale(.92);
     }
 
     .wheel {
-        width: 340px;
-        height: 340px;
-        border-radius: 50%;
-        position: relative;
-        background:
-            conic-gradient(
-                from -90deg,
-                #22c55e 0deg,
-                #22c55e calc(var(--chance) * 3.6deg),
-                #171b22 calc(var(--chance) * 3.6deg),
-                #101319 360deg
-            );
-        box-shadow:
-            0 0 0 10px #0c1015,
-            0 0 0 12px rgba(255,255,255,.06),
-            0 0 60px rgba(0,0,0,.8),
-            0 0 90px rgba(34,197,94,.09);
-        transform: rotate(0deg);
+        width: 300px;
+        height: 300px;
     }
 
-    .wheel::before {
-        content: "";
-        position: absolute;
-        inset: 18px;
-        border-radius: 50%;
-        border: 1px solid rgba(255,255,255,.12);
-        box-shadow: inset 0 0 50px rgba(0,0,0,.6);
+    .inventoryGrid,
+    .targetGrid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+
+    .inventoryGrid,
+    .targetGrid {
+        grid-template-columns:
+            repeat(2, 1fr);
     }
 
-    .wheel::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        background:
-            repeating-conic-gradient(
-                from -90deg,
-                rgba(255,255,255,.12) 0deg,
-                rgba(255,255,255,.12) .7deg,
-                transparent .7deg,
-                transparent 30deg
-            );
-        opacity: .12;
-        pointer-events: none;
-    }
-
-    .wheel-center {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 125px;
-        height: 125px;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        background:
-            radial-gradient(circle at 35% 25%, #303741, #101419 65%);
-        border: 5px solid #0a0d11;
-        box-shadow:
-            0 0 0 2px rgba(255,255,255,.08),
-            0 12px 35px rgba(0,0,0,.7);
-        display: grid;
-        place-items: center;
-        z-index: 5;
-    }
-
-    .center-percent {
-        font-size: 29px;
-        font-weight: 1000;
-    }
-
-    .center-small {
-        font-size: 9px;
-        color: #6b7280;
-        text-transform: uppercase;
-        font-weight: 900;
-        letter-spacing: 1px;
-        margin-top: -30px;
-    }
-
-    /*
-       НОВАЯ СТРЕЛКА
-
-       Вращается именно сама стрелка.
-       Она всегда начинается сверху.
-       Кончик смотрит в сторону сектора.
-    */
-
-    .needle-wrapper {
-        position: absolute;
-        inset: 0;
-        z-index: 20;
-        pointer-events: none;
-        transform: rotate(0deg);
-        transform-origin: 50% 50%;
-    }
-
-    .needle {
-        position: absolute;
-        left: 50%;
-        top: 25px;
-        width: 0;
-        height: 145px;
-        transform: translateX(-50%);
-    }
-
-    .needle-line {
-        position: absolute;
-        left: -3px;
-        top: 0;
-        width: 6px;
-        height: 130px;
-        border-radius: 99px;
-        background:
-            linear-gradient(to bottom, #ffffff, #d1d5db 60%, #9ca3af);
-        box-shadow:
-            0 0 7px rgba(255,255,255,.9),
-            0 0 20px rgba(255,255,255,.35);
-    }
-
-    .needle-tip {
-        position: absolute;
-        top: -8px;
-        left: -12px;
-        width: 0;
-        height: 0;
-        border-left: 12px solid transparent;
-        border-right: 12px solid transparent;
-        border-bottom: 23px solid #ffffff;
-        filter:
-            drop-shadow(0 0 5px rgba(255,255,255,.9))
-            drop-shadow(0 0 12px rgba(255,255,255,.45));
-    }
-
-    .needle-hub {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 46px;
-        height: 46px;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        z-index: 30;
-        background:
-            radial-gradient(circle at 35% 30%, #ffffff, #bfc5cc 30%, #424a54 65%, #151a20);
-        border: 4px solid #090c10;
-        box-shadow:
-            0 0 0 2px rgba(255,255,255,.15),
-            0 0 25px rgba(255,255,255,.15);
-    }
-
-    .pointer-top {
-        position: absolute;
-        top: -8px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0;
-        height: 0;
-        border-left: 11px solid transparent;
-        border-right: 11px solid transparent;
-        border-top: 18px solid #fff;
-        z-index: 50;
-        filter:
-            drop-shadow(0 0 5px #fff)
-            drop-shadow(0 0 15px rgba(255,255,255,.45));
-        display: none;
-    }
-
-    /* состояние вращения */
-
-    .needle-wrapper.spinning {
-        animation: needleSpin 4.5s cubic-bezier(.12,.76,.15,1) forwards;
-    }
-
-    @keyframes needleSpin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(var(--final-angle));
-        }
-    }
-
-    .wheel.spinning {
-        box-shadow:
-            0 0 0 10px #0c1015,
-            0 0 0 12px rgba(255,255,255,.08),
-            0 0 80px rgba(34,197,94,.18);
-    }
-
-    .wheel-result-win {
-        animation: winPulse .8s ease-in-out 2;
-    }
-
-    @keyframes winPulse {
-        0%,100% {
-            filter: brightness(1);
-        }
-        50% {
-            filter: brightness(1.35);
-        }
-    }
-
-    .wheel-result-loss {
-        animation: lossPulse .5s ease-in-out 2;
-    }
-
-    @keyframes lossPulse {
-        0%,100% {
-            filter: brightness(1);
-        }
-        50% {
-            filter: brightness(.7);
-        }
-    }
-
-    /* =========================
-       BUTTON
-    ========================= */
-
-    .upgrade-btn {
-        width: 100%;
-        height: 62px;
-        border: 0;
-        border-radius: 15px;
-        background:
-            linear-gradient(135deg, #22c55e, #16a34a);
-        color: #031007;
-        font-size: 17px;
-        font-weight: 1000;
-        cursor: pointer;
-        box-shadow:
-            0 10px 35px rgba(34,197,94,.18),
-            inset 0 1px 0 rgba(255,255,255,.3);
-        transition: .2s;
-    }
-
-    .upgrade-btn:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow:
-            0 15px 45px rgba(34,197,94,.28),
-            inset 0 1px 0 rgba(255,255,255,.3);
-    }
-
-    .upgrade-btn:active:not(:disabled) {
-        transform: translateY(0);
-    }
-
-    .upgrade-btn:disabled {
-        cursor: not-allowed;
-        opacity: .35;
-        box-shadow: none;
-    }
-
-    .hint {
-        text-align: center;
-        margin-top: 11px;
-        color: #4b5563;
-        font-size: 11px;
-    }
-
-    /* =========================
-       TARGETS
-    ========================= */
-
-    .targets {
-        min-height: 580px;
-    }
-
-    .target-info {
-        padding: 14px 20px;
-        background: rgba(34,197,94,.045);
-        border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-
-    .target-info-row {
-        display: flex;
-        justify-content: space-between;
-        font-size: 12px;
-        margin-bottom: 6px;
-    }
-
-    .target-info-row:last-child {
-        margin-bottom: 0;
-    }
-
-    .muted {
-        color: #6b7280;
-    }
-
-    .target-max {
-        color: #22c55e;
-        font-weight: 900;
-    }
-
-    .targets-grid {
+    .upgradeCard {
         padding: 15px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        max-height: 530px;
-        overflow-y: auto;
     }
 
-    .target {
-        position: relative;
-        border-radius: 14px;
-        border: 1px solid rgba(255,255,255,.07);
-        background:
-            linear-gradient(180deg, rgba(255,255,255,.045), rgba(0,0,0,.18));
-        padding: 8px;
-        cursor: pointer;
-        transition: .2s;
-        opacity: .55;
+    .wheelArea {
+        transform:
+            scale(.8);
+
+        margin:
+            -30px auto
+            -20px;
     }
 
-    .target.reachable {
-        opacity: 1;
+    .values {
+        grid-template-columns:
+            1fr;
     }
 
-    .target.reachable:hover {
-        transform: translateY(-2px);
-        border-color: rgba(255,255,255,.2);
+    .arrowBetween {
+        transform:
+            rotate(90deg);
     }
-
-    .target.selected {
-        border-color: #22c55e;
-        box-shadow:
-            0 0 0 1px rgba(34,197,94,.2),
-            0 0 25px rgba(34,197,94,.12);
-        background: rgba(34,197,94,.1);
-    }
-
-    .target.locked {
-        cursor: not-allowed;
-        filter: grayscale(.3);
-    }
-
-    .target-image {
-        height: 105px;
-        border-radius: 10px;
-        display: grid;
-        place-items: center;
-        background:
-            radial-gradient(circle, rgba(255,255,255,.07), transparent 65%),
-            #0b0e13;
-        overflow: hidden;
-    }
-
-    .target-image img,
-    .target-image svg {
-        width: 85%;
-        height: 85%;
-        object-fit: contain;
-    }
-
-    .target-name {
-        margin-top: 8px;
-        font-size: 11px;
-        font-weight: 800;
-        color: #d1d5db;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .target-price {
-        color: #22c55e;
-        font-size: 13px;
-        font-weight: 900;
-        margin-top: 3px;
-    }
-
-    .target-chance {
-        position: absolute;
-        top: 7px;
-        left: 7px;
-        background: rgba(0,0,0,.75);
-        border-radius: 7px;
-        padding: 4px 6px;
-        font-size: 9px;
-        font-weight: 900;
-        color: #9ca3af;
-    }
-
-    .target.reachable .target-chance {
-        color: #22c55e;
-    }
-
-    /* =========================
-       RESULT MODAL
-    ========================= */
-
-    .modal {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,.78);
-        backdrop-filter: blur(15px);
-        z-index: 999;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
-
-    .modal.show {
-        display: flex;
-    }
-
-    .result-box {
-        width: min(470px, 100%);
-        background:
-            radial-gradient(circle at 50% 10%, rgba(34,197,94,.12), transparent 35%),
-            #0d1117;
-        border: 1px solid rgba(255,255,255,.1);
-        border-radius: 25px;
-        padding: 30px;
-        text-align: center;
-        box-shadow: 0 40px 120px rgba(0,0,0,.65);
-        animation: modalIn .3s ease;
-    }
-
-    @keyframes modalIn {
-        from {
-            transform: scale(.9) translateY(20px);
-            opacity: 0;
-        }
-        to {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-        }
-    }
-
-    .result-status {
-        font-size: 13px;
-        font-weight: 1000;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-    }
-
-    .result-status.win {
-        color: #22c55e;
-    }
-
-    .result-status.loss {
-        color: #ef4444;
-    }
-
-    .result-title {
-        font-size: 38px;
-        font-weight: 1000;
-        margin: 7px 0 20px;
-    }
-
-    .result-image {
-        width: 230px;
-        height: 190px;
-        margin: 0 auto 18px;
-        border-radius: 20px;
-        background:
-            radial-gradient(circle, rgba(34,197,94,.1), transparent 65%),
-            #090c10;
-        display: grid;
-        place-items: center;
-        overflow: hidden;
-    }
-
-    .result-image img,
-    .result-image svg {
-        width: 90%;
-        height: 90%;
-        object-fit: contain;
-    }
-
-    .result-item-name {
-        font-size: 20px;
-        font-weight: 1000;
-    }
-
-    .result-item-price {
-        margin-top: 5px;
-        color: #22c55e;
-        font-size: 18px;
-        font-weight: 900;
-    }
-
-    .modal-buttons {
-        display: flex;
-        gap: 10px;
-        margin-top: 25px;
-    }
-
-    .modal-btn {
-        flex: 1;
-        height: 52px;
-        border-radius: 13px;
-        border: 0;
-        cursor: pointer;
-        font-weight: 1000;
-        transition: .2s;
-    }
-
-    .modal-btn.green {
-        background: #22c55e;
-        color: #031007;
-    }
-
-    .modal-btn.gray {
-        background: rgba(255,255,255,.07);
-        color: #fff;
-    }
-
-    .modal-btn:hover {
-        transform: translateY(-2px);
-    }
-
-    /* =========================
-       RESPONSIVE
-    ========================= */
-
-    @media (max-width: 1250px) {
-        .upgrade-layout {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .center {
-            grid-column: 1 / -1;
-            grid-row: 1;
-            max-width: 620px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .inventory {
-            grid-column: 1;
-        }
-
-        .targets {
-            grid-column: 2;
-        }
-    }
-
-    @media (max-width: 800px) {
-        .header {
-            padding: 0 15px;
-        }
-
-        .nav a {
-            padding: 8px;
-            font-size: 12px;
-        }
-
-        .logo {
-            font-size: 17px;
-        }
-
-        .main {
-            padding: 25px 12px 50px;
-        }
-
-        .upgrade-layout {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .center,
-        .inventory,
-        .targets {
-            width: 100%;
-            max-width: none;
-        }
-
-        .wheel-zone {
-            width: 330px;
-            height: 330px;
-        }
-
-        .wheel {
-            width: 280px;
-            height: 280px;
-        }
-
-        .needle {
-            top: 30px;
-            height: 120px;
-        }
-
-        .needle-line {
-            height: 105px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .inventory-grid,
-        .targets-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .upgrade-card {
-            padding: 15px;
-        }
-
-        .wheel-zone {
-            transform: scale(.9);
-            margin-top: -15px;
-            margin-bottom: 0;
-        }
-
-        .values {
-            grid-template-columns: 1fr;
-        }
-
-        .arrow-between {
-            transform: rotate(90deg);
-            height: 10px;
-        }
-    }
+}
 </style>
 </head>
 
 <body>
 
-<div class="page">
+<header class="header">
 
-    <!-- HEADER -->
+    <div class="logo">
 
-    <header class="header">
-        <div class="logo">
-            <div class="logo-icon">⚡</div>
-            CHAK338
+        <div class="logoIcon">
+            ⚡
         </div>
 
-        <nav class="nav">
-            <a href="index.html">Главная</a>
-            <a href="inventory.html">Инвентарь</a>
-            <a href="upgrade.html" class="active">Апгрейдер</a>
-        </nav>
-    </header>
+        CHAK338
+
+    </div>
+
+    <nav class="nav">
+
+        <a href="index.html">
+            Главная
+        </a>
+
+        <a href="inventory.html">
+            Инвентарь
+        </a>
+
+        <a
+            href="upgrade.html"
+            class="active"
+        >
+            Апгрейдер
+        </a>
+
+    </nav>
+
+</header>
 
 
-    <main class="main">
+<main class="main">
 
-        <div class="title">
-            <h1>UPGRADE <span>⚡</span></h1>
-            <p>Поставь свои предметы и попробуй улучшить их</p>
-        </div>
+    <div class="pageTitle">
 
+        <h1>
+            UPGRADE
+            <span>⚡</span>
+        </h1>
 
-        <div class="upgrade-layout">
+        <p>
+            Улучши свои предметы и попробуй выбить более дорогой
+        </p>
 
-            <!-- =========================
-                 INVENTORY
-            ========================== -->
-
-            <section class="panel inventory">
-
-                <div class="panel-head">
-                    <h2>ТВОЙ ИНВЕНТАРЬ</h2>
-                    <span class="counter" id="inventoryCount">0 предметов</span>
-                </div>
-
-                <div class="inventory-grid" id="inventoryGrid">
-                </div>
-
-            </section>
+    </div>
 
 
-            <!-- =========================
-                 CENTER
-            ========================== -->
+    <div class="layout">
 
-            <section class="center">
 
-                <div class="upgrade-card">
+        <!-- =================================================
+             INVENTORY
+        ================================================== -->
 
-                    <div class="values">
+        <section class="panel inventory">
 
-                        <div class="value-box">
-                            <div class="value-label">СТАВКА</div>
-                            <div class="value green" id="stakeValue">0</div>
+            <div class="panelHeader">
+
+                <strong>
+                    ТВОЙ ИНВЕНТАРЬ
+                </strong>
+
+                <span id="inventoryCount">
+                    0 предметов
+                </span>
+
+            </div>
+
+            <div
+                class="inventoryGrid"
+                id="inventoryGrid"
+            ></div>
+
+        </section>
+
+
+        <!-- =================================================
+             CENTER
+        ================================================== -->
+
+        <section class="center">
+
+            <div class="upgradeCard">
+
+
+                <div class="values">
+
+                    <div class="valueBox">
+
+                        <div class="valueLabel">
+                            СТАВКА
                         </div>
-
-                        <div class="arrow-between">→</div>
-
-                        <div class="value-box">
-                            <div class="value-label">ЦЕЛЬ</div>
-                            <div class="value" id="targetValue">—</div>
-                        </div>
-
-                    </div>
-
-
-                    <!-- CHANCE -->
-
-                    <div class="chance-title">
-                        <span>ШАНС УСПЕХА</span>
-                        <span class="chance-value" id="chanceValue">50%</span>
-                    </div>
-
-                    <div class="chance-buttons">
-
-                        <button class="chance-btn" data-chance="10">
-                            10%
-                        </button>
-
-                        <button class="chance-btn" data-chance="25">
-                            25%
-                        </button>
-
-                        <button class="chance-btn active" data-chance="50">
-                            50%
-                        </button>
-
-                        <button class="chance-btn" data-chance="75">
-                            75%
-                        </button>
-
-                    </div>
-
-
-                    <!-- WHEEL -->
-
-                    <div class="wheel-zone">
-
-                        <div class="wheel-glow"></div>
 
                         <div
-                            class="wheel"
-                            id="wheel"
-                            style="--chance: 50"
+                            class="valueNumber green"
+                            id="stakeValue"
                         >
-
-                            <div class="wheel-center">
-
-                                <div
-                                    class="center-percent"
-                                    id="wheelPercent"
-                                >
-                                    50%
-                                </div>
-
-                                <div class="center-small">
-                                    CHANCE
-                                </div>
-
-                            </div>
-
+                            0
                         </div>
-
-
-                        <!-- КРАСИВАЯ ВРАЩАЮЩАЯСЯ СТРЕЛКА -->
-
-                        <div
-                            class="needle-wrapper"
-                            id="needleWrapper"
-                        >
-
-                            <div class="needle">
-
-                                <div class="needle-tip"></div>
-
-                                <div class="needle-line"></div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="needle-hub"></div>
 
                     </div>
 
+
+                    <div class="arrowBetween">
+                        →
+                    </div>
+
+
+                    <div class="valueBox">
+
+                        <div class="valueLabel">
+                            ЦЕЛЬ
+                        </div>
+
+                        <div
+                            class="valueNumber"
+                            id="targetValue"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CHANCE -->
+
+                <div class="chanceHeader">
+
+                    <span>
+                        ШАНС УСПЕХА
+                    </span>
+
+                    <span
+                        class="chanceNumber"
+                        id="chanceValue"
+                    >
+                        50%
+                    </span>
+
+                </div>
+
+
+                <div class="chanceButtons">
 
                     <button
-                        class="upgrade-btn"
-                        id="upgradeButton"
-                        disabled
+                        class="chanceButton"
+                        data-chance="10"
                     >
-                        ВЫБЕРИ ПРЕДМЕТЫ
+                        10%
                     </button>
 
-                    <div class="hint">
-                        Результат определяется один раз перед вращением стрелки
+                    <button
+                        class="chanceButton"
+                        data-chance="25"
+                    >
+                        25%
+                    </button>
+
+                    <button
+                        class="chanceButton active"
+                        data-chance="50"
+                    >
+                        50%
+                    </button>
+
+                    <button
+                        class="chanceButton"
+                        data-chance="75"
+                    >
+                        75%
+                    </button>
+
+                </div>
+
+
+                <!-- =================================================
+                     WHEEL
+                ================================================== -->
+
+                <div class="wheelArea">
+
+                    <div class="wheelGlow"></div>
+
+
+                    <div
+                        class="wheel"
+                        id="wheel"
+                        style="--chance:50"
+                    >
+
+                        <div class="wheelCenter">
+
+                            <div
+                                class="wheelPercent"
+                                id="wheelPercent"
+                            >
+                                50%
+                            </div>
+
+                            <div class="wheelSmall">
+                                CHANCE
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- НОВАЯ СТРЕЛКА -->
+
+                    <div
+                        class="rotatingArrow"
+                        id="rotatingArrow"
+                    >
+
+                        <div class="arrowOuter"></div>
+
+                        <div class="arrowInner"></div>
+
                     </div>
 
                 </div>
 
-            </section>
+
+                <button
+                    class="upgradeButton"
+                    id="upgradeButton"
+                    disabled
+                >
+                    ВЫБЕРИ ПРЕДМЕТЫ
+                </button>
 
 
-            <!-- =========================
-                 TARGETS
-            ========================== -->
-
-            <section class="panel targets">
-
-                <div class="panel-head">
-                    <h2>ЦЕЛИ</h2>
-                    <span class="counter" id="targetCount">0</span>
+                <div class="hint">
+                    Результат определяется до начала вращения
                 </div>
 
-                <div class="target-info">
+            </div>
 
-                    <div class="target-info-row">
-                        <span class="muted">Максимальная цена</span>
-                        <span class="target-max" id="maxTarget">
-                            0
-                        </span>
-                    </div>
+        </section>
 
-                    <div class="target-info-row">
-                        <span class="muted">Доступно целей</span>
-                        <span id="reachableCount">
-                            0
-                        </span>
-                    </div>
+
+        <!-- =================================================
+             TARGETS
+        ================================================== -->
+
+        <section class="panel targets">
+
+            <div class="panelHeader">
+
+                <strong>
+                    ЦЕЛИ
+                </strong>
+
+                <span id="targetCount">
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="targetInfo">
+
+                <div class="targetInfoRow">
+
+                    <span class="muted">
+                        Максимальная цена
+                    </span>
+
+                    <span
+                        class="targetMax"
+                        id="maxTarget"
+                    >
+                        0
+                    </span>
 
                 </div>
 
-                <div class="targets-grid" id="targetsGrid">
+
+                <div class="targetInfoRow">
+
+                    <span class="muted">
+                        Доступно целей
+                    </span>
+
+                    <span id="reachableCount">
+                        0
+                    </span>
+
                 </div>
 
-            </section>
-
-        </div>
-
-    </main>
-
-</div>
+            </div>
 
 
-<!-- =========================
+            <div
+                class="targetGrid"
+                id="targetGrid"
+            ></div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<!-- =========================================================
      RESULT MODAL
-========================== -->
+========================================================= -->
 
-<div class="modal" id="resultModal">
+<div
+    class="modal"
+    id="resultModal"
+>
 
-    <div class="result-box">
+    <div class="resultBox">
 
         <div
-            class="result-status"
+            class="resultStatus"
             id="resultStatus"
         >
             ПОБЕДА
         </div>
 
+
         <div
-            class="result-title"
+            class="resultTitle"
             id="resultTitle"
         >
             УСПЕШНЫЙ АПГРЕЙД
         </div>
 
-        <div
-            class="result-image"
-            id="resultImage"
-        >
-        </div>
 
         <div
-            class="result-item-name"
-            id="resultItemName"
+            class="resultImage"
+            id="resultImage"
+        ></div>
+
+
+        <div
+            class="resultName"
+            id="resultName"
         >
             —
         </div>
 
+
         <div
-            class="result-item-price"
-            id="resultItemPrice"
+            class="resultPrice"
+            id="resultPrice"
         >
             0
         </div>
 
-        <div class="modal-buttons">
+
+        <div class="resultButtons">
 
             <button
-                class="modal-btn gray"
+                class="resultButton close"
                 onclick="closeResult()"
             >
                 ЗАКРЫТЬ
             </button>
 
+
             <button
-                class="modal-btn green"
-                id="takeItemButton"
+                class="resultButton take"
+                id="takeButton"
                 onclick="takeWonItem()"
             >
                 ЗАБРАТЬ ПРЕДМЕТ
@@ -1321,129 +1808,173 @@
 
 <script src="data.js"></script>
 
+
 <script>
 
-/* ============================================================
+/* =========================================================
    CHAK338 UPGRADER
-   ============================================================
-
-   ГЛАВНОЕ ИСПРАВЛЕНИЕ:
-
-   1. RNG вызывается ТОЛЬКО ОДИН РАЗ.
-   2. Сначала определяется WIN/LOSS.
-   3. Потом вычисляется конкретный угол.
-   4. Стрелка заканчивает вращение ИМЕННО в этом месте.
-   5. WIN -> угол внутри зелёного сектора.
-   6. LOSS -> угол вне зелёного сектора.
-   7. После окончания анимации результат НЕ пересчитывается.
-
-============================================================ */
-
-
-/* =========================
-   STATE
-========================= */
+========================================================= */
 
 let inventory = [];
-let selectedIds = new Set();
+
+let selectedInventoryIds =
+    new Set();
 
 let chance = 50;
+
 let selectedTarget = null;
 
 let spinning = false;
+
 let pendingWinItem = null;
 
 
-/* =========================
+/* =========================================================
    DOM
-========================= */
+========================================================= */
 
 const inventoryGrid =
-    document.getElementById('inventoryGrid');
+    document.getElementById(
+        "inventoryGrid"
+    );
 
-const targetsGrid =
-    document.getElementById('targetsGrid');
+const targetGrid =
+    document.getElementById(
+        "targetGrid"
+    );
 
 const inventoryCount =
-    document.getElementById('inventoryCount');
+    document.getElementById(
+        "inventoryCount"
+    );
 
 const targetCount =
-    document.getElementById('targetCount');
+    document.getElementById(
+        "targetCount"
+    );
 
 const reachableCount =
-    document.getElementById('reachableCount');
+    document.getElementById(
+        "reachableCount"
+    );
 
 const stakeValue =
-    document.getElementById('stakeValue');
+    document.getElementById(
+        "stakeValue"
+    );
 
 const targetValue =
-    document.getElementById('targetValue');
+    document.getElementById(
+        "targetValue"
+    );
 
 const maxTarget =
-    document.getElementById('maxTarget');
+    document.getElementById(
+        "maxTarget"
+    );
 
 const chanceValue =
-    document.getElementById('chanceValue');
-
-const wheelPercent =
-    document.getElementById('wheelPercent');
+    document.getElementById(
+        "chanceValue"
+    );
 
 const wheel =
-    document.getElementById('wheel');
+    document.getElementById(
+        "wheel"
+    );
 
-const needleWrapper =
-    document.getElementById('needleWrapper');
+const wheelPercent =
+    document.getElementById(
+        "wheelPercent"
+    );
+
+const rotatingArrow =
+    document.getElementById(
+        "rotatingArrow"
+    );
 
 const upgradeButton =
-    document.getElementById('upgradeButton');
+    document.getElementById(
+        "upgradeButton"
+    );
 
 const resultModal =
-    document.getElementById('resultModal');
+    document.getElementById(
+        "resultModal"
+    );
 
 const resultStatus =
-    document.getElementById('resultStatus');
+    document.getElementById(
+        "resultStatus"
+    );
 
 const resultTitle =
-    document.getElementById('resultTitle');
+    document.getElementById(
+        "resultTitle"
+    );
 
 const resultImage =
-    document.getElementById('resultImage');
+    document.getElementById(
+        "resultImage"
+    );
 
-const resultItemName =
-    document.getElementById('resultItemName');
+const resultName =
+    document.getElementById(
+        "resultName"
+    );
 
-const resultItemPrice =
-    document.getElementById('resultItemPrice');
+const resultPrice =
+    document.getElementById(
+        "resultPrice"
+    );
 
-const takeItemButton =
-    document.getElementById('takeItemButton');
+const takeButton =
+    document.getElementById(
+        "takeButton"
+    );
 
 
-/* =========================
-   DATA HELPERS
-========================= */
+/* =========================================================
+   HELPERS
+========================================================= */
 
-function getItemsDatabase() {
+function getDatabaseItems() {
 
-    if (Array.isArray(window.ITEMS)) {
+    if (
+        Array.isArray(window.ITEMS)
+    ) {
         return window.ITEMS;
     }
 
-    if (Array.isArray(window.items)) {
+    if (
+        Array.isArray(window.items)
+    ) {
         return window.items;
     }
 
-    if (Array.isArray(window.CASES)) {
+    if (
+        Array.isArray(window.CASES)
+    ) {
 
         const result = [];
 
-        window.CASES.forEach(c => {
+        window.CASES.forEach(
+            caseData => {
 
-            if (Array.isArray(c.items)) {
-                result.push(...c.items);
+                if (
+                    Array.isArray(
+                        caseData.items
+                    )
+                ) {
+
+                    result.push(
+                        ...caseData.items
+                    );
+
+                }
+
             }
-
-        });
+        );
 
         return result;
     }
@@ -1456,14 +1987,17 @@ function getInventory() {
 
     try {
 
-        const raw =
-            localStorage.getItem('chak338_inventory');
+        const data =
+            localStorage.getItem(
+                "chak338_inventory"
+            );
 
-        if (!raw) {
+        if (!data) {
             return [];
         }
 
-        const parsed = JSON.parse(raw);
+        const parsed =
+            JSON.parse(data);
 
         return Array.isArray(parsed)
             ? parsed
@@ -1472,7 +2006,6 @@ function getInventory() {
     } catch (error) {
 
         console.error(
-            'Ошибка загрузки инвентаря:',
             error
         );
 
@@ -1486,13 +2019,16 @@ function saveInventory(items) {
     inventory = items;
 
     localStorage.setItem(
-        'chak338_inventory',
+        "chak338_inventory",
         JSON.stringify(items)
     );
 }
 
 
-function getItemId(item, index = 0) {
+function getItemId(
+    item,
+    index
+) {
 
     return String(
         item.instanceId ??
@@ -1501,26 +2037,26 @@ function getItemId(item, index = 0) {
         item.id ??
         (
             item.name +
-            '_' +
+            "_" +
             item.price +
-            '_' +
+            "_" +
             index
         )
     );
 }
 
 
-function getItemName(item) {
+function getName(item) {
 
     return (
         item.name ??
         item.title ??
-        'Предмет'
+        "Предмет"
     );
 }
 
 
-function getItemPrice(item) {
+function getPrice(item) {
 
     return Number(
         item.price ??
@@ -1530,32 +2066,47 @@ function getItemPrice(item) {
 }
 
 
-function getItemImage(item) {
+function getImage(item) {
 
     return (
         item.image ??
         item.img ??
         item.icon ??
-        ''
+        ""
     );
 }
 
 
-/* =========================
+function escapeHtml(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+}
+
+
+/* =========================================================
    IMAGE
-========================= */
+========================================================= */
 
-function renderImage(item, className = '') {
+function itemImage(item) {
 
-    const src = getItemImage(item);
+    const image =
+        getImage(item);
 
-    if (!src) {
+    if (!image) {
 
         return `
             <div
                 style="
                     font-size:42px;
-                    opacity:.45;
+                    opacity:.4;
                 "
             >
                 🎁
@@ -1565,9 +2116,8 @@ function renderImage(item, className = '') {
 
     return `
         <img
-            class="${className}"
-            src="${src}"
-            alt="${escapeHtml(getItemName(item))}"
+            src="${escapeHtml(image)}"
+            alt=""
             onerror="
                 this.style.display='none';
                 this.nextElementSibling.style.display='block';
@@ -1578,7 +2128,7 @@ function renderImage(item, className = '') {
             style="
                 display:none;
                 font-size:42px;
-                opacity:.45;
+                opacity:.4;
             "
         >
             🎁
@@ -1587,56 +2137,41 @@ function renderImage(item, className = '') {
 }
 
 
-function escapeHtml(value) {
-
-    return String(value)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
-}
-
-
-/* =========================
+/* =========================================================
    INVENTORY
-========================= */
+========================================================= */
 
 function renderInventory() {
 
-    inventory = getInventory();
+    inventory =
+        getInventory();
 
     inventoryCount.textContent =
-        `${inventory.length} предметов`;
+        inventory.length +
+        " предметов";
 
-    if (!inventory.length) {
+
+    if (
+        inventory.length === 0
+    ) {
 
         inventoryGrid.innerHTML = `
+
             <div class="empty">
 
                 <div
                     style="
-                        font-size:48px;
-                        margin-bottom:15px;
+                        font-size:50px;
+                        margin-bottom:12px;
                     "
                 >
                     📦
                 </div>
 
-                <div>
-                    Инвентарь пуст
-                </div>
-
-                <div
-                    style="
-                        margin-top:8px;
-                        font-size:11px;
-                    "
-                >
-                    Открой кейс, чтобы получить предмет
-                </div>
+                Инвентарь пуст
 
             </div>
+
         `;
 
         return;
@@ -1645,75 +2180,109 @@ function renderInventory() {
 
     inventoryGrid.innerHTML =
         inventory
-            .map((item, index) => {
+            .map(
+                (item, index) => {
 
-                const id =
-                    getItemId(item, index);
+                    const id =
+                        getItemId(
+                            item,
+                            index
+                        );
 
-                const selected =
-                    selectedIds.has(id);
+                    const selected =
+                        selectedInventoryIds
+                            .has(id);
 
-                return `
 
-                    <div
-                        class="item ${selected ? 'selected' : ''}"
-                        data-id="${escapeHtml(id)}"
-                        onclick="toggleInventoryItem('${escapeJs(id)}')"
-                    >
+                    return `
 
-                        <div class="check">
-                            ✓
+                        <div
+                            class="
+                                inventoryItem
+                                ${selected
+                                    ? "selected"
+                                    : ""
+                                }
+                            "
+                            data-id="${escapeHtml(id)}"
+                        >
+
+                            <div
+                                class="selectedMark"
+                            >
+                                ✓
+                            </div>
+
+                            <div class="itemImage">
+                                ${itemImage(item)}
+                            </div>
+
+                            <div class="itemName">
+                                ${escapeHtml(
+                                    getName(item)
+                                )}
+                            </div>
+
+                            <div class="itemPrice">
+                                ${getPrice(item)}
+                            </div>
+
                         </div>
 
-                        <div class="item-image">
-                            ${renderImage(item)}
-                        </div>
+                    `;
 
-                        <div class="item-name">
-                            ${escapeHtml(getItemName(item))}
-                        </div>
+                }
+            )
+            .join("");
 
-                        <div class="item-price">
-                            ${getItemPrice(item)}
-                        </div>
 
-                    </div>
+    inventoryGrid
+        .querySelectorAll(
+            ".inventoryItem"
+        )
+        .forEach(
+            element => {
 
-                `;
+                element.addEventListener(
+                    "click",
+                    () => {
 
-            })
-            .join('');
+                        toggleInventory(
+                            element.dataset.id
+                        );
+
+                    }
+                );
+
+            }
+        );
 }
 
 
-function escapeJs(value) {
-
-    return String(value)
-        .replaceAll('\\', '\\\\')
-        .replaceAll("'", "\\'");
-}
-
-
-/* =========================
-   SELECT INVENTORY
-========================= */
-
-function toggleInventoryItem(id) {
+function toggleInventory(id) {
 
     if (spinning) {
         return;
     }
 
-    if (selectedIds.has(id)) {
 
-        selectedIds.delete(id);
+    if (
+        selectedInventoryIds
+            .has(id)
+    ) {
+
+        selectedInventoryIds
+            .delete(id);
 
     } else {
 
-        selectedIds.add(id);
+        selectedInventoryIds
+            .add(id);
     }
 
-    selectedTarget = null;
+
+    selectedTarget =
+        null;
 
     renderInventory();
     renderTargets();
@@ -1721,257 +2290,276 @@ function toggleInventoryItem(id) {
 }
 
 
-/* =========================
+/* =========================================================
    STAKE
-========================= */
+========================================================= */
 
-function getSelectedItems() {
+function selectedItems() {
 
     return inventory.filter(
         (item, index) =>
-            selectedIds.has(
-                getItemId(item, index)
-            )
+
+            selectedInventoryIds
+                .has(
+                    getItemId(
+                        item,
+                        index
+                    )
+                )
     );
 }
 
 
 function getStake() {
 
-    return getSelectedItems()
+    return selectedItems()
         .reduce(
-            (sum, item) =>
-                sum + getItemPrice(item),
+            (total, item) =>
+                total +
+                getPrice(item),
             0
         );
 }
 
 
-/* =========================
+/* =========================================================
    TARGETS
-========================= */
+========================================================= */
 
 function renderTargets() {
 
-    const stake = getStake();
+    const stake =
+        getStake();
 
-    /*
-       Например:
-
-       ставка = 100
-       шанс = 50%
-
-       максимальная цель =
-       100 / 0.5 = 200
-
-       ставка = 100
-       шанс = 25%
-
-       максимум =
-       100 / 0.25 = 400
-    */
 
     const maximum =
         chance > 0
-            ? stake / (chance / 100)
+            ? stake /
+              (chance / 100)
             : 0;
 
 
-    const allItems =
-        getItemsDatabase()
+    const targets =
+        getDatabaseItems()
             .filter(
                 item =>
-                    getItemPrice(item) > stake
+                    getPrice(item) >
+                    stake
             )
             .sort(
                 (a, b) =>
-                    getItemPrice(a) -
-                    getItemPrice(b)
+                    getPrice(a) -
+                    getPrice(b)
             );
 
 
     targetCount.textContent =
-        allItems.length;
+        targets.length;
 
 
     let reachable = 0;
 
 
-    targetsGrid.innerHTML =
-        allItems
-            .map(item => {
+    targetGrid.innerHTML =
+        targets
+            .map(
+                (item, index) => {
+
+                    const price =
+                        getPrice(item);
+
+
+                    const canUse =
+                        stake > 0 &&
+                        price <= maximum;
+
+
+                    if (canUse) {
+                        reachable++;
+                    }
+
+
+                    const selected =
+                        selectedTarget ===
+                        item;
+
+
+                    const targetChance =
+                        price > 0
+                            ? Math.min(
+                                100,
+                                (
+                                    stake /
+                                    price
+                                ) * 100
+                            )
+                            : 0;
+
+
+                    return `
+
+                        <div
+                            class="
+                                targetItem
+                                ${canUse
+                                    ? ""
+                                    : "locked"
+                                }
+                                ${selected
+                                    ? "selected"
+                                    : ""
+                                }
+                            "
+                            data-target-index="${index}"
+                        >
+
+                            <div
+                                class="targetChance"
+                            >
+                                ${
+                                    canUse
+                                        ? targetChance
+                                            .toFixed(1)
+                                            + "%"
+                                        : "🔒"
+                                }
+                            </div>
+
+                            <div
+                                class="selectedMark"
+                            >
+                                ✓
+                            </div>
+
+                            <div class="itemImage">
+                                ${itemImage(item)}
+                            </div>
+
+                            <div class="itemName">
+                                ${escapeHtml(
+                                    getName(item)
+                                )}
+                            </div>
+
+                            <div class="itemPrice">
+                                ${price}
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+
+    targetGrid
+        .querySelectorAll(
+            ".targetItem"
+        )
+        .forEach(
+            element => {
+
+                const index =
+                    Number(
+                        element.dataset
+                            .targetIndex
+                    );
+
+                const item =
+                    targets[index];
+
 
                 const price =
-                    getItemPrice(item);
+                    getPrice(item);
 
-                const possible =
+
+                const canUse =
                     stake > 0 &&
                     price <= maximum;
 
-                if (possible) {
-                    reachable++;
+
+                if (!canUse) {
+                    return;
                 }
 
 
-                const isSelected =
-                    selectedTarget === item;
+                element.addEventListener(
+                    "click",
+                    () => {
 
+                        if (spinning) {
+                            return;
+                        }
 
-                /*
-                   Шанс конкретной цели =
-                   ставка / цена * 100
+                        selectedTarget =
+                            item;
 
-                   Но никогда не больше выбранного
-                   общего шанса.
-                */
+                        renderTargets();
+                        updateInterface();
 
-                const targetChance =
-                    price > 0
-                        ? Math.min(
-                            100,
-                            (stake / price) * 100
-                        )
-                        : 0;
+                    }
+                );
 
-
-                return `
-
-                    <div
-                        class="
-                            target
-                            ${possible ? 'reachable' : 'locked'}
-                            ${isSelected ? 'selected' : ''}
-                        "
-                        onclick="
-                            ${possible
-                                ? `selectTargetByObject(${JSON.stringify(item).replaceAll('"', '&quot;')})`
-                                : ''
-                            }
-                        "
-                    >
-
-                        <div class="target-chance">
-                            ${possible
-                                ? targetChance.toFixed(1) + '%'
-                                : '🔒'
-                            }
-                        </div>
-
-                        <div class="target-image">
-                            ${renderImage(item)}
-                        </div>
-
-                        <div class="target-name">
-                            ${escapeHtml(getItemName(item))}
-                        </div>
-
-                        <div class="target-price">
-                            ${price}
-                        </div>
-
-                    </div>
-
-                `;
-
-            })
-            .join('');
+            }
+        );
 
 
     reachableCount.textContent =
         reachable;
 
+
     maxTarget.textContent =
         maximum > 0
             ? Math.floor(maximum)
-            : '0';
+            : "0";
 }
 
 
-/*
-   Надёжный выбор цели.
-   Вместо передачи объекта через HTML
-   ищем его по имени + цене.
-*/
-
-function selectTargetByObject(data) {
-
-    if (spinning) {
-        return;
-    }
-
-    const target =
-        getItemsDatabase().find(
-            item =>
-                getItemName(item) === data.name &&
-                getItemPrice(item) === getItemPrice(data)
-        );
-
-    if (!target) {
-        return;
-    }
-
-    const stake = getStake();
-
-    const maximum =
-        stake / (chance / 100);
-
-    if (
-        stake <= 0 ||
-        getItemPrice(target) <= stake ||
-        getItemPrice(target) > maximum
-    ) {
-        return;
-    }
-
-    selectedTarget = target;
-
-    renderTargets();
-    updateInterface();
-}
-
-
-/* =========================
-   INTERFACE
-========================= */
+/* =========================================================
+   UI
+========================================================= */
 
 function updateInterface() {
 
     const stake =
         getStake();
 
+
     stakeValue.textContent =
         stake;
 
+
+    targetValue.textContent =
+        selectedTarget
+            ? getPrice(
+                selectedTarget
+            )
+            : "—";
+
+
     chanceValue.textContent =
-        chance + '%';
+        chance + "%";
+
 
     wheelPercent.textContent =
-        chance + '%';
-
-    wheel.style
-        .setProperty(
-            '--chance',
-            chance
-        );
+        chance + "%";
 
 
-    if (selectedTarget) {
-
-        targetValue.textContent =
-            getItemPrice(selectedTarget);
-
-    } else {
-
-        targetValue.textContent =
-            '—';
-    }
+    wheel.style.setProperty(
+        "--chance",
+        chance
+    );
 
 
     if (spinning) {
 
-        upgradeButton.disabled = true;
+        upgradeButton.disabled =
+            true;
+
         upgradeButton.textContent =
-            '⚡ ВРАЩЕНИЕ...';
+            "⚡ ВРАЩЕНИЕ...";
 
         return;
     }
@@ -1979,9 +2567,11 @@ function updateInterface() {
 
     if (!stake) {
 
-        upgradeButton.disabled = true;
+        upgradeButton.disabled =
+            true;
+
         upgradeButton.textContent =
-            'ВЫБЕРИ ПРЕДМЕТЫ';
+            "ВЫБЕРИ ПРЕДМЕТЫ";
 
         return;
     }
@@ -1989,92 +2579,109 @@ function updateInterface() {
 
     if (!selectedTarget) {
 
-        upgradeButton.disabled = true;
+        upgradeButton.disabled =
+            true;
+
         upgradeButton.textContent =
-            'ВЫБЕРИ ЦЕЛЬ';
+            "ВЫБЕРИ ЦЕЛЬ";
 
         return;
     }
 
 
-    upgradeButton.disabled = false;
+    upgradeButton.disabled =
+        false;
 
     upgradeButton.textContent =
-        `АПГРЕЙД НА ${getItemPrice(selectedTarget)}`;
+        "АПГРЕЙД НА " +
+        getPrice(selectedTarget);
 }
 
 
-/* =========================
+/* =========================================================
    CHANCE BUTTONS
-========================= */
+========================================================= */
 
 document
-    .querySelectorAll('.chance-btn')
-    .forEach(button => {
+    .querySelectorAll(
+        ".chanceButton"
+    )
+    .forEach(
+        button => {
 
-        button.addEventListener(
-            'click',
-            () => {
+            button.addEventListener(
+                "click",
+                () => {
 
-                if (spinning) {
-                    return;
-                }
-
-                chance =
-                    Number(
-                        button.dataset.chance
-                    );
+                    if (spinning) {
+                        return;
+                    }
 
 
-                document
-                    .querySelectorAll('.chance-btn')
-                    .forEach(btn => {
-
-                        btn.classList.toggle(
-                            'active',
-                            btn === button
+                    chance =
+                        Number(
+                            button.dataset
+                                .chance
                         );
 
-                    });
+
+                    document
+                        .querySelectorAll(
+                            ".chanceButton"
+                        )
+                        .forEach(
+                            btn => {
+
+                                btn.classList.toggle(
+                                    "active",
+                                    btn === button
+                                );
+
+                            }
+                        );
 
 
-                /*
-                   При смене шанса старая цель
-                   может стать недоступной.
-                */
+                    const stake =
+                        getStake();
 
-                const stake =
-                    getStake();
 
-                if (selectedTarget) {
+                    if (selectedTarget) {
 
-                    const maximum =
-                        stake / (chance / 100);
+                        const maximum =
+                            stake /
+                            (chance / 100);
 
-                    if (
-                        getItemPrice(selectedTarget) >
-                        maximum
-                    ) {
-                        selectedTarget = null;
+
+                        if (
+                            getPrice(
+                                selectedTarget
+                            ) > maximum
+                        ) {
+
+                            selectedTarget =
+                                null;
+                        }
+
                     }
+
+
+                    renderTargets();
+                    updateInterface();
+
                 }
+            );
+
+        }
+    );
 
 
-                renderTargets();
-                updateInterface();
-            }
-        );
-
-    });
-
-
-/* =========================
+/* =========================================================
    AUDIO
-========================= */
+========================================================= */
 
 let audioContext = null;
 
-function getAudioContext() {
+function audio() {
 
     if (!audioContext) {
 
@@ -2090,12 +2697,12 @@ function getAudioContext() {
 }
 
 
-function playTick() {
+function tickSound() {
 
     try {
 
         const ctx =
-            getAudioContext();
+            audio();
 
         const oscillator =
             ctx.createOscillator();
@@ -2103,25 +2710,31 @@ function playTick() {
         const gain =
             ctx.createGain();
 
-        oscillator.type = 'square';
 
-        oscillator.frequency.setValueAtTime(
-            650 + Math.random() * 250,
-            ctx.currentTime
-        );
+        oscillator.type =
+            "square";
+
+
+        oscillator.frequency.value =
+            650 +
+            Math.random() * 250;
+
 
         gain.gain.setValueAtTime(
-            .045,
+            .035,
             ctx.currentTime
         );
+
 
         gain.gain.exponentialRampToValueAtTime(
             .001,
             ctx.currentTime + .035
         );
 
+
         oscillator.connect(gain);
         gain.connect(ctx.destination);
+
 
         oscillator.start();
 
@@ -2133,19 +2746,20 @@ function playTick() {
 }
 
 
-function playWinSound() {
+function winSound() {
 
     try {
 
         const ctx =
-            getAudioContext();
+            audio();
 
         const notes = [
-            523.25,
-            659.25,
-            783.99,
-            1046.50
+            523,
+            659,
+            784,
+            1047
         ];
+
 
         notes.forEach(
             (frequency, index) => {
@@ -2156,33 +2770,42 @@ function playWinSound() {
                 const gain =
                     ctx.createGain();
 
+
                 oscillator.type =
-                    'sine';
+                    "sine";
 
                 oscillator.frequency.value =
                     frequency;
 
+
                 const start =
                     ctx.currentTime +
-                    index * .10;
+                    index * .1;
+
 
                 gain.gain.setValueAtTime(
                     .001,
                     start
                 );
 
+
                 gain.gain.exponentialRampToValueAtTime(
-                    .20,
-                    start + .025
+                    .18,
+                    start + .02
                 );
+
 
                 gain.gain.exponentialRampToValueAtTime(
                     .001,
                     start + .25
                 );
 
+
                 oscillator.connect(gain);
-                gain.connect(ctx.destination);
+                gain.connect(
+                    ctx.destination
+                );
+
 
                 oscillator.start(start);
 
@@ -2197,12 +2820,12 @@ function playWinSound() {
 }
 
 
-function playLossSound() {
+function lossSound() {
 
     try {
 
         const ctx =
-            getAudioContext();
+            audio();
 
         const oscillator =
             ctx.createOscillator();
@@ -2210,36 +2833,44 @@ function playLossSound() {
         const gain =
             ctx.createGain();
 
+
         oscillator.type =
-            'sawtooth';
+            "sawtooth";
+
 
         oscillator.frequency.setValueAtTime(
             180,
             ctx.currentTime
         );
 
+
         oscillator.frequency.exponentialRampToValueAtTime(
-            70,
+            65,
             ctx.currentTime + .5
         );
+
 
         gain.gain.setValueAtTime(
             .001,
             ctx.currentTime
         );
 
+
         gain.gain.exponentialRampToValueAtTime(
             .12,
             ctx.currentTime + .03
         );
+
 
         gain.gain.exponentialRampToValueAtTime(
             .001,
             ctx.currentTime + .55
         );
 
+
         oscillator.connect(gain);
         gain.connect(ctx.destination);
+
 
         oscillator.start();
 
@@ -2251,97 +2882,77 @@ function playLossSound() {
 }
 
 
-/* =========================
-   TICK SOUND LOOP
-========================= */
+/* =========================================================
+   TICKS
+========================================================= */
 
-let tickTimer = null;
+let tickTimeout = null;
 
 function startTicks() {
 
     stopTicks();
 
-    let delay = 100;
 
-    function tick() {
+    let delay = 80;
+
+
+    function nextTick() {
 
         if (!spinning) {
             return;
         }
 
-        playTick();
 
-        delay *= 1.09;
+        tickSound();
 
-        if (delay > 350) {
-            delay = 350;
+
+        delay *= 1.08;
+
+
+        if (delay > 300) {
+            delay = 300;
         }
 
-        tickTimer =
+
+        tickTimeout =
             setTimeout(
-                tick,
+                nextTick,
                 delay
             );
     }
 
-    tick();
+
+    nextTick();
 }
 
 
 function stopTicks() {
 
-    if (tickTimer) {
+    if (tickTimeout) {
 
         clearTimeout(
-            tickTimer
+            tickTimeout
         );
 
-        tickTimer = null;
+        tickTimeout = null;
     }
 }
 
 
-/* ============================================================
-   НОВАЯ ЛОГИКА УГЛА СТРЕЛКИ
-============================================================ */
+/* =========================================================
+   RESULT ANGLE
+========================================================= */
 
 
 /*
-   Визуально зелёный сектор начинается сверху:
+    Зелёная зона начинается сверху.
 
-   0°
-   |
-   | зелёная зона
-   ↓
-   chance * 3.6°
+    50%:
 
-   Например 50%:
-
-   0° → 180° = GREEN
-   180° → 360° = LOSS
+    0° ---------------- 180° ---------------- 360°
+    |       WIN        |        LOSS         |
 */
 
-
-function randomFloat(min, max) {
-
-    return (
-        Math.random() *
-        (max - min) +
-        min
-    );
-}
-
-
-/*
-   Получаем угол, который гарантированно
-   соответствует результату.
-
-   WIN:
-      угол находится внутри зелёного сектора.
-
-   LOSS:
-      угол находится за пределами зелёного сектора.
-*/
 
 function getResultAngle(won) {
 
@@ -2349,79 +2960,95 @@ function getResultAngle(won) {
         chance * 3.6;
 
 
-    let angle;
-
-
     if (won) {
 
         /*
-           Не ставим прямо на границу.
+            Берём угол строго внутри зелёной зоны.
 
-           Это важно:
-           если шанс 50%, не выбираем
-           180.000°, потому что это граница.
-
-           Берём безопасную середину сектора.
+            Не используем границу.
         */
 
         const margin =
             Math.min(
-                8,
-                greenDegrees * .12
-            );
-
-        angle =
-            randomFloat(
-                margin,
-                greenDegrees - margin
-            );
-
-    } else {
-
-        const margin =
-            Math.min(
-                8,
-                (360 - greenDegrees) * .12
+                7,
+                greenDegrees * .1
             );
 
 
-        angle =
-            randomFloat(
-                greenDegrees + margin,
-                360 - margin
-            );
+        return (
+            margin +
+            Math.random() *
+            (
+                greenDegrees -
+                margin * 2
+            )
+        );
+
     }
 
 
-    return angle;
-}
+    /*
+        Проигрыш.
+
+        Берём угол строго после зелёного
+        сектора.
+    */
+
+    const lossStart =
+        greenDegrees;
 
 
-/*
-   Добавляем несколько полных оборотов,
-   чтобы стрелка красиво крутилась.
+    const lossDegrees =
+        360 -
+        greenDegrees;
 
-   При этом последний угол всегда
-   сохраняется правильным.
-*/
 
-function buildFinalRotation(resultAngle) {
+    const margin =
+        Math.min(
+            7,
+            lossDegrees * .1
+        );
 
-    const fullSpins = 5;
 
     return (
-        fullSpins * 360 +
-        resultAngle
+        lossStart +
+        margin +
+        Math.random() *
+        (
+            lossDegrees -
+            margin * 2
+        )
     );
 }
 
 
-/* =========================
-   START UPGRADE
-========================= */
+function finalRotation(angle) {
+
+    /*
+        5 полных оборотов +
+        конечный угол.
+
+        Например:
+
+        angle = 90
+
+        стрелка:
+        0 → 1800 → 1890
+    */
+
+    return (
+        5 * 360 +
+        angle
+    );
+}
+
+
+/* =========================================================
+   START
+========================================================= */
 
 upgradeButton.addEventListener(
-    'click',
+    "click",
     startUpgrade
 );
 
@@ -2433,22 +3060,17 @@ function startUpgrade() {
     }
 
 
-    const selected =
-        getSelectedItems();
+    const items =
+        selectedItems();
+
 
     const stake =
-        selected.reduce(
-            (sum, item) =>
-                sum + getItemPrice(item),
-            0
-        );
+        getStake();
 
 
-    if (!selected.length) {
-
-        alert(
-            'Выбери хотя бы один предмет'
-        );
+    if (
+        items.length === 0
+    ) {
 
         return;
     }
@@ -2456,22 +3078,19 @@ function startUpgrade() {
 
     if (!selectedTarget) {
 
-        alert(
-            'Выбери предмет для апгрейда'
-        );
-
         return;
     }
 
 
     const targetPrice =
-        getItemPrice(
+        getPrice(
             selectedTarget
         );
 
 
     const maximum =
-        stake / (chance / 100);
+        stake /
+        (chance / 100);
 
 
     if (
@@ -2479,11 +3098,8 @@ function startUpgrade() {
         targetPrice > maximum
     ) {
 
-        alert(
-            'Эта цель недоступна при выбранном шансе'
-        );
-
-        selectedTarget = null;
+        selectedTarget =
+            null;
 
         renderTargets();
         updateInterface();
@@ -2492,166 +3108,154 @@ function startUpgrade() {
     }
 
 
-    /* ========================================================
-       ВАЖНО:
+    /*
+    =========================================================
+       ГЛАВНОЕ ИСПРАВЛЕНИЕ
 
-       RNG ТОЛЬКО ОДИН РАЗ.
+       RNG вызывается ОДИН РАЗ.
 
-       После этой строки результат уже известен.
-    ======================================================== */
+       Результат запоминается.
+
+       После этого стрелка получает угол,
+       который соответствует ЭТОМУ результату.
+    =========================================================
+    */
+
 
     const roll =
         Math.random() * 100;
+
 
     const won =
         roll < chance;
 
 
     /*
-       Получаем угол ТОЛЬКО после определения
-       результата.
-
-       Поэтому визуальный результат
-       гарантированно соответствует результату.
+        Теперь угол строится
+        именно на основании won.
     */
 
     const resultAngle =
-        getResultAngle(won);
+        getResultAngle(
+            won
+        );
 
 
-    const finalRotation =
-        buildFinalRotation(
+    const rotation =
+        finalRotation(
             resultAngle
         );
 
 
     console.log(
-        '[UPGRADER]',
+        "UPGRADE RESULT:",
         {
             roll,
             chance,
             won,
             resultAngle,
-            finalRotation
+            rotation
         }
     );
 
 
+    /*
+        Запоминаем всё до начала анимации.
+    */
+
+    window.currentUpgrade = {
+
+        won: won,
+
+        roll: roll,
+
+        angle: resultAngle,
+
+        target:
+            selectedTarget,
+
+        stake:
+            stake,
+
+        items:
+            items
+
+    };
+
+
     spinning = true;
+
 
     upgradeButton.disabled =
         true;
 
 
     /*
-       Запоминаем результат прямо в state.
-
-       Никакого нового Math.random()
-       после анимации больше нет.
+        Сбрасываем предыдущую анимацию.
     */
 
-    window.__upgradeResult = {
-        won,
-        roll,
-        angle: resultAngle,
-        target: selectedTarget,
-        stake,
-        items: selected
-    };
+    rotatingArrow.classList.remove(
+        "spinning",
+        "win",
+        "loss"
+    );
+
+
+    void rotatingArrow.offsetWidth;
 
 
     /*
-       Удаляем старые визуальные классы.
+        Передаём конечный угол
+        CSS-анимации.
     */
 
-    wheel.classList.remove(
-        'wheel-result-win',
-        'wheel-result-loss'
+    rotatingArrow.style.setProperty(
+        "--final-angle",
+        rotation + "deg"
     );
 
 
     /*
-       Убираем предыдущую анимацию.
-    */
-
-    needleWrapper.classList.remove(
-        'spinning'
-    );
-
-    /*
-       Форсируем reflow,
-       чтобы CSS-анимация могла стартовать
-       заново.
-    */
-
-    void needleWrapper.offsetWidth;
-
-
-    /*
-       Передаём CSS финальный угол.
-
-       Именно этот угол соответствует
-       результату.
-    */
-
-    needleWrapper.style
-        .setProperty(
-            '--final-angle',
-            finalRotation + 'deg'
-        );
-
-
-    /*
-       Начинаем звуки.
+        Запускаем звук.
     */
 
     startTicks();
 
 
     /*
-       Запускаем вращение.
+        Запускаем стрелку.
     */
 
-    needleWrapper.classList.add(
-        'spinning'
+    rotatingArrow.classList.add(
+        "spinning"
     );
 
 
     /*
-       Немного визуального эффекта.
+        Ждём именно animationend.
     */
 
-    wheel.classList.add(
-        'spinning'
-    );
-
-
-    /*
-       Ждём фактического окончания CSS-анимации.
-    */
-
-    needleWrapper.addEventListener(
-        'animationend',
-        onSpinFinished,
+    rotatingArrow.addEventListener(
+        "animationend",
+        finishUpgrade,
         {
             once: true
         }
     );
-
 }
 
 
-/* =========================
-   FINISH SPIN
-========================= */
+/* =========================================================
+   FINISH
+========================================================= */
 
-function onSpinFinished() {
+function finishUpgrade() {
 
     stopTicks();
 
 
     const result =
-        window.__upgradeResult;
+        window.currentUpgrade;
 
 
     if (!result) {
@@ -2665,94 +3269,63 @@ function onSpinFinished() {
 
 
     /*
-       Ещё раз:
+        НИКАКОГО НОВОГО RANDOM ЗДЕСЬ НЕТ.
 
-       НЕ ДЕЛАЕМ Math.random() ЗДЕСЬ.
-
-       Результат уже был определён
-       ДО вращения.
+        Берём результат,
+        который был определён ДО вращения.
     */
 
-    const won =
-        result.won;
+    if (result.won) {
 
-
-    if (won) {
-
-        wheel.classList.remove(
-            'spinning',
-            'wheel-result-loss'
+        rotatingArrow.classList.add(
+            "win"
         );
 
-        wheel.classList.add(
-            'wheel-result-win'
-        );
-
-        playWinSound();
+        winSound();
 
     } else {
 
-        wheel.classList.remove(
-            'spinning',
-            'wheel-result-win'
+        rotatingArrow.classList.add(
+            "loss"
         );
 
-        wheel.classList.add(
-            'wheel-result-loss'
-        );
+        lossSound();
 
-        playLossSound();
     }
 
 
     /*
-       Если проигрыш:
-       ставка сгорает.
+        Сначала сгорает ставка.
     */
 
-    if (!won) {
+    removeStake();
 
-        removeSelectedFromInventory();
 
-        showLossResult();
+    if (result.won) {
 
-        spinning = false;
+        /*
+            Создаём ожидаемый выигрыш.
+        */
 
-        selectedIds.clear();
+        pendingWinItem = {
+            ...result.target
+        };
 
-        selectedTarget = null;
 
-        renderInventory();
-        renderTargets();
-        updateInterface();
+        showWin(
+            pendingWinItem
+        );
 
-        return;
+    } else {
+
+        showLoss();
+
     }
 
 
-    /*
-       WIN:
+    selectedInventoryIds.clear();
 
-       Ставка удаляется из инвентаря.
-
-       Сам выигранный предмет НЕ добавляем
-       дважды.
-
-       Он попадёт в inventory только
-       после нажатия "ЗАБРАТЬ ПРЕДМЕТ".
-    */
-
-    removeSelectedFromInventory();
-
-
-    pendingWinItem = {
-        ...result.target
-    };
-
-
-    selectedIds.clear();
     selectedTarget = null;
-
 
     spinning = false;
 
@@ -2760,31 +3333,26 @@ function onSpinFinished() {
     renderInventory();
     renderTargets();
     updateInterface();
-
-
-    showWinResult(
-        pendingWinItem
-    );
-
 }
 
 
-/* =========================
+/* =========================================================
    REMOVE STAKE
-========================= */
+========================================================= */
 
-function removeSelectedFromInventory() {
+function removeStake() {
 
-    const ids =
+    const selected =
         new Set(
-            selectedIds
+            selectedInventoryIds
         );
 
 
     inventory =
         inventory.filter(
             (item, index) =>
-                !ids.has(
+
+                !selected.has(
                     getItemId(
                         item,
                         index
@@ -2799,96 +3367,100 @@ function removeSelectedFromInventory() {
 }
 
 
-/* =========================
-   WIN RESULT
-========================= */
+/* =========================================================
+   WIN
+========================================================= */
 
-function showWinResult(item) {
+function showWin(item) {
 
     resultStatus.textContent =
-        'ПОБЕДА';
+        "ПОБЕДА";
+
 
     resultStatus.className =
-        'result-status win';
+        "resultStatus win";
 
 
     resultTitle.textContent =
-        'АПГРЕЙД УСПЕШЕН!';
+        "АПГРЕЙД УСПЕШЕН!";
 
 
     resultImage.innerHTML =
-        renderImage(item);
+        itemImage(item);
 
 
-    resultItemName.textContent =
-        getItemName(item);
+    resultName.textContent =
+        getName(item);
 
 
-    resultItemPrice.textContent =
-        getItemPrice(item) +
-        ' XP / VALUE';
+    resultPrice.textContent =
+        getPrice(item) +
+        " монет";
 
 
-    takeItemButton.style.display =
-        'block';
+    takeButton.style.display =
+        "block";
 
 
     resultModal.classList.add(
-        'show'
+        "show"
     );
 }
 
 
-/* =========================
-   LOSS RESULT
-========================= */
+/* =========================================================
+   LOSS
+========================================================= */
 
-function showLossResult() {
+function showLoss() {
 
     resultStatus.textContent =
-        'ПОРАЖЕНИЕ';
+        "ПОРАЖЕНИЕ";
+
 
     resultStatus.className =
-        'result-status loss';
+        "resultStatus loss";
 
 
     resultTitle.textContent =
-        'НЕ ПОВЕЗЛО';
+        "НЕ ПОВЕЗЛО";
 
 
     resultImage.innerHTML = `
+
         <div
             style="
-                font-size:80px;
-                opacity:.55;
+                font-size:78px;
+                opacity:.5;
             "
         >
             💀
         </div>
+
     `;
 
 
-    resultItemName.textContent =
-        'Предметы сгорели';
+    resultName.textContent =
+        "Ставка сгорела";
 
 
-    resultItemPrice.textContent =
-        'Попробуй ещё раз';
+    resultPrice.textContent =
+        "Попробуй ещё раз";
 
 
-    takeItemButton.style.display =
-        'none';
+    takeButton.style.display =
+        "none";
 
 
     resultModal.classList.add(
-        'show'
+        "show"
     );
 }
 
 
-/* =========================
-   TAKE WON ITEM
-========================= */
+/* =========================================================
+   TAKE WIN
+========================================================= */
 
 function takeWonItem() {
 
@@ -2898,27 +3470,24 @@ function takeWonItem() {
 
 
     /*
-       Проверяем, не был ли предмет
-       уже добавлен.
+        Создаём НОВЫЙ instanceId.
+
+        Поэтому предмет не конфликтует
+        с уже существующим.
     */
 
-    const newItem = {
+    const item = {
+
         ...pendingWinItem,
 
-        /*
-           Создаём новый уникальный ID.
-
-           Это особенно важно, если выигранный
-           предмет уже существует в инвентаре.
-        */
-
         instanceId:
-            'upgrade_' +
+            "upgrade_" +
             Date.now() +
-            '_' +
+            "_" +
             Math.random()
                 .toString(36)
                 .slice(2)
+
     };
 
 
@@ -2927,7 +3496,7 @@ function takeWonItem() {
 
 
     inventory.push(
-        newItem
+        item
     );
 
 
@@ -2937,11 +3506,12 @@ function takeWonItem() {
 
 
     /*
-       Начисляем XP за успешный апгрейд.
+        За успешный апгрейд
+        начисляем стоимость предмета.
     */
 
     addXP(
-        getItemPrice(newItem)
+        getPrice(item)
     );
 
 
@@ -2958,148 +3528,129 @@ function takeWonItem() {
 }
 
 
-/* =========================
-   CLOSE MODAL
-========================= */
+/* =========================================================
+   XP
+========================================================= */
+
+function addXP(amount) {
+
+    const current =
+        Number(
+            localStorage.getItem(
+                "chak338_xp"
+            ) || 0
+        );
+
+
+    localStorage.setItem(
+        "chak338_xp",
+        String(
+            current +
+            Number(amount)
+        )
+    );
+}
+
+
+/* =========================================================
+   CLOSE
+========================================================= */
 
 function closeResult() {
 
     resultModal.classList.remove(
-        'show'
-    );
-
-    wheel.classList.remove(
-        'wheel-result-win',
-        'wheel-result-loss'
-    );
-
-    wheel.classList.remove(
-        'spinning'
+        "show"
     );
 
 
-    /*
-       Возвращаем стрелку визуально
-       в начальное положение.
+    rotatingArrow.classList.remove(
+        "spinning",
+        "win",
+        "loss"
+    );
 
-       Это происходит после того,
-       как пользователь увидел результат.
-    */
 
-    needleWrapper.style.transition =
-        'transform .35s ease';
+    rotatingArrow.style.transition =
+        "transform .35s ease";
 
-    needleWrapper.style.transform =
-        'rotate(0deg)';
+
+    rotatingArrow.style.transform =
+        "translate(-50%, -50%) rotate(0deg)";
 
 
     setTimeout(
         () => {
 
-            needleWrapper.style.transition =
-                '';
+            rotatingArrow.style.transition =
+                "";
 
-            needleWrapper.classList.remove(
-                'spinning'
-            );
-
-            needleWrapper.style.transform =
-                '';
+            rotatingArrow.style.transform =
+                "";
 
         },
         400
     );
 
 
-    window.__upgradeResult =
+    window.currentUpgrade =
         null;
 }
 
 
-/* =========================
-   XP
-========================= */
-
-function addXP(amount) {
-
-    try {
-
-        const current =
-            Number(
-                localStorage.getItem(
-                    'chak338_xp'
-                ) || 0
-            );
-
-
-        localStorage.setItem(
-            'chak338_xp',
-            String(
-                current + Number(amount)
-            )
-        );
-
-    } catch (e) {
-
-        console.error(
-            'Ошибка XP:',
-            e
-        );
-    }
-}
-
-
-/* =========================
-   MODAL CLICK OUTSIDE
-========================= */
+/* =========================================================
+   MODAL OUTSIDE
+========================================================= */
 
 resultModal.addEventListener(
-    'click',
+    "click",
     event => {
 
         if (
             event.target ===
             resultModal
         ) {
+
             closeResult();
+
         }
 
     }
 );
 
 
-/* =========================
+/* =========================================================
    ESC
-========================= */
+========================================================= */
 
 document.addEventListener(
-    'keydown',
+    "keydown",
     event => {
 
         if (
-            event.key === 'Escape' &&
+            event.key === "Escape" &&
             resultModal.classList.contains(
-                'show'
+                "show"
             )
         ) {
 
             closeResult();
+
         }
 
     }
 );
 
 
-/* =========================
+/* =========================================================
    INIT
-========================= */
+========================================================= */
 
 function init() {
 
     inventory =
         getInventory();
 
-    selectedIds =
+    selectedInventoryIds =
         new Set();
 
     selectedTarget =
@@ -3107,6 +3658,7 @@ function init() {
 
     chance =
         50;
+
 
     renderInventory();
     renderTargets();
