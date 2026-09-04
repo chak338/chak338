@@ -1,32 +1,44 @@
-/* CHAK338 Gaming Hub — единый каталог предметов */
+/* =========================================================
+   CHAK338 GAMING HUB
+   Единый каталог кейсов и предметов
+   ========================================================= */
 
 const RARITIES = {
   common: {
     name: 'Обычная',
     color: '#94a3b8'
   },
+
   uncommon: {
     name: 'Необычная',
     color: '#22c55e'
   },
+
   rare: {
     name: 'Редкая',
     color: '#38bdf8'
   },
+
   epic: {
     name: 'Эпическая',
     color: '#a855f7'
   },
+
   legendary: {
     name: 'Легендарная',
     color: '#f59e0b'
   },
+
   mythic: {
     name: 'Мифическая',
     color: '#ef4444'
   }
 };
 
+
+/* =========================================================
+   КЕЙСЫ
+   ========================================================= */
 
 const CASES = [
 
@@ -36,11 +48,20 @@ const CASES = [
     short: 'CLASH',
     subtitle: 'CLASH OF CLANS',
     color: '#f59e0b',
+
     cooldownHours: 5,
     xp: 100,
-    description: 'Персонажи Clash of Clans — от варвара до королевы лучниц.',
+
+    description:
+      'Персонажи Clash of Clans — от Варвара до Королевы лучниц.',
+
+    /*
+      ВАЖНО:
+      PNG сейчас лежит в корне GitHub рядом с index.html.
+    */
     image: 'clash-case.png'
   },
+
 
   {
     id: 'cs2',
@@ -48,11 +69,16 @@ const CASES = [
     short: 'CS2',
     subtitle: 'COUNTER-STRIKE 2',
     color: '#38bdf8',
+
     cooldownHours: 12,
     xp: 150,
-    description: 'Оружие, ножи и легендарные скины.',
+
+    description:
+      'Оружие, ножи и легендарные скины Counter-Strike 2.',
+
     image: 'cs2-case.png'
   },
+
 
   {
     id: 'dota2',
@@ -60,47 +86,73 @@ const CASES = [
     short: 'DOTA',
     subtitle: 'DOTA 2',
     color: '#ef4444',
+
     cooldownHours: 24,
     xp: 250,
-    description: 'Артефакты, расходники и дорогие предметы Dota 2.',
+
+    description:
+      'Артефакты, расходники и дорогие предметы Dota 2.',
+
     image: 'dota-case.png'
   }
 
 ];
 
 
-/* -------------------------------------------------------
-   Встроенные SVG-картинки предметов.
-   Поэтому предметы не будут показывать битую картинку.
-------------------------------------------------------- */
+/* =========================================================
+   ВСТРОЕННЫЕ КАРТИНКИ ПРЕДМЕТОВ
+   ========================================================= */
 
 function svgIcon(label, emoji, color) {
 
   const safe = String(label)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 
   const svg = `
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 360">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 500 360"
+  >
 
     <defs>
 
       <radialGradient id="bg">
-        <stop stop-color="${color}" stop-opacity=".28"/>
-        <stop offset="1"
-              stop-color="#07070b"
-              stop-opacity="0"/>
+        <stop
+          stop-color="${color}"
+          stop-opacity=".32"
+        />
+
+        <stop
+          offset="1"
+          stop-color="#07070b"
+          stop-opacity="0"
+        />
       </radialGradient>
 
-      <linearGradient id="shine" x1="0" x2="1">
-        <stop stop-color="${color}" stop-opacity=".9"/>
-        <stop offset="1"
-              stop-color="#fff"
-              stop-opacity=".15"/>
+      <linearGradient
+        id="shine"
+        x1="0"
+        x2="1"
+      >
+
+        <stop
+          stop-color="${color}"
+          stop-opacity=".95"
+        />
+
+        <stop
+          offset="1"
+          stop-color="#fff"
+          stop-opacity=".12"
+        />
+
       </linearGradient>
 
     </defs>
+
 
     <rect
       width="500"
@@ -108,6 +160,7 @@ function svgIcon(label, emoji, color) {
       rx="34"
       fill="#09090f"
     />
+
 
     <rect
       x="12"
@@ -117,33 +170,40 @@ function svgIcon(label, emoji, color) {
       rx="28"
       fill="url(#bg)"
       stroke="${color}"
-      stroke-opacity=".28"
+      stroke-opacity=".35"
+      stroke-width="2"
     />
+
 
     <circle
       cx="250"
-      cy="150"
-      r="86"
+      cy="145"
+      r="90"
       fill="#11111b"
       stroke="${color}"
-      stroke-opacity=".35"
+      stroke-opacity=".45"
       stroke-width="3"
     />
 
+
     <circle
       cx="250"
-      cy="150"
-      r="68"
+      cy="145"
+      r="70"
       fill="${color}"
-      opacity=".09"
+      opacity=".10"
     />
+
 
     <text
       x="250"
-      y="178"
+      y="176"
       text-anchor="middle"
       font-size="92"
-    >${emoji}</text>
+    >
+      ${emoji}
+    </text>
+
 
     <rect
       x="60"
@@ -152,35 +212,41 @@ function svgIcon(label, emoji, color) {
       height="3"
       rx="2"
       fill="url(#shine)"
-      opacity=".5"
+      opacity=".6"
     />
+
 
     <text
       x="250"
       y="310"
       text-anchor="middle"
-      fill="#fff"
+      fill="#ffffff"
       font-family="Arial,sans-serif"
-      font-size="26"
+      font-size="25"
       font-weight="900"
-    >${safe}</text>
+    >
+      ${safe}
+    </text>
 
-  </svg>`;
+  </svg>
+  `;
 
-  return 'data:image/svg+xml;charset=UTF-8,' +
-    encodeURIComponent(svg);
+  return (
+    'data:image/svg+xml;charset=UTF-8,' +
+    encodeURIComponent(svg)
+  );
 }
 
 
-/* -------------------------------------------------------
+/* =========================================================
    ПРЕДМЕТЫ
-------------------------------------------------------- */
+   ========================================================= */
 
 const rawItems = [
 
-  /* =========================
+  /* =======================================================
      CLASH OF CLANS
-  ========================= */
+     ======================================================= */
 
   [
     'clash_barbarian',
@@ -309,9 +375,9 @@ const rawItems = [
   ],
 
 
-  /* =========================
+  /* =======================================================
      CS2
-  ========================= */
+     ======================================================= */
 
   [
     'cs2_glock',
@@ -431,9 +497,9 @@ const rawItems = [
   ],
 
 
-  /* =========================
+  /* =======================================================
      DOTA 2
-  ========================= */
+     ======================================================= */
 
   [
     'dota_tango',
@@ -609,11 +675,11 @@ const rawItems = [
 ];
 
 
-/* -------------------------------------------------------
-   Создание объектов
-------------------------------------------------------- */
+/* =========================================================
+   СОЗДАЁМ ОБЪЕКТЫ ПРЕДМЕТОВ
+   ========================================================= */
 
-const ITEMS = rawItems.map((x) => {
+const ITEMS = rawItems.map((item) => {
 
   const [
     id,
@@ -622,33 +688,48 @@ const ITEMS = rawItems.map((x) => {
     emoji,
     price,
     rarity
-  ] = x;
+  ] = item;
 
-  const color = RARITIES[rarity].color;
+
+  const rarityData =
+    RARITIES[rarity] || RARITIES.common;
+
 
   /*
-    Чем дороже предмет,
-    тем меньше его вес при выпадении.
+    Вес выпадения:
+    дешёвые предметы выпадают чаще,
+    дорогие — реже.
   */
 
   const chance =
-    100 / Math.pow(price / 10, 0.82);
+    100 / Math.pow(
+      price / 10,
+      0.82
+    );
+
 
   return {
 
     id,
+
     caseId,
+
     name,
+
     emoji,
+
     price,
+
     rarity,
+
     chance,
+
     type: caseId,
 
     image: svgIcon(
       name,
       emoji,
-      color
+      rarityData.color
     )
 
   };
@@ -656,9 +737,9 @@ const ITEMS = rawItems.map((x) => {
 });
 
 
-/* -------------------------------------------------------
-   HELPERS
-------------------------------------------------------- */
+/* =========================================================
+   ПОИСК
+   ========================================================= */
 
 function getCase(id) {
 
@@ -672,7 +753,7 @@ function getCase(id) {
 function getItem(id) {
 
   return ITEMS.find(
-    i => i.id === id
+    item => item.id === id
   );
 
 }
@@ -681,11 +762,15 @@ function getItem(id) {
 function getCaseItems(caseId) {
 
   return ITEMS.filter(
-    i => i.caseId === caseId
+    item => item.caseId === caseId
   );
 
 }
 
+
+/* =========================================================
+   ЦЕНА
+   ========================================================= */
 
 function formatPrice(value) {
 
@@ -694,9 +779,9 @@ function formatPrice(value) {
 }
 
 
-/* -------------------------------------------------------
+/* =========================================================
    INVENTORY
-------------------------------------------------------- */
+   ========================================================= */
 
 function getInventory() {
 
@@ -708,7 +793,7 @@ function getInventory() {
       ) || '[]'
     );
 
-  } catch {
+  } catch (error) {
 
     return [];
 
@@ -732,6 +817,7 @@ function addInventoryItem(item) {
   const inventory =
     getInventory();
 
+
   inventory.push({
 
     ...item,
@@ -750,20 +836,29 @@ function addInventoryItem(item) {
 
   });
 
-  saveInventory(inventory);
+
+  saveInventory(
+    inventory
+  );
 
 }
 
 
 function removeInventoryItems(uids) {
 
-  const set =
+  const ids =
     new Set(uids);
+
+
+  const inventory =
+    getInventory();
+
 
   saveInventory(
 
-    getInventory().filter(
-      item => !set.has(item.uid)
+    inventory.filter(
+      item =>
+        !ids.has(item.uid)
     )
 
   );
@@ -771,9 +866,9 @@ function removeInventoryItems(uids) {
 }
 
 
-/* -------------------------------------------------------
+/* =========================================================
    XP
-------------------------------------------------------- */
+   ========================================================= */
 
 function getXP() {
 
@@ -792,10 +887,12 @@ function addXP(value) {
     getXP() +
     Number(value || 0);
 
+
   localStorage.setItem(
     'chak338_xp',
     String(xp)
   );
+
 
   return xp;
 
@@ -804,16 +901,18 @@ function addXP(value) {
 
 function getLevel() {
 
-  return Math.floor(
-    getXP() / 1000
-  ) + 1;
+  return (
+    Math.floor(
+      getXP() / 1000
+    ) + 1
+  );
 
 }
 
 
-/* -------------------------------------------------------
+/* =========================================================
    COOLDOWN
-------------------------------------------------------- */
+   ========================================================= */
 
 function cooldownKey(caseId) {
 
@@ -824,8 +923,14 @@ function cooldownKey(caseId) {
 
 function getRemaining(caseId) {
 
-  const c =
+  const currentCase =
     getCase(caseId);
+
+
+  if (!currentCase) {
+    return 0;
+  }
+
 
   const last =
     Number(
@@ -834,14 +939,26 @@ function getRemaining(caseId) {
       ) || 0
     );
 
+
   if (!last) {
     return 0;
   }
 
+
   return Math.max(
+
     0,
-    c.cooldownHours * 3600000 -
-    (Date.now() - last)
+
+    currentCase.cooldownHours *
+      60 *
+      60 *
+      1000
+      -
+      (
+        Date.now() -
+        last
+      )
+
   );
 
 }
@@ -849,8 +966,14 @@ function getRemaining(caseId) {
 
 function getNextOpenTime(caseId) {
 
-  const c =
+  const currentCase =
     getCase(caseId);
+
+
+  if (!currentCase) {
+    return new Date();
+  }
+
 
   const last =
     Number(
@@ -859,13 +982,20 @@ function getNextOpenTime(caseId) {
       ) || 0
     );
 
+
   if (!last) {
     return new Date();
   }
 
+
   return new Date(
+
     last +
-    c.cooldownHours * 3600000
+    currentCase.cooldownHours *
+    60 *
+    60 *
+    1000
+
   );
 
 }
@@ -873,7 +1003,9 @@ function getNextOpenTime(caseId) {
 
 function canOpenCase(caseId) {
 
-  return getRemaining(caseId) <= 0;
+  return (
+    getRemaining(caseId) <= 0
+  );
 
 }
 
@@ -881,44 +1013,260 @@ function canOpenCase(caseId) {
 function setCaseOpened(caseId) {
 
   localStorage.setItem(
+
     cooldownKey(caseId),
-    String(Date.now())
+
+    String(
+      Date.now()
+    )
+
   );
 
 }
 
 
-/* -------------------------------------------------------
-   СЛУЧАЙНЫЙ ПРЕДМЕТ
-------------------------------------------------------- */
+/* =========================================================
+   СЛУЧАЙНОЕ ВЫПАДЕНИЕ
+   ========================================================= */
 
 function randomCaseItem(caseId) {
 
   const items =
     getCaseItems(caseId);
 
+
+  if (!items.length) {
+    return null;
+  }
+
+
   const total =
     items.reduce(
+
       (sum, item) =>
         sum + item.chance,
+
       0
+
     );
 
+
   let roll =
-    Math.random() * total;
+    Math.random() *
+    total;
+
 
   for (const item of items) {
 
     roll -= item.chance;
 
+
     if (roll <= 0) {
+
       return item;
+
     }
 
   }
+
 
   return items[
     items.length - 1
   ];
 
 }
+
+
+/* =========================================================
+   ФОРМАТ ВРЕМЕНИ
+   ========================================================= */
+
+function formatTime(ms) {
+
+  ms = Math.max(
+    0,
+    Number(ms || 0)
+  );
+
+
+  const totalSeconds =
+    Math.floor(
+      ms / 1000
+    );
+
+
+  const hours =
+    Math.floor(
+      totalSeconds / 3600
+    );
+
+
+  const minutes =
+    Math.floor(
+      (totalSeconds % 3600) / 60
+    );
+
+
+  const seconds =
+    totalSeconds % 60;
+
+
+  return (
+
+    String(hours)
+      .padStart(2, '0') +
+
+    ':' +
+
+    String(minutes)
+      .padStart(2, '0') +
+
+    ':' +
+
+    String(seconds)
+      .padStart(2, '0')
+
+  );
+
+}
+
+
+/* =========================================================
+   ПРОГРЕСС XP
+   ========================================================= */
+
+function getLevelProgress() {
+
+  const xp =
+    getXP();
+
+
+  const level =
+    getLevel();
+
+
+  const currentLevelXP =
+    (level - 1) * 1000;
+
+
+  const nextLevelXP =
+    level * 1000;
+
+
+  const current =
+    xp - currentLevelXP;
+
+
+  const needed =
+    nextLevelXP -
+    currentLevelXP;
+
+
+  return {
+
+    level,
+
+    current,
+
+    needed,
+
+    percent:
+      Math.min(
+        100,
+        Math.max(
+          0,
+          (current / needed) * 100
+        )
+      )
+
+  };
+
+}
+
+
+/* =========================================================
+   ОБНОВЛЕНИЕ СОСТОЯНИЯ
+   ========================================================= */
+
+function getSiteState() {
+
+  return {
+
+    xp:
+      getXP(),
+
+    level:
+      getLevel(),
+
+    inventory:
+      getInventory(),
+
+    cases:
+      CASES.map(c => ({
+
+        id: c.id,
+
+        remaining:
+          getRemaining(c.id),
+
+        available:
+          canOpenCase(c.id)
+
+      }))
+
+  };
+
+}
+
+
+/* =========================================================
+   DEBUG / GLOBAL
+   ========================================================= */
+
+window.CHAK338 = {
+
+  CASES,
+
+  ITEMS,
+
+  RARITIES,
+
+  getCase,
+
+  getItem,
+
+  getCaseItems,
+
+  formatPrice,
+
+  getInventory,
+
+  saveInventory,
+
+  addInventoryItem,
+
+  removeInventoryItems,
+
+  getXP,
+
+  addXP,
+
+  getLevel,
+
+  getRemaining,
+
+  getNextOpenTime,
+
+  canOpenCase,
+
+  setCaseOpened,
+
+  randomCaseItem,
+
+  formatTime,
+
+  getLevelProgress,
+
+  getSiteState
+
+};
