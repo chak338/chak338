@@ -1,286 +1,436 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>CHAK338 — Gaming Hub</title>
 
-<meta
-    name="description"
-    content="CHAK338 Gaming Hub — кейсы, новости, розыгрыши, апгрейдер, инвентарь и будущий мерч."
->
-
 <script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      boxShadow: {
+        neon: "0 0 45px rgba(168,85,247,.28)",
+        cyan: "0 0 45px rgba(56,189,248,.25)",
+        redneon: "0 0 45px rgba(239,68,68,.28)"
+      }
+    }
+  }
+}
+</script>
+
+<script src="data.js"></script>
 
 <style>
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-    background: #07070b;
-    color: #f8fafc;
+  background: #07070b;
+  color: #f8fafc;
 }
 
-body::before {
+body:before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .18;
 
-    content: "";
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.035) 1px,
+      transparent 1px
+    );
 
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    opacity: .18;
-
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,.035) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.035) 1px,
-            transparent 1px
-        );
-
-    background-size: 36px 36px;
-
+  background-size: 36px 36px;
 }
 
 .glass {
-
-    background:
-        rgba(12,12,18,.78);
-
-    backdrop-filter:
-        blur(18px);
-
-}
-
-.card {
-
-    background: #0c0c12;
-
-    border:
-        1px solid rgba(255,255,255,.08);
-
+  background: rgba(12,12,18,.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .case-card {
-
-    transition:
-        .3s transform,
-        .3s box-shadow;
-
+  transition:
+    transform .3s,
+    box-shadow .3s;
 }
 
 .case-card:hover {
-
-    transform:
-        translateY(-8px);
-
-    box-shadow:
-        0 30px 70px rgba(0,0,0,.45);
-
-}
-
-.hero-title {
-
-    font-size:
-        clamp(48px, 8vw, 100px);
-
-    line-height:
-        .88;
-
+  transform: translateY(-8px);
 }
 
 .case-art {
-
-    height: 270px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    overflow: hidden;
-
+  position: relative;
+  overflow: hidden;
 }
 
-.case-placeholder {
+.case-art:after {
+  content: "";
+  position: absolute;
 
-    width: 220px;
+  width: 260px;
+  height: 260px;
 
-    height: 145px;
+  border-radius: 50%;
 
-    border-radius: 25px;
+  background: rgba(168,85,247,.18);
 
-    display: flex;
+  filter: blur(60px);
 
-    align-items: center;
+  top: 5%;
+  left: 50%;
 
-    justify-content: center;
+  transform: translateX(-50%);
+}
 
-    font-size: 28px;
+.case-image {
+  position: relative;
+  z-index: 2;
 
-    font-weight: 1000;
+  max-width: 82%;
+  max-height: 220px;
 
-    letter-spacing: .08em;
+  object-fit: contain;
 
-    transform:
-        perspective(700px)
-        rotateX(8deg)
-        rotateY(-8deg);
+  filter:
+    drop-shadow(0 25px 35px rgba(0,0,0,.7))
+    drop-shadow(0 0 25px rgba(168,85,247,.22));
+}
 
-    background:
-        linear-gradient(
-            145deg,
-            #292933,
-            #0c0c11
-        );
+.reel-window {
+  position: relative;
+  overflow: hidden;
 
-    border:
-        1px solid rgba(255,255,255,.15);
+  border-radius: 22px;
 
-    box-shadow:
-        0 30px 70px rgba(0,0,0,.55);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.025),
+      rgba(0,0,0,.35)
+    );
+
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.reel-window:before {
+  content: "";
+
+  position: absolute;
+
+  z-index: 20;
+
+  left: 50%;
+  top: 0;
+  bottom: 0;
+
+  width: 3px;
+
+  transform: translateX(-50%);
+
+  background: white;
+
+  box-shadow:
+    0 0 10px white,
+    0 0 25px rgba(168,85,247,.8);
+}
+
+.reel-window:after {
+  content: "";
+
+  position: absolute;
+
+  z-index: 10;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      #050508 0%,
+      transparent 12%,
+      transparent 88%,
+      #050508 100%
+    );
+}
+
+.reel {
+  display: flex;
+
+  gap: 12px;
+
+  width: max-content;
+
+  will-change: transform;
+}
+
+.reel-item {
+  position: relative;
+
+  flex: 0 0 128px;
+
+  height: 155px;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.055),
+      rgba(255,255,255,.015)
+    );
+
+  border: 2px solid rgba(255,255,255,.08);
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  overflow: hidden;
+}
+
+.reel-item img {
+  width: 78px;
+  height: 78px;
+
+  object-fit: contain;
+
+  filter: drop-shadow(
+    0 8px 12px rgba(0,0,0,.7)
+  );
+}
+
+.reel-item.common {
+  border-color: #64748b;
+}
+
+.reel-item.uncommon {
+  border-color: #22c55e;
+}
+
+.reel-item.rare {
+  border-color: #38bdf8;
+}
+
+.reel-item.epic {
+  border-color: #a855f7;
+}
+
+.reel-item.legendary {
+  border-color: #f59e0b;
+
+  box-shadow:
+    0 0 20px rgba(245,158,11,.12);
+}
+
+.reel-item.mythic {
+  border-color: #ef4444;
+
+  box-shadow:
+    0 0 25px rgba(239,68,68,.18);
+}
+
+.drop-pop {
+  animation:
+    dropPop .65s
+    cubic-bezier(.2,.9,.25,1.3);
+}
+
+@keyframes dropPop {
+
+  0% {
+    transform: scale(.55) rotate(-8deg);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.08) rotate(2deg);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 
 }
 
 .modal-bg {
+  background: rgba(0,0,0,.82);
 
-    background:
-        rgba(0,0,0,.8);
+  backdrop-filter: blur(10px);
+}
 
-    backdrop-filter:
-        blur(10px);
+.timer-ready {
+  color: #34d399;
+}
 
+.timer-wait {
+  color: #f59e0b;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 20px;
 }
 
 </style>
-
 </head>
 
 
-<body>
+<body class="antialiased">
 
-<!-- =====================================================
-     HEADER
-===================================================== -->
 
 <header class="fixed top-0 left-0 right-0 z-50">
 
 <div class="glass border-b border-white/10">
 
-<div class="max-w-7xl mx-auto px-5">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
 <div class="h-20 flex items-center justify-between">
 
-<a href="index.html"
-   class="flex items-center gap-3">
+<a href="#" class="flex items-center gap-3">
 
-<div
-    class="w-11 h-11 rounded-2xl
-    bg-gradient-to-br from-fuchsia-500 to-violet-700
-    flex items-center justify-center
-    font-black text-xl">
-
+<div class="
+w-11 h-11
+rounded-2xl
+bg-gradient-to-br
+from-fuchsia-500
+to-violet-700
+flex items-center justify-center
+font-black text-xl
+shadow-neon
+">
 C
-
 </div>
 
 <div>
-
 <div class="font-black text-xl">
 CHAK338
 </div>
 
-<div
-    class="text-[10px] uppercase
-    tracking-[.22em] text-zinc-500">
-
+<div class="
+text-[10px]
+uppercase
+tracking-[.22em]
+text-zinc-500
+">
 Gaming Hub
-
 </div>
-
 </div>
 
 </a>
 
 
-<nav class="hidden lg:flex gap-7 text-sm font-bold text-zinc-400">
+<nav class="
+hidden lg:flex
+items-center
+gap-7
+text-sm
+font-bold
+text-zinc-400
+">
 
-<a href="#cases"
-   class="hover:text-white">
-
+<a href="#cases" class="hover:text-white">
 Кейсы
-
 </a>
 
-<a href="#news"
-   class="hover:text-white">
-
+<a href="#news" class="hover:text-white">
 Новости
-
 </a>
 
-<a href="#giveaways"
-   class="hover:text-white">
-
+<a href="#giveaways" class="hover:text-white">
 Розыгрыши
-
 </a>
 
-<a href="#shop"
-   class="hover:text-white">
-
+<a href="#shop" class="hover:text-white">
 Мерч
+</a>
 
+<a
+href="inventory.html"
+class="
+px-3 py-2
+rounded-xl
+bg-fuchsia-500/10
+border border-fuchsia-500/20
+text-fuchsia-300
+">
+Инвентарь
+</a>
+
+<a
+href="upgrade.html"
+class="
+px-3 py-2
+rounded-xl
+bg-white/5
+border border-white/10
+">
+Апгрейдер
 </a>
 
 </nav>
 
 
-<div class="flex gap-3">
+<div class="flex items-center gap-3">
+
+<div class="hidden sm:block text-right">
+
+<div class="text-[10px] text-zinc-500">
+ТВОЙ УРОВЕНЬ
+</div>
+
+<div class="font-black">
+LVL <span id="level">1</span>
+·
+<span id="xp">0</span> XP
+</div>
+
+</div>
+
 
 <a
-    href="upgrade.html"
-    class="hidden sm:block px-4 py-3
-    rounded-xl bg-white/5
-    border border-white/10
-    font-black text-sm">
-
-АПГРЕЙДЕР
-
-</a>
-
-<a
-    href="inventory.html"
-    class="px-4 py-3 rounded-xl
-    bg-fuchsia-500 text-white
-    font-black text-sm">
-
+href="inventory.html"
+class="
+px-4 py-3
+rounded-xl
+bg-fuchsia-500
+text-white
+text-sm
+font-black
+">
 ИНВЕНТАРЬ
-
 </a>
 
 </div>
 
 </div>
-
 </div>
-
 </div>
 
 </header>
@@ -289,52 +439,62 @@ Gaming Hub
 <main class="pt-20">
 
 
-<!-- =====================================================
-     HERO
-===================================================== -->
+<!-- HERO -->
 
 <section class="relative overflow-hidden">
 
-<div
-    class="absolute
-    -top-40
-    left-1/2
-    -translate-x-1/2
-    w-[800px]
-    h-[500px]
-    bg-fuchsia-600/20
-    blur-[130px]
-    rounded-full">
-</div>
+<div class="
+absolute
+-top-40
+left-1/2
+-translate-x-1/2
+w-[700px]
+h-[500px]
+bg-fuchsia-600/15
+blur-[120px]
+rounded-full
+"></div>
 
 
-<div
-    class="max-w-7xl mx-auto
-    px-5
-    pt-24
-    pb-24">
+<div class="
+max-w-7xl
+mx-auto
+px-4 sm:px-6 lg:px-8
+pt-20 pb-16
+">
 
-<div
-    class="grid lg:grid-cols-2
-    gap-16 items-center">
+<div class="
+grid
+lg:grid-cols-2
+gap-12
+items-center
+">
 
 
 <div>
 
-<div
-    class="inline-flex items-center
-    gap-2 px-4 py-2
-    rounded-full
-    bg-white/5
-    border border-white/10
-    text-xs font-black
-    uppercase tracking-widest
-    text-fuchsia-300">
+<div class="
+inline-flex
+items-center
+gap-2
+px-4 py-2
+rounded-full
+bg-white/5
+border border-white/10
+text-xs
+font-black
+uppercase
+tracking-widest
+text-fuchsia-300
+">
 
 <span
-    class="w-2 h-2
-    bg-emerald-400
-    rounded-full">
+class="
+w-2 h-2
+bg-emerald-400
+rounded-full
+animate-pulse
+">
 </span>
 
 CHAK338 ONLINE
@@ -342,14 +502,16 @@ CHAK338 ONLINE
 </div>
 
 
-<h1
-    class="hero-title
-    font-black
-    tracking-tight
-    mt-8">
+<h1 class="
+mt-7
+text-5xl
+sm:text-7xl
+font-black
+leading-[.9]
+tracking-tight
+">
 
 ИГРАЙ.<br>
-
 ОТКРЫВАЙ.<br>
 
 <span class="text-fuchsia-400">
@@ -359,664 +521,212 @@ CHAK338 ONLINE
 </h1>
 
 
-<p
-    class="mt-8 max-w-xl
-    text-lg
-    text-zinc-400
-    leading-relaxed">
+<p class="
+mt-7
+max-w-xl
+text-zinc-400
+text-lg
+leading-relaxed
+">
 
-Добро пожаловать в CHAK338 Gaming Hub —
-место, где игровой мир, стримы,
-кейсы, розыгрыши и будущий мерч
-собираются в одном месте.
+Кейсы, уникальные персонажи,
+экипировка, Dota 2, розыгрыши
+и мерч от CHAK338.
 
 </p>
 
 
-<div class="flex flex-wrap gap-4 mt-8">
+<div class="mt-8 flex flex-wrap gap-3">
 
 <a
-    href="#cases"
-    class="px-7 py-4
-    rounded-2xl
-    bg-fuchsia-500
-    hover:bg-fuchsia-400
-    text-white
-    font-black">
+href="#cases"
+class="
+px-7 py-4
+rounded-2xl
+bg-fuchsia-500
+hover:bg-fuchsia-400
+font-black
+shadow-neon
+">
 
-СМОТРЕТЬ КЕЙСЫ
+ОТКРЫТЬ КЕЙС
 
 </a>
 
 
 <a
-    href="upgrade.html"
-    class="px-7 py-4
-    rounded-2xl
-    border border-white/10
-    bg-white/5
-    font-black">
+href="upgrade.html"
+class="
+px-7 py-4
+rounded-2xl
+bg-white/5
+border border-white/10
+font-black
+hover:bg-white/10
+">
 
-АПГРЕЙДЕР →
+АПГРЕЙДЕР
 
 </a>
 
 </div>
 
+
+<div class="
+mt-10
+grid
+grid-cols-3
+max-w-lg
+gap-5
+">
+
+<div>
+<div class="text-2xl font-black">
+3
 </div>
 
-
-<!-- HERO SIDE -->
-
-<div class="grid grid-cols-2 gap-4">
-
-<div class="card rounded-3xl p-6">
-
-<div class="text-4xl">
-🎁
+<div class="text-xs text-zinc-500 mt-1">
+кейса
 </div>
-
-<h3
-    class="mt-5
-    text-xl font-black">
-
-НАГРАДЫ
-
-</h3>
-
-<p
-    class="mt-2
-    text-sm text-zinc-500">
-
-Новые предметы
-за активность.
-
-</p>
-
 </div>
-
-
-<div class="card rounded-3xl p-6">
-
-<div class="text-4xl">
-🏆
-</div>
-
-<h3
-    class="mt-5
-    text-xl font-black">
-
-РЕЙТИНГ
-
-</h3>
-
-<p
-    class="mt-2
-    text-sm text-zinc-500">
-
-Прокачивай свой
-уровень.
-
-</p>
-
-</div>
-
-
-<div class="card rounded-3xl p-6">
-
-<div class="text-4xl">
-⚡
-</div>
-
-<h3
-    class="mt-5
-    text-xl font-black">
-
-UPGRADE
-
-</h3>
-
-<p
-    class="mt-2
-    text-sm text-zinc-500">
-
-Улучшай предметы
-из инвентаря.
-
-</p>
-
-</div>
-
-
-<div class="card rounded-3xl p-6">
-
-<div class="text-4xl">
-👑
-</div>
-
-<h3
-    class="mt-5
-    text-xl font-black">
-
-ЭКСКЛЮЗИВ
-
-</h3>
-
-<p
-    class="mt-2
-    text-sm text-zinc-500">
-
-Редкие предметы
-CHAK338.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     CASES
-===================================================== -->
-
-<section id="cases"
-         class="py-24">
-
-<div
-    class="max-w-7xl mx-auto
-    px-5">
-
-<div class="mb-12">
-
-<div
-    class="text-xs
-    font-black
-    uppercase
-    tracking-[.25em]
-    text-zinc-500">
-
-CHAK338 CASES
-
-</div>
-
-<h2
-    class="mt-3
-    text-4xl sm:text-6xl
-    font-black">
-
-Открывай свой дроп.
-
-</h2>
-
-<p
-    class="mt-5
-    text-zinc-500
-    max-w-2xl">
-
-Три направления.
-Три города.
-Совершенно разные коллекции.
-
-</p>
-
-</div>
-
-
-<div
-    id="casesGrid"
-    class="grid md:grid-cols-3 gap-6">
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     LEVEL
-===================================================== -->
-
-<section
-    class="py-24
-    bg-white/[.02]
-    border-y border-white/5">
-
-<div
-    class="max-w-7xl mx-auto
-    px-5">
-
-<div
-    class="grid lg:grid-cols-2
-    gap-12 items-center">
 
 
 <div>
+<div class="text-2xl font-black">
+18
+</div>
 
-<div
-    class="text-xs
-    font-black
-    uppercase
-    tracking-[.25em]
-    text-emerald-400">
+<div class="text-xs text-zinc-500 mt-1">
+предметов
+</div>
+</div>
 
-LEVEL SYSTEM
+
+<div>
+<div class="text-2xl font-black">
+100
+</div>
+
+<div class="text-xs text-zinc-500 mt-1">
+уровней
+</div>
+</div>
+
+</div>
 
 </div>
 
 
-<h2
-    class="mt-4
-    text-4xl sm:text-6xl
-    font-black">
+<!-- FEATURED -->
 
-Прокачивай уровень.<br>
-Получай награды.
+<div class="relative">
 
-</h2>
-
-
-<p
-    class="mt-6
-    text-zinc-400
-    leading-relaxed">
-
-Открывай кейсы, получай XP
-и постепенно повышай свой уровень
-в CHAK338 Gaming Hub.
-
-</p>
+<div class="
+absolute
+inset-8
+rounded-[40px]
+bg-fuchsia-500/10
+blur-3xl
+"></div>
 
 
-<div class="mt-8">
+<div class="
+relative
+rounded-[36px]
+border border-white/10
+bg-zinc-950/90
+p-6
+shadow-neon
+">
 
-<div
-    class="flex justify-between
-    text-sm font-bold mb-2">
+<div class="
+flex
+items-center
+justify-between
+mb-5
+">
 
-<span>
-LVL <span id="level">1</span>
+<span class="
+text-xs
+font-black
+uppercase
+tracking-widest
+text-zinc-500
+">
+FEATURED DROP
 </span>
 
-<span>
-<span id="xp">0</span> XP
+<span class="
+px-3 py-1
+rounded-full
+bg-red-500/10
+text-red-300
+text-xs
+font-black
+">
+MYTHIC · 3%
 </span>
 
 </div>
 
 
 <div
-    class="h-3
-    rounded-full
-    bg-zinc-900
-    overflow-hidden">
+class="
+case-art
+h-80
+rounded-[28px]
+flex
+items-center
+justify-center
+bg-gradient-to-br
+from-fuchsia-950
+to-zinc-950
+">
 
-<div
-    id="xpBar"
-    class="h-full
-    bg-fuchsia-500
-    rounded-full"
-    style="width:0%">
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div
-    class="card
-    rounded-[32px]
-    p-8">
-
-<div
-    class="text-xs
-    text-zinc-500
-    uppercase
-    tracking-widest
-    font-black">
-
-YOUR PROFILE
+<img
+src="assets/cases/lviv.png"
+class="case-image"
+/>
 
 </div>
 
 
-<div
-    class="flex
-    items-center
-    justify-between
-    mt-8">
+<div class="
+mt-5
+flex
+items-end
+justify-between
+gap-4
+">
 
 <div>
 
-<div
-    class="text-5xl
-    font-black">
-
-LVL <span id="profileLevel">
-1
-</span>
-
+<div class="text-sm text-zinc-500">
+CASE #001
 </div>
 
-<div
-    class="text-zinc-500
-    mt-2">
+<div class="text-2xl font-black">
+LVIV
+</div>
 
-CHAK338 PLAYER
-
+<div class="text-xs text-zinc-500 mt-1">
+Персонажи
 </div>
 
 </div>
 
-
-<div
-    class="w-20 h-20
-    rounded-3xl
-    bg-fuchsia-500/10
-    border border-fuchsia-500/20
-    flex items-center
-    justify-center
-    text-4xl">
-
-⚡
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     NEWS
-===================================================== -->
-
-<section
-    id="news"
-    class="py-24">
-
-<div
-    class="max-w-7xl mx-auto
-    px-5">
-
-<div
-    class="mb-12">
-
-<div
-    class="text-xs
-    font-black
-    uppercase
-    tracking-[.25em]
-    text-zinc-500">
-
-LATEST
-
-</div>
-
-<h2
-    class="mt-3
-    text-4xl sm:text-5xl
-    font-black">
-
-Новости CHAK338
-
-</h2>
-
-</div>
-
-
-<div
-    class="grid md:grid-cols-3
-    gap-5">
-
-
-<article
-    class="card rounded-3xl p-7">
-
-<div class="text-4xl">
-🔥
-</div>
-
-<div
-    class="mt-7
-    text-xs
-    text-fuchsia-400
-    font-black">
-
-UPDATE #001
-
-</div>
-
-<h3
-    class="mt-2
-    text-xl font-black">
-
-CHAK338 Gaming Hub
-запущен
-
-</h3>
-
-<p
-    class="mt-3
-    text-sm
-    text-zinc-500
-    leading-relaxed">
-
-Первая версия игрового хаба
-уже доступна. Дальше будет
-ещё больше функций.
-
-</p>
-
-</article>
-
-
-<article
-    class="card rounded-3xl p-7">
-
-<div class="text-4xl">
-🎮
-</div>
-
-<div
-    class="mt-7
-    text-xs
-    text-cyan-400
-    font-black">
-
-UPDATE #002
-
-</div>
-
-<h3
-    class="mt-2
-    text-xl font-black">
-
-Новые кейсы
-
-</h3>
-
-<p
-    class="mt-3
-    text-sm
-    text-zinc-500
-    leading-relaxed">
-
-LVIV, KIYIV и VINNYTSIA.
-У каждого кейса будет
-своя коллекция.
-
-</p>
-
-</article>
-
-
-<article
-    class="card rounded-3xl p-7">
-
-<div class="text-4xl">
-⚡
-</div>
-
-<div
-    class="mt-7
-    text-xs
-    text-red-400
-    font-black">
-
-COMING SOON
-
-</div>
-
-<h3
-    class="mt-2
-    text-xl font-black">
-
-Новые игровые функции
-
-</h3>
-
-<p
-    class="mt-3
-    text-sm
-    text-zinc-500
-    leading-relaxed">
-
-Рейтинги, новые механики,
-эксклюзивные предметы
-и больше возможностей.
-
-</p>
-
-</article>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     GIVEAWAYS
-===================================================== -->
-
-<section
-    id="giveaways"
-    class="py-24
-    bg-white/[.02]
-    border-y border-white/5">
-
-<div
-    class="max-w-7xl mx-auto
-    px-5">
-
-<div
-    class="grid lg:grid-cols-2
-    gap-12 items-center">
-
-
-<div>
-
-<div
-    class="text-xs
-    font-black
-    uppercase
-    tracking-[.25em]
-    text-fuchsia-400">
-
-COMMUNITY
-
-</div>
-
-<h2
-    class="mt-4
-    text-4xl sm:text-6xl
-    font-black">
-
-Розыгрыши<br>
-уже на подходе.
-
-</h2>
-
-<p
-    class="mt-6
-    text-zinc-400
-    leading-relaxed">
-
-В будущем здесь появятся
-регулярные розыгрыши от CHAK338:
-предметы, эксклюзивы,
-мерч и другие призы.
-
-</p>
-
-</div>
-
-
-<div
-    class="card rounded-[32px]
-    p-8">
-
-<div
-    class="text-6xl">
-
-🎁
-
-</div>
-
-<h3
-    class="mt-7
-    text-3xl
-    font-black">
-
-GIVEAWAY #001
-
-</h3>
-
-<div
-    class="mt-3
-    text-fuchsia-400
-    font-black">
-
-COMING SOON
-
-</div>
-
-<p
-    class="mt-5
-    text-zinc-500">
-
-Следи за новостями,
-чтобы не пропустить старт.
-
-</p>
 
 <button
-    onclick="alert('Розыгрыш скоро будет доступен!')"
-    class="mt-7
-    w-full py-4
-    rounded-2xl
-    bg-white
-    text-black
-    font-black">
+onclick="openCase('lviv')"
+class="
+px-5 py-3
+rounded-xl
+bg-white
+text-black
+font-black
+">
 
-УЗНАТЬ БОЛЬШЕ
+ОТКРЫТЬ
 
 </button>
 
@@ -1026,164 +736,274 @@ COMING SOON
 
 </div>
 
-</section>
-
-
-<!-- =====================================================
-     MERCH
-===================================================== -->
-
-<section
-    id="shop"
-    class="py-24">
-
-<div
-    class="max-w-7xl mx-auto
-    px-5">
-
-<div
-    class="max-w-2xl mb-12">
-
-<div
-    class="text-xs
-    font-black
-    uppercase
-    tracking-[.25em]
-    text-zinc-500">
-
-CHAK338 SHOP
+</div>
 
 </div>
 
-<h2
-    class="mt-3
-    text-4xl sm:text-6xl
-    font-black">
+</section>
 
-Мерч стримера.
 
+<!-- CASES -->
+
+<section
+id="cases"
+class="
+py-20
+border-t
+border-white/5
+">
+
+<div class="
+max-w-7xl
+mx-auto
+px-4 sm:px-6 lg:px-8
+">
+
+
+<div class="max-w-2xl mb-10">
+
+<div class="
+text-xs
+font-black
+uppercase
+tracking-[.25em]
+text-fuchsia-400
+">
+THE CASES
+</div>
+
+<h2 class="
+mt-3
+text-4xl
+sm:text-5xl
+font-black
+">
+Выбери свой дроп.
 </h2>
 
-<p
-    class="mt-5
-    text-zinc-400">
-
-Собственный мерч CHAK338
-уже в планах.
-Скоро здесь появятся первые
-коллекции.
-
+<p class="
+mt-4
+text-zinc-400
+">
+Три направления коллекции.
+Каждый кейс имеет собственный cooldown.
 </p>
 
 </div>
 
 
 <div
-    class="grid sm:grid-cols-3
-    gap-5">
+id="caseGrid"
+class="
+grid
+lg:grid-cols-3
+gap-6
+">
+</div>
 
-
-<div class="card rounded-3xl overflow-hidden">
-
-<div
-    class="h-56
-    flex items-center
-    justify-center
-    bg-zinc-900
-    text-8xl">
-
-👕
 
 </div>
 
-<div class="p-6">
+</section>
 
-<h3
-    class="font-black text-xl">
 
-CHAK338 T-Shirt
+<!-- LEVEL -->
 
+<section
+class="
+py-20
+bg-white/[.02]
+border-y
+border-white/5
+">
+
+<div class="
+max-w-7xl
+mx-auto
+px-4 sm:px-6 lg:px-8
+grid
+lg:grid-cols-2
+gap-12
+items-center
+">
+
+
+<div>
+
+<div class="
+text-xs
+font-black
+uppercase
+tracking-[.25em]
+text-emerald-400
+">
+LEVEL SYSTEM
+</div>
+
+
+<h2 class="
+mt-3
+text-4xl
+sm:text-5xl
+font-black
+">
+
+Прокачивай уровень.<br>
+Открывай награды.
+
+</h2>
+
+
+<p class="
+mt-5
+text-zinc-400
+leading-relaxed
+">
+
+За открытия кейсов ты получаешь XP.
+Чем больше играешь — тем выше уровень.
+
+</p>
+
+
+<div class="mt-7 max-w-xl">
+
+<div class="
+flex
+justify-between
+text-xs
+font-bold
+mb-2
+">
+
+<span>
+LVL <span id="level2">1</span>
+</span>
+
+<span>
+<span id="xp2">0</span>
+/
+1000 XP
+</span>
+
+</div>
+
+
+<div class="
+h-3
+rounded-full
+bg-zinc-900
+overflow-hidden
+">
+
+<div
+id="xpbar"
+class="
+h-full
+bg-fuchsia-500
+rounded-full
+transition-all
+"
+style="width:0%"
+></div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="
+grid
+sm:grid-cols-2
+gap-4
+">
+
+<div class="
+rounded-3xl
+border border-white/10
+bg-zinc-950
+p-6
+">
+
+<div class="text-3xl">
+🎁
+</div>
+
+<h3 class="mt-5 font-black text-xl">
+Награды
 </h3>
 
-<div
-    class="mt-2
-    text-zinc-500">
-
-COMING SOON
-
-</div>
-
-</div>
+<p class="mt-2 text-sm text-zinc-500">
+Новые предметы за активность.
+</p>
 
 </div>
 
 
-<div class="card rounded-3xl overflow-hidden">
+<div class="
+rounded-3xl
+border border-white/10
+bg-zinc-950
+p-6
+">
 
-<div
-    class="h-56
-    flex items-center
-    justify-center
-    bg-zinc-900
-    text-8xl">
-
-🧥
-
+<div class="text-3xl">
+🏆
 </div>
 
-<div class="p-6">
-
-<h3
-    class="font-black text-xl">
-
-CHAK338 Hoodie
-
+<h3 class="mt-5 font-black text-xl">
+Рейтинг
 </h3>
 
-<div
-    class="mt-2
-    text-zinc-500">
-
-COMING SOON
-
-</div>
-
-</div>
+<p class="mt-2 text-sm text-zinc-500">
+Стань легендой CHAK338.
+</p>
 
 </div>
 
 
-<div class="card rounded-3xl overflow-hidden">
+<div class="
+rounded-3xl
+border border-white/10
+bg-zinc-950
+p-6
+">
 
-<div
-    class="h-56
-    flex items-center
-    justify-center
-    bg-zinc-900
-    text-8xl">
-
-🧢
-
+<div class="text-3xl">
+⚡
 </div>
 
-<div class="p-6">
-
-<h3
-    class="font-black text-xl">
-
-CHAK338 Cap
-
+<h3 class="mt-5 font-black text-xl">
+Апгрейдер
 </h3>
 
-<div
-    class="mt-2
-    text-zinc-500">
-
-COMING SOON
+<p class="mt-2 text-sm text-zinc-500">
+Рискуй предметами ради лучших.
+</p>
 
 </div>
 
+
+<div class="
+rounded-3xl
+border border-white/10
+bg-zinc-950
+p-6
+">
+
+<div class="text-3xl">
+👑
 </div>
+
+<h3 class="mt-5 font-black text-xl">
+Эксклюзив
+</h3>
+
+<p class="mt-2 text-sm text-zinc-500">
+Редкие предметы CHAK338.
+</p>
 
 </div>
 
@@ -1193,58 +1013,444 @@ COMING SOON
 
 </section>
 
+
+<!-- NEWS -->
+
+<section id="news" class="py-20">
+
+<div class="
+max-w-7xl
+mx-auto
+px-4 sm:px-6 lg:px-8
+">
+
+<div class="mb-10">
+
+<div class="
+text-xs
+font-black
+uppercase
+tracking-[.25em]
+text-zinc-500
+">
+LATEST
+</div>
+
+<h2 class="
+mt-3
+text-4xl
+font-black
+">
+Новости
+</h2>
+
+</div>
+
+
+<div class="
+grid
+md:grid-cols-3
+gap-5
+">
+
+<div class="
+rounded-3xl
+border border-white/10
+bg-zinc-950
+p-6
+">
+
+<div class="text-4xl">
+🔥
+</div>
+
+<div class="
+mt-7
+text-xs
+text-fuchsia-400
+font-black
+">
+UPDATE #001
+</div>
+
+<h3 class="mt-2 text-xl font-black">
+CHAK338 Gaming Hub
+</h3>
+
+<p class="mt-2 text-sm text-zinc-500">
+Игровой портал запущен.
+</p>
+
+</div>
+
+
+<div class="
+rounded-3xl
+border border-white/10
+bg-zinc-950
+p-6
+">
+
+<div class="text-4xl">
+🎁
+</div>
+
+<div class="
+mt-7
+text-xs
+text-cyan-400
+font-black
+">
+GIVEAWAY
+</div>
+
+<h3 class="mt-2 text-xl font-black">
+Розыгрыш мерча
+</h3>
+
+<p class="mt-2 text-sm text-zinc-500">
+Следи за новостями.
+</p>
+
+</div>
+
+
+<div class="
+rounded-3xl
+border border-white/10
+bg-zinc-950
+p-6
+">
+
+<div class="text-4xl">
+⚔️
+</div>
+
+<div class="
+mt-7
+text-xs
+text-red-400
+font-black
+">
+COMING SOON
+</div>
+
+<h3 class="mt-2 text-xl font-black">
+CHAK Damage System
+</h3>
+
+<p class="mt-2 text-sm text-zinc-500">
+Новые игровые механики.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- GIVEAWAY -->
+
+<section
+id="giveaways"
+class="
+py-20
+bg-gradient-to-br
+from-fuchsia-950/30
+via-zinc-950
+to-red-950/20
+border-y
+border-white/5
+">
+
+<div class="
+max-w-5xl
+mx-auto
+px-4
+text-center
+">
+
+<div class="text-5xl">
+🎁
+</div>
+
+<h2 class="
+mt-5
+text-4xl
+sm:text-6xl
+font-black
+">
+
+РОЗЫГРЫШИ<br>
+
+<span class="text-fuchsia-400">
+CHAK338
+</span>
+
+</h2>
+
+<p class="
+mt-5
+text-zinc-400
+max-w-2xl
+mx-auto
+">
+
+Эксклюзивные персонажи,
+предметы и настоящий мерч
+от стримера.
+
+</p>
+
+<button
+onclick="showMessage('Раздел розыгрышей скоро откроется!')"
+class="
+mt-8
+px-8 py-4
+rounded-2xl
+bg-white
+text-black
+font-black
+">
+
+УЗНАТЬ БОЛЬШЕ
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SHOP -->
+
+<section id="shop" class="py-20">
+
+<div class="
+max-w-7xl
+mx-auto
+px-4 sm:px-6 lg:px-8
+">
+
+<div class="max-w-2xl mb-10">
+
+<div class="
+text-xs
+font-black
+uppercase
+tracking-[.25em]
+text-zinc-500
+">
+CHAK338 SHOP
+</div>
+
+<h2 class="
+mt-3
+text-4xl
+sm:text-5xl
+font-black
+">
+Мерч стримера.
+</h2>
+
+<p class="
+mt-4
+text-zinc-400
+">
+Физические вещи из мира CHAK338.
+</p>
+
+</div>
+
+
+<div class="
+grid
+sm:grid-cols-3
+gap-5
+">
+
+
+<div class="
+rounded-3xl
+border border-white/10
+bg-zinc-950
+overflow-hidden
+">
+
+<div class="
+h-56
+flex
+items-center
+justify-center
+bg-zinc-900
+text-8xl
+">
+👕
+</div>
+
+<div class="p-5">
+
+<h3 class="font-black text-xl">
+CHAK338 T-Shirt
+</h3>
+
+<div class="mt-2 text-zinc-500">
+1 490 ₴
+</div>
+
+<button
+onclick="showMessage('Магазин скоро откроется.')"
+class="
+w-full
+mt-5
+py-3
+rounded-xl
+bg-white
+text-black
+font-black
+">
+В МАГАЗИН
+</button>
+
+</div>
+</div>
+
+
+<div class="
+rounded-3xl
+border border-white/10
+bg-zinc-950
+overflow-hidden
+">
+
+<div class="
+h-56
+flex
+items-center
+justify-center
+bg-zinc-900
+text-8xl
+">
+🧥
+</div>
+
+<div class="p-5">
+
+<h3 class="font-black text-xl">
+CHAK338 Hoodie
+</h3>
+
+<div class="mt-2 text-zinc-500">
+2 990 ₴
+</div>
+
+<button
+onclick="showMessage('Магазин скоро откроется.')"
+class="
+w-full
+mt-5
+py-3
+rounded-xl
+bg-white
+text-black
+font-black
+">
+В МАГАЗИН
+</button>
+
+</div>
+</div>
+
+
+<div class="
+rounded-3xl
+border border-white/10
+bg-zinc-950
+overflow-hidden
+">
+
+<div class="
+h-56
+flex
+items-center
+justify-center
+bg-zinc-900
+text-8xl
+">
+🧢
+</div>
+
+<div class="p-5">
+
+<h3 class="font-black text-xl">
+CHAK338 Cap
+</h3>
+
+<div class="mt-2 text-zinc-500">
+990 ₴
+</div>
+
+<button
+onclick="showMessage('Магазин скоро откроется.')"
+class="
+w-full
+mt-5
+py-3
+rounded-xl
+bg-white
+text-black
+font-black
+">
+В МАГАЗИН
+</button>
+
+</div>
+</div>
+
+
+</div>
+</div>
+
+</section>
 
 </main>
 
 
-<!-- =====================================================
-     FOOTER
-===================================================== -->
+<footer class="
+border-t
+border-white/10
+bg-black
+">
 
-<footer
-    class="border-t
-    border-white/10
-    bg-black">
-
-<div
-    class="max-w-7xl mx-auto
-    px-5 py-10">
-
-<div
-    class="flex
-    flex-col md:flex-row
-    justify-between
-    gap-5">
+<div class="
+max-w-7xl
+mx-auto
+px-4 sm:px-6 lg:px-8
+py-10
+flex
+flex-col
+md:flex-row
+justify-between
+gap-5
+">
 
 <div>
 
-<div
-    class="font-black
-    text-xl">
-
+<div class="font-black text-xl">
 CHAK338
-
 </div>
 
-<p
-    class="mt-2
-    text-sm
-    text-zinc-600">
-
-Gaming Hub · Cases · Drops · Upgrade · Merch
-
+<p class="mt-2 text-sm text-zinc-600">
+Gaming Hub · Cases · Drops · Merch
 </p>
 
 </div>
 
-<div
-    class="text-sm
-    text-zinc-600">
-
+<div class="text-sm text-zinc-600">
 © 2026 CHAK338
-
-</div>
-
 </div>
 
 </div>
@@ -1252,564 +1458,1239 @@ Gaming Hub · Cases · Drops · Upgrade · Merch
 </footer>
 
 
-<script src="data.js"></script>
+<!-- CASE MODAL -->
+
+<div
+id="caseModal"
+class="
+hidden
+fixed
+inset-0
+z-[100]
+modal-bg
+items-center
+justify-center
+p-4
+">
+
+<div
+class="
+w-full
+max-w-6xl
+rounded-[32px]
+border border-white/10
+bg-zinc-950
+shadow-2xl
+overflow-hidden
+">
+
+<div class="
+p-5 sm:p-7
+flex
+justify-between
+items-start
+border-b
+border-white/10
+">
+
+<div>
+
+<div
+id="modalType"
+class="
+text-xs
+uppercase
+tracking-widest
+font-black
+text-fuchsia-400
+">
+CASE
+</div>
+
+<h2
+id="modalTitle"
+class="
+mt-1
+text-3xl
+font-black
+">
+LVIV
+</h2>
+
+<div
+id="modalCooldown"
+class="
+mt-2
+text-xs
+font-bold
+text-emerald-400
+">
+ГОТОВ
+</div>
+
+</div>
+
+
+<button
+onclick="closeCase()"
+class="
+w-10 h-10
+rounded-xl
+bg-white/5
+hover:bg-white/10
+">
+✕
+</button>
+
+</div>
+
+
+<div class="p-5 sm:p-7">
+
+
+<div class="
+mb-4
+flex
+items-center
+justify-between
+">
+
+<div class="
+text-xs
+font-black
+uppercase
+tracking-widest
+text-zinc-500
+">
+CASE CONTENTS
+</div>
+
+<div
+id="modalXP"
+class="
+text-xs
+font-black
+text-fuchsia-400
+">
++100 XP
+</div>
+
+</div>
+
+
+<!-- ROULETTE -->
+
+<div class="reel-window p-4">
+
+<div
+id="reel"
+class="reel">
+</div>
+
+</div>
+
+
+<div class="
+mt-4
+text-center
+text-xs
+text-zinc-600
+">
+
+▲
+
+<span class="mx-2">
+ЦЕНТРАЛЬНЫЙ УКАЗАТЕЛЬ
+</span>
+
+▲
+
+</div>
+
+
+<!-- DROP RESULT -->
+
+<div
+id="dropResult"
+class="
+hidden
+mt-6
+rounded-3xl
+border border-fuchsia-500/30
+bg-fuchsia-500/5
+p-6
+text-center
+">
+
+<div class="
+text-xs
+font-black
+uppercase
+tracking-widest
+text-fuchsia-300
+">
+YOU GOT
+</div>
+
+
+<img
+id="dropImage"
+class="
+mx-auto
+mt-4
+w-32
+h-32
+object-contain
+drop-pop
+"
+/>
+
+
+<div
+id="dropName"
+class="
+text-3xl
+font-black
+mt-2
+">
+Shadow
+</div>
+
+
+<div
+id="dropRarity"
+class="
+mt-2
+text-sm
+font-bold
+">
+EPIC
+</div>
+
+
+<div
+id="dropPrice"
+class="
+mt-2
+text-zinc-400
+font-black
+">
+75 ₴
+</div>
+
+
+<div
+id="dropStat"
+class="
+mt-2
+text-zinc-500
+">
+Предмет добавлен в инвентарь
+</div>
+
+
+<a
+href="inventory.html"
+class="
+inline-block
+mt-4
+px-5 py-3
+rounded-xl
+bg-white
+text-black
+font-black
+">
+
+ОТКРЫТЬ ИНВЕНТАРЬ
+
+</a>
+
+</div>
+
+
+<div class="
+mt-6
+flex
+flex-col
+sm:flex-row
+gap-3
+">
+
+<button
+id="spinBtn"
+onclick="spinCase()"
+class="
+flex-1
+py-4
+rounded-2xl
+bg-fuchsia-500
+hover:bg-fuchsia-400
+font-black
+">
+
+ОТКРЫТЬ КЕЙС
+
+</button>
+
+
+<button
+onclick="closeCase()"
+class="
+px-6
+py-4
+rounded-2xl
+bg-white/5
+border border-white/10
+font-black
+">
+
+ЗАКРЫТЬ
+
+</button>
+
+</div>
+
+
+<div
+id="rarityList"
+class="
+mt-7
+grid
+grid-cols-2
+sm:grid-cols-6
+gap-2
+text-[11px]
+font-bold
+">
+</div>
+
+
+</div>
+</div>
+
+</div>
+
 
 <script>
 
-/* =====================================================
-   CASES
-===================================================== */
+/* =========================================================
+   CASE UI
+   ========================================================= */
 
-const casesGrid =
-    document.getElementById("casesGrid");
+let activeCase = "lviv";
+let spinning = false;
+let lastWinner = null;
 
+
+/* =========================================================
+   RENDER CASE CARDS
+   ========================================================= */
 
 function renderCases() {
 
-    casesGrid.innerHTML = "";
+  const grid =
+    document.getElementById("caseGrid");
 
-    CASES.forEach(caseData => {
+  grid.innerHTML = "";
 
-        const items =
-            getCaseItems(caseData.id);
+  Object.values(CASES).forEach(c => {
 
-        const remaining =
-            getRemaining(caseData.id);
+    const ready = isCaseReady(c.id);
 
-        const article =
-            document.createElement("article");
+    const remaining =
+      getRemainingCooldown(c.id);
 
-        article.className =
-            "case-card card rounded-[30px] overflow-hidden";
+    const border =
+      c.id === "lviv"
+        ? "border-cyan-500/30 shadow-cyan"
+        : c.id === "kiyiv"
+          ? "border-fuchsia-500/30"
+          : "border-red-500/30";
 
 
-        article.innerHTML = `
+    const buttonColor =
+      c.id === "lviv"
+        ? "bg-cyan-400 text-black hover:bg-cyan-300"
+        : c.id === "kiyiv"
+          ? "bg-fuchsia-500 hover:bg-fuchsia-400"
+          : "bg-red-500 hover:bg-red-400";
 
-            <div
-                class="case-art"
-                style="
-                    background:
-                    radial-gradient(
-                        circle at 50% 35%,
-                        ${caseData.color}45,
-                        transparent 40%
-                    ),
-                    linear-gradient(
-                        145deg,
-                        #181820,
-                        #09090d
-                    );
-                "
-            >
 
-                ${
-                    caseData.image
-                    ? `
-                    <img
-                        src="${caseData.image}"
-                        alt="${caseData.name}"
-                        class="max-w-[80%] max-h-[190px]
-                        object-contain relative z-10"
-                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-                    >
-                    `
-                    : ""
-                }
+    const timerClass =
+      ready
+        ? "timer-ready"
+        : "timer-wait";
 
-                <div
-                    class="case-placeholder"
-                    style="
-                        display:${caseData.image ? "none" : "flex"};
-                        color:${caseData.color};
-                        text-shadow:0 0 25px ${caseData.color};
-                    "
-                >
-                    ${caseData.name}
-                </div>
 
-            </div>
+    grid.innerHTML += `
 
-
-            <div class="p-6">
-
-                <div
-                    class="text-xs
-                    font-black
-                    uppercase
-                    tracking-widest"
-                    style="
-                        color:${caseData.color}
-                    "
-                >
-
-                    ${caseData.subtitle}
-
-                </div>
-
-
-                <h3
-                    class="mt-2
-                    text-3xl
-                    font-black">
-
-                    ${caseData.name}
-
-                </h3>
-
-
-                <p
-                    class="mt-3
-                    text-zinc-500
-                    min-h-[48px]">
-
-                    ${caseData.description}
-
-                </p>
-
-
-                <div
-                    class="mt-5
-                    flex justify-between
-                    text-xs
-                    text-zinc-500">
-
-                    <span>
-                        ${items.length} предметов
-                    </span>
-
-                    <span>
-                        ${formatRemaining(remaining)}
-                    </span>
-
-                </div>
-
-
-                <button
-                    onclick="openCase('${caseData.id}')"
-                    class="w-full
-                    mt-6
-                    py-4
-                    rounded-2xl
-                    font-black
-                    text-black"
-                    style="
-                        background:${caseData.color}
-                    "
-                >
-
-                    ${
-                        remaining > 0
-                        ? "ПОСМОТРЕТЬ КЕЙС"
-                        : "ОТКРЫТЬ КЕЙС"
-                    }
-
-                </button>
-
-            </div>
-
-        `;
-
-
-        casesGrid.appendChild(article);
-
-    });
-
-}
-
-
-renderCases();
-
-
-/* =====================================================
-   XP
-===================================================== */
-
-function updateXP() {
-
-    const xp =
-        getXP();
-
-    const level =
-        getLevel();
-
-    const current =
-        xp % 1000;
-
-    const percent =
-        current / 10;
-
-
-    document.getElementById("xp").textContent =
-        xp;
-
-    document.getElementById("level").textContent =
-        level;
-
-    document.getElementById("profileLevel").textContent =
-        level;
-
-    document.getElementById("xpBar").style.width =
-        percent + "%";
-
-}
-
-
-updateXP();
-
-
-/* =====================================================
-   CASE MODAL
-===================================================== */
-
-function openCase(caseId) {
-
-    const caseData =
-        getCase(caseId);
-
-    const items =
-        getCaseItems(caseId);
-
-
-    const modal =
-        document.createElement("div");
-
-    modal.id =
-        "caseModal";
-
-    modal.className =
-        "modal-bg fixed inset-0 z-[100] flex items-center justify-center p-5";
-
-
-    modal.innerHTML = `
+      <article
+        class="
+        case-card
+        rounded-[30px]
+        border
+        ${border}
+        bg-zinc-950
+        overflow-hidden
+        "
+      >
 
         <div
-            class="card
-            rounded-[32px]
-            max-w-5xl
-            w-full
-            max-h-[90vh]
-            overflow-y-auto
-            p-7">
+          class="
+          case-art
+          h-64
+          flex
+          items-center
+          justify-center
+          bg-gradient-to-br
+          from-zinc-900
+          to-black
+          "
+        >
 
-            <div
-                class="flex
-                justify-between
-                items-center">
-
-                <div>
-
-                    <div
-                        class="text-xs
-                        font-black
-                        uppercase
-                        tracking-widest"
-                        style="color:${caseData.color}">
-
-                        ${caseData.subtitle}
-
-                    </div>
-
-                    <h2
-                        class="mt-2
-                        text-4xl
-                        font-black">
-
-                        ${caseData.name}
-
-                    </h2>
-
-                </div>
-
-
-                <button
-                    onclick="closeCaseModal()"
-                    class="w-11 h-11
-                    rounded-xl
-                    bg-white/5
-                    text-xl">
-
-                    ×
-
-                </button>
-
-            </div>
-
-
-            <div
-                class="grid sm:grid-cols-2
-                lg:grid-cols-3
-                gap-4 mt-8">
-
-                ${items.map(item => {
-
-                    const rarity =
-                        getRarity(item.rarity);
-
-                    return `
-
-                    <div
-                        class="rounded-2xl
-                        border
-                        bg-zinc-950
-                        p-5"
-                        style="
-                            border-color:${rarity.color}55
-                        ">
-
-                        <div
-                            class="h-32
-                            flex
-                            items-center
-                            justify-center">
-
-                            <img
-                                src="${item.image}"
-                                alt="${item.name}"
-                                class="max-w-full
-                                max-h-full
-                                object-contain"
-                                onerror="this.style.display='none'"
-                            >
-
-                        </div>
-
-                        <div
-                            class="mt-4
-                            text-xs
-                            font-black"
-                            style="
-                                color:${rarity.color}
-                            ">
-
-                            ${rarity.name.toUpperCase()}
-
-                        </div>
-
-                        <div
-                            class="mt-1
-                            font-black">
-
-                            ${item.name}
-
-                        </div>
-
-                        <div
-                            class="mt-2
-                            text-zinc-500">
-
-                            ${formatPrice(item.price)}
-
-                        </div>
-
-                    </div>
-
-                    `;
-
-                }).join("")}
-
-            </div>
-
-
-            <button
-                onclick="startOpening('${caseId}')"
-                class="w-full
-                mt-7
-                py-5
-                rounded-2xl
-                font-black
-                text-black"
-                style="
-                    background:${caseData.color}
-                "
-            >
-
-                ${
-                    canOpenCase(caseId)
-                    ? "ОТКРЫТЬ КЕЙС"
-                    : "КЕЙС ЕЩЁ НЕ ГОТОВ"
-                }
-
-            </button>
+          <img
+            src="${c.image}"
+            class="case-image"
+            alt="${c.name}"
+          >
 
         </div>
 
+
+        <div class="p-6">
+
+          <div
+            class="
+            text-xs
+            font-black
+            uppercase
+            tracking-widest
+            "
+            style="color:${c.color}"
+          >
+            ${String(Object.keys(CASES).indexOf(c.id)+1).padStart(2,"0")}
+            ·
+            ${c.subtitle}
+          </div>
+
+
+          <h3
+            class="
+            mt-2
+            text-3xl
+            font-black
+            "
+          >
+            ${c.name}
+          </h3>
+
+
+          <p class="
+            mt-3
+            text-zinc-500
+            min-h-[48px]
+          ">
+            ${caseDescription(c.id)}
+          </p>
+
+
+          <div class="
+            mt-5
+            flex
+            justify-between
+            text-xs
+            text-zinc-500
+          ">
+
+            <span>
+              ${c.items.length} предметов
+            </span>
+
+            <span>
+              +${c.xp} XP
+            </span>
+
+          </div>
+
+
+          <div
+            class="
+            mt-5
+            rounded-2xl
+            bg-white/[.03]
+            border border-white/5
+            p-4
+            "
+          >
+
+            <div class="
+              flex
+              justify-between
+              text-xs
+              font-bold
+              "
+            >
+
+              <span class="text-zinc-500">
+                СЛЕДУЮЩЕЕ ОТКРЫТИЕ
+              </span>
+
+              <span
+                id="timer-${c.id}"
+                class="${timerClass}"
+              >
+                ${ready ? "ГОТОВ" : formatTime(remaining)}
+              </span>
+
+            </div>
+
+
+            <div class="
+              mt-3
+              h-1.5
+              rounded-full
+              bg-zinc-900
+              overflow-hidden
+            ">
+
+              <div
+                id="progress-${c.id}"
+                class="h-full rounded-full"
+                style="
+                  width:${cooldownProgress(c.id)}%;
+                  background:${c.color};
+                "
+              ></div>
+
+            </div>
+
+          </div>
+
+
+          <button
+            onclick="openCase('${c.id}')"
+            class="
+            w-full
+            mt-5
+            py-4
+            rounded-2xl
+            ${buttonColor}
+            font-black
+            "
+          >
+
+            ${ready
+              ? `ОТКРЫТЬ ${c.name}`
+              : `СМОТРЕТЬ ${c.name}`}
+
+          </button>
+
+        </div>
+
+      </article>
     `;
-
-
-    document.body.appendChild(modal);
-
+  });
 }
 
 
-function closeCaseModal() {
+function caseDescription(id) {
 
-    const modal =
-        document.getElementById("caseModal");
+  if (id === "lviv") {
+    return "Только персонажи CHAK338 — от обычных до мифических.";
+  }
 
-    if (modal) {
+  if (id === "kiyiv") {
+    return "Одежда, маски, куртки и редкие образы.";
+  }
 
-        modal.remove();
+  return "Только предметы из мира Dota 2.";
+}
+
+
+function cooldownProgress(id) {
+
+  const c = getCase(id);
+
+  const remaining =
+    getRemainingCooldown(id);
+
+  if (!remaining) return 100;
+
+  return Math.max(
+    0,
+    Math.min(
+      100,
+      100 - (remaining / c.cooldown * 100)
+    )
+  );
+}
+
+
+/* =========================================================
+   TIMER
+   ========================================================= */
+
+function updateTimers() {
+
+  Object.values(CASES).forEach(c => {
+
+    const timer =
+      document.getElementById(
+        "timer-" + c.id
+      );
+
+    const progress =
+      document.getElementById(
+        "progress-" + c.id
+      );
+
+    if (!timer) return;
+
+    const remaining =
+      getRemainingCooldown(c.id);
+
+    if (remaining <= 0) {
+
+      timer.textContent = "ГОТОВ";
+
+      timer.className =
+        "timer-ready";
+
+      if (progress) {
+        progress.style.width = "100%";
+      }
+
+    } else {
+
+      timer.textContent =
+        formatTime(remaining);
+
+      timer.className =
+        "timer-wait";
+
+      if (progress) {
+        progress.style.width =
+          cooldownProgress(c.id) + "%";
+      }
 
     }
 
-}
-
-
-/* =====================================================
-   OPEN
-===================================================== */
-
-function startOpening(caseId) {
-
-    if (!canOpenCase(caseId)) {
-
-        alert(
-            "Этот кейс пока недоступен."
-        );
-
-        return;
-
-    }
-
-
-    const item =
-        randomCaseItem(caseId);
-
-
-    setCaseOpened(caseId);
-
-
-    closeCaseModal();
-
-
-    addInventoryItem(item);
-
-
-    const caseData =
-        getCase(caseId);
-
-
-    addXP(caseData.xp);
-
-
-    updateXP();
-
-
-    showDrop(item);
+  });
 
 }
 
 
-/* =====================================================
-   DROP
-===================================================== */
+/* =========================================================
+   OPEN CASE MODAL
+   ========================================================= */
 
-function showDrop(item) {
+function openCase(id) {
+
+  activeCase = id;
+
+  const c = getCase(id);
+
+  document.getElementById(
+    "modalTitle"
+  ).textContent = c.name;
+
+
+  document.getElementById(
+    "modalType"
+  ).textContent =
+    c.subtitle;
+
+
+  document.getElementById(
+    "modalXP"
+  ).textContent =
+    "+" + c.xp + " XP";
+
+
+  const remaining =
+    getRemainingCooldown(id);
+
+
+  document.getElementById(
+    "modalCooldown"
+  ).textContent =
+    remaining > 0
+      ? "Следующее открытие через " +
+        formatTime(remaining)
+      : "КЕЙС ГОТОВ";
+
+
+  document.getElementById(
+    "caseModal"
+  ).classList.remove("hidden");
+
+
+  document.getElementById(
+    "caseModal"
+  ).classList.add("flex");
+
+
+  document.getElementById(
+    "dropResult"
+  ).classList.add("hidden");
+
+
+  buildReel();
+
+  renderRarities();
+
+  updateSpinButton();
+
+}
+
+
+function closeCase() {
+
+  if (spinning) return;
+
+  document.getElementById(
+    "caseModal"
+  ).classList.add("hidden");
+
+  document.getElementById(
+    "caseModal"
+  ).classList.remove("flex");
+
+}
+
+
+/* =========================================================
+   ROULETTE
+   ========================================================= */
+
+function randomReelItem() {
+
+  const c = getCase(activeCase);
+
+  return c.items[
+    Math.floor(
+      Math.random() * c.items.length
+    )
+  ];
+
+}
+
+
+function buildReel(winner = null) {
+
+  const reel =
+    document.getElementById("reel");
+
+  reel.style.transition = "none";
+
+  reel.style.transform =
+    "translateX(0)";
+
+  reel.innerHTML = "";
+
+
+  const items = [];
+
+  /*
+    60 карточек.
+    Победитель будет находиться
+    в позиции 48.
+  */
+
+  for (let i = 0; i < 60; i++) {
+
+    items.push(
+      randomReelItem()
+    );
+
+  }
+
+
+  if (winner) {
+    items[48] = winner;
+  }
+
+
+  items.forEach(item => {
 
     const rarity =
-        getRarity(item.rarity);
+      item.rarity.toLowerCase();
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "reel-item " + rarity;
 
 
-    const modal =
-        document.createElement("div");
+    div.innerHTML = `
 
-    modal.className =
-        "modal-bg fixed inset-0 z-[120] flex items-center justify-center p-5";
+      <img
+        src="${item.image}"
+        alt="${item.name}"
+      >
 
+      <div
+        class="
+        mt-2
+        text-xs
+        font-black
+        px-2
+        "
+      >
+        ${item.name}
+      </div>
 
-    modal.innerHTML = `
-
-        <div
-            class="card
-            rounded-[35px]
-            max-w-lg
-            w-full
-            text-center
-            p-10">
-
-            <div
-                class="text-xs
-                uppercase
-                tracking-[.3em]
-                font-black"
-                style="
-                    color:${rarity.color}
-                ">
-
-                YOU WON
-
-            </div>
-
-
-            <div
-                class="h-64
-                mt-6
-                flex items-center
-                justify-center">
-
-                <img
-                    src="${item.image}"
-                    alt="${item.name}"
-                    class="max-w-full
-                    max-h-full
-                    object-contain">
-
-            </div>
-
-
-            <div
-                class="text-sm
-                font-black"
-                style="
-                    color:${rarity.color}
-                ">
-
-                ${rarity.name.toUpperCase()}
-
-            </div>
-
-
-            <h2
-                class="text-4xl
-                font-black
-                mt-2">
-
-                ${item.name}
-
-            </h2>
-
-
-            <div
-                class="mt-3
-                text-zinc-500">
-
-                ${formatPrice(item.price)}
-
-            </div>
-
-
-            <button
-                onclick="this.closest('.modal-bg').remove()"
-                class="w-full
-                mt-8
-                py-4
-                rounded-2xl
-                bg-white
-                text-black
-                font-black">
-
-                ЗАБРАТЬ
-
-            </button>
-
-        </div>
+      <div
+        class="
+        mt-1
+        text-[10px]
+        text-zinc-500
+        "
+      >
+        ${item.rarity}
+      </div>
 
     `;
 
+    reel.appendChild(div);
 
-    document.body.appendChild(modal);
+  });
 
 }
+
+
+/* =========================================================
+   SPIN
+   ========================================================= */
+
+function spinCase() {
+
+  if (spinning) return;
+
+
+  if (!isCaseReady(activeCase)) {
+
+    showMessage(
+      "Кейс ещё нельзя открыть. Подожди " +
+      formatTime(
+        getRemainingCooldown(activeCase)
+      )
+    );
+
+    return;
+  }
+
+
+  spinning = true;
+
+
+  const button =
+    document.getElementById(
+      "spinBtn"
+    );
+
+  button.disabled = true;
+
+  button.textContent =
+    "ОТКРЫВАЕМ...";
+
+
+  const winner =
+    randomDrop(activeCase);
+
+  lastWinner = winner;
+
+
+  buildReel(winner);
+
+
+  const reel =
+    document.getElementById("reel");
+
+
+  const targetIndex = 48;
+
+  const itemWidth = 128;
+
+  const gap = 12;
+
+  const step =
+    itemWidth + gap;
+
+
+  const windowWidth =
+    reel.parentElement.clientWidth;
+
+
+  const targetCenter =
+    targetIndex * step +
+    itemWidth / 2;
+
+
+  const offset =
+    targetCenter -
+    windowWidth / 2;
+
+
+  /*
+    Старая версия имела
+    около 5 секунд прокрутки.
+  */
+
+  reel.style.transition =
+    "transform 5s cubic-bezier(.07,.72,.12,1)";
+
+
+  reel.style.transform =
+    "translateX(" +
+    (-offset) +
+    "px)";
+
+
+  setTimeout(() => {
+
+    finishSpin(winner);
+
+  }, 5100);
+
+}
+
+
+/* =========================================================
+   FINISH
+   ========================================================= */
+
+function finishSpin(winner) {
+
+  const c =
+    getCase(activeCase);
+
+
+  addInventoryItem({
+    ...winner,
+    caseId: c.id,
+    caseName: c.name,
+    type: c.type,
+    price: RARITIES[winner.rarity].price,
+    rarityName: RARITIES[winner.rarity].ru
+  });
+
+
+  addXP(c.xp);
+
+  setCaseCooldown(c.id);
+
+
+  document.getElementById(
+    "dropImage"
+  ).src =
+    winner.image;
+
+
+  document.getElementById(
+    "dropName"
+  ).textContent =
+    winner.name;
+
+
+  document.getElementById(
+    "dropRarity"
+  ).textContent =
+    winner.rarity +
+    " · " +
+    RARITIES[winner.rarity].ru;
+
+
+  document.getElementById(
+    "dropPrice"
+  ).textContent =
+    formatMoney(
+      RARITIES[winner.rarity].price
+    );
+
+
+  document.getElementById(
+    "dropStat"
+  ).textContent =
+    "+" +
+    c.xp +
+    " XP · Предмет добавлен в инвентарь";
+
+
+  document.getElementById(
+    "dropResult"
+  ).classList.remove("hidden");
+
+
+  document.getElementById(
+    "modalCooldown"
+  ).textContent =
+    "Следующее открытие через " +
+    formatTime(c.cooldown);
+
+
+  spinning = false;
+
+  updateSpinButton();
+
+  updateHeaderXP();
+
+  updateTimers();
+
+}
+
+
+function updateSpinButton() {
+
+  const button =
+    document.getElementById(
+      "spinBtn"
+    );
+
+  if (!button) return;
+
+
+  if (spinning) {
+
+    button.disabled = true;
+
+    button.textContent =
+      "ОТКРЫВАЕМ...";
+
+    return;
+
+  }
+
+
+  if (isCaseReady(activeCase)) {
+
+    button.disabled = false;
+
+    button.textContent =
+      "ОТКРЫТЬ КЕЙС";
+
+  } else {
+
+    button.disabled = true;
+
+    button.textContent =
+      "КЕЙС НА COOLDOWN";
+
+  }
+
+}
+
+
+/* =========================================================
+   RARITIES
+   ========================================================= */
+
+function renderRarities() {
+
+  const c =
+    getCase(activeCase);
+
+  const box =
+    document.getElementById(
+      "rarityList"
+    );
+
+  box.innerHTML = "";
+
+
+  c.items.forEach(item => {
+
+    const rarity =
+      RARITIES[item.rarity];
+
+    box.innerHTML += `
+
+      <div>
+
+        <span
+          style="color:${rarity.color}"
+          class="font-black"
+        >
+          ${item.rarity}
+        </span>
+
+        <br>
+
+        <span class="text-zinc-500">
+          ${rarity.price} ₴
+        </span>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+
+/* =========================================================
+   XP
+   ========================================================= */
+
+function updateHeaderXP() {
+
+  const xp =
+    getXP();
+
+  const level =
+    getLevel();
+
+
+  const ids = [
+    "xp",
+    "xp2"
+  ];
+
+  ids.forEach(id => {
+
+    const el =
+      document.getElementById(id);
+
+    if (el) {
+      el.textContent = xp;
+    }
+
+  });
+
+
+  const levels = [
+    "level",
+    "level2"
+  ];
+
+  levels.forEach(id => {
+
+    const el =
+      document.getElementById(id);
+
+    if (el) {
+      el.textContent = level;
+    }
+
+  });
+
+
+  const bar =
+    document.getElementById(
+      "xpbar"
+    );
+
+  if (bar) {
+
+    bar.style.width =
+      (xp / 10) + "%";
+
+  }
+
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+function showMessage(message) {
+
+  const old =
+    document.getElementById(
+      "toast"
+    );
+
+  if (old) old.remove();
+
+
+  const toast =
+    document.createElement("div");
+
+
+  toast.id = "toast";
+
+
+  toast.className = `
+    fixed
+    bottom-6
+    left-1/2
+    -translate-x-1/2
+    z-[200]
+    max-w-md
+    w-[calc(100%-32px)]
+    bg-white
+    text-black
+    px-5
+    py-4
+    rounded-2xl
+    shadow-2xl
+    text-sm
+    font-black
+    text-center
+  `;
+
+
+  toast.textContent =
+    message;
+
+
+  document.body.appendChild(
+    toast
+  );
+
+
+  setTimeout(
+    () => toast.remove(),
+    3200
+  );
+
+}
+
+
+/* =========================================================
+   INIT
+   ========================================================= */
+
+function init() {
+
+  renderCases();
+
+  updateHeaderXP();
+
+  setInterval(() => {
+
+    updateTimers();
+
+    if (!spinning) {
+      updateSpinButton();
+    }
+
+  }, 1000);
+
+}
+
+
+init();
+
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Escape" &&
+      !spinning
+    ) {
+
+      closeCase();
+
+    }
+
+  }
+);
 
 </script>
 
