@@ -7,332 +7,289 @@
 
 <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width,initial-scale=1.0"
 >
 
-<title>CHAK338 — Gaming Hub</title>
+<title>CHAK338</title>
 
 <script src="data.js"></script>
 
 <style>
 
 * {
-    box-sizing: border-box;
+    box-sizing:border-box;
 }
 
-html,
 body {
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
+
+    margin:0;
+
+    color:white;
 
     font-family:
-        Inter,
         Arial,
         sans-serif;
 
     background:
         radial-gradient(
-            circle at 50% -10%,
-            #26365e 0,
-            #101522 38%,
-            #070a11 75%
+            circle at top,
+            #24345a,
+            #070a11 65%
         );
 
-    color: #fff;
-}
-
-body {
-    overflow-x: hidden;
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
-}
-
-button {
-    font: inherit;
+    color:inherit;
+    text-decoration:none;
 }
 
 .header {
 
-    position: sticky;
+    position:sticky;
 
-    top: 0;
+    top:0;
 
-    z-index: 100;
+    z-index:20;
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
+    justify-content:space-between;
 
-    justify-content: space-between;
+    align-items:center;
 
-    padding: 18px 5vw;
+    padding:18px 5%;
 
     background:
-        rgba(7, 10, 17, .82);
+        rgba(5,8,14,.85);
 
-    backdrop-filter: blur(18px);
+    backdrop-filter:
+        blur(20px);
 
     border-bottom:
-        1px solid rgba(255,255,255,.08);
+        1px solid
+        rgba(255,255,255,.08);
+
 }
 
 .logo {
 
-    font-size: 27px;
+    font-size:28px;
 
-    font-weight: 1000;
-
-    letter-spacing: -1px;
+    font-weight:1000;
 
 }
 
 .logo span {
-    color: #6ea8ff;
+    color:#6ea8ff;
 }
 
 .nav {
 
-    display: flex;
+    display:flex;
 
-    gap: 24px;
+    gap:22px;
 
-    color: #aab3c7;
+    color:#9ba6ba;
 
-    font-size: 14px;
+    font-size:14px;
 
-    font-weight: 800;
+    font-weight:800;
+
 }
 
 .nav a:hover {
-    color: white;
+    color:white;
 }
 
 .container {
 
-    width: min(1250px, 90%);
+    width:min(1250px,90%);
 
-    margin: auto;
+    margin:auto;
+
 }
 
 .hero {
 
-    min-height: 390px;
+    min-height:380px;
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
+    justify-content:center;
 
-    justify-content: center;
+    align-items:center;
 
-    text-align: center;
+    text-align:center;
 
-    padding: 60px 0;
 }
 
 .hero h1 {
 
-    margin: 0;
-
     font-size:
-        clamp(48px, 8vw, 100px);
+        clamp(60px,10vw,110px);
 
-    line-height: .9;
+    margin:0;
 
-    font-weight: 1000;
+    font-weight:1000;
 
-    letter-spacing: -5px;
+    letter-spacing:-6px;
+
 }
 
 .hero h1 span {
-    color: #6ea8ff;
+    color:#6ea8ff;
 }
 
 .hero p {
 
-    max-width: 600px;
+    max-width:600px;
 
-    margin: 25px auto;
+    margin:25px auto;
 
-    color: #9da8bd;
+    color:#929db2;
 
-    font-size: 17px;
+    line-height:1.7;
 
-    line-height: 1.7;
 }
 
-.section-title {
+.title {
 
-    margin: 50px 0 25px;
+    margin:40px 0 25px;
 
-    font-size: 28px;
+    font-size:30px;
 
-    font-weight: 1000;
+    font-weight:1000;
+
 }
 
 .cases {
 
-    display: grid;
+    display:grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(4,1fr);
 
-    gap: 22px;
+    gap:18px;
+
 }
 
-.case-card {
+.case {
 
-    position: relative;
+    min-height:390px;
 
-    min-height: 390px;
+    padding:20px;
 
-    padding: 26px;
+    border-radius:25px;
 
-    border-radius: 28px;
+    cursor:pointer;
 
-    overflow: hidden;
+    display:flex;
 
-    cursor: pointer;
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    text-align:center;
 
     border:
-        1px solid rgba(255,255,255,.1);
+        1px solid
+        rgba(255,255,255,.1);
 
     transition:
-        transform .25s,
-        border-color .25s;
+        .25s;
+
 }
 
-.case-card:hover {
+.case:hover {
 
     transform:
         translateY(-8px);
 
     border-color:
-        rgba(255,255,255,.28);
+        rgba(255,255,255,.3);
+
 }
 
-.case-card.blue {
+.case.blue {
 
     background:
         radial-gradient(
-            circle at 50% 25%,
-            #315cbb,
-            #101c3d 60%,
-            #080d19
+            circle,
+            #315cae,
+            #0c152b
         );
+
 }
 
-.case-card.purple {
+.case.purple {
 
     background:
         radial-gradient(
-            circle at 50% 25%,
-            #7434a8,
-            #241238 60%,
-            #0b0812
+            circle,
+            #7838a9,
+            #21102f
         );
+
 }
 
-.case-card.red {
+.case.red {
 
     background:
         radial-gradient(
-            circle at 50% 25%,
-            #b33b35,
-            #421613 60%,
-            #100707
+            circle,
+            #b23932,
+            #2b0d0d
         );
+
 }
 
-.case-card-content {
+.case.dota {
 
-    position: relative;
+    background:
+        radial-gradient(
+            circle,
+            #6d3b25,
+            #160d0a
+        );
 
-    z-index: 2;
-
-    height: 100%;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    text-align: center;
 }
 
-.case-image {
+.case img {
 
-    width: 220px;
+    width:210px;
 
-    height: 220px;
+    height:210px;
 
-    object-fit: contain;
+    object-fit:contain;
 
     filter:
         drop-shadow(
-            0 25px 30px rgba(0,0,0,.45)
+            0 20px 25px
+            rgba(0,0,0,.5)
         );
 
-    transition:
-        transform .3s;
-}
-
-.case-card:hover .case-image {
-
-    transform:
-        scale(1.08)
-        rotate(-2deg);
 }
 
 .case-name {
 
-    margin-top: 8px;
+    font-size:24px;
 
-    font-size: 29px;
+    font-weight:1000;
 
-    font-weight: 1000;
 }
 
 .case-description {
 
-    margin-top: 7px;
+    margin-top:7px;
 
-    color: rgba(255,255,255,.65);
+    color:
+        rgba(255,255,255,.65);
 
-    font-size: 13px;
-}
+    font-size:12px;
 
-.open-button {
-
-    margin-top: 20px;
-
-    width: 100%;
-
-    padding: 15px;
-
-    border: 0;
-
-    border-radius: 14px;
-
-    background: white;
-
-    color: #080b12;
-
-    font-weight: 1000;
-
-    cursor: pointer;
-
-    transition: transform .2s;
-}
-
-.open-button:hover {
-    transform: scale(1.03);
 }
 
 
@@ -340,499 +297,451 @@ button {
 
 .modal {
 
-    position: fixed;
+    position:fixed;
 
-    inset: 0;
+    inset:0;
 
-    z-index: 500;
+    z-index:100;
 
-    display: none;
+    display:none;
 
-    align-items: center;
+    justify-content:center;
 
-    justify-content: center;
+    align-items:center;
 
-    padding: 20px;
+    padding:20px;
 
     background:
-        rgba(0,0,0,.78);
+        rgba(0,0,0,.85);
 
-    backdrop-filter: blur(12px);
+    backdrop-filter:
+        blur(10px);
+
 }
 
 .modal.show {
-    display: flex;
+    display:flex;
 }
 
 .modal-box {
 
-    width: min(1050px, 100%);
+    width:min(1100px,100%);
 
-    max-height: 90vh;
+    max-height:90vh;
 
-    overflow-y: auto;
+    overflow:auto;
 
-    padding: 30px;
+    padding:30px;
 
-    border-radius: 28px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #161d2c,
-            #090d15
-        );
-
-    border:
-        1px solid rgba(255,255,255,.12);
-
-    box-shadow:
-        0 30px 100px rgba(0,0,0,.6);
-}
-
-.modal-top {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    margin-bottom: 25px;
-}
-
-.modal-title {
-
-    font-size: 28px;
-
-    font-weight: 1000;
-}
-
-.close {
-
-    width: 42px;
-
-    height: 42px;
-
-    border-radius: 12px;
-
-    border: 0;
-
-    background:
-        rgba(255,255,255,.08);
-
-    color: white;
-
-    cursor: pointer;
-
-    font-size: 20px;
-}
-
-.contents {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(6, 1fr);
-
-    gap: 12px;
-}
-
-.item-card {
-
-    position: relative;
-
-    padding: 13px;
-
-    border-radius: 18px;
-
-    background:
-        rgba(255,255,255,.045);
-
-    border:
-        1px solid rgba(255,255,255,.07);
-
-    text-align: center;
-
-    transition:
-        transform .2s;
-}
-
-.item-card:hover {
-
-    transform:
-        translateY(-5px);
-
-    background:
-        rgba(255,255,255,.08);
-}
-
-.item-image {
-
-    width: 100%;
-
-    height: 115px;
-
-    object-fit: contain;
-}
-
-.item-name {
-
-    margin-top: 8px;
-
-    font-size: 12px;
-
-    font-weight: 900;
-}
-
-.rarity {
-
-    margin-top: 5px;
-
-    font-size: 9px;
-
-    font-weight: 1000;
-
-    text-transform: uppercase;
-}
-
-.rarity.common {
-    color: #aeb7c8;
-}
-
-.rarity.uncommon {
-    color: #62d98b;
-}
-
-.rarity.rare {
-    color: #55a8ff;
-}
-
-.rarity.epic {
-    color: #b87cff;
-}
-
-.rarity.legendary {
-    color: #ffb84d;
-}
-
-.rarity.mythic {
-    color: #ff4c72;
-}
-
-.price {
-
-    margin-top: 5px;
-
-    color: #d9e1ef;
-
-    font-size: 11px;
-
-    font-weight: 900;
-}
-
-.case-actions {
-
-    display: flex;
-
-    justify-content: center;
-
-    gap: 12px;
-
-    margin-top: 25px;
-}
-
-.main-open {
-
-    padding:
-        15px 45px;
-
-    border: 0;
-
-    border-radius: 14px;
-
-    background: #fff;
-
-    color: #080b12;
-
-    font-weight: 1000;
-
-    cursor: pointer;
-}
-
-
-/* SPIN */
-
-.spin-screen {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 600;
-
-    display: none;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background:
-        rgba(3,5,9,.94);
-}
-
-.spin-screen.show {
-    display: flex;
-}
-
-.spin-box {
-
-    width: min(1100px, 94%);
-
-    text-align: center;
-}
-
-.spin-title {
-
-    font-size: 30px;
-
-    font-weight: 1000;
-
-    margin-bottom: 30px;
-}
-
-.reel {
-
-    position: relative;
-
-    overflow: hidden;
-
-    width: 100%;
-
-    height: 220px;
-
-    border-radius: 25px;
-
-    background:
-        #101622;
-
-    border:
-        1px solid rgba(255,255,255,.12);
-}
-
-.marker {
-
-    position: absolute;
-
-    z-index: 5;
-
-    top: 0;
-
-    bottom: 0;
-
-    left: 50%;
-
-    width: 4px;
-
-    transform: translateX(-50%);
-
-    background: white;
-
-    box-shadow:
-        0 0 25px rgba(255,255,255,.8);
-}
-
-.reel-track {
-
-    position: absolute;
-
-    left: 0;
-
-    top: 0;
-
-    height: 100%;
-
-    display: flex;
-
-    gap: 12px;
-
-    align-items: center;
-
-    padding-left: 15px;
-
-    will-change: transform;
-}
-
-.reel-item {
-
-    flex:
-        0 0 180px;
-
-    height: 185px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    border-radius: 18px;
-
-    background:
-        rgba(255,255,255,.055);
-
-    border:
-        1px solid rgba(255,255,255,.07);
-}
-
-.reel-item img {
-
-    width: 120px;
-
-    height: 120px;
-
-    object-fit: contain;
-}
-
-.reel-item-name {
-
-    font-size: 11px;
-
-    font-weight: 900;
-}
-
-.result {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 700;
-
-    display: none;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background:
-        rgba(3,5,9,.92);
-}
-
-.result.show {
-    display: flex;
-}
-
-.result-box {
-
-    width: min(440px, 92%);
-
-    padding: 40px;
-
-    text-align: center;
-
-    border-radius: 30px;
+    border-radius:28px;
 
     background:
         linear-gradient(
             145deg,
             #171f30,
-            #080b12
+            #090c13
         );
 
     border:
-        1px solid rgba(255,255,255,.12);
+        1px solid
+        rgba(255,255,255,.12);
+
+}
+
+.modal-header {
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.modal-title {
+
+    font-size:28px;
+
+    font-weight:1000;
+
+}
+
+.close {
+
+    width:42px;
+
+    height:42px;
+
+    border:0;
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    color:white;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+}
+
+.contents {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(6,1fr);
+
+    gap:12px;
+
+}
+
+.item {
+
+    padding:12px;
+
+    border-radius:17px;
+
+    text-align:center;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+}
+
+.item img {
+
+    width:100%;
+
+    height:120px;
+
+    object-fit:contain;
+
+}
+
+.item-name {
+
+    font-size:12px;
+
+    font-weight:900;
+
+}
+
+.rarity {
+
+    margin-top:5px;
+
+    font-size:9px;
+
+    font-weight:1000;
+
+    text-transform:uppercase;
+
+}
+
+.common {
+    color:#aeb7c8;
+}
+
+.uncommon {
+    color:#62d98b;
+}
+
+.rare {
+    color:#55a8ff;
+}
+
+.epic {
+    color:#b87cff;
+}
+
+.legendary {
+    color:#ffb84d;
+}
+
+.mythic {
+    color:#ff4c72;
+}
+
+.price {
+
+    margin-top:5px;
+
+    font-size:11px;
+
+    color:#d7dfed;
+
+    font-weight:900;
+
+}
+
+.open {
+
+    display:block;
+
+    margin:25px auto 0;
+
+    padding:
+        15px 45px;
+
+    border:0;
+
+    border-radius:14px;
+
+    background:white;
+
+    color:#070a10;
+
+    font-weight:1000;
+
+    cursor:pointer;
+
+}
+
+
+/* SPIN */
+
+.spin {
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:200;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+        rgba(2,4,8,.96);
+
+}
+
+.spin.show {
+    display:flex;
+}
+
+.reel {
+
+    position:relative;
+
+    width:min(1100px,90%);
+
+    height:210px;
+
+    overflow:hidden;
+
+    border-radius:25px;
+
+    background:#111722;
+
+}
+
+.marker {
+
+    position:absolute;
+
+    z-index:2;
+
+    left:50%;
+
+    top:0;
+
+    bottom:0;
+
+    width:4px;
+
+    transform:
+        translateX(-50%);
+
+    background:white;
+
+}
+
+.track {
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    height:100%;
+
+    display:flex;
+
+    gap:10px;
+
+    align-items:center;
+
+}
+
+.reel-item {
+
+    flex:
+        0 0 170px;
+
+    height:180px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:18px;
+
+    background:
+        rgba(255,255,255,.05);
+
+}
+
+.reel-item img {
+
+    width:120px;
+
+    height:120px;
+
+    object-fit:contain;
+
+}
+
+.reel-item span {
+
+    font-size:10px;
+
+    font-weight:900;
+
+}
+
+
+/* RESULT */
+
+.result {
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:300;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+        rgba(0,0,0,.9);
+
+}
+
+.result.show {
+    display:flex;
+}
+
+.result-box {
+
+    width:min(430px,90%);
+
+    padding:40px;
+
+    text-align:center;
+
+    border-radius:30px;
+
+    background:#111824;
+
 }
 
 .result-box img {
 
-    width: 230px;
+    width:230px;
 
-    height: 230px;
+    height:230px;
 
-    object-fit: contain;
+    object-fit:contain;
 
-    filter:
-        drop-shadow(
-            0 20px 35px rgba(0,0,0,.5)
-        );
 }
 
 .result-name {
 
-    margin-top: 15px;
+    font-size:28px;
 
-    font-size: 28px;
+    font-weight:1000;
 
-    font-weight: 1000;
-}
-
-.result-rarity {
-
-    margin-top: 8px;
-
-    font-weight: 1000;
+    margin-top:10px;
 
 }
 
 .result-price {
 
-    margin-top: 8px;
+    color:#aab4c5;
 
-    color: #aeb8ca;
+    margin-top:8px;
 
 }
 
-.result-button {
+.result button {
 
-    width: 100%;
+    width:100%;
 
-    margin-top: 25px;
+    margin-top:25px;
 
-    padding: 15px;
+    padding:15px;
 
-    border: 0;
+    border:0;
 
-    border-radius: 14px;
+    border-radius:14px;
 
-    background: white;
+    background:white;
 
-    color: black;
+    font-weight:1000;
 
-    font-weight: 1000;
-
-    cursor: pointer;
 }
 
-
-@media(max-width: 900px) {
+@media(max-width:1100px) {
 
     .cases {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
     .contents {
         grid-template-columns:
-            repeat(3, 1fr);
+            repeat(4,1fr);
     }
 
-    .nav {
-        display: none;
-    }
 }
 
-@media(max-width: 500px) {
+@media(max-width:650px) {
+
+    .nav {
+        display:none;
+    }
+
+    .cases {
+        grid-template-columns:1fr;
+    }
 
     .contents {
         grid-template-columns:
-            repeat(2, 1fr);
+            repeat(2,1fr);
     }
 
-    .hero h1 {
-        letter-spacing: -3px;
-    }
 }
 
 </style>
@@ -844,27 +753,33 @@ button {
 
 <header class="header">
 
-    <a class="logo" href="index.html">
-        CHAK<span>338</span>
-    </a>
+<a
+    href="index.html"
+    class="logo"
+>
+    CHAK<span>338</span>
+</a>
 
-    <nav class="nav">
 
-        <a href="index.html">Главная</a>
+<nav class="nav">
 
-        <a href="#cases">Кейсы</a>
+<a href="index.html">
+Главная
+</a>
 
-        <a href="inventory.html">Инвентарь</a>
+<a href="#cases">
+Кейсы
+</a>
 
-        <a href="upgrade.html">Апгрейд</a>
+<a href="inventory.html">
+Инвентарь
+</a>
 
-        <a href="#news">Новости</a>
+<a href="upgrade.html">
+Апгрейд
+</a>
 
-        <a href="#giveaways">Розыгрыши</a>
-
-        <a href="#merch">Мерч</a>
-
-    </nav>
+</nav>
 
 </header>
 
@@ -874,68 +789,32 @@ button {
 
 <section class="hero">
 
-    <div>
+<div>
 
-        <h1>
-            CHAK<span>338</span>
-        </h1>
+<h1>
+CHAK<span>338</span>
+</h1>
 
-        <p>
-            Открывай кейсы, собирай уникальные предметы,
-            прокачивай коллекцию и участвуй в апгрейдах.
-        </p>
+<p>
+Открывай кейсы, собирай редкие предметы
+и улучшай свою коллекцию.
+</p>
 
-    </div>
+</div>
 
 </section>
 
 
 <section id="cases">
 
-    <div class="section-title">
-        Кейсы
-    </div>
+<div class="title">
+Кейсы
+</div>
 
-    <div class="cases" id="casesGrid"></div>
-
-</section>
-
-
-<section id="news">
-
-    <div class="section-title">
-        Новости
-    </div>
-
-    <p style="color:#8f99ad">
-        Скоро здесь появятся новости CHAK338.
-    </p>
-
-</section>
-
-
-<section id="giveaways">
-
-    <div class="section-title">
-        Розыгрыши
-    </div>
-
-    <p style="color:#8f99ad">
-        Скоро здесь появятся розыгрыши.
-    </p>
-
-</section>
-
-
-<section id="merch">
-
-    <div class="section-title">
-        CHAK338 Merch
-    </div>
-
-    <p style="color:#8f99ad">
-        Скоро здесь появится мерч.
-    </p>
+<div
+    class="cases"
+    id="casesGrid"
+></div>
 
 </section>
 
@@ -945,124 +824,122 @@ button {
 
 <!-- CONTENT MODAL -->
 
-<div class="modal" id="contentsModal">
+<div
+    class="modal"
+    id="contentsModal"
+>
 
-    <div class="modal-box">
-
-        <div class="modal-top">
-
-            <div
-                class="modal-title"
-                id="modalTitle"
-            >
-                Содержимое
-            </div>
-
-            <button
-                class="close"
-                onclick="closeContents()"
-            >
-                ×
-            </button>
-
-        </div>
+<div class="modal-box">
 
 
-        <div
-            class="contents"
-            id="contents"
-        ></div>
+<div class="modal-header">
+
+<div
+    class="modal-title"
+    id="modalTitle"
+>
+</div>
+
+<button
+    class="close"
+    onclick="closeModal()"
+>
+×
+</button>
+
+</div>
 
 
-        <div class="case-actions">
+<div
+    class="contents"
+    id="contents"
+></div>
 
-            <button
-                class="main-open"
-                id="modalOpenButton"
-            >
-                ОТКРЫТЬ КЕЙС
-            </button>
 
-        </div>
+<button
+    class="open"
+    id="openCaseButton"
+>
+ОТКРЫТЬ КЕЙС
+</button>
 
-    </div>
+
+</div>
 
 </div>
 
 
 <!-- SPIN -->
 
-<div class="spin-screen" id="spinScreen">
+<div
+    class="spin"
+    id="spin"
+>
 
-    <div class="spin-box">
+<div class="reel">
 
-        <div class="spin-title">
-            Открываем кейс...
-        </div>
+<div class="marker"></div>
 
-        <div class="reel">
+<div
+    class="track"
+    id="track"
+></div>
 
-            <div class="marker"></div>
-
-            <div
-                class="reel-track"
-                id="reelTrack"
-            ></div>
-
-        </div>
-
-    </div>
+</div>
 
 </div>
 
 
 <!-- RESULT -->
 
-<div class="result" id="result">
+<div
+    class="result"
+    id="result"
+>
 
-    <div class="result-box">
+<div class="result-box">
 
-        <div>
-            ТЕБЕ ВЫПАЛО
-        </div>
+<div>
+ТЕБЕ ВЫПАЛО
+</div>
 
-        <img id="resultImage">
+<img
+    id="resultImage"
+>
 
-        <div
-            class="result-name"
-            id="resultName"
-        ></div>
+<div
+    class="result-name"
+    id="resultName"
+></div>
 
-        <div
-            class="result-rarity"
-            id="resultRarity"
-        ></div>
+<div
+    class="result-price"
+    id="resultPrice"
+></div>
 
-        <div
-            class="result-price"
-            id="resultPrice"
-        ></div>
+<button onclick="closeResult()">
+ЗАБРАТЬ
+</button>
 
-        <button
-            class="result-button"
-            onclick="closeResult()"
-        >
-            ЗАБРАТЬ В ИНВЕНТАРЬ
-        </button>
-
-    </div>
+</div>
 
 </div>
 
 
 <script>
 
-/* =========================================================
-   RENDER CASES
-   ========================================================= */
-
 const casesGrid =
-    document.getElementById("casesGrid");
+    document.getElementById(
+        "casesGrid"
+    );
+
+
+let currentCase = null;
+
+
+/* ============================================================
+   CASE CARDS
+   ============================================================ */
 
 
 CASES.forEach(caseData => {
@@ -1070,72 +947,77 @@ CASES.forEach(caseData => {
     const card =
         document.createElement("div");
 
+
     card.className =
-        "case-card " +
+        "case " +
         caseData.color;
+
 
     card.innerHTML = `
 
-        <div class="case-card-content">
+        <img
+            src="${caseData.image}"
+            onerror="
+                this.src='https://dummyimage.com/400x400/151b29/ffffff&text=${caseData.name}'
+            "
+        >
 
-            <div>
+        <div>
 
-                <img
-                    class="case-image"
-                    src="${caseData.image}"
-                    onerror="this.src='https://dummyimage.com/400x400/151b29/ffffff&text=${caseData.name}'"
-                >
-
-                <div class="case-name">
-                    ${caseData.name}
-                </div>
-
-                <div class="case-description">
-                    ${caseData.description}
-                </div>
-
+            <div class="case-name">
+                ${caseData.name}
             </div>
 
-            <button
-                class="open-button"
-                onclick="openContents('${caseData.id}')"
-            >
-                ПОСМОТРЕТЬ КЕЙС
-            </button>
+            <div class="case-description">
+                ${caseData.description}
+            </div>
 
         </div>
 
     `;
 
-    casesGrid.appendChild(card);
+
+    card.onclick = () => {
+
+        openCaseContents(
+            caseData.id
+        );
+
+    };
+
+
+    casesGrid.appendChild(
+        card
+    );
 
 });
 
 
-/* =========================================================
-   CASE CONTENTS
-   ========================================================= */
-
-let selectedCase = null;
+/* ============================================================
+   CONTENTS
+   ============================================================ */
 
 
-function openContents(caseId) {
+function openCaseContents(caseId) {
 
-    selectedCase = getCase(caseId);
+    currentCase =
+        getCase(caseId);
 
-    if (!selectedCase) {
-        return;
-    }
 
-    document.getElementById("modalTitle").textContent =
-        selectedCase.name +
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        currentCase.name +
         " — СОДЕРЖИМОЕ";
 
 
-    const contents =
-        document.getElementById("contents");
+    const container =
+        document.getElementById(
+            "contents"
+        );
 
-    contents.innerHTML = "";
+
+    container.innerHTML = "";
 
 
     const items =
@@ -1145,22 +1027,28 @@ function openContents(caseId) {
     items.forEach(item => {
 
         const rarity =
-            getRarity(item.rarity);
+            getRarity(
+                item.rarity
+            );
 
 
-        const card =
-            document.createElement("div");
+        const element =
+            document.createElement(
+                "div"
+            );
 
-        card.className =
-            "item-card";
+
+        element.className =
+            "item";
 
 
-        card.innerHTML = `
+        element.innerHTML = `
 
             <img
-                class="item-image"
                 src="${item.image}"
-                onerror="this.src='https://dummyimage.com/300x300/151b29/ffffff&text=${encodeURIComponent(item.name)}'"
+                onerror="
+                    this.src='https://dummyimage.com/300x300/151b29/ffffff&text=ITEM'
+                "
             >
 
             <div class="item-name">
@@ -1168,7 +1056,10 @@ function openContents(caseId) {
             </div>
 
             <div
-                class="rarity ${item.rarity}"
+                class="
+                    rarity
+                    ${item.rarity}
+                "
             >
                 ${rarity.name}
             </div>
@@ -1180,61 +1071,154 @@ function openContents(caseId) {
         `;
 
 
-        contents.appendChild(card);
+        container.appendChild(
+            element
+        );
 
     });
 
 
     document.getElementById(
         "contentsModal"
-    ).classList.add("show");
-
-
-    document.getElementById(
-        "modalOpenButton"
-    ).onclick = () => {
-
-        closeContents();
-
-        spinCase(selectedCase.id);
-
-    };
+    ).classList.add(
+        "show"
+    );
 
 }
 
 
-function closeContents() {
+function closeModal() {
 
     document.getElementById(
         "contentsModal"
-    ).classList.remove("show");
+    ).classList.remove(
+        "show"
+    );
 
 }
 
 
-/* =========================================================
+/* ============================================================
+   OPEN CASE
+   ============================================================ */
+
+
+document.getElementById(
+    "openCaseButton"
+).onclick = () => {
+
+    if (!currentCase) {
+        return;
+    }
+
+
+    if (
+        !canOpenCase(
+            currentCase.id
+        )
+    ) {
+
+        alert(
+            "Кейс пока недоступен.\n\nОсталось: " +
+            formatTime(
+                getRemaining(
+                    currentCase.id
+                )
+            )
+        );
+
+        return;
+
+    }
+
+
+    closeModal();
+
+    spinCase(
+        currentCase.id
+    );
+
+};
+
+
+/* ============================================================
    SPIN
-   ========================================================= */
+   ============================================================ */
+
+
+function spinCase(caseId) {
+
+    const winner =
+        randomCaseItem(
+            caseId
+        );
+
+
+    if (!winner) {
+        return;
+    }
+
+
+    setCaseOpened(
+        caseId
+    );
+
+
+    document.getElementById(
+        "spin"
+    ).classList.add(
+        "show"
+    );
+
+
+    buildReel(
+        winner
+    );
+
+
+    setTimeout(() => {
+
+        document.getElementById(
+            "spin"
+        ).classList.remove(
+            "show"
+        );
+
+
+        showResult(
+            winner
+        );
+
+    },5300);
+
+}
+
 
 function buildReel(winner) {
 
     const track =
-        document.getElementById("reelTrack");
+        document.getElementById(
+            "track"
+        );
+
 
     track.innerHTML = "";
 
-    const allItems = ITEMS;
 
-    const reel = [];
+    const items = [];
 
 
-    for (let i = 0; i < 55; i++) {
+    for (
+        let i = 0;
+        i < 50;
+        i++
+    ) {
 
-        reel.push(
-            allItems[
+        items.push(
+            ITEMS[
                 Math.floor(
                     Math.random() *
-                    allItems.length
+                    ITEMS.length
                 )
             ]
         );
@@ -1242,15 +1226,20 @@ function buildReel(winner) {
     }
 
 
-    const winnerIndex = 46;
-
-    reel[winnerIndex] = winner;
+    const winnerIndex = 40;
 
 
-    reel.forEach(item => {
+    items[winnerIndex] =
+        winner;
+
+
+    items.forEach(item => {
 
         const el =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         el.className =
             "reel-item";
@@ -1260,34 +1249,43 @@ function buildReel(winner) {
 
             <img
                 src="${item.image}"
-                onerror="this.src='https://dummyimage.com/300x300/151b29/ffffff&text=ITEM'"
             >
 
-            <div class="reel-item-name">
+            <span>
                 ${item.name}
-            </div>
+            </span>
 
         `;
 
 
-        track.appendChild(el);
+        track.appendChild(
+            el
+        );
 
     });
 
 
-    const itemWidth = 180 + 12;
+    const width =
+        170 + 10;
 
-    const screenWidth =
-        document.querySelector(".reel").clientWidth;
+
+    const reelWidth =
+        document.querySelector(
+            ".reel"
+        ).clientWidth;
 
 
     const target =
-        -(winnerIndex * itemWidth)
-        + screenWidth / 2
-        - itemWidth / 2;
+        -(winnerIndex * width)
+        +
+        reelWidth / 2
+        -
+        width / 2;
 
 
-    track.style.transition = "none";
+    track.style.transition =
+        "none";
+
 
     track.style.transform =
         "translateX(0)";
@@ -1310,77 +1308,17 @@ function buildReel(winner) {
 }
 
 
-function spinCase(caseId) {
-
-    if (!canOpenCase(caseId)) {
-
-        const remaining =
-            getCaseRemaining(caseId);
-
-        alert(
-            "Кейс пока недоступен.\nОсталось: " +
-            formatTime(remaining)
-        );
-
-        return;
-
-    }
-
-
-    const winner =
-        randomCaseItem(caseId);
-
-
-    if (!winner) {
-        return;
-    }
-
-
-    setCaseOpened(caseId);
-
-
-    document.getElementById(
-        "spinScreen"
-    ).classList.add("show");
-
-
-    buildReel(winner);
-
-
-    setTimeout(() => {
-
-        document.getElementById(
-            "spinScreen"
-        ).classList.remove("show");
-
-
-        showResult(winner);
-
-    }, 5300);
-
-}
-
-
-/* =========================================================
+/* ============================================================
    RESULT
-   ========================================================= */
+   ============================================================ */
+
 
 function showResult(item) {
 
     document.getElementById(
         "resultImage"
-    ).src = item.image;
-
-
-    document.getElementById(
-        "resultImage"
-    ).onerror = function() {
-
-        this.src =
-            "https://dummyimage.com/400x400/151b29/ffffff&text=" +
-            encodeURIComponent(item.name);
-
-    };
+    ).src =
+        item.image;
 
 
     document.getElementById(
@@ -1389,46 +1327,39 @@ function showResult(item) {
         item.name;
 
 
-    const rarity =
-        getRarity(item.rarity);
-
-
-    const rarityElement =
-        document.getElementById(
-            "resultRarity"
-        );
-
-
-    rarityElement.textContent =
-        rarity.name;
-
-
-    rarityElement.className =
-        "result-rarity rarity " +
-        item.rarity;
-
-
     document.getElementById(
         "resultPrice"
     ).textContent =
         "Стоимость: 💰 " +
-        formatPrice(item.price);
+        formatPrice(
+            item.price
+        );
 
 
     document.getElementById(
         "result"
-    ).classList.add("show");
+    ).classList.add(
+        "show"
+    );
 
 
-    addInventoryItem(item);
+    addInventoryItem(
+        item
+    );
 
 
     const caseData =
-        getCase(item.caseId);
+        getCase(
+            item.caseId
+        );
 
 
     if (caseData) {
-        addXP(caseData.xp);
+
+        addXP(
+            caseData.xp
+        );
+
     }
 
 }
@@ -1438,34 +1369,43 @@ function closeResult() {
 
     document.getElementById(
         "result"
-    ).classList.remove("show");
+    ).classList.remove(
+        "show"
+    );
 
 }
 
 
 function formatTime(ms) {
 
-    const total =
-        Math.ceil(ms / 1000);
-
-    const hours =
-        Math.floor(total / 3600);
-
-    const minutes =
-        Math.floor(
-            (total % 3600) / 60
+    const seconds =
+        Math.ceil(
+            ms / 1000
         );
 
-    const seconds =
-        total % 60;
+
+    const h =
+        Math.floor(
+            seconds / 3600
+        );
+
+
+    const m =
+        Math.floor(
+            (seconds % 3600) / 60
+        );
+
+
+    const s =
+        seconds % 60;
 
 
     return (
-        String(hours).padStart(2,"0") +
-        ":" +
-        String(minutes).padStart(2,"0") +
-        ":" +
-        String(seconds).padStart(2,"0")
+        String(h).padStart(2,"0")
+        + ":" +
+        String(m).padStart(2,"0")
+        + ":" +
+        String(s).padStart(2,"0")
     );
 
 }
