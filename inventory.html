@@ -1,520 +1,794 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="ru">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="utf-8">
+<title>CHAK338 — Inventory</title>
 
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1"
->
-
-<title>
-  CHAK338 — Инвентарь
-</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="data.js"></script>
 
 <style>
-
-body{
-  background:#06070b;
-  color:#f8fafc;
+* {
+    box-sizing: border-box;
 }
 
-.glass{
-
-  background:
-    rgba(8,9,14,.86);
-
-  backdrop-filter:
-    blur(18px);
-
+:root {
+    --bg:#07090d;
+    --panel:#0d1118;
+    --panel2:#111722;
+    --border:rgba(255,255,255,.08);
+    --text:#f4f7fb;
+    --muted:#7e899a;
+    --green:#22e58a;
+    --red:#ff4058;
+    --yellow:#ffc857;
 }
 
-.item{
-
-  transition:.2s;
-
+body {
+    margin:0;
+    min-height:100vh;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 50% -10%,rgba(30,100,70,.16),transparent 35%),
+        linear-gradient(180deg,#080a0f,#05070a);
+    font-family:Inter,Arial,sans-serif;
 }
 
-.item:hover{
-
-  transform:
-    translateY(-5px);
-
-  box-shadow:
-    0 20px 50px
-    rgba(168,85,247,.1);
-
+.header {
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 28px;
+    border-bottom:1px solid var(--border);
+    background:rgba(7,9,13,.9);
+    backdrop-filter:blur(12px);
+    position:sticky;
+    top:0;
+    z-index:20;
 }
 
+.logo {
+    font-size:22px;
+    font-weight:950;
+}
+
+.logo span {
+    color:var(--green);
+}
+
+.nav {
+    display:flex;
+    gap:8px;
+}
+
+.nav a {
+    color:#9da7b5;
+    text-decoration:none;
+    padding:10px 14px;
+    border-radius:9px;
+    font-size:14px;
+    font-weight:800;
+}
+
+.nav a:hover,
+.nav a.active {
+    color:white;
+    background:rgba(255,255,255,.06);
+}
+
+.xp {
+    padding:10px 15px;
+    color:var(--green);
+    border:1px solid rgba(34,229,138,.2);
+    background:rgba(34,229,138,.06);
+    border-radius:9px;
+    font-weight:900;
+}
+
+.page {
+    max-width:1400px;
+    margin:auto;
+    padding:30px 20px 70px;
+}
+
+.top {
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    margin-bottom:25px;
+}
+
+h1 {
+    margin:0;
+    font-size:32px;
+}
+
+.subtitle {
+    color:var(--muted);
+    margin-top:7px;
+}
+
+.stats {
+    display:flex;
+    gap:10px;
+}
+
+.stat {
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:13px 18px;
+    text-align:center;
+}
+
+.stat span {
+    display:block;
+    color:var(--muted);
+    font-size:10px;
+    text-transform:uppercase;
+}
+
+.stat strong {
+    display:block;
+    color:var(--green);
+    margin-top:4px;
+    font-size:17px;
+}
+
+.grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+    gap:14px;
+}
+
+.card {
+    position:relative;
+    background:
+        linear-gradient(180deg,rgba(17,23,34,.98),rgba(9,12,18,.98));
+    border:1px solid var(--border);
+    border-radius:14px;
+    overflow:hidden;
+    transition:.2s;
+}
+
+.card:hover {
+    transform:translateY(-3px);
+    border-color:rgba(34,229,138,.3);
+    box-shadow:0 15px 40px rgba(0,0,0,.3);
+}
+
+.image-box {
+    height:175px;
+    display:grid;
+    place-items:center;
+    padding:18px;
+    background:
+        radial-gradient(circle,rgba(255,255,255,.06),transparent 65%);
+}
+
+.image-box img {
+    max-width:100%;
+    max-height:145px;
+    object-fit:contain;
+}
+
+.body {
+    padding:15px;
+}
+
+.name {
+    font-size:14px;
+    font-weight:900;
+    min-height:38px;
+}
+
+.price {
+    color:var(--yellow);
+    font-size:18px;
+    font-weight:950;
+    margin-top:8px;
+}
+
+.game {
+    color:var(--muted);
+    font-size:11px;
+    margin-top:4px;
+}
+
+.actions {
+    margin-top:13px;
+}
+
+.sell {
+    width:100%;
+    padding:11px;
+    border:1px solid rgba(34,229,138,.25);
+    border-radius:9px;
+    background:rgba(34,229,138,.08);
+    color:var(--green);
+    cursor:pointer;
+    font-weight:900;
+    transition:.15s;
+}
+
+.sell:hover {
+    background:var(--green);
+    color:#03130b;
+}
+
+.sell:disabled {
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.empty {
+    grid-column:1/-1;
+    text-align:center;
+    color:var(--muted);
+    padding:80px 20px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:15px;
+}
+
+.toast {
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    z-index:100;
+    min-width:280px;
+    padding:17px 20px;
+    background:#101822;
+    border:1px solid rgba(34,229,138,.35);
+    border-radius:12px;
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
+    transform:translateY(120px);
+    opacity:0;
+    transition:.3s;
+}
+
+.toast.show {
+    transform:translateY(0);
+    opacity:1;
+}
+
+.toast-title {
+    color:var(--green);
+    font-weight:950;
+}
+
+.toast-text {
+    color:#b7c0cc;
+    margin-top:4px;
+    font-size:13px;
+}
+
+.confirm {
+    position:fixed;
+    inset:0;
+    z-index:90;
+    display:none;
+    place-items:center;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(6px);
+}
+
+.confirm.show {
+    display:grid;
+}
+
+.modal {
+    width:min(430px,calc(100vw - 30px));
+    padding:28px;
+    background:#0e141d;
+    border:1px solid var(--border);
+    border-radius:17px;
+    text-align:center;
+}
+
+.modal h2 {
+    margin:0;
+}
+
+.modal p {
+    color:var(--muted);
+    line-height:1.5;
+}
+
+.modal-value {
+    color:var(--green);
+    font-size:28px;
+    font-weight:950;
+    margin:20px 0;
+}
+
+.modal-buttons {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.modal-buttons button {
+    padding:13px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:900;
+}
+
+.cancel {
+    color:white;
+    background:rgba(255,255,255,.06);
+    border:1px solid var(--border);
+}
+
+.confirm-sell {
+    color:#03130b;
+    background:var(--green);
+    border:0;
+}
+
+@media(max-width:700px) {
+
+    .header {
+        padding:0 12px;
+    }
+
+    .nav a {
+        display:none;
+    }
+
+    .top {
+        display:block;
+    }
+
+    .stats {
+        margin-top:15px;
+    }
+
+    .stat {
+        flex:1;
+    }
+
+    .page {
+        padding:20px 10px;
+    }
+}
 </style>
-
 </head>
-
 
 <body>
 
+<header class="header">
 
-<header
-  class="
-    fixed
-    top-0
-    left-0
-    right-0
-    z-40
-    glass
-    border-b
-    border-white/10
-  "
->
+    <div class="logo">
+        CHAK338 <span>GAMING</span>
+    </div>
 
-<div
-  class="
-    max-w-7xl
-    mx-auto
-    px-4
-    h-20
-    flex
-    items-center
-    justify-between
-  "
->
+    <nav class="nav">
+        <a href="index.html">Главная</a>
+        <a href="index.html#cases">Кейсы</a>
+        <a href="upgrade.html">Апгрейд</a>
+        <a href="inventory.html" class="active">Инвентарь</a>
+    </nav>
 
-<a
-  href="index.html"
-  class="font-black text-xl"
->
-
-CHAK338
-
-<span
-  class="
-    text-fuchsia-400
-    text-xs
-  "
->
-
-GAMING HUB
-
-</span>
-
-</a>
-
-
-<nav
-  class="
-    flex
-    gap-5
-    text-sm
-    font-bold
-    text-zinc-400
-  "
->
-
-<a href="index.html">
-  Кейсы
-</a>
-
-<a href="upgrade.html">
-  Апгрейдер
-</a>
-
-<a
-  class="text-white"
-  href="inventory.html"
->
-  Инвентарь
-</a>
-
-</nav>
-
-</div>
+    <div class="xp">
+        EXP: <span id="xp">0</span>
+    </div>
 
 </header>
 
 
+<main class="page">
 
-<main
-  class="
-    pt-28
-    max-w-7xl
-    mx-auto
-    px-4
-    pb-20
-  "
->
+    <div class="top">
 
+        <div>
+            <h1>МОЙ ИНВЕНТАРЬ</h1>
+            <div class="subtitle">
+                Продавай ненужные предметы и получай EXP
+            </div>
+        </div>
 
-<div
-  class="
-    flex
-    flex-col
-    md:flex-row
-    justify-between
-    gap-5
-  "
->
+        <div class="stats">
 
-<div>
+            <div class="stat">
+                <span>Предметов</span>
+                <strong id="count">0</strong>
+            </div>
 
-<div
-  class="
-    text-xs
-    uppercase
-    tracking-[.3em]
-    text-fuchsia-400
-    font-black
-  "
->
+            <div class="stat">
+                <span>Стоимость</span>
+                <strong id="total">0</strong>
+            </div>
 
-YOUR COLLECTION
+        </div>
 
-</div>
+    </div>
 
 
-<h1
-  class="
-    text-5xl
-    font-black
-    mt-3
-  "
->
-
-Инвентарь
-
-</h1>
-
-
-<p
-  class="
-    text-zinc-500
-    mt-3
-  "
->
-
-Все выпавшие предметы.
-
-</p>
-
-</div>
-
-
-
-<div
-  class="
-    grid
-    grid-cols-3
-    gap-3
-  "
->
-
-<div
-  class="
-    rounded-2xl
-    border
-    border-white/10
-    bg-zinc-950
-    p-4
-  "
->
-
-<div
-  class="
-    text-xs
-    text-zinc-600
-  "
->
-
-ПРЕДМЕТОВ
-
-</div>
-
-<b
-  id="count"
-  class="text-2xl"
->
-
-0
-
-</b>
-
-</div>
-
-
-
-<div
-  class="
-    rounded-2xl
-    border
-    border-white/10
-    bg-zinc-950
-    p-4
-  "
->
-
-<div
-  class="
-    text-xs
-    text-zinc-600
-  "
->
-
-СТОИМОСТЬ
-
-</div>
-
-<b
-  id="total"
-  class="text-2xl"
->
-
-0
-
-</b>
-
-</div>
-
-
-
-<div
-  class="
-    rounded-2xl
-    border
-    border-white/10
-    bg-zinc-950
-    p-4
-  "
->
-
-<div
-  class="
-    text-xs
-    text-zinc-600
-  "
->
-
-XP
-
-</div>
-
-<b
-  id="xp"
-  class="text-2xl"
->
-
-0
-
-</b>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<div
-  id="grid"
-  class="
-    mt-10
-    grid
-    sm:grid-cols-2
-    lg:grid-cols-4
-    xl:grid-cols-5
-    gap-4
-  "
-></div>
+    <div class="grid" id="grid"></div>
 
 </main>
 
 
+<!-- CONFIRM -->
 
-<script src="data.js"></script>
+<div class="confirm" id="confirm">
+
+    <div class="modal">
+
+        <h2>Продать предмет?</h2>
+
+        <p id="confirmText"></p>
+
+        <div class="modal-value" id="confirmValue">
+            +0 EXP
+        </div>
+
+        <div class="modal-buttons">
+
+            <button
+                class="cancel"
+                onclick="closeConfirm()"
+            >
+                ОТМЕНА
+            </button>
+
+            <button
+                class="confirm-sell"
+                onclick="confirmSell()"
+            >
+                ПРОДАТЬ
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="toast" id="toast">
+
+    <div class="toast-title">
+        ПРЕДМЕТ ПРОДАН
+    </div>
+
+    <div class="toast-text" id="toastText"></div>
+
+</div>
 
 
 <script>
 
-function render(){
-
-  const inventory =
-    getInventory();
+let inventory = [];
+let sellIndex = null;
 
 
-  document.getElementById(
-    'count'
-  ).textContent =
-    inventory.length;
+/* -----------------------------------------------------
+   HELPERS
+----------------------------------------------------- */
 
+function getInventoryData() {
 
-  document.getElementById(
-    'total'
-  ).textContent =
-    inventory
-      .reduce(
-        (sum,item) =>
-          sum +
-          Number(
-            item.price || 0
-          ),
-        0
-      )
-      .toLocaleString(
-        'ru-RU'
-      )
-      +
-      ' монет';
+    if (typeof getInventory === "function") {
 
+        try {
+            return getInventory() || [];
+        } catch(e) {}
 
-  document.getElementById(
-    'xp'
-  ).textContent =
-    getXP();
+    }
 
+    try {
 
-  const grid =
-    document.getElementById(
-      'grid'
+        return JSON.parse(
+            localStorage.getItem("chak338_inventory") || "[]"
+        );
+
+    } catch(e) {
+
+        return [];
+
+    }
+}
+
+function saveInventory(list) {
+
+    localStorage.setItem(
+        "chak338_inventory",
+        JSON.stringify(list)
     );
+}
 
+function getXP() {
 
-  if(!inventory.length){
-
-    grid.innerHTML = `
-
-      <div
-        class="
-          col-span-full
-          rounded-3xl
-          border
-          border-dashed
-          border-white/10
-          p-12
-          text-center
-          text-zinc-500
-        "
-      >
-
-        Инвентарь пуст.
-
-        <a
-          class="
-            text-fuchsia-400
-            font-black
-          "
-          href="index.html#cases"
-        >
-
-          Открыть кейс →
-
-        </a>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  grid.innerHTML =
-    inventory
-      .slice()
-      .reverse()
-      .map(
-        item => `
-
-        <article
-          class="
-            item
-            rounded-3xl
-            border
-            border-white/10
-            bg-zinc-950
-            p-4
-          "
-        >
-
-          <div
-            class="
-              h-40
-              rounded-2xl
-              bg-black/30
-            "
-          >
-
-            <img
-              src="${item.image}"
-              class="
-                w-full
-                h-full
-                object-contain
-              "
-              alt="${item.name}"
-            >
-
-          </div>
-
-
-          <h3
-            class="
-              font-black
-              mt-4
-            "
-          >
-
-            ${item.name}
-
-          </h3>
-
-
-          <div
-            class="
-              text-xs
-              mt-1
-            "
-            style="
-              color:
-              ${
-                RARITIES[item.rarity]
-                  ?.color || '#fff'
-              }
-            "
-          >
-
-            ${
-              RARITIES[item.rarity]
-                ?.name || 'Предмет'
-            }
-
-          </div>
-
-
-          <div
-            class="
-              text-amber-400
-              font-black
-              mt-2
-            "
-          >
-
-            🪙 ${item.price}
-
-          </div>
-
-        </article>
-
-      `
-      )
-      .join('');
+    return Number(
+        localStorage.getItem("chak338_xp") || 0
+    );
 
 }
 
+function setXP(value) {
+
+    localStorage.setItem(
+        "chak338_xp",
+        String(Math.max(0,Math.floor(value)))
+    );
+
+}
+
+function price(item) {
+
+    return Number(item?.price || 0);
+
+}
+
+function name(item) {
+
+    return item?.name ||
+           item?.title ||
+           "Предмет";
+
+}
+
+function image(item) {
+
+    return item?.image || "";
+
+}
+
+function format(value) {
+
+    if (typeof formatPrice === "function") {
+
+        try {
+            return formatPrice(value);
+        } catch(e) {}
+
+    }
+
+    return Number(value || 0)
+        .toLocaleString("ru-RU");
+
+}
+
+
+/* -----------------------------------------------------
+   RENDER
+----------------------------------------------------- */
+
+function render() {
+
+    inventory = getInventoryData();
+
+    const grid =
+        document.getElementById("grid");
+
+    document.getElementById("xp")
+        .textContent =
+        getXP().toLocaleString("ru-RU");
+
+    document.getElementById("count")
+        .textContent =
+        inventory.length;
+
+    document.getElementById("total")
+        .textContent =
+        format(
+            inventory.reduce(
+                (sum,item) => sum + price(item),
+                0
+            )
+        );
+
+
+    if (!inventory.length) {
+
+        grid.innerHTML = `
+            <div class="empty">
+                <h2>Инвентарь пуст</h2>
+                <p>
+                    Открой кейс и получи свой первый предмет.
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    grid.innerHTML =
+        inventory.map((item,index) => {
+
+            return `
+
+                <div class="card">
+
+                    <div class="image-box">
+
+                        <img
+                            src="${escapeAttr(image(item))}"
+                            alt=""
+                        >
+
+                    </div>
+
+                    <div class="body">
+
+                        <div class="name">
+                            ${escapeHtml(name(item))}
+                        </div>
+
+                        <div class="price">
+                            ${format(price(item))}
+                        </div>
+
+                        <div class="game">
+                            Предмет инвентаря
+                        </div>
+
+                        <div class="actions">
+
+                            <button
+                                class="sell"
+                                onclick="openSell(${index})"
+                            >
+                                ПРОДАТЬ · +${format(price(item))} EXP
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* -----------------------------------------------------
+   SELL
+----------------------------------------------------- */
+
+function openSell(index) {
+
+    const item = inventory[index];
+
+    if (!item) return;
+
+    sellIndex = index;
+
+    document.getElementById("confirmText")
+        .textContent =
+        `Ты продаёшь «${name(item)}».`;
+
+    document.getElementById("confirmValue")
+        .textContent =
+        `+${format(price(item))} EXP`;
+
+    document.getElementById("confirm")
+        .classList.add("show");
+}
+
+function closeConfirm() {
+
+    sellIndex = null;
+
+    document.getElementById("confirm")
+        .classList.remove("show");
+}
+
+function confirmSell() {
+
+    if (sellIndex === null) return;
+
+    const item = inventory[sellIndex];
+
+    if (!item) {
+
+        closeConfirm();
+        return;
+
+    }
+
+    const gained =
+        price(item);
+
+    /*
+       Удаляем предмет.
+    */
+
+    inventory.splice(
+        sellIndex,
+        1
+    );
+
+    /*
+       Начисляем EXP.
+    */
+
+    const oldXP =
+        getXP();
+
+    setXP(
+        oldXP + gained
+    );
+
+    /*
+       Сохраняем новый инвентарь.
+    */
+
+    saveInventory(
+        inventory
+    );
+
+    closeConfirm();
+
+    render();
+
+    showToast(
+        `«${name(item)}» продан за +${format(gained)} EXP`
+    );
+}
+
+
+/* -----------------------------------------------------
+   TOAST
+----------------------------------------------------- */
+
+let toastTimer;
+
+function showToast(text) {
+
+    const toast =
+        document.getElementById("toast");
+
+    document.getElementById("toastText")
+        .textContent = text;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        },3000);
+}
+
+
+/* -----------------------------------------------------
+   ESCAPE
+----------------------------------------------------- */
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+function escapeAttr(value) {
+
+    return escapeHtml(value);
+
+}
+
+
+/* -----------------------------------------------------
+   INIT
+----------------------------------------------------- */
 
 render();
 
