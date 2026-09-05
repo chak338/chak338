@@ -10,155 +10,424 @@
 <script src="data.js"></script>
 
 <style>
-
 * {
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
     margin: 0;
     background:
-        radial-gradient(circle at 50% -20%, rgba(86, 70, 180, .25), transparent 45%),
+        radial-gradient(circle at 50% -20%, rgba(124,58,237,.16), transparent 35%),
         #070912;
     color: #fff;
     font-family: Inter, Arial, sans-serif;
 }
 
-.glass {
-    background: rgba(15, 18, 32, .82);
-    border: 1px solid rgba(255,255,255,.07);
-    backdrop-filter: blur(14px);
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0d18;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #292d3d;
+    border-radius: 10px;
 }
 
 .header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(7,9,18,.86);
+    height: 84px;
+    background: rgba(7,9,18,.94);
     border-bottom: 1px solid rgba(255,255,255,.06);
-    backdrop-filter: blur(18px);
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    width: min(1250px, calc(100% - 32px));
+    margin: auto;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: #9d7cff;
+}
+
+.nav {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav a {
+    color: #ddd;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.nav a:hover {
+    color: #a878ff;
+}
+
+.nav .active {
+    background: #7c3aed;
+    padding: 12px 18px;
+    border-radius: 13px;
+}
+
+.hero {
+    padding: 70px 0 50px;
+}
+
+.hero-title {
+    font-size: clamp(42px, 7vw, 76px);
+    line-height: .95;
+    font-weight: 950;
+    letter-spacing: -4px;
+}
+
+.hero-title span {
+    color: #8b5cf6;
+}
+
+.hero-text {
+    max-width: 650px;
+    margin-top: 25px;
+    color: #9da2b3;
+    font-size: 18px;
+}
+
+.section-title {
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 25px;
+}
+
+.cases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
 }
 
 .case-card {
-    position: relative;
+    background: linear-gradient(145deg, #111524, #0c0f1b);
+    border: 1px solid #24283a;
+    border-radius: 22px;
     overflow: hidden;
-    transition: .25s;
+    cursor: pointer;
+    transition: .25s ease;
 }
 
 .case-card:hover {
     transform: translateY(-6px);
-    border-color: rgba(139,92,246,.55);
-    box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    border-color: #7c3aed;
+    box-shadow: 0 20px 50px rgba(124,58,237,.16);
 }
 
 .case-image {
+    height: 220px;
+    background: #111522;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.case-image img {
     width: 100%;
-    height: 230px;
-    object-fit: contain;
-    display: block;
+    height: 100%;
+    object-fit: cover;
 }
 
-.hantiks-art {
-    height: 230px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background:
-        radial-gradient(circle, rgba(139,92,246,.3), transparent 60%);
+.case-body {
+    padding: 20px;
 }
 
-.hantiks-logo {
-    width: 150px;
-    height: 150px;
-    border-radius: 42px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 52px;
-    font-weight: 1000;
-    letter-spacing: -5px;
-
-    background:
-        linear-gradient(135deg,#7c3aed,#ec4899);
-
-    box-shadow:
-        0 0 60px rgba(139,92,246,.4),
-        inset 0 0 35px rgba(255,255,255,.12);
-
-    transform: rotate(-6deg);
+.case-name {
+    font-size: 23px;
+    font-weight: 900;
 }
 
-.modal-bg {
+.case-meta {
+    color: #9499aa;
+    margin-top: 7px;
+}
+
+.case-xp {
+    color: #a98aff;
+    font-weight: 800;
+    margin-top: 15px;
+}
+
+.hantiks-section {
+    margin-top: 70px;
+    padding-bottom: 100px;
+}
+
+.hantiks-card {
+    max-width: 390px;
+}
+
+/* =====================================================
+   MODAL
+   ===================================================== */
+
+.modal {
     position: fixed;
     inset: 0;
     z-index: 1000;
+    background: rgba(0,0,0,.78);
+    backdrop-filter: blur(8px);
 
     display: none;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
 
-    background: rgba(0,0,0,.78);
-    backdrop-filter: blur(10px);
-
-    padding: 20px;
+    padding: 25px 15px;
+    overflow-y: auto;
 }
 
-.modal-bg.show {
+.modal.show {
     display: flex;
 }
 
-.modal {
-    width: min(1050px, 100%);
-    max-height: 90vh;
-    overflow: auto;
+.modal-dialog {
+    width: min(1000px, 100%);
+    max-height: calc(100vh - 50px);
 
-    border-radius: 28px;
-    background: #0c1020;
-    border: 1px solid rgba(255,255,255,.08);
+    background: #0b0e1c;
+    border: 1px solid #272c40;
+    border-radius: 25px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
 
     box-shadow: 0 30px 100px rgba(0,0,0,.65);
+
+    /* ВАЖНО */
+    scroll-behavior: auto;
 }
 
-.modal-item {
-    background: rgba(255,255,255,.035);
-    border: 1px solid rgba(255,255,255,.06);
-    border-radius: 15px;
-    padding: 10px;
+.modal-dialog::-webkit-scrollbar {
+    width: 8px;
 }
 
-.modal-item img {
-    width: 70px;
-    height: 70px;
-    object-fit: contain;
+.modal-top {
+    padding: 25px;
 }
 
-.reel-window {
-    position: relative;
-    overflow: hidden;
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-title {
+    font-size: 28px;
+    font-weight: 950;
+}
+
+.close-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    border: 1px solid #30364c;
+    background: #161a29;
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.case-preview {
+    width: 100%;
+    height: 250px;
     border-radius: 18px;
-    border: 1px solid rgba(255,255,255,.08);
-    background: #080b15;
+    overflow: hidden;
+    background: #111522;
+    border: 1px solid #292e42;
+}
+
+.case-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-info {
+    display: flex;
+    gap: 15px;
+    margin-top: 18px;
+}
+
+.info-box {
+    flex: 1;
+    background: #151927;
+    border-radius: 14px;
+    padding: 16px;
+}
+
+.info-label {
+    color: #7d8293;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.info-value {
+    margin-top: 5px;
+    font-size: 20px;
+    font-weight: 900;
+    color: #a783ff;
+}
+
+.contents-title {
+    padding: 0 25px;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.items-grid {
+    padding: 18px 25px 25px;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.item-card {
+    min-height: 125px;
+    background: #141827;
+    border: 1px solid #272c40;
+    border-radius: 15px;
+    padding: 12px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.item-image {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+    border-radius: 12px;
+    background: #0d101c;
+}
+
+.item-name {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.item-price {
+    margin-top: 3px;
+    color: #a783ff;
+    font-weight: 900;
+}
+
+.open-wrap {
+    padding: 0 25px 25px;
+}
+
+.open-btn {
+    width: 100%;
+    border: 0;
+    border-radius: 14px;
+    padding: 17px;
+
+    color: white;
+    background: linear-gradient(90deg,#7c3aed,#9333ea);
+
+    font-size: 18px;
+    font-weight: 950;
+    cursor: pointer;
+}
+
+.open-btn:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+/* =====================================================
+   REEL
+   ===================================================== */
+
+.reel-area {
+    display: none;
+    padding: 0 25px 30px;
+}
+
+.reel-area.show {
+    display: block;
+}
+
+.reel-title {
+    text-align: center;
+    color: #777d90;
+    font-size: 13px;
+    margin-bottom: 12px;
 }
 
 .reel {
+    position: relative;
+    height: 150px;
+
+    background: #090c16;
+    border: 1px solid #272c40;
+    border-radius: 17px;
+
+    overflow: hidden;
+}
+
+.reel-line {
+    position: absolute;
+    z-index: 10;
+
+    left: 50%;
+    top: 0;
+    bottom: 0;
+
+    width: 3px;
+    transform: translateX(-50%);
+
+    background: white;
+    box-shadow: 0 0 15px rgba(255,255,255,.8);
+}
+
+.reel-track {
+    position: absolute;
+    top: 10px;
+    left: 0;
+
+    height: 130px;
+
     display: flex;
     gap: 10px;
-    padding: 20px;
+
+    transform: translateX(0);
     will-change: transform;
 }
 
-.reel-card {
-    min-width: 130px;
-    width: 130px;
-    height: 155px;
+.reel-item {
+    flex: 0 0 125px;
+    height: 130px;
 
-    flex-shrink: 0;
+    background: #141827;
+    border: 1px solid #272c40;
+    border-radius: 14px;
 
-    border-radius: 16px;
-    background: #111626;
-    border: 1px solid rgba(255,255,255,.06);
+    padding: 10px;
 
     display: flex;
     flex-direction: column;
@@ -166,654 +435,602 @@ body {
     justify-content: center;
 }
 
-.reel-card img {
-    width: 85px;
-    height: 85px;
+.reel-item img {
+    width: 70px;
+    height: 70px;
     object-fit: contain;
 }
 
-.reel-line {
-    position: absolute;
-    z-index: 5;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 3px;
-    transform: translateX(-50%);
-    background: #fff;
-    box-shadow: 0 0 15px rgba(255,255,255,.9);
+.reel-item-name {
+    font-size: 11px;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 5px;
 }
+
+.reel-item-price {
+    color: #a783ff;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+/* =====================================================
+   RESULT
+   ===================================================== */
 
 .result {
     display: none;
+    padding: 0 25px 30px;
     text-align: center;
-    padding: 25px;
 }
 
 .result.show {
     display: block;
 }
 
-.result img {
-    width: 180px;
-    height: 180px;
+.result-card {
+    background: linear-gradient(145deg,#171b2c,#0e1120);
+    border: 1px solid #7c3aed;
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.result-card img {
+    width: 150px;
+    height: 150px;
     object-fit: contain;
-    margin: auto;
 }
 
-button {
-    transition: .2s;
+.result-name {
+    font-size: 25px;
+    font-weight: 950;
 }
 
-button:disabled {
-    opacity: .45;
-    cursor: not-allowed;
+.result-price {
+    color: #a783ff;
+    font-size: 20px;
+    font-weight: 900;
+    margin-top: 6px;
 }
 
+@media(max-width: 900px) {
+    .cases-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .items-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .nav {
+        gap: 12px;
+    }
+}
+
+@media(max-width: 600px) {
+    .header {
+        height: 70px;
+    }
+
+    .logo {
+        font-size: 19px;
+    }
+
+    .nav a {
+        font-size: 13px;
+    }
+
+    .hero {
+        padding-top: 40px;
+    }
+
+    .modal {
+        padding: 10px;
+    }
+
+    .modal-dialog {
+        max-height: calc(100vh - 20px);
+    }
+
+    .modal-info {
+        flex-direction: column;
+    }
+}
 </style>
 </head>
 
 <body>
 
 <header class="header">
-    <div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
+    <div class="container flex items-center justify-between">
+        <div class="logo">
+            CHAK338 <span>GAMING</span>
+        </div>
 
-        <a href="index.html"
-           class="text-2xl font-black tracking-tight">
-            CHAK338
-            <span class="text-violet-400">GAMING</span>
-        </a>
-
-        <nav class="flex gap-2">
-            <a href="index.html"
-               class="px-4 py-2 rounded-xl bg-violet-600">
-                Главная
-            </a>
-
-            <a href="inventory.html"
-               class="px-4 py-2 rounded-xl hover:bg-white/5">
-                Инвентарь
-            </a>
-
-            <a href="upgrade.html"
-               class="px-4 py-2 rounded-xl hover:bg-white/5">
-                Апгрейд
-            </a>
+        <nav class="nav">
+            <a href="index.html" class="active">Главная</a>
+            <a href="inventory.html">Инвентарь</a>
+            <a href="upgrade.html">Апгрейд</a>
         </nav>
-
     </div>
 </header>
 
+<main>
 
-<main class="max-w-7xl mx-auto px-5 py-12">
-
-    <!-- HERO -->
-
-    <section class="glass rounded-3xl p-8 md:p-12 mb-10">
-
-        <div class="max-w-3xl">
-
-            <div class="text-violet-400 font-bold uppercase tracking-widest mb-3">
-                CHAK338 GAMING HUB
-            </div>
-
-            <h1 class="text-4xl md:text-6xl font-black leading-tight mb-5">
-                Открывай кейсы.
-                <br>
-                Лови редкие предметы.
-            </h1>
-
-            <p class="text-white/55 text-lg mb-7">
-                Открывай игровые кейсы, собирай инвентарь,
-                прокачивай уровень и используй предметы
-                в апгрейдере.
-            </p>
-
-            <div class="flex flex-wrap gap-3">
-
-                <a href="#cases"
-                   class="px-6 py-3 rounded-xl bg-violet-600 hover:bg-violet-500 font-bold">
-                    Открыть кейсы
-                </a>
-
-                <a href="upgrade.html"
-                   class="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 font-bold">
-                    Перейти в апгрейд
-                </a>
-
-            </div>
-
+<section class="hero">
+    <div class="container">
+        <div class="hero-title">
+            CHAK338<br>
+            <span>GAMING HUB</span>
         </div>
 
-    </section>
+        <div class="hero-text">
+            Открывай кейсы, получай редкие предметы,
+            прокачивай инвентарь и испытывай удачу
+            в апгрейде.
+        </div>
+    </div>
+</section>
 
+<section>
+    <div class="container">
 
-    <!-- CASES -->
+        <div class="section-title">
+            Основные кейсы
+        </div>
 
-    <section id="cases">
+        <div class="cases-grid">
 
-        <div class="flex items-end justify-between mb-6">
-
-            <div>
-                <div class="text-violet-400 font-bold uppercase tracking-widest text-sm">
-                    CASES
+            <!-- CLASH -->
+            <article class="case-card" onclick="openCase('clash')">
+                <div class="case-image">
+                    <img src="clash-case.png" alt="Clash of Clans">
                 </div>
 
-                <h2 class="text-3xl font-black mt-1">
-                    Кейсы
-                </h2>
-            </div>
+                <div class="case-body">
+                    <div class="case-name">
+                        Clash of Clans
+                    </div>
 
-            <div id="xpDisplay"
-                 class="text-white/60">
-                XP: 0
-            </div>
+                    <div class="case-meta">
+                        14 предметов
+                    </div>
+
+                    <div class="case-xp">
+                        +100 XP
+                    </div>
+                </div>
+            </article>
+
+            <!-- CS2 -->
+            <article class="case-card" onclick="openCase('cs2')">
+                <div class="case-image">
+                    <img src="cs2-case.png" alt="CS2">
+                </div>
+
+                <div class="case-body">
+                    <div class="case-name">
+                        CS2
+                    </div>
+
+                    <div class="case-meta">
+                        13 предметов
+                    </div>
+
+                    <div class="case-xp">
+                        +150 XP
+                    </div>
+                </div>
+            </article>
+
+            <!-- DOTA -->
+            <article class="case-card" onclick="openCase('dota')">
+                <div class="case-image">
+                    <img src="dota-case.png" alt="Dota 2">
+                </div>
+
+                <div class="case-body">
+                    <div class="case-name">
+                        Dota 2
+                    </div>
+
+                    <div class="case-meta">
+                        19 предметов
+                    </div>
+
+                    <div class="case-xp">
+                        +250 XP
+                    </div>
+                </div>
+            </article>
 
         </div>
+    </div>
+</section>
 
+<!-- HANTIKS ОТДЕЛЬНО -->
+<section class="hantiks-section">
+    <div class="container">
 
-        <div id="casesGrid"
-             class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+        <div class="section-title">
+            Другие кейсы
         </div>
 
-    </section>
+        <article class="case-card hantiks-card" onclick="openCase('hantiks')">
+
+            <div class="case-image">
+                <div style="
+                    font-size:55px;
+                    font-weight:950;
+                    color:#a783ff;
+                    text-shadow:0 0 30px rgba(167,131,255,.45);
+                ">
+                    H
+                </div>
+            </div>
+
+            <div class="case-body">
+                <div class="case-name">
+                    Hantiks
+                </div>
+
+                <div class="case-meta">
+                    11 предметов
+                </div>
+
+                <div class="case-xp">
+                    Без таймера
+                </div>
+            </div>
+
+        </article>
+
+    </div>
+</section>
 
 </main>
 
 
-<!-- CASE MODAL -->
+<!-- =====================================================
+     CASE MODAL
+     ===================================================== -->
 
-<div id="caseModal"
-     class="modal-bg">
+<div id="caseModal" class="modal">
 
-    <div class="modal">
+    <div id="caseDialog" class="modal-dialog">
 
-        <div class="p-6 border-b border-white/5 flex justify-between items-center">
+        <div class="modal-top">
 
-            <div>
-                <div class="text-white/40 text-sm">
-                    CASE
+            <div class="modal-header">
+
+                <div id="modalTitle" class="modal-title">
+                    Кейc
                 </div>
 
-                <h2 id="modalTitle"
-                    class="text-2xl font-black">
-                    Кейc
-                </h2>
+                <button class="close-btn" onclick="closeCase()">
+                    ✕
+                </button>
+
             </div>
 
-            <button onclick="closeCase()"
-                    class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10">
-                ✕
+            <div class="case-preview">
+                <img id="modalCaseImage" src="" alt="">
+            </div>
+
+            <div class="modal-info">
+
+                <div class="info-box">
+                    <div class="info-label">
+                        Награда XP
+                    </div>
+
+                    <div id="modalXp" class="info-value">
+                        +100 XP
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">
+                        Следующее открытие
+                    </div>
+
+                    <div id="modalCooldown" class="info-value">
+                        —
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="contents-title">
+            Содержимое кейса
+        </div>
+
+        <div id="modalItems" class="items-grid"></div>
+
+        <div class="open-wrap">
+
+            <button
+                id="openCaseButton"
+                class="open-btn"
+                onclick="startOpening()"
+            >
+                ОТКРЫТЬ КЕЙС
             </button>
 
         </div>
 
+        <div id="reelArea" class="reel-area">
 
-        <div id="caseContent"
-             class="p-6">
+            <div class="reel-title">
+                ОПРЕДЕЛЕНИЕ ПРЕДМЕТА
+            </div>
 
-            <!-- JS -->
+            <div class="reel">
+
+                <div class="reel-line"></div>
+
+                <div id="reelTrack" class="reel-track"></div>
+
+            </div>
+
+        </div>
+
+        <div id="resultArea" class="result">
+
+            <div class="result-card">
+
+                <img id="resultImage" src="" alt="">
+
+                <div id="resultName" class="result-name"></div>
+
+                <div id="resultPrice" class="result-price"></div>
+
+            </div>
 
         </div>
 
     </div>
-
 </div>
 
 
 <script>
-
-let selectedCase = null;
+let currentCase = null;
 let opening = false;
 
+const modal = document.getElementById('caseModal');
+const dialog = document.getElementById('caseDialog');
 
-// ============================================================
-// RENDER CASES
-// ============================================================
+const modalTitle = document.getElementById('modalTitle');
+const modalCaseImage = document.getElementById('modalCaseImage');
+const modalXp = document.getElementById('modalXp');
+const modalCooldown = document.getElementById('modalCooldown');
+const modalItems = document.getElementById('modalItems');
+const openCaseButton = document.getElementById('openCaseButton');
 
-function renderCases() {
+const reelArea = document.getElementById('reelArea');
+const reelTrack = document.getElementById('reelTrack');
 
-    const grid = document.getElementById("casesGrid");
+const resultArea = document.getElementById('resultArea');
+const resultImage = document.getElementById('resultImage');
+const resultName = document.getElementById('resultName');
+const resultPrice = document.getElementById('resultPrice');
 
-    grid.innerHTML = "";
-
-    CASES.forEach((c, index) => {
-
-        const cooldown = c.noCooldown
-            ? 0
-            : getCaseCooldown(c.id);
-
-        const remaining = cooldown - Date.now();
-
-        const locked = remaining > 0;
-
-        const card = document.createElement("div");
-
-        card.className =
-            "glass rounded-3xl p-4 case-card";
-
-
-        let art = "";
-
-        if (c.image) {
-
-            art = `
-                <img
-                    class="case-image"
-                    src="${c.image}"
-                    alt="${c.name}"
-                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                >
-
-                <div
-                    style="display:none"
-                    class="hantiks-art">
-                    <div class="hantiks-logo">
-                        ${index + 1}
-                    </div>
-                </div>
-            `;
-
-        } else {
-
-            art = `
-                <div class="hantiks-art">
-                    <div class="hantiks-logo">
-                        H
-                    </div>
-                </div>
-            `;
-        }
-
-
-        card.innerHTML = `
-
-            ${art}
-
-            <div class="px-2 pb-2">
-
-                <div class="flex items-center justify-between mb-2">
-
-                    <h3 class="text-xl font-black">
-                        ${c.name}
-                    </h3>
-
-                    <div class="text-xs text-white/35">
-                        #${index + 1}
-                    </div>
-
-                </div>
-
-
-                <div class="text-white/45 text-sm mb-4">
-                    ${c.items.length} предметов
-                </div>
-
-
-                <button
-                    class="w-full py-3 rounded-xl font-bold
-                    ${locked
-                        ? "bg-white/5"
-                        : "bg-violet-600 hover:bg-violet-500"}"
-                    onclick="openCase('${c.id}')">
-
-                    ${
-                        c.noCooldown
-                            ? "ОТКРЫТЬ"
-                            : locked
-                                ? formatTime(remaining)
-                                : "ОТКРЫТЬ КЕЙС"
-                    }
-
-                </button>
-
-            </div>
-        `;
-
-
-        grid.appendChild(card);
-    });
-
-
-    document.getElementById("xpDisplay").textContent =
-        `XP: ${getXP()}`;
-}
-
-
-// ============================================================
-// FORMAT TIME
-// ============================================================
 
 function formatTime(ms) {
-
-    if (ms <= 0) {
-        return "ОТКРЫТЬ КЕЙС";
-    }
+    if (ms <= 0) return 'ГОТОВО';
 
     let sec = Math.floor(ms / 1000);
 
     const h = Math.floor(sec / 3600);
-
     sec %= 3600;
 
     const m = Math.floor(sec / 60);
-
     sec %= 60;
 
-    return `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
+    return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
 }
 
 
-// ============================================================
-// OPEN CASE WINDOW
-// ============================================================
+function cooldownKey(id) {
+    return `chak338_case_${id}`;
+}
 
-function openCase(caseId) {
 
-    if (opening) return;
+function getCooldown(id) {
+    return Number(localStorage.getItem(cooldownKey(id)) || 0);
+}
 
-    const c = CASES.find(x => x.id === caseId);
 
-    if (!c) return;
+function setCooldown(id, time) {
+    localStorage.setItem(cooldownKey(id), String(time));
+}
 
-    if (!c.noCooldown) {
 
-        const remaining =
-            getCaseCooldown(caseId) - Date.now();
+function getInventory() {
+    try {
+        return JSON.parse(
+            localStorage.getItem('chak338_inventory') || '[]'
+        );
+    } catch {
+        return [];
+    }
+}
 
-        if (remaining > 0) {
-            return;
-        }
+
+function saveInventory(items) {
+    localStorage.setItem(
+        'chak338_inventory',
+        JSON.stringify(items)
+    );
+}
+
+
+function addXP(amount) {
+    const xp = Number(
+        localStorage.getItem('chak338_xp') || 0
+    );
+
+    localStorage.setItem(
+        'chak338_xp',
+        String(xp + amount)
+    );
+}
+
+
+function openCase(id) {
+
+    const box = CASES.find(c => c.id === id);
+
+    if (!box) return;
+
+    currentCase = box;
+    opening = false;
+
+    modalTitle.textContent = box.name;
+
+    if (box.image) {
+        modalCaseImage.src = box.image;
+        modalCaseImage.style.display = 'block';
+    } else {
+        modalCaseImage.style.display = 'none';
     }
 
+    modalXp.textContent =
+        box.xp > 0 ? `+${box.xp} XP` : 'Без XP';
 
-    selectedCase = c;
+    renderCaseItems();
 
-    document.getElementById("modalTitle").textContent =
-        c.name;
+    reelArea.classList.remove('show');
+    resultArea.classList.remove('show');
 
+    openCaseButton.disabled = false;
+    openCaseButton.textContent = 'ОТКРЫТЬ КЕЙС';
 
-    const content =
-        document.getElementById("caseContent");
+    updateCooldown();
 
+    modal.classList.add('show');
 
-    content.innerHTML = `
-
-        <div class="grid md:grid-cols-[260px_1fr] gap-7">
-
-            <div>
-
-                ${
-                    c.image
-                        ? `
-                        <img
-                            src="${c.image}"
-                            class="w-full h-64 object-contain rounded-2xl"
-                        >
-                        `
-                        : `
-                        <div class="h-64 hantiks-art rounded-2xl">
-                            <div class="hantiks-logo">
-                                H
-                            </div>
-                        </div>
-                        `
-                }
-
-                <div class="mt-4 p-4 rounded-2xl bg-white/5">
-
-                    <div class="text-white/40 text-sm">
-                        Награда XP
-                    </div>
-
-                    <div class="text-2xl font-black text-violet-400">
-                        +${c.xp} XP
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div>
-
-                <h3 class="text-xl font-black mb-4">
-                    Содержимое кейса
-                </h3>
-
-
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-
-                    ${c.items.map(item => `
-
-                        <div class="modal-item">
-
-                            <img src="${item.image}">
-
-                            <div class="text-sm font-bold mt-2">
-                                ${item.name}
-                            </div>
-
-                            <div class="text-violet-400 font-black">
-                                ${item.price} монет
-                            </div>
-
-                        </div>
-
-                    `).join("")}
-
-                </div>
-
-
-                <button
-                    onclick="startOpening()"
-                    class="mt-6 w-full py-4 rounded-2xl bg-violet-600 hover:bg-violet-500 font-black text-lg">
-
-                    ОТКРЫТЬ КЕЙС
-
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div id="reelArea"
-             class="hidden mt-8">
-
-            <div class="text-center text-white/40 text-sm mb-3">
-                ОПРЕДЕЛЕНИЕ ПРЕДМЕТА
-            </div>
-
-            <div class="reel-window">
-
-                <div class="reel-line"></div>
-
-                <div id="reel"
-                     class="reel">
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div id="caseResult"
-             class="result">
-
-        </div>
-
-    `;
-
-
-    document.getElementById("caseModal")
-        .classList.add("show");
+    /*
+       ГЛАВНОЕ ИСПРАВЛЕНИЕ:
+       каждый раз после открытия кейса
+       прокручиваем модалку В САМЫЙ ВЕРХ.
+    */
+    requestAnimationFrame(() => {
+        dialog.scrollTop = 0;
+    });
 }
 
 
-// ============================================================
-// CLOSE CASE
-// ============================================================
+function renderCaseItems() {
+
+    modalItems.innerHTML = '';
+
+    currentCase.items.forEach(item => {
+
+        const card = document.createElement('div');
+        card.className = 'item-card';
+
+        card.innerHTML = `
+            <img
+                class="item-image"
+                src="${item.image}"
+                alt=""
+                onerror="this.src=svgIcon('🎁')"
+            >
+
+            <div class="item-name">
+                ${item.name}
+            </div>
+
+            <div class="item-price">
+                ${item.price} монет
+            </div>
+        `;
+
+        modalItems.appendChild(card);
+    });
+}
+
+
+function updateCooldown() {
+
+    if (!currentCase) return;
+
+    if (currentCase.noCooldown) {
+        modalCooldown.textContent = 'БЕЗ ТАЙМЕРА';
+        openCaseButton.disabled = false;
+        return;
+    }
+
+    const end = getCooldown(currentCase.id);
+
+    if (!end || end <= Date.now()) {
+        modalCooldown.textContent = 'ГОТОВО';
+        openCaseButton.disabled = false;
+        return;
+    }
+
+    modalCooldown.textContent =
+        formatTime(end - Date.now());
+
+    openCaseButton.disabled = true;
+}
+
+
+setInterval(() => {
+    if (currentCase && modal.classList.contains('show')) {
+        updateCooldown();
+    }
+}, 1000);
+
 
 function closeCase() {
 
     if (opening) return;
 
-    document.getElementById("caseModal")
-        .classList.remove("show");
+    modal.classList.remove('show');
 
-    selectedCase = null;
+    currentCase = null;
 }
 
 
-// ============================================================
-// OPENING
-// ============================================================
+modal.addEventListener('click', e => {
 
-function startOpening() {
-
-    if (!selectedCase || opening) return;
-
-    opening = true;
-
-
-    const c = selectedCase;
-
-
-    if (!c.noCooldown) {
-
-        const remaining =
-            getCaseCooldown(c.id) - Date.now();
-
-        if (remaining > 0) {
-            opening = false;
-            return;
-        }
+    if (e.target === modal && !opening) {
+        closeCase();
     }
 
-
-    const reelArea =
-        document.getElementById("reelArea");
-
-    const reel =
-        document.getElementById("reel");
+});
 
 
-    reelArea.classList.remove("hidden");
+/* =====================================================
+   ВЫБОР ПРЕДМЕТА
+   ===================================================== */
 
+function chooseItem(items) {
 
-    const result =
-        document.getElementById("caseResult");
+    /*
+       Пока используем взвешенный выбор по цене.
+       Вероятности пользователю не показываются.
+    */
 
-    result.classList.remove("show");
+    const weights = items.map(item => {
 
-    result.innerHTML = "";
-
-
-    // выбираем предмет заранее
-    const winner =
-        weightedItem(c.items);
-
-
-    // создаём длинную ленту
-    const sequence = [];
-
-    for (let i = 0; i < 55; i++) {
-
-        sequence.push(
-            c.items[
-                Math.floor(
-                    Math.random() * c.items.length
-                )
-            ]
-        );
-    }
-
-
-    // победитель примерно в конце
-    sequence[48] = winner;
-
-
-    reel.innerHTML =
-        sequence.map(item => `
-
-            <div class="reel-card">
-
-                <img src="${item.image}">
-
-                <div class="text-xs text-white/70 text-center px-2">
-                    ${item.name}
-                </div>
-
-                <div class="text-violet-400 font-black text-sm">
-                    ${item.price}
-                </div>
-
-            </div>
-
-        `).join("");
-
-
-    const cardWidth = 140;
-
-    const target =
-        (48 * cardWidth) -
-        (reelArea.clientWidth / 2) +
-        70;
-
-
-    reel.style.transition = "none";
-    reel.style.transform = "translateX(0px)";
-
-
-    requestAnimationFrame(() => {
-
-        requestAnimationFrame(() => {
-
-            reel.style.transition =
-                "transform 4.5s cubic-bezier(.08,.72,.12,1)";
-
-            reel.style.transform =
-                `translateX(-${target}px)`;
-
-        });
+        if (item.price <= 25) return 40;
+        if (item.price <= 100) return 25;
+        if (item.price <= 300) return 12;
+        if (item.price <= 600) return 5;
+        if (item.price <= 750) return 2;
+        return 1;
 
     });
 
-
-    // звуки
-    playSpinSound();
-
-
-    setTimeout(() => {
-
-        finishCase(winner);
-
-    }, 4700);
-}
-
-
-// ============================================================
-// WEIGHTED ITEM
-// ============================================================
-
-function weightedItem(items) {
-
-    // обычная мягкая система:
-    // дешёвые предметы выпадают чаще,
-    // дорогие реже.
-
-    const weights =
-        items.map(item =>
-            1 / Math.sqrt(item.price)
-        );
-
     const total =
-        weights.reduce((a,b) => a+b, 0);
+        weights.reduce((a,b) => a + b, 0);
 
-    let random =
-        Math.random() * total;
-
+    let random = Math.random() * total;
 
     for (let i = 0; i < items.length; i++) {
 
@@ -824,231 +1041,209 @@ function weightedItem(items) {
         }
     }
 
-
-    return items[0];
+    return items[items.length - 1];
 }
 
 
-// ============================================================
-// FINISH CASE
-// ============================================================
+/* =====================================================
+   REEL
+   ===================================================== */
 
-function finishCase(winner) {
+function createReel(target) {
 
-    const c = selectedCase;
+    reelTrack.innerHTML = '';
+
+    const sequence = [];
+
+    for (let i = 0; i < 38; i++) {
+        sequence.push(
+            currentCase.items[
+                Math.floor(
+                    Math.random() *
+                    currentCase.items.length
+                )
+            ]
+        );
+    }
+
+    /*
+       Целевой предмет ставим заранее
+       примерно в конец ленты.
+    */
+    sequence.push(target);
+
+    for (let i = 0; i < 8; i++) {
+        sequence.push(
+            currentCase.items[
+                Math.floor(
+                    Math.random() *
+                    currentCase.items.length
+                )
+            ]
+        );
+    }
+
+    sequence.forEach(item => {
+
+        const el = document.createElement('div');
+
+        el.className = 'reel-item';
+
+        el.innerHTML = `
+            <img
+                src="${item.image}"
+                alt=""
+                onerror="this.src=svgIcon('🎁')"
+            >
+
+            <div class="reel-item-name">
+                ${item.name}
+            </div>
+
+            <div class="reel-item-price">
+                ${item.price}
+            </div>
+        `;
+
+        reelTrack.appendChild(el);
+    });
+
+    reelTrack.style.transition = 'none';
+    reelTrack.style.transform = 'translateX(0)';
+
+    return sequence;
+}
 
 
-    // предмет добавляется в инвентарь
+function startOpening() {
+
+    if (!currentCase || opening) return;
+
+    if (
+        !currentCase.noCooldown &&
+        getCooldown(currentCase.id) > Date.now()
+    ) {
+        return;
+    }
+
+    opening = true;
+
+    openCaseButton.disabled = true;
+    openCaseButton.textContent = 'ОТКРЫТИЕ...';
+
+    resultArea.classList.remove('show');
+
+    const target = chooseItem(currentCase.items);
+
+    createReel(target);
+
+    reelArea.classList.add('show');
+
+    /*
+       Скроллим к рулетке только ПОСЛЕ нажатия
+       "ОТКРЫТЬ КЕЙС".
+    */
+    setTimeout(() => {
+
+        reelArea.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+
+    }, 80);
+
+    setTimeout(() => {
+
+        /*
+           Целевой элемент находится примерно
+           на позиции 38.
+        */
+
+        const targetIndex = 38;
+
+        const itemWidth = 125;
+        const gap = 10;
+
+        const targetCenter =
+            targetIndex * (itemWidth + gap) +
+            itemWidth / 2;
+
+        const reelWidth =
+            document.querySelector('.reel').clientWidth;
+
+        const finalX =
+            -(targetCenter - reelWidth / 2);
+
+        reelTrack.style.transition =
+            'transform 4.5s cubic-bezier(.08,.72,.12,1)';
+
+        reelTrack.style.transform =
+            `translateX(${finalX}px)`;
+
+    }, 100);
+
+
+    setTimeout(() => {
+
+        finishOpening(target);
+
+    }, 4900);
+}
+
+
+function finishOpening(item) {
+
+    const now = Date.now();
+
+    if (!currentCase.noCooldown) {
+        setCooldown(
+            currentCase.id,
+            now + currentCase.cooldown
+        );
+    }
+
+    addXP(currentCase.xp);
+
     const inventory = getInventory();
 
-    inventory.push(
-        makeInventoryItem(
-            winner,
-            c.id
-        )
-    );
+    inventory.push({
+        ...item,
+
+        id:
+            'item_' +
+            Date.now() +
+            '_' +
+            Math.random()
+                .toString(36)
+                .slice(2),
+
+        obtainedAt: now
+    });
 
     saveInventory(inventory);
 
+    resultImage.src = item.image;
+    resultName.textContent = item.name;
+    resultPrice.textContent =
+        `${item.price} монет`;
 
-    // XP
-    if (c.xp > 0) {
-        addXP(c.xp);
-    }
+    resultArea.classList.add('show');
 
-
-    // cooldown
-    if (!c.noCooldown) {
-
-        setCaseCooldown(
-            c.id,
-            Date.now() + c.cooldown
-        );
-    }
-
-
-    const result =
-        document.getElementById("caseResult");
-
-
-    result.innerHTML = `
-
-        <div class="text-white/40 uppercase tracking-widest text-sm">
-            ВЫПАЛО
-        </div>
-
-        <img src="${winner.image}">
-
-        <div class="text-3xl font-black">
-            ${winner.name}
-        </div>
-
-        <div class="text-violet-400 text-2xl font-black mt-2">
-            ${winner.price} монет
-        </div>
-
-        <div class="text-green-400 font-bold mt-3">
-            Предмет добавлен в инвентарь
-        </div>
-
-        ${
-            c.xp > 0
-                ? `<div class="text-white/50 mt-1">+${c.xp} XP</div>`
-                : ""
-        }
-
-        <button
-            onclick="closeAfterWin()"
-            class="mt-6 px-8 py-3 rounded-xl bg-violet-600 hover:bg-violet-500 font-bold">
-
-            ЗАБРАТЬ
-
-        </button>
-
-    `;
-
-
-    result.classList.add("show");
-
-
-    playWinSound();
-
+    openCaseButton.textContent = 'КЕЙС ОТКРЫТ';
 
     opening = false;
 
-    renderCases();
+    updateCooldown();
+
+    setTimeout(() => {
+
+        resultArea.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+
+    }, 150);
 }
-
-
-// ============================================================
-// CLOSE AFTER WIN
-// ============================================================
-
-function closeAfterWin() {
-
-    document.getElementById("caseModal")
-        .classList.remove("show");
-
-    selectedCase = null;
-
-    opening = false;
-}
-
-
-// ============================================================
-// SIMPLE SOUND
-// ============================================================
-
-function playSpinSound() {
-
-    try {
-
-        const ctx =
-            new (window.AudioContext ||
-                window.webkitAudioContext)();
-
-        const osc =
-            ctx.createOscillator();
-
-        const gain =
-            ctx.createGain();
-
-
-        osc.type = "triangle";
-
-        osc.frequency.value = 150;
-
-        gain.gain.setValueAtTime(
-            .001,
-            ctx.currentTime
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            .12,
-            ctx.currentTime + .1
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            .001,
-            ctx.currentTime + 4
-        );
-
-
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-
-        osc.start();
-        osc.stop(ctx.currentTime + 4);
-
-    } catch {}
-}
-
-
-function playWinSound() {
-
-    try {
-
-        const ctx =
-            new (window.AudioContext ||
-                window.webkitAudioContext)();
-
-
-        [440, 660, 880].forEach(
-            (freq, index) => {
-
-                const osc =
-                    ctx.createOscillator();
-
-                const gain =
-                    ctx.createGain();
-
-
-                osc.frequency.value = freq;
-
-                gain.gain.setValueAtTime(
-                    .001,
-                    ctx.currentTime
-                );
-
-                gain.gain.exponentialRampToValueAtTime(
-                    .12,
-                    ctx.currentTime + index * .12
-                );
-
-                gain.gain.exponentialRampToValueAtTime(
-                    .001,
-                    ctx.currentTime + .8
-                );
-
-
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-
-                osc.start(
-                    ctx.currentTime + index * .12
-                );
-
-                osc.stop(
-                    ctx.currentTime + .9
-                );
-            }
-        );
-
-    } catch {}
-}
-
-
-// ============================================================
-// UPDATE TIMERS
-// ============================================================
-
-setInterval(() => {
-    renderCases();
-}, 1000);
-
-
-renderCases();
-
 </script>
 
 </body>
